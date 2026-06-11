@@ -15,8 +15,8 @@ App de organização de casamento para noivas do Brasil e da América Latina.
 
 ## Versões
 
-- `index.html` — versão local (dados no aparelho), ideal para demonstração
-- `app-cloud.html` — versão com **login e banco de dados** (Supabase); siga o `SETUP.md`
+- `index.html` — **app oficial**: login + banco de dados na nuvem (Supabase)
+- `app-local.html` — versão local (dados só no aparelho), útil para demonstrações
 
 ## Como rodar
 
