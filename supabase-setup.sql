@@ -5,14 +5,14 @@
 
 -- Estado do app: um registro por usuária (JSON com perfil,
 -- despesas, fornecedores, tarefas e anotações)
-create table if not exists public.app_state (
+create table if not exists public.sim_state (
   user_id    uuid primary key references auth.users(id) on delete cascade,
   data       jsonb not null default '{}'::jsonb,
   updated_at timestamptz not null default now()
 );
 
 -- Anexos (orçamentos e contratos) em base64
-create table if not exists public.app_files (
+create table if not exists public.sim_files (
   user_id    uuid not null references auth.users(id) on delete cascade,
   id         text not null,
   mime       text,
@@ -22,27 +22,27 @@ create table if not exists public.app_files (
 );
 
 -- ---------- Segurança: cada usuária só enxerga o que é dela ----------
-alter table public.app_state enable row level security;
-alter table public.app_files enable row level security;
+alter table public.sim_state enable row level security;
+alter table public.sim_files enable row level security;
 
 create policy "estado: ler o próprio"
-  on public.app_state for select using (auth.uid() = user_id);
+  on public.sim_state for select using (auth.uid() = user_id);
 create policy "estado: criar o próprio"
-  on public.app_state for insert with check (auth.uid() = user_id);
+  on public.sim_state for insert with check (auth.uid() = user_id);
 create policy "estado: atualizar o próprio"
-  on public.app_state for update using (auth.uid() = user_id);
+  on public.sim_state for update using (auth.uid() = user_id);
 create policy "estado: apagar o próprio"
-  on public.app_state for delete using (auth.uid() = user_id);
+  on public.sim_state for delete using (auth.uid() = user_id);
 
 create policy "arquivos: ler os próprios"
-  on public.app_files for select using (auth.uid() = user_id);
+  on public.sim_files for select using (auth.uid() = user_id);
 create policy "arquivos: criar os próprios"
-  on public.app_files for insert with check (auth.uid() = user_id);
+  on public.sim_files for insert with check (auth.uid() = user_id);
 create policy "arquivos: atualizar os próprios"
-  on public.app_files for update using (auth.uid() = user_id);
+  on public.sim_files for update using (auth.uid() = user_id);
 create policy "arquivos: apagar os próprios"
-  on public.app_files for delete using (auth.uid() = user_id);
+  on public.sim_files for delete using (auth.uid() = user_id);
 
 -- Limite de tamanho por anexo (~3,6 MB em base64), proteção básica
-alter table public.app_files
-  add constraint app_files_tamanho check (length(data) < 3800000);
+alter table public.sim_files
+  add constraint sim_files_tamanho check (length(data) < 3800000);
