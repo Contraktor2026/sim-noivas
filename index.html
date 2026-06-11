@@ -6,6 +6,7 @@
 <title>SIM. — A assessora que cabe no seu bolso</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{
   --paper:#FAF9F5;
@@ -221,6 +222,23 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 <body>
 <div class="app">
 
+  <!-- ============ LOGIN ============ -->
+  <div class="onb" id="login" style="display:none;z-index:58">
+    <div class="top">
+      <div class="wm">SIM<i>.</i></div>
+      <div class="tagline">Sua organização de casamento,<br>segura e em qualquer aparelho.</div>
+    </div>
+    <div class="panel">
+      <h3 id="lgTitle">Entrar</h3>
+      <div class="ps" id="lgSub">Acesse com seu e-mail e senha.</div>
+      <div class="f"><label>E-mail</label><input id="lgEmail" type="email" autocomplete="email" placeholder="voce@email.com"></div>
+      <div class="f"><label>Senha</label><input id="lgPass" type="password" autocomplete="current-password" placeholder="mínimo 6 caracteres"></div>
+      <button class="btn p full" id="lgGo" onclick="doAuth()">Entrar</button>
+      <button class="btn g full" style="margin-top:8px" onclick="toggleAuthMode()" id="lgSwitch">Criar minha conta</button>
+      <p class="fine" id="lgMsg" style="text-align:center;margin-top:10px;min-height:18px"></p>
+    </div>
+  </div>
+
   <div class="splash" id="splash"><div class="wm">SIM<i style="color:var(--gold)">.</i></div></div>
 
   <!-- ============ ONBOARDING ============ -->
@@ -377,6 +395,11 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
         <div class="cap" style="margin-bottom:8px">Lista sugerida</div>
         <p class="fine" style="margin-bottom:10px">Carrego o roteiro do casamento brasileiro <b>adaptado ao tempo que falta até a sua data</b> — mesmo que não sejam mais 12 meses. Tudo editável.</p>
         <button class="btn g full" onclick="loadSuggested()">Carregar roteiro sugerido</button>
+      </div>
+      <div class="card">
+        <div class="cap" style="margin-bottom:8px">Conta</div>
+        <p class="fine" style="margin-bottom:10px" id="acctEmail">—</p>
+        <button class="btn g full" onclick="doLogout()">Sair da conta</button>
       </div>
       <div class="card">
         <div class="cap" style="margin-bottom:8px">Guia de uso</div>
@@ -580,6 +603,99 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 </div>
 
 <script>
+/* =================== CONFIGURAÇÃO (PREENCHA) ===================
+   Crie um projeto em https://supabase.com, rode o supabase-setup.sql
+   e cole abaixo a URL e a anon key (Settings → API). */
+const SUPABASE_URL='https://omdzifdpnuvtofkwwuau.supabase.co';
+const SUPABASE_ANON_KEY='sb_publishable_qfpZimfti9lqVZZOH0vdtA_FSvUCxmU';
+
+const sb=window.supabase?window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY):null;
+let sbUser=null;
+
+/* adaptador: mesmo contrato do window.storage, agora no banco */
+window.storage={
+  async get(key){
+    if(!sbUser) throw new Error('sem sessão');
+    if(key.startsWith('sim-file:')){
+      const id=key.slice(9);
+      const {data,error}=await sb.from('sim_files').select('mime,data').eq('user_id',sbUser.id).eq('id',id).single();
+      if(error||!data) throw new Error('não encontrado');
+      return {key,value:JSON.stringify({m:data.mime,d:data.data})};
+    }
+    const {data,error}=await sb.from('sim_state').select('data').eq('user_id',sbUser.id).single();
+    if(error||!data) throw new Error('não encontrado');
+    return {key,value:JSON.stringify(data.data)};
+  },
+  async set(key,value){
+    if(!sbUser) throw new Error('sem sessão');
+    if(key.startsWith('sim-file:')){
+      const id=key.slice(9); const f=JSON.parse(value);
+      const {error}=await sb.from('sim_files').upsert({user_id:sbUser.id,id,mime:f.m,data:f.d});
+      if(error) throw error;
+      return {key,value};
+    }
+    const {error}=await sb.from('sim_state').upsert({user_id:sbUser.id,data:JSON.parse(value),updated_at:new Date().toISOString()});
+    if(error) throw error;
+    return {key,value};
+  },
+  async delete(key){
+    if(!sbUser) throw new Error('sem sessão');
+    if(key.startsWith('sim-file:')){
+      await sb.from('sim_files').delete().eq('user_id',sbUser.id).eq('id',key.slice(9));
+      return {key,deleted:true};
+    }
+    await sb.from('sim_state').delete().eq('user_id',sbUser.id);
+    return {key,deleted:true};
+  }
+};
+
+/* ---- autenticação ---- */
+let authMode='in';
+function toggleAuthMode(){
+  authMode=authMode==='in'?'up':'in';
+  document.getElementById('lgTitle').textContent=authMode==='in'?'Entrar':'Criar conta';
+  document.getElementById('lgSub').textContent=authMode==='in'?'Acesse com seu e-mail e senha.':'Leva menos de um minuto.';
+  document.getElementById('lgGo').textContent=authMode==='in'?'Entrar':'Criar conta';
+  document.getElementById('lgSwitch').textContent=authMode==='in'?'Criar minha conta':'Já tenho conta';
+  document.getElementById('lgMsg').textContent='';
+}
+async function doAuth(){
+  const email=document.getElementById('lgEmail').value.trim();
+  const pass=document.getElementById('lgPass').value;
+  const msg=document.getElementById('lgMsg');
+  if(!email||pass.length<6){ msg.textContent='Informe e-mail válido e senha de 6+ caracteres.'; return; }
+  const btn=document.getElementById('lgGo'); btn.disabled=true; msg.textContent='Um instante…';
+  try{
+    const {data,error}= authMode==='in'
+      ? await sb.auth.signInWithPassword({email,password:pass})
+      : await sb.auth.signUp({email,password:pass});
+    if(error) throw error;
+    if(authMode==='up'&&!data.session){ msg.textContent='Conta criada! Confirme no seu e-mail e depois entre.'; btn.disabled=false; return; }
+    sbUser=data.session.user;
+    document.getElementById('login').style.display='none';
+    await bootApp();
+  }catch(e){
+    msg.textContent= /Invalid login/i.test(e.message)?'E-mail ou senha incorretos.':('Erro: '+e.message);
+  }
+  btn.disabled=false;
+}
+async function doLogout(){
+  await sb.auth.signOut();
+  location.reload();
+}
+async function initAuth(){
+  document.getElementById('splash').style.display='flex';
+  if(!sb||SUPABASE_URL.includes('COLE_AQUI')){
+    document.getElementById('splash').style.display='none';
+    document.getElementById('login').style.display='flex';
+    document.getElementById('lgMsg').textContent='Configuração pendente: cole a URL e a anon key do Supabase no código.';
+    return;
+  }
+  const {data}=await sb.auth.getSession();
+  if(data&&data.session){ sbUser=data.session.user; await bootApp(); }
+  else { document.getElementById('splash').style.display='none'; document.getElementById('login').style.display='flex'; }
+}
+
 /* =================== ESTADO + PERSISTÊNCIA =================== */
 const KEY='sim-noivas-v1';
 let state={profile:null,exp:[],cats:[],tasks:[],notes:[]};
@@ -1807,6 +1923,7 @@ function finishTour(){
 
 /* =================== AJUSTES =================== */
 function fillSettings(){
+  if(sbUser) $('acctEmail').textContent='Conectada como '+sbUser.email;
   const p=state.profile; if(!p) return;
   $('stA').value=p.a; $('stB').value=p.b; $('stDate').value=p.date;
   $('stCity').value=p.city||''; $('stUF').value=p.uf||''; $('stCountry').value=p.country||'Brasil';
@@ -1863,7 +1980,7 @@ function askConfirm(title,msg,onYes,yesLabel){
 
 /* =================== INIT =================== */
 function renderAll(){ renderHome(); renderFin(); renderForn(); renderChk(); }
-(async function(){
+async function bootApp(){
   await load();
   ['obBudget','stBudget','exVal','qVal','pcVal'].forEach(id=>maskMoney($(id)));
   $('fileQuote').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast('Arquivo recebido — processando…'); handleQuoteFile(e.target.files[0]); } });
@@ -1871,7 +1988,8 @@ function renderAll(){ renderHome(); renderFin(); renderForn(); renderChk(); }
   $('splash').style.display='none';
   if(!state.profile){ $('onb').style.display='flex'; }
   else { renderAll(); showTour(); }
-})();
+}
+initAuth();
 </script>
 </body>
 </html>
