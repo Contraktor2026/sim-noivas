@@ -606,8 +606,8 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 /* =================== CONFIGURAÇÃO (PREENCHA) ===================
    Crie um projeto em https://supabase.com, rode o supabase-setup.sql
    e cole abaixo a URL e a anon key (Settings → API). */
-const SUPABASE_URL='COLE_AQUI_SUA_URL';
-const SUPABASE_ANON_KEY='COLE_AQUI_SUA_ANON_KEY';
+const SUPABASE_URL='https://omdzifdpnuvtofkwwuau.supabase.co';
+const SUPABASE_ANON_KEY='sb_publishable_qfpZimfti9lqVZZOH0vdtA_FSvUCxmU';
 
 const sb=window.supabase?window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY):null;
 let sbUser=null;
@@ -618,11 +618,11 @@ window.storage={
     if(!sbUser) throw new Error('sem sessão');
     if(key.startsWith('sim-file:')){
       const id=key.slice(9);
-      const {data,error}=await sb.from('app_files').select('mime,data').eq('user_id',sbUser.id).eq('id',id).single();
+      const {data,error}=await sb.from('sim_files').select('mime,data').eq('user_id',sbUser.id).eq('id',id).single();
       if(error||!data) throw new Error('não encontrado');
       return {key,value:JSON.stringify({m:data.mime,d:data.data})};
     }
-    const {data,error}=await sb.from('app_state').select('data').eq('user_id',sbUser.id).single();
+    const {data,error}=await sb.from('sim_state').select('data').eq('user_id',sbUser.id).single();
     if(error||!data) throw new Error('não encontrado');
     return {key,value:JSON.stringify(data.data)};
   },
@@ -630,21 +630,21 @@ window.storage={
     if(!sbUser) throw new Error('sem sessão');
     if(key.startsWith('sim-file:')){
       const id=key.slice(9); const f=JSON.parse(value);
-      const {error}=await sb.from('app_files').upsert({user_id:sbUser.id,id,mime:f.m,data:f.d});
+      const {error}=await sb.from('sim_files').upsert({user_id:sbUser.id,id,mime:f.m,data:f.d});
       if(error) throw error;
       return {key,value};
     }
-    const {error}=await sb.from('app_state').upsert({user_id:sbUser.id,data:JSON.parse(value),updated_at:new Date().toISOString()});
+    const {error}=await sb.from('sim_state').upsert({user_id:sbUser.id,data:JSON.parse(value),updated_at:new Date().toISOString()});
     if(error) throw error;
     return {key,value};
   },
   async delete(key){
     if(!sbUser) throw new Error('sem sessão');
     if(key.startsWith('sim-file:')){
-      await sb.from('app_files').delete().eq('user_id',sbUser.id).eq('id',key.slice(9));
+      await sb.from('sim_files').delete().eq('user_id',sbUser.id).eq('id',key.slice(9));
       return {key,deleted:true};
     }
-    await sb.from('app_state').delete().eq('user_id',sbUser.id);
+    await sb.from('sim_state').delete().eq('user_id',sbUser.id);
     return {key,deleted:true};
   }
 };
