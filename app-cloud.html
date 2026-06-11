@@ -1223,14 +1223,11 @@ function pickJSON(text){
   return JSON.parse(text.slice(a,b+1));
 }
 async function callExtract(content){
-  const r=await fetch('https://api.anthropic.com/v1/messages',{
-    method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content}]})
-  });
-  const data=await r.json().catch(()=>null);
-  if(!data) throw new Error('resposta inválida da leitura');
-  if(data.error) throw new Error('leitura indisponível: '+(data.error.message||data.error.type||''));
-  const text=(data.content||[]).filter(i=>i.type==='text').map(i=>i.text).join('\n');
+  /* a leitura roda na Edge Function sim-extract — a chave da IA vive só no servidor */
+  const {data,error}=await sb.functions.invoke('sim-extract',{body:{content}});
+  if(error) throw new Error('leitura indisponível: '+(error.message||'falha na função'));
+  if(data&&data.error) throw new Error('leitura indisponível: '+data.error);
+  const text=data&&data.text||'';
   console.log('SIM extração:',text);
   return pickJSON(text);
 }
