@@ -256,6 +256,14 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 #login .plan li::before{content:'';position:absolute;left:2px;top:9px;width:10px;height:6px;border-left:1.5px solid var(--gold);border-bottom:1.5px solid var(--gold);transform:rotate(-45deg)}
 #login .plan li.dim{color:var(--muted)}
 #login .betanote{background:rgba(168,133,59,.12);border:1px solid rgba(168,133,59,.4);border-radius:12px;padding:14px 16px;font-size:14px;color:var(--gold-soft);line-height:1.55;text-align:center;margin-bottom:14px}
+#login .mockwrap{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 2px 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+#login .mockwrap::-webkit-scrollbar{display:none}
+#login .mock{flex-shrink:0;scroll-snap-align:center;width:250px}
+#login .mockframe{width:250px;height:440px;border-radius:26px;border:1px solid rgba(168,133,59,.55);background:var(--paper);overflow:hidden;position:relative;box-shadow:0 20px 44px rgba(0,0,0,.4)}
+#login .mockframe::after{content:'';position:absolute;top:8px;left:50%;transform:translateX(-50%);width:64px;height:5px;border-radius:99px;background:rgba(31,61,43,.14)}
+#login .mockin{width:332px;height:586px;transform:scale(.749);transform-origin:top left;padding:24px 16px 16px;pointer-events:none;user-select:none}
+#login .mocklabel{text-align:center;margin-top:10px;font-family:'Karla',sans-serif;font-size:13px;font-weight:700;letter-spacing:.4px;color:var(--gold-soft)}
+#login .mockhint{text-align:center;font-size:12px;color:#B9C8B7;font-family:'Karla',sans-serif;margin-top:6px;letter-spacing:.5px}
 #login .ldfooter{text-align:center;padding:30px 0 14px;color:#9aa49c;font-size:12.5px;font-family:'Karla',sans-serif;letter-spacing:.4px;line-height:1.8}
 #login .ldfooter .wm2{font-family:var(--display);font-size:17px;letter-spacing:.3em;color:var(--gold-soft)}
 </style>
@@ -314,6 +322,78 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
         <h4>Roteiro no seu ritmo</h4>
         <p>Um passo a passo que se adapta ao tempo que falta — de 12 meses à reta final. Você sempre sabe o que fazer agora e o que pode esperar.</p>
       </div>
+    </div>
+
+    <div class="ldsec">
+      <div class="ldkicker">Por dentro</div>
+      <div class="ldtitle">Bonito de abrir,<br>fácil de usar</div>
+      <div class="mockwrap">
+
+        <div class="mock"><div class="mockframe"><div class="mockin">
+          <div class="row" style="margin-bottom:10px"><div class="wordmark">SIM<i>.</i></div><div class="chip">243 dias</div></div>
+          <div class="hero" style="margin-top:0">
+            <div class="mono"><span>A<span style="font-size:.6em;color:var(--gold)"> &amp; </span>P</span></div>
+            <div class="names">Ana &amp; Pedro</div>
+            <div class="place">12 de setembro de 2026 · Garopaba, SC</div>
+            <div class="count">243<small> dias para o sim</small></div>
+            <div class="ornament"><svg width="10" height="10" viewBox="0 0 12 12" fill="var(--gold)"><path d="M6 0l1.8 4.2L12 6 7.8 7.8 6 12 4.2 7.8 0 6l4.2-1.8z"/></svg></div>
+          </div>
+          <h2 class="sec" style="font-size:19px">Precisa de você</h2>
+          <div class="card" style="padding:4px 14px">
+            <div class="li"><div class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2.5" y="6" width="19" height="13" rx="2"/><circle cx="12" cy="12.5" r="3"/></svg></div>
+              <div class="bd"><div class="t">Sinal do buffet</div><div class="m">vence 20 de jun</div></div>
+              <div style="text-align:right"><div class="v">R$ 3.100,00</div><span class="tag due">EM BREVE</span></div></div>
+            <div class="li"><div class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div>
+              <div class="bd"><div class="t">Fotografia: 3 orçamentos</div><div class="m">Compare e escolha</div></div>
+              <span class="tag due">DECIDIR</span></div>
+          </div>
+        </div></div><div class="mocklabel">Tela Hoje</div></div>
+
+        <div class="mock"><div class="mockframe"><div class="mockin">
+          <h2 class="sec" style="margin-top:4px">Dinheiro</h2>
+          <p class="sub">Cada compromisso, com vencimento e status.</p>
+          <div class="card green">
+            <div class="row"><div><div class="cap gold">Orçamento</div><div class="num">R$ 55.000,00</div></div></div>
+            <div class="meter"><i style="width:58%"></i></div>
+            <div class="row fine"><span>Comprometido: <b>R$ 31.900,00</b></span><span>Disponível: <b>R$ 23.100,00</b></span></div>
+            <hr class="hr" style="border-color:rgba(250,249,245,.18)">
+            <div class="row fine"><span>Já pago: <b>R$ 12.400,00</b></span><span>A pagar: <b>R$ 19.500,00</b></span></div>
+          </div>
+          <div class="row" style="margin:10px 0 8px"><span class="cap">Setembro de 2026</span><span class="fine"><b>R$ 4.300,00</b> a pagar</span></div>
+          <div class="card" style="padding:4px 14px">
+            <div class="li"><div class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2.5" y="6" width="19" height="13" rx="2"/><circle cx="12" cy="12.5" r="3"/></svg></div>
+              <div class="bd"><div class="t">Parcela 2/4 — Lume Foto</div><div class="m">05 de set · Fotografia</div></div>
+              <div style="text-align:right"><div class="v">R$ 2.150,00</div><span class="tag due">A PAGAR</span></div></div>
+            <div class="li"><div class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2.5" y="6" width="19" height="13" rx="2"/><circle cx="12" cy="12.5" r="3"/></svg></div>
+              <div class="bd"><div class="t">Vestido — ajustes</div><div class="m">12 de set · Vestido</div></div>
+              <div style="text-align:right"><div class="v">R$ 850,00</div><span class="tag ok">PAGO</span></div></div>
+          </div>
+        </div></div><div class="mocklabel">Dinheiro sob controle</div></div>
+
+        <div class="mock"><div class="mockframe"><div class="mockin">
+          <div class="vhead" style="padding-top:6px">
+            <div class="vmono">L</div>
+            <div class="vname">Lume Fotografia</div>
+            <div class="vcat">Fotografia · contratado em 02/06/2026</div>
+            <div style="color:var(--gold);font-size:15px;letter-spacing:3px;margin-top:6px">★★★★★</div>
+            <div style="font-family:var(--display);font-style:italic;font-size:13.5px;color:var(--gold);margin-top:5px">“Estilo documental, premiado”</div>
+          </div>
+          <div class="vstats">
+            <div class="vstat"><div class="cap">Valor do contrato</div><div class="dn">R$ 8.600,00</div></div>
+            <div class="vstat"><div class="cap">Já pago</div><div class="dn" style="color:var(--ok)">R$ 4.300,00</div></div>
+            <div class="vstat"><div class="cap">Lançado</div><div class="dn">R$ 8.600,00</div></div>
+            <div class="vstat"><div class="cap">Falta lançar</div><div class="dn" style="color:var(--muted)">R$ 0,00</div></div>
+          </div>
+          <div class="card" style="padding:4px 14px">
+            <div class="li"><div class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2.5" y="6" width="19" height="13" rx="2"/><circle cx="12" cy="12.5" r="3"/></svg></div>
+              <div class="bd"><div class="t">Parcela 3/4</div><div class="m">vence 05 de out</div></div>
+              <div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:5px"><div class="v">R$ 2.150,00</div><button class="btn p sm">Pagar</button></div></div>
+          </div>
+          <div class="card" style="display:flex;gap:8px;align-items:center;font-size:13px;font-weight:700;color:var(--green)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5l-8.5 8.5a5.5 5.5 0 01-7.8-7.8L13 4a3.7 3.7 0 015.2 5.2l-8.2 8.2a1.8 1.8 0 01-2.6-2.6l7.6-7.6"/></svg> Contrato anexado e lido pela IA</div>
+        </div></div><div class="mocklabel">Página do fornecedor</div></div>
+
+      </div>
+      <div class="mockhint">Arraste para o lado e espie as telas</div>
     </div>
 
     <div class="ldsec">
