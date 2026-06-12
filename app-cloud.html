@@ -7,6 +7,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#1F3D2B">
+<link rel="apple-touch-icon" href="./icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SIM.">
 <style>
 :root{
   --paper:#FAF9F5;
@@ -217,6 +223,14 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 .howto .st .tx{flex:1;line-height:1.5}
 .howto .st .tx strong{color:#4c493e;font-weight:700}
 .fileln{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--green);background:var(--green-soft);border:none;border-radius:8px;padding:7px 11px;cursor:pointer}
+#login .brandring{width:74px;height:74px;border:1px solid #A8853B;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;position:relative}
+#login .brandring::after{content:'';position:absolute;inset:4px;border:1px solid rgba(168,133,59,.45);border-radius:50%}
+#login .brandring span{font-family:'Marcellus',serif;font-size:30px;color:#FAF9F5;letter-spacing:1px}
+#login .brandring span i{font-style:normal;color:#A8853B}
+#login .lgrule{display:flex;align-items:center;gap:10px;margin:18px 0 0}
+#login .lgrule::before,#login .lgrule::after{content:'';flex:1;height:1px;background:rgba(31,61,43,.18)}
+#login .lgrule small{font-family:'Karla',sans-serif;font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:#7d8a80}
+#login .lgfoot{text-align:center;margin-top:14px;font-family:'Karla',sans-serif;font-size:11.5px;color:#8a948c;letter-spacing:.3px}
 </style>
 </head>
 <body>
@@ -225,8 +239,9 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
   <!-- ============ LOGIN ============ -->
   <div class="onb" id="login" style="display:none;z-index:58">
     <div class="top">
+      <div class="brandring"><span>S<i>.</i></span></div>
       <div class="wm">SIM<i>.</i></div>
-      <div class="tagline">Sua organização de casamento,<br>segura e em qualquer aparelho.</div>
+      <div class="tagline">Você disse sim.<br>O resto, a gente organiza juntas.</div>
     </div>
     <div class="panel">
       <h3 id="lgTitle">Entrar</h3>
@@ -236,6 +251,12 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       <button class="btn p full" id="lgGo" onclick="doAuth()">Entrar</button>
       <button class="btn g full" style="margin-top:8px" onclick="toggleAuthMode()" id="lgSwitch">Criar minha conta</button>
       <p class="fine" id="lgMsg" style="text-align:center;margin-top:10px;min-height:18px"></p>
+      <div class="lgrule"><small>No celular</small></div>
+      <button class="btn g full" style="margin-top:12px" id="btnInstall" onclick="doInstall()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:6px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Instalar o app
+      </button>
+      <p class="fine" id="iosHint" style="display:none;margin-top:10px;text-align:center">No iPhone: toque em <b>Compartilhar</b> e depois em <b>Adicionar à Tela de Início</b>.<br>No Android: menu <b>⋮</b> do navegador → <b>Adicionar à tela inicial</b>.</p>
+      <div class="lgfoot">Feito para noivas do Brasil</div>
     </div>
   </div>
 
@@ -648,6 +669,27 @@ window.storage={
     return {key,deleted:true};
   }
 };
+
+/* ---- instalação (PWA) ---- */
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;});
+async function doInstall(){
+  if(deferredPrompt){
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice; deferredPrompt=null;
+  } else {
+    document.getElementById('iosHint').style.display='block';
+  }
+}
+if(window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches){
+  document.addEventListener('DOMContentLoaded',()=>{
+    const b=document.getElementById('btnInstall'); if(b) b.style.display='none';
+    const r=document.querySelector('#login .lgrule'); if(r) r.style.display='none';
+  });
+}
+if('serviceWorker' in navigator && location.protocol==='https:'){
+  navigator.serviceWorker.register('./sw.js').catch(()=>{});
+}
 
 /* ---- autenticação ---- */
 let authMode='in';
