@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
 <title>SIM. — Sua assistente de casamento</title>
+<meta name="description" content="Organize seu casamento sem planilhas: cole a proposta do fornecedor (WhatsApp, print ou PDF) e o SIM. preenche valores, compara orçamentos e organiza as parcelas. Grátis para começar.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -316,6 +317,21 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 #login .orndiv.ongreen{color:#C9A961}
 #login .heroorn{display:flex;justify-content:center;margin:14px 0 2px;color:#C9A961}
 #login .ftorn{display:flex;justify-content:center;margin-bottom:10px;color:#C9A961}
+#login .ldtitle .hl{font-style:italic;color:var(--gold)}
+#login .founder{background:rgba(250,249,245,.06);border:1px solid rgba(168,133,59,.35);border-radius:16px;padding:20px 18px;text-align:center}
+#login .founder .fk{font-family:'Karla',sans-serif;font-size:10.5px;letter-spacing:3px;text-transform:uppercase;color:#C9A961;margin-bottom:8px}
+#login .founder h4{font-family:var(--display);font-size:20px;color:var(--paper);line-height:1.35;margin-bottom:8px}
+#login .founder p{font-size:14px;color:#C4D1C2;line-height:1.65}
+#login .founder p b{color:var(--gold-soft)}
+#login .faq details{background:#fff;border:1px solid var(--line);border-radius:12px;margin-bottom:9px;overflow:hidden}
+#login .faq summary{padding:14px 15px;font-family:'Karla',sans-serif;font-weight:700;font-size:14px;color:var(--green);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px}
+#login .faq summary::-webkit-details-marker{display:none}
+#login .faq summary::after{content:'+';font-family:var(--display);font-size:20px;color:var(--gold);line-height:1;flex-shrink:0}
+#login .faq details[open] summary::after{content:'–'}
+#login .faq .fa{padding:0 15px 13px;font-size:13.5px;color:#6f6c61;line-height:1.6}
+#login .stickycta{position:fixed;left:14px;right:14px;bottom:12px;z-index:59;transform:translateY(90px);opacity:0;transition:.28s;pointer-events:none}
+#login .stickycta.show{transform:translateY(0);opacity:1;pointer-events:auto}
+#login .stickycta button{box-shadow:0 12px 30px rgba(22,48,31,.45);font-size:15px;padding:15px}
 #login .ldfooter{text-align:center;padding:34px 0 14px;color:#9aa49c;font-size:12.5px;font-family:'Karla',sans-serif;letter-spacing:.4px;line-height:1.8}
 #login .ldfooter .wm2{font-family:var(--display);font-size:17px;letter-spacing:.3em;color:var(--gold-soft)}
 #login .ldfooter .ringsorn{color:#C9A961;display:block;margin:0 auto 10px}
@@ -340,12 +356,13 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 </svg>
     </div>
     <div class="panel">
-      <h3 id="lgTitle">Entrar</h3>
-      <div class="ps" id="lgSub">Acesse com seu e-mail e senha.</div>
+      <h3 id="lgTitle">Criar conta grátis</h3>
+      <div class="ps" id="lgSub">Leva menos de um minuto — e é grátis.</div>
       <div class="f"><label>E-mail</label><input id="lgEmail" type="email" autocomplete="email" placeholder="voce@email.com"></div>
       <div class="f"><label>Senha</label><input id="lgPass" type="password" autocomplete="current-password" placeholder="mínimo 6 caracteres"></div>
-      <button class="btn p full" id="lgGo" onclick="doAuth()">Entrar</button>
-      <button class="btn g full" style="margin-top:8px" onclick="toggleAuthMode()" id="lgSwitch">Criar minha conta</button>
+      <button class="btn p full" id="lgGo" onclick="doAuth()">Começar grátis</button>
+      <button class="btn g full" style="margin-top:8px" onclick="toggleAuthMode()" id="lgSwitch">Já tenho conta</button>
+      <p class="fine" style="text-align:center;margin-top:10px;color:#8a948c">Sem cartão de crédito · seus dados são só seus</p>
       <p class="fine" id="lgMsg" style="text-align:center;margin-top:10px;min-height:18px"></p>
       <div class="lgrule"><small>No celular</small></div>
       <button class="btn g full" style="margin-top:12px" id="btnInstall" onclick="doInstall()">
@@ -383,7 +400,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
   <circle cx="95" cy="12" r="2.4" fill="currentColor" fill-opacity=".5"/>
 </svg>
       <div class="ldkicker">O que é</div>
-      <div class="ldtitle">Casar é um sonho.<br>Organizar não precisa ser um pesadelo.</div>
+      <div class="ldtitle">Casar é um <i class="hl">sonho</i>.<br>Organizar não precisa ser um <i class="hl">pesadelo</i>.</div>
       <div class="orndiv"><svg width="160" height="24" viewBox="0 0 160 24" fill="none" aria-hidden="true">
   <g stroke="currentColor" stroke-width="1.1" fill="none">
     <path d="M10 14 C 35 8, 55 9, 71 12"/>
@@ -748,6 +765,11 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       <div class="ldstep"><div class="n">1</div><div><h5>Crie sua conta grátis</h5><p>E-mail e senha. Seus dados ficam seguros na nuvem e te acompanham em qualquer aparelho.</p></div></div>
       <div class="ldstep"><div class="n">2</div><div><h5>Conte sobre o grande dia</h5><p>Nomes, data, cidade e orçamento. O app monta seu painel e seu roteiro personalizados.</p></div></div>
       <div class="ldstep"><div class="n">3</div><div><h5>Organize sem planilhas</h5><p>Cole propostas, compare fornecedores, acompanhe pagamentos. Tudo num lugar só — feito para o celular.</p></div></div>
+      <div class="founder" style="margin-top:26px">
+        <div class="fk">Quem fez</div>
+        <h4>Nascido dentro de casamentos reais</h4>
+        <p>O SIM. foi criado em Santa Catarina pela equipe da <b>Fontez Fotografia</b>, que vive casamentos de perto há anos. A cada "sim" registrado, as mesmas dores se repetiam nas noivas: a planilha abandonada, a proposta perdida no WhatsApp, o medo de estourar o orçamento. Este app é a resposta de quem viu tudo isso acontecer — e resolveu organizar.</p>
+      </div>
     </div>
 
     <section class="band">
@@ -838,6 +860,31 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       </div>
     </section>
 
+    <section class="band faq">
+      <div class="ldkicker">Dúvidas</div>
+      <div class="ldtitle" style="font-size:24px">Perguntas de noiva</div>
+      <details>
+        <summary>É grátis mesmo?</summary>
+        <div class="fa">É. O plano Grátis existe para sempre e cobre a organização inteira: financeiro, fornecedores, roteiro e anotações. E durante a fase de lançamento, até a leitura de propostas pelo SIM. está liberada, sem cartão de crédito.</div>
+      </details>
+      <details>
+        <summary>Funciona no iPhone e no Android?</summary>
+        <div class="fa">Nos dois — e em qualquer computador. O SIM. abre direto no navegador, sem loja de aplicativos, e você ainda pode instalar na tela inicial pelo botão "Instalar o app".</div>
+      </details>
+      <details>
+        <summary>Meus dados ficam seguros?</summary>
+        <div class="fa">Ficam. Sua conta é protegida por senha, os dados viajam criptografados e são gravados em servidores no Brasil. Só você acessa o seu casamento — nem outras noivas, nem fornecedores.</div>
+      </details>
+      <details>
+        <summary>Já estou no meio do planejamento. Vale a pena?</summary>
+        <div class="fa">Vale ainda mais: o roteiro do SIM. se adapta ao tempo que falta para o seu casamento, e você pode lançar de uma vez tudo o que já contratou — colando as propostas e contratos, o SIM. preenche os valores e as parcelas para você.</div>
+      </details>
+      <details>
+        <summary>O noivo pode usar junto?</summary>
+        <div class="fa">Pode: é só entrar com a mesma conta em outro celular ou computador — os dados aparecem atualizados em todos os aparelhos.</div>
+      </details>
+    </section>
+
     <div class="ldfooter">
       <svg class="ringsorn" width="56" height="36" viewBox="0 0 56 36" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
   <circle cx="21" cy="20" r="12"/>
@@ -847,6 +894,9 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       <div class="wm2">SIM<i style="font-style:normal;color:var(--gold)">.</i></div>
       Você disse sim. O resto, a gente organiza juntas.<br>
       Feito com cuidado para noivas do Brasil e da América Latina.
+    </div>
+    <div class="stickycta" id="stickycta">
+      <button class="btn p full" onclick="document.getElementById('lgEmail').scrollIntoView({behavior:'smooth',block:'center'});toggleAuthModeTo('up')">Criar conta grátis</button>
     </div>
   </div>
 
@@ -1388,15 +1438,26 @@ async function demoLoop(){
 }
 demoLoop();
 
+/* CTA flutuante acompanha a rolagem da landing */
+(function(){
+  const lg=document.getElementById('login'), bar=document.getElementById('stickycta');
+  if(!lg||!bar) return;
+  lg.addEventListener('scroll',()=>{
+    const nearTop=lg.scrollTop<560;
+    const nearBottom=lg.scrollTop+lg.clientHeight>lg.scrollHeight-260;
+    bar.classList.toggle('show', !nearTop && !nearBottom);
+  },{passive:true});
+})();
+
 /* ---- autenticação ---- */
-let authMode='in';
+let authMode='up';
 function toggleAuthModeTo(mode){ if(authMode!==mode) toggleAuthMode(); }
 function toggleAuthMode(){
   authMode=authMode==='in'?'up':'in';
   document.getElementById('lgTitle').textContent=authMode==='in'?'Entrar':'Criar conta';
   document.getElementById('lgSub').textContent=authMode==='in'?'Acesse com seu e-mail e senha.':'Leva menos de um minuto.';
-  document.getElementById('lgGo').textContent=authMode==='in'?'Entrar':'Criar conta';
-  document.getElementById('lgSwitch').textContent=authMode==='in'?'Criar minha conta':'Já tenho conta';
+  document.getElementById('lgGo').textContent=authMode==='in'?'Entrar':'Começar grátis';
+  document.getElementById('lgSwitch').textContent=authMode==='in'?'Quero criar minha conta':'Já tenho conta';
   document.getElementById('lgMsg').textContent='';
 }
 async function doAuth(){
