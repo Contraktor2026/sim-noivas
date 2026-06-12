@@ -304,7 +304,12 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 #login .dscene .hero{padding:16px 12px 14px;margin-top:4px}
 #login .dscene .hero .count{font-size:26px}
 #login .dscene .hero .mono{width:54px;height:54px}
-#login .dtoast{position:absolute;left:50%;bottom:24px;transform:translateX(-50%) translateY(14px);background:var(--green-deep);color:var(--gold-soft);font-size:12px;font-weight:700;padding:9px 16px;border-radius:99px;opacity:0;transition:.3s;white-space:nowrap}
+#login .dscene{padding-bottom:88px}
+#login .dnav{position:absolute;left:0;right:0;bottom:0;padding:7px 2px 9px;pointer-events:none}
+#login .dnav button{font-size:8px;padding:4px 3px;gap:2px;transition:transform .12s}
+#login .dnav button svg{width:17px;height:17px}
+#login .dnav button.pr{transform:scale(.82)}
+#login .dtoast{position:absolute;left:50%;bottom:74px;transform:translateX(-50%) translateY(14px);background:var(--green-deep);color:var(--gold-soft);font-size:12px;font-weight:700;padding:9px 16px;border-radius:99px;opacity:0;transition:.3s;white-space:nowrap}
 #login .dtoast.show{opacity:1;transform:translateX(-50%)}
 #login>*{flex-shrink:0}
 #login .orndiv{display:flex;justify-content:center;margin:-6px 0 20px;color:#A8853B}
@@ -605,6 +610,13 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
             <button class="btn p full" style="margin-top:18px" onclick="document.getElementById('lgEmail').scrollIntoView({behavior:'smooth',block:'center'});toggleAuthModeTo('up')">Criar conta grátis</button>
           </div>
 
+          <nav class="nav dnav" aria-hidden="true">
+            <button data-s="home"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M3 11l9-7 9 7v9a1 1 0 01-1 1h-5v-6h-6v6H4a1 1 0 01-1-1z"/></svg>Hoje</button>
+            <button data-s="fin"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="2.5" y="6" width="19" height="13" rx="2"/><path d="M2.5 10h19M7 15h4"/></svg>Dinheiro</button>
+            <button data-s="forn" class="on"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M20 7h-4V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2H4a1.5 1.5 0 00-1.5 1.5V19A1.5 1.5 0 004 20.5h16A1.5 1.5 0 0021.5 19V8.5A1.5 1.5 0 0020 7zM10 7V5h4v2"/></svg>Fornec.</button>
+            <button data-s="chk"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg>Lista</button>
+            <button data-s="set"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a7.7 7.7 0 00.1-6l-2.2.4a6 6 0 00-1.7-1.7l.4-2.2a7.7 7.7 0 00-6 0l.4 2.2a6 6 0 00-1.7 1.7L6.5 9a7.7 7.7 0 000 6l2.2-.4a6 6 0 001.7 1.7l-.4 2.2a7.7 7.7 0 006 0l-.4-2.2a6 6 0 001.7-1.7z"/></svg>Ajustes</button>
+          </nav>
           <div class="dtoast" id="dmoToast"></div>
         
         </div>
@@ -1274,6 +1286,9 @@ const dSleep=ms=>new Promise(r=>setTimeout(r,ms));
 async function dType(el,txt,speed){ el.textContent=''; for(const ch of txt){ el.textContent+=ch; await dSleep(speed); } }
 async function dFill(id,txt){ const el=document.getElementById(id); if(!el) return; el.classList.add('fill'); await dType(el,txt,16); await dSleep(140); }
 function dToast(t,ms){ const e=document.getElementById('dmoToast'); if(!e) return; e.textContent=t; e.classList.add('show'); setTimeout(()=>e.classList.remove('show'),ms||1800); }
+function dTab(k){ document.querySelectorAll('#demoframe .dnav button').forEach(b=>b.classList.toggle('on', b.dataset.s===k)); }
+async function dTabPress(k){ const b=document.querySelector('#demoframe .dnav button[data-s="'+k+'"]'); if(b){ b.classList.add('pr'); await dSleep(170); b.classList.remove('pr'); } dTab(k); await dSleep(160); }
+async function dScroll(id,to,ms){ const el=document.getElementById(id); if(!el) return; const from=el.scrollTop, n=26; for(let i=1;i<=n;i++){ el.scrollTop=from+(to-from)*(i/n); await dSleep((ms||1200)/n); } }
 async function dPress(id){ const e=document.getElementById(id); if(!e) return; e.classList.add('on'); await dSleep(180); e.classList.remove('on'); }
 async function demoLoop(){
   if(!document.getElementById('demoframe')) return;
@@ -1291,6 +1306,8 @@ async function demoLoop(){
       const payW=document.getElementById('dmoPayWrap');
       if(payW) payW.innerHTML='<button class="btn p sm dpress" id="dmoPay">Pagar</button>';
       const task=document.getElementById('dmoTask'); if(task) task.classList.remove('done');
+      dTab('forn');
+      ['dsc5','dsc6','dsc7','dsc8'].forEach(id=>{ const e=document.getElementById(id); if(e) e.scrollTop=0; });
       if(btn) btn.textContent='Ler e preencher';
       await dSleep(700);
       if(txt) await dType(txt,msg,15);
@@ -1317,24 +1334,37 @@ async function demoLoop(){
       sc(3); await dSleep(350);
       if(parc) for(const li of parc.children){ li.style.opacity='1'; await dSleep(420); }
       await dSleep(1700);
-      /* 5 — a Home avisa */
-      sc(4); await dSleep(2600);
-      /* 6 — pagar no Dinheiro */
-      sc(5); await dSleep(1500);
+      /* 5 — toca em Hoje: a Home avisa */
+      await dTabPress('home');
+      sc(4); await dSleep(1600);
+      await dScroll('dsc5',150,1300);
+      await dSleep(1300);
+      /* 6 — toca em Dinheiro e paga */
+      await dTabPress('fin');
+      sc(5); await dSleep(1400);
       await dPress('dmoPay');
       if(payW) payW.innerHTML='<span class="tag ok">PAGO</span>';
       dToast('Parcela paga');
-      await dSleep(1900);
-      /* 7 — falar com o fornecedor */
-      sc(6); await dSleep(1400);
+      await dSleep(1300);
+      await dScroll('dsc6',180,1300);
+      await dSleep(1400);
+      /* 7 — toca em Fornecedores: página do contratado */
+      await dTabPress('forn');
+      sc(6); await dSleep(1300);
       await dPress('dmoWa');
       dToast('Abrindo conversa no WhatsApp…');
-      await dSleep(1900);
-      /* 8 — roteiro */
+      await dSleep(1500);
+      await dScroll('dsc7',230,1500);
+      await dSleep(1500);
+      /* 8 — toca em Lista: o roteiro */
+      await dTabPress('chk');
       sc(7); await dSleep(900);
       if(task) task.classList.add('done');
-      await dSleep(2200);
+      await dSleep(1200);
+      await dScroll('dsc8',170,1300);
+      await dSleep(1300);
       /* 9 — convite */
+      dTab(null);
       sc(8); await dSleep(3000);
     }catch(e){ await dSleep(2000); }
   }
