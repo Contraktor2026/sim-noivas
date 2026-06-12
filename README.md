@@ -1,4 +1,4 @@
-# SIM. — Seu casamento organizado na palma da mão
+# SIM. — Sua assistente de casamento
 
 App de organização de casamento para noivas do Brasil e da América Latina.
 **Você disse sim. O resto, a gente organiza juntas.**
