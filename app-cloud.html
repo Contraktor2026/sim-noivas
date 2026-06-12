@@ -297,6 +297,13 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 #login .dfield label{display:block;font-size:9.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
 #login .dfield .dval{background:#fff;border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-size:13.5px;min-height:37px;color:var(--ink);transition:border-color .3s, box-shadow .3s}
 #login .dfield .dval.fill{border-color:var(--gold);box-shadow:0 0 0 3px rgba(168,133,59,.14)}
+#login .diachip{display:inline-flex;align-items:center;gap:6px;background:rgba(168,133,59,.16);border:1px solid rgba(168,133,59,.45);color:#7a6430;font-size:10px;font-weight:800;letter-spacing:1.2px;padding:4px 10px;border-radius:99px;font-family:'Karla',sans-serif;text-transform:uppercase}
+#login .diachip svg{flex-shrink:0}
+#login .dpress{transition:transform .12s}
+#login .dpress.on{transform:scale(.9)}
+#login .dscene .hero{padding:16px 12px 14px;margin-top:4px}
+#login .dscene .hero .count{font-size:26px}
+#login .dscene .hero .mono{width:54px;height:54px}
 #login .dtoast{position:absolute;left:50%;bottom:24px;transform:translateX(-50%) translateY(14px);background:var(--green-deep);color:var(--gold-soft);font-size:12px;font-weight:700;padding:9px 16px;border-radius:99px;opacity:0;transition:.3s;white-space:nowrap}
 #login .dtoast.show{opacity:1;transform:translateX(-50%)}
 #login>*{flex-shrink:0}
@@ -447,57 +454,129 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
         <div class="demoframe" id="demoframe">
 
           <div class="dscene on" id="dsc1">
-            <div class="dlive"><i></i> DEMONSTRAÇÃO</div>
-            <h3 class="dn" style="font-size:20px;color:var(--green);margin:10px 0 2px">Colar proposta</h3>
-            <p style="font-size:12.5px;color:var(--muted);margin-bottom:12px">Copie a mensagem do fornecedor e cole aqui.</p>
-            <div class="dbox"><span id="dmoTxt"></span><span class="dcursor"></span></div>
-            <button class="btn p full" id="dmoBtn" style="margin-top:14px">Ler e preencher</button>
+            <div class="dlive"><i></i> COLE A PROPOSTA DO WHATSAPP</div>
+            <h3 class="dn" style="font-size:19px;color:var(--green);margin:9px 0 2px">Colar proposta</h3>
+            <p style="font-size:12px;color:var(--muted);margin-bottom:10px">Chegou orçamento? Copie a mensagem e cole.</p>
+            <div class="dbox" style="min-height:118px;font-size:12.5px"><span id="dmoTxt"></span><span class="dcursor"></span></div>
+            <button class="btn p full dpress" id="dmoBtn" style="margin-top:12px">Ler e preencher</button>
           </div>
 
           <div class="dscene" id="dsc2">
-            <div class="dlive"><i></i> A IA PREENCHEU</div>
-            <h3 class="dn" style="font-size:20px;color:var(--green);margin:10px 0 12px">Novo orçamento</h3>
+            <div class="dlive"><i></i> A IA PREENCHE PARA VOCÊ</div>
+            <div style="margin:9px 0 10px"><span class="diachip"><svg width="11" height="11" viewBox="0 0 12 12" fill="currentColor"><path d="M6 0l1.6 4.4L12 6 7.6 7.6 6 12 4.4 7.6 0 6l4.4-1.6z"/></svg> Preenchido por inteligência artificial</span></div>
             <div class="dfield"><label>Fornecedor</label><div class="dval" id="dmoF1"></div></div>
-            <div style="display:flex;gap:9px">
+            <div style="display:flex;gap:8px">
               <div class="dfield" style="flex:1"><label>Valor</label><div class="dval" id="dmoF2"></div></div>
               <div class="dfield" style="flex:1"><label>WhatsApp</label><div class="dval" id="dmoF3"></div></div>
             </div>
-            <div class="dfield"><label>O que inclui</label><div class="dval" id="dmoF4" style="min-height:54px"></div></div>
-            <div class="dfield"><label>Diferencial</label><div class="dval" id="dmoF5"></div></div>
-            <button class="btn p full" style="margin-top:4px">Salvar orçamento</button>
+            <div class="dfield"><label>O que inclui</label><div class="dval" id="dmoF4" style="min-height:50px;font-size:12.5px"></div></div>
+            <div class="dfield"><label>Condições</label><div class="dval" id="dmoF5"></div></div>
+            <button class="btn p full">Salvar orçamento</button>
           </div>
 
           <div class="dscene" id="dsc3">
-            <div class="dlive"><i></i> PRONTO PARA COMPARAR</div>
-            <h3 class="dn" style="font-size:20px;color:var(--green);margin:10px 0 2px">Buffet</h3>
-            <p style="font-size:12.5px;color:var(--muted);margin-bottom:12px">2 orçamentos · R$ 15.500 a R$ 18.900</p>
-            <div class="quote win" style="background:#fff">
+            <div class="dlive"><i></i> COMPARE E CONTRATE</div>
+            <h3 class="dn" style="font-size:19px;color:var(--green);margin:9px 0 2px">Buffet</h3>
+            <p style="font-size:11.5px;color:var(--muted);margin-bottom:9px">3 orçamentos · R$ 15.500 a R$ 18.900</p>
+            <div class="quote win" style="background:#fff;padding:12px">
               <div class="qh">
                 <div style="flex:1;min-width:0">
-                  <div class="qn">Maré Alta Buffet</div>
-                  <div style="display:flex;gap:6px;margin-top:5px"><span class="tag ok">MENOR PREÇO</span></div>
+                  <div class="qn" style="font-size:14.5px">Maré Alta Buffet</div>
+                  <div style="display:flex;gap:5px;margin-top:4px"><span class="tag ok">MENOR PREÇO</span></div>
                 </div>
-                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
-                  <div class="qp">R$ 15.500,00</div>
-                  <div style="color:var(--gold);font-size:13px;letter-spacing:2px">★★★★★</div>
+                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
+                  <div class="qp" style="font-size:15px">R$ 15.500,00</div>
+                  <div style="color:var(--gold);font-size:11px;letter-spacing:2px">★★★★★</div>
                 </div>
               </div>
-              <div class="inc">150 convidados, jantar, coquetel, bolo e equipe completa. Sinal de 30%.</div>
-              <div class="qfoot"><button class="btn p sm">Contratar</button><span class="wapp">WhatsApp</span></div>
+              <button class="btn p full sm dpress" id="dmoHire" style="margin-top:9px">Contratar</button>
             </div>
-            <div class="quote" style="background:#fff;opacity:.65">
-              <div class="qh">
-                <div style="flex:1;min-width:0"><div class="qn">Sabor &amp; Festa</div>
-                  <div style="display:flex;gap:6px;margin-top:5px"><span class="tag due">+R$ 3.400,00</span></div></div>
-                <div class="qp">R$ 18.900,00</div>
-              </div>
+            <div class="quote" style="background:#fff;opacity:.7;padding:11px">
+              <div class="qh"><div style="flex:1"><div class="qn" style="font-size:13.5px">Dom Catering</div><div style="margin-top:4px"><span class="tag due">+R$ 1.700,00</span></div></div><div class="qp" style="font-size:13.5px">R$ 17.200,00</div></div>
             </div>
-            <div class="dtoast" id="dmoToast">Orçamento guardado</div>
+            <div class="quote" style="background:#fff;opacity:.55;padding:11px">
+              <div class="qh"><div style="flex:1"><div class="qn" style="font-size:13.5px">Sabor &amp; Festa</div><div style="margin-top:4px"><span class="tag due">+R$ 3.400,00</span></div></div><div class="qp" style="font-size:13.5px">R$ 18.900,00</div></div>
+            </div>
           </div>
 
+          <div class="dscene" id="dsc4">
+            <div class="dlive"><i></i> PARCELAS CRIADAS NA HORA</div>
+            <h3 class="dn" style="font-size:19px;color:var(--green);margin:9px 0 2px">Plano de pagamento</h3>
+            <p style="font-size:11.5px;color:var(--muted);margin-bottom:9px">Maré Alta Buffet · geradas do contrato</p>
+            <div class="card" style="padding:3px 12px" id="dmoParc">
+              <div class="li" style="opacity:0;transition:opacity .4s"><div class="bd"><div class="t" style="font-size:13.5px">Sinal — 30%</div><div class="m">vence 20 de jun</div></div><div style="text-align:right"><div class="v" style="font-size:13.5px">R$ 4.650,00</div><span class="tag due">A PAGAR</span></div></div>
+              <div class="li" style="opacity:0;transition:opacity .4s"><div class="bd"><div class="t" style="font-size:13.5px">Parcela 2/3</div><div class="m">vence 20 de jul</div></div><div style="text-align:right"><div class="v" style="font-size:13.5px">R$ 5.425,00</div><span class="tag due">A PAGAR</span></div></div>
+              <div class="li" style="opacity:0;transition:opacity .4s"><div class="bd"><div class="t" style="font-size:13.5px">Parcela 3/3</div><div class="m">vence 20 de ago</div></div><div style="text-align:right"><div class="v" style="font-size:13.5px">R$ 5.425,00</div><span class="tag due">A PAGAR</span></div></div>
+            </div>
+            <div style="margin-top:10px"><span class="diachip"><svg width="11" height="11" viewBox="0 0 12 12" fill="currentColor"><path d="M6 0l1.6 4.4L12 6 7.6 7.6 6 12 4.4 7.6 0 6l4.4-1.6z"/></svg> Datas e valores lançados pela IA</span></div>
+          </div>
+
+          <div class="dscene" id="dsc5">
+            <div class="dlive"><i></i> A TELA HOJE TE AVISA</div>
+            <div class="hero">
+              <div class="mono"><span style="font-size:20px">A<span style="font-size:.6em;color:var(--gold)"> &amp; </span>P</span></div>
+              <div class="names" style="font-size:19px">Ana &amp; Pedro</div>
+              <div class="count">243<small> dias para o sim</small></div>
+            </div>
+            <h2 class="sec" style="font-size:16px;margin-top:10px">Precisa de você</h2>
+            <div class="card" style="padding:3px 12px">
+              <div class="li"><div class="bd"><div class="t" style="font-size:13.5px">Sinal — Maré Alta Buffet</div><div class="m">vence 20 de jun · Buffet</div></div><div style="text-align:right"><div class="v" style="font-size:13.5px">R$ 4.650,00</div><span class="tag due">EM BREVE</span></div></div>
+              <div class="li"><div class="bd"><div class="t" style="font-size:13.5px">Decoração: 2 orçamentos</div><div class="m">Compare e escolha</div></div><span class="tag due">DECIDIR</span></div>
+            </div>
+          </div>
+
+          <div class="dscene" id="dsc6">
+            <div class="dlive"><i></i> PAGUE E ACOMPANHE</div>
+            <h3 class="dn" style="font-size:19px;color:var(--green);margin:9px 0 8px">Dinheiro</h3>
+            <div class="card green" style="padding:13px 14px">
+              <div class="cap gold">Orçamento</div><div class="num" style="font-size:21px">R$ 55.000,00</div>
+              <div class="meter"><i style="width:42%"></i></div>
+              <div class="row fine"><span>Comprometido: <b>R$ 23.300,00</b></span><span>Livre: <b>R$ 31.700,00</b></span></div>
+            </div>
+            <div class="row" style="margin:9px 0 7px"><span class="cap">Junho de 2026</span><span class="fine"><b>R$ 4.650,00</b> a pagar</span></div>
+            <div class="card" style="padding:3px 12px">
+              <div class="li"><div class="bd"><div class="t" style="font-size:13.5px">Sinal — Maré Alta</div><div class="m">20 de jun · Buffet</div></div>
+                <div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:4px"><div class="v" style="font-size:13.5px">R$ 4.650,00</div><span id="dmoPayWrap"><button class="btn p sm dpress" id="dmoPay">Pagar</button></span></div></div>
+            </div>
+          </div>
+
+          <div class="dscene" id="dsc7">
+            <div class="dlive"><i></i> FALE COM O FORNECEDOR</div>
+            <div class="vhead" style="padding-top:4px">
+              <div class="vmono" style="width:52px;height:52px;font-size:22px">M</div>
+              <div class="vname" style="font-size:19px">Maré Alta Buffet</div>
+              <div class="vcat">Buffet · contratado hoje</div>
+              <div style="color:var(--gold);font-size:13px;letter-spacing:2.5px;margin-top:5px">★★★★★</div>
+              <div class="contactrow" style="margin-top:9px"><a class="dpress" id="dmoWa" style="border-color:var(--gold)">WhatsApp</a><a>(48) 99812-0033</a></div>
+            </div>
+            <div class="vstats" style="margin-top:10px">
+              <div class="vstat"><div class="cap">Contrato</div><div class="dn" style="font-size:15px">R$ 15.500,00</div></div>
+              <div class="vstat"><div class="cap">Já pago</div><div class="dn" style="font-size:15px;color:var(--ok)">R$ 4.650,00</div></div>
+            </div>
+          </div>
+
+          <div class="dscene" id="dsc8">
+            <div class="dlive"><i></i> SIGA O ROTEIRO</div>
+            <h3 class="dn" style="font-size:19px;color:var(--green);margin:9px 0 8px">Sua lista</h3>
+            <div class="phh"><div class="dn" style="font-size:14.5px">8 a 6 meses antes</div><span>2 de 3</span></div>
+            <div class="task" id="dmoTask"><div class="ck"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="tt" style="font-size:13px">Fechar o buffet</div></div>
+            <div class="task done"><div class="ck"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="tt" style="font-size:13px">Definir a paleta de cores</div></div>
+            <div class="task"><div class="ck"></div><div class="tt" style="font-size:13px">Agendar degustação do cardápio</div></div>
+            <div class="task"><div class="ck"></div><div class="tt" style="font-size:13px">Enviar o save the date</div></div>
+            <p style="font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center">O roteiro se adapta ao tempo até o seu casamento.</p>
+          </div>
+
+          <div class="dscene" id="dsc9" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center">
+            <div class="brandring" style="margin-bottom:12px"><span>S<i>.</i></span></div>
+            <div style="font-family:var(--display);font-size:23px;color:var(--green);line-height:1.3">Do orçamento ao altar,<br>tudo num lugar só.</div>
+            <button class="btn p full" style="margin-top:18px" onclick="document.getElementById('lgEmail').scrollIntoView({behavior:'smooth',block:'center'});toggleAuthModeTo('up')">Criar conta grátis</button>
+          </div>
+
+          <div class="dtoast" id="dmoToast"></div>
+        
         </div>
       </div>
-      <div class="mocklabel" style="margin-bottom:26px">Sem digitar nada: a proposta vira orçamento comparável</div>
+      <div class="mocklabel" style="margin-bottom:26px">Tour guiado: do orçamento colado ao roteiro — sem digitar nada</div>
 
       <div class="ldkicker">Por dentro</div>
       <div class="ldtitle" style="font-size:24px">E o resto do app acompanha</div>
@@ -1157,41 +1236,72 @@ if('serviceWorker' in navigator && location.protocol==='https:'){
   navigator.serviceWorker.register('./sw.js').catch(()=>{});
 }
 
-/* ---- demonstração animada da landing ---- */
+/* ---- demonstração animada da landing: tour completo ---- */
 const dSleep=ms=>new Promise(r=>setTimeout(r,ms));
 async function dType(el,txt,speed){ el.textContent=''; for(const ch of txt){ el.textContent+=ch; await dSleep(speed); } }
-async function dFill(id,txt){ const el=document.getElementById(id); if(!el) return; el.classList.add('fill'); await dType(el,txt,18); await dSleep(160); }
+async function dFill(id,txt){ const el=document.getElementById(id); if(!el) return; el.classList.add('fill'); await dType(el,txt,16); await dSleep(140); }
+function dToast(t,ms){ const e=document.getElementById('dmoToast'); if(!e) return; e.textContent=t; e.classList.add('show'); setTimeout(()=>e.classList.remove('show'),ms||1800); }
+async function dPress(id){ const e=document.getElementById(id); if(!e) return; e.classList.add('on'); await dSleep(180); e.classList.remove('on'); }
 async function demoLoop(){
-  const frame=document.getElementById('demoframe');
-  if(!frame) return;
-  const sc=i=>{ ['dsc1','dsc2','dsc3'].forEach((d,j)=>{ const e=document.getElementById(d); if(e) e.classList.toggle('on', j===i); }); };
-  const msg='Oi, Ana! Para 150 convidados fica R$ 15.500 com jantar, coquetel, bolo e equipe completa. Fechamos com 30% de sinal. Qualquer coisa me chama!\n— Maré Alta Buffet · (48) 99812-0033';
+  if(!document.getElementById('demoframe')) return;
+  const SC=['dsc1','dsc2','dsc3','dsc4','dsc5','dsc6','dsc7','dsc8','dsc9'];
+  const sc=i=>SC.forEach((d,j)=>{ const e=document.getElementById(d); if(e) e.classList.toggle('on', j===i); });
+  const msg='Oi, Ana! Para 150 convidados fica R$ 15.500 com jantar, coquetel, bolo e equipe completa. Sinal de 30% e o restante em 2x.\n— Maré Alta Buffet · (48) 99812-0033';
   while(document.getElementById('demoframe')){
     try{
+      /* 1 — colar proposta */
       sc(0);
       const txt=document.getElementById('dmoTxt'), btn=document.getElementById('dmoBtn');
       ['dmoF1','dmoF2','dmoF3','dmoF4','dmoF5'].forEach(id=>{const e=document.getElementById(id); if(e){e.textContent='';e.classList.remove('fill');}});
-      const toast=document.getElementById('dmoToast'); if(toast) toast.classList.remove('show');
+      const parc=document.getElementById('dmoParc');
+      if(parc) [...parc.children].forEach(li=>li.style.opacity='0');
+      const payW=document.getElementById('dmoPayWrap');
+      if(payW) payW.innerHTML='<button class="btn p sm dpress" id="dmoPay">Pagar</button>';
+      const task=document.getElementById('dmoTask'); if(task) task.classList.remove('done');
       if(btn) btn.textContent='Ler e preencher';
       await dSleep(700);
-      if(txt) await dType(txt,msg,17);
-      await dSleep(500);
-      if(btn) btn.innerHTML='<span class="spin" style="display:inline-block;vertical-align:-2px;margin-right:8px"></span>Lendo a proposta…';
-      await dSleep(1500);
-      sc(1);
+      if(txt) await dType(txt,msg,15);
       await dSleep(450);
+      await dPress('dmoBtn');
+      if(btn) btn.innerHTML='<span class="spin" style="display:inline-block;vertical-align:-2px;margin-right:8px"></span>Inteligência artificial lendo…';
+      await dSleep(1600);
+      /* 2 — IA preenche */
+      sc(1); await dSleep(420);
       await dFill('dmoF1','Maré Alta Buffet');
       await dFill('dmoF2','15.500,00');
       await dFill('dmoF3','(48) 99812-0033');
-      await dFill('dmoF4','150 convidados, jantar, coquetel, bolo e equipe completa. Sinal de 30%.');
-      await dFill('dmoF5','Equipe completa inclusa');
-      await dSleep(1400);
-      sc(2);
-      await dSleep(400);
-      if(toast) toast.classList.add('show');
+      await dFill('dmoF4','150 convidados, jantar, coquetel, bolo e equipe completa.');
+      await dFill('dmoF5','Sinal de 30% e o restante em 2x');
+      dToast('Preenchido pela IA em segundos');
+      await dSleep(2100);
+      /* 3 — comparar e contratar */
+      sc(2); await dSleep(1900);
+      await dPress('dmoHire');
+      dToast('Maré Alta contratado');
+      await dSleep(1100);
+      /* 4 — parcelas nascem */
+      sc(3); await dSleep(350);
+      if(parc) for(const li of parc.children){ li.style.opacity='1'; await dSleep(420); }
+      await dSleep(1700);
+      /* 5 — a Home avisa */
+      sc(4); await dSleep(2600);
+      /* 6 — pagar no Dinheiro */
+      sc(5); await dSleep(1500);
+      await dPress('dmoPay');
+      if(payW) payW.innerHTML='<span class="tag ok">PAGO</span>';
+      dToast('Parcela paga');
+      await dSleep(1900);
+      /* 7 — falar com o fornecedor */
+      sc(6); await dSleep(1400);
+      await dPress('dmoWa');
+      dToast('Abrindo conversa no WhatsApp…');
+      await dSleep(1900);
+      /* 8 — roteiro */
+      sc(7); await dSleep(900);
+      if(task) task.classList.add('done');
       await dSleep(2200);
-      if(toast) toast.classList.remove('show');
-      await dSleep(2400);
+      /* 9 — convite */
+      sc(8); await dSleep(3000);
     }catch(e){ await dSleep(2000); }
   }
 }
