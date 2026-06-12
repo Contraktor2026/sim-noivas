@@ -257,7 +257,14 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 #login .plan li.dim{color:var(--muted)}
 #login .betanote{background:rgba(168,133,59,.12);border:1px solid rgba(168,133,59,.4);border-radius:12px;padding:14px 16px;font-size:14px;color:var(--gold-soft);line-height:1.55;text-align:center;margin-bottom:14px}
 /* ---- bandas claras: a LP alterna verde e papel ---- */
-#login .band{margin:38px -24px 0;padding:36px 24px 30px;background:var(--paper)}
+#login .band{margin:38px -24px 0;padding:36px 24px 30px;background:var(--paper);position:relative;overflow:hidden}
+/* ---- ornamentos botânicos ---- */
+#login .orn{position:absolute;pointer-events:none;color:var(--gold);opacity:.4}
+#login .orn.tr{top:-12px;right:-16px;transform:rotate(96deg)}
+#login .orn.bl{bottom:-14px;left:-16px;transform:rotate(-86deg) scaleX(-1)}
+#login .vine{display:block;margin:14px auto 0;color:var(--gold);opacity:.85}
+#login .band .vine{opacity:.7;margin:2px auto 16px}
+#login .ringsorn{display:block;margin:0 auto 10px;color:var(--gold);opacity:.9}
 #login .band.alt{background:#F1EEE5}
 #login .band .ldtitle{color:var(--green)}
 #login .band .ldkicker{color:var(--gold)}
@@ -305,6 +312,14 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       <div class="brandring"><span>S<i>.</i></span></div>
       <div class="wm">SIM<i>.</i></div>
       <div class="tagline">Você disse sim.<br>O resto, a gente organiza juntas.</div>
+      <svg class="vine" width="200" height="24" viewBox="0 0 200 24" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true">
+  <path d="M6 12 H78 M122 12 H194"/>
+  <path d="M40 12 q7 -9 16 -7 q-7 9 -16 7z" fill="currentColor" fill-opacity=".2"/>
+  <path d="M60 12 q7 9 16 7 q-7 -9 -16 -7z" fill="currentColor" fill-opacity=".2"/>
+  <path d="M144 12 q7 -9 16 -7 q-7 9 -16 7z" fill="currentColor" fill-opacity=".2"/>
+  <path d="M124 12 q7 9 16 7 q-7 -9 -16 -7z" fill="currentColor" fill-opacity=".2"/>
+  <path d="M100 5 l5 7 -5 7 -5 -7z" fill="currentColor" fill-opacity=".35"/>
+</svg>
     </div>
     <div class="panel">
       <h3 id="lgTitle">Entrar</h3>
@@ -327,6 +342,28 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
     </div>
 
     <section class="band">
+      <svg class="orn tr" width="120" height="120" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+  <path d="M12 112 C 38 86, 58 56, 92 16"/>
+  <path d="M30 92 q-14 -2 -18 -14 q14 2 18 14z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M36 84 q14 -8 24 0 q-14 8 -24 0z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M48 68 q-14 -4 -16 -16 q14 4 16 16z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M54 60 q13 -9 23 -2 q-13 9 -23 2z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M66 44 q-12 -5 -13 -17 q12 5 13 17z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M72 37 q12 -9 21 -3 q-12 9 -21 3z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M82 24 q-9 -5 -9 -15 q9 5 9 15z" fill="currentColor" fill-opacity=".14"/>
+  <circle cx="95" cy="12" r="2.4" fill="currentColor" fill-opacity=".5"/>
+</svg>
+      <svg class="orn bl" width="120" height="120" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+  <path d="M12 112 C 38 86, 58 56, 92 16"/>
+  <path d="M30 92 q-14 -2 -18 -14 q14 2 18 14z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M36 84 q14 -8 24 0 q-14 8 -24 0z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M48 68 q-14 -4 -16 -16 q14 4 16 16z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M54 60 q13 -9 23 -2 q-13 9 -23 2z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M66 44 q-12 -5 -13 -17 q12 5 13 17z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M72 37 q12 -9 21 -3 q-12 9 -21 3z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M82 24 q-9 -5 -9 -15 q9 5 9 15z" fill="currentColor" fill-opacity=".14"/>
+  <circle cx="95" cy="12" r="2.4" fill="currentColor" fill-opacity=".5"/>
+</svg>
       <div class="ldkicker">O que é</div>
       <div class="ldtitle">Casar é um sonho.<br>Organizar não precisa ser um pesadelo.</div>
       <p style="text-align:center;font-size:15px;color:#6f6c61;line-height:1.65;margin:-4px 0 22px;font-family:'Karla',sans-serif">O SIM. é a sua assistente de casamento: cuida do dinheiro, dos fornecedores e do passo a passo até o altar. E quando chegar orçamento, manda pra cá — texto do WhatsApp, print ou PDF, ele lê e preenche tudo.<br><b style="color:var(--green)">Você só decide.</b></p>
@@ -353,6 +390,17 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
     </section>
 
     <section class="band alt">
+      <svg class="orn tr" width="120" height="120" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+  <path d="M12 112 C 38 86, 58 56, 92 16"/>
+  <path d="M30 92 q-14 -2 -18 -14 q14 2 18 14z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M36 84 q14 -8 24 0 q-14 8 -24 0z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M48 68 q-14 -4 -16 -16 q14 4 16 16z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M54 60 q13 -9 23 -2 q-13 9 -23 2z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M66 44 q-12 -5 -13 -17 q12 5 13 17z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M72 37 q12 -9 21 -3 q-12 9 -21 3z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M82 24 q-9 -5 -9 -15 q9 5 9 15z" fill="currentColor" fill-opacity=".14"/>
+  <circle cx="95" cy="12" r="2.4" fill="currentColor" fill-opacity=".5"/>
+</svg>
       <div class="ldkicker">Veja a mágica</div>
       <div class="ldtitle">A proposta chega,<br>o SIM. preenche</div>
       <div class="demo">
@@ -505,8 +553,32 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
     </div>
 
     <section class="band">
-      <div class="ldkicker">Planos</div>
+      <svg class="orn bl" width="120" height="120" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+  <path d="M12 112 C 38 86, 58 56, 92 16"/>
+  <path d="M30 92 q-14 -2 -18 -14 q14 2 18 14z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M36 84 q14 -8 24 0 q-14 8 -24 0z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M48 68 q-14 -4 -16 -16 q14 4 16 16z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M54 60 q13 -9 23 -2 q-13 9 -23 2z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M66 44 q-12 -5 -13 -17 q12 5 13 17z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M72 37 q12 -9 21 -3 q-12 9 -21 3z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M82 24 q-9 -5 -9 -15 q9 5 9 15z" fill="currentColor" fill-opacity=".14"/>
+  <circle cx="95" cy="12" r="2.4" fill="currentColor" fill-opacity=".5"/>
+</svg>
+      <svg class="ringsorn" width="56" height="36" viewBox="0 0 56 36" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+  <circle cx="21" cy="20" r="12"/>
+  <circle cx="35" cy="20" r="12"/>
+  <path d="M21 5 l3.5 3 -3.5 3 -3.5 -3z" fill="currentColor" fill-opacity=".4"/>
+</svg>
+      <div class="ldkicker" style="margin-top:-4px">Planos</div>
       <div class="ldtitle">Comece grátis hoje</div>
+      <svg class="vine" width="200" height="24" viewBox="0 0 200 24" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true">
+  <path d="M6 12 H78 M122 12 H194"/>
+  <path d="M40 12 q7 -9 16 -7 q-7 9 -16 7z" fill="currentColor" fill-opacity=".2"/>
+  <path d="M60 12 q7 9 16 7 q-7 -9 -16 -7z" fill="currentColor" fill-opacity=".2"/>
+  <path d="M144 12 q7 -9 16 -7 q-7 9 -16 7z" fill="currentColor" fill-opacity=".2"/>
+  <path d="M124 12 q7 9 16 7 q-7 -9 -16 -7z" fill="currentColor" fill-opacity=".2"/>
+  <path d="M100 5 l5 7 -5 7 -5 -7z" fill="currentColor" fill-opacity=".35"/>
+</svg>
       <div class="betanote">Fase de lançamento: as primeiras noivas usam <b>todos os recursos gratuitamente</b>, incluindo a leitura por inteligência artificial.</div>
       <div class="plan">
         <h4>Grátis</h4>
@@ -552,6 +624,11 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
     </section>
 
     <div class="ldfooter">
+      <svg class="ringsorn" width="56" height="36" viewBox="0 0 56 36" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+  <circle cx="21" cy="20" r="12"/>
+  <circle cx="35" cy="20" r="12"/>
+  <path d="M21 5 l3.5 3 -3.5 3 -3.5 -3z" fill="currentColor" fill-opacity=".4"/>
+</svg>
       <div class="wm2">SIM<i style="font-style:normal;color:var(--gold)">.</i></div>
       Você disse sim. O resto, a gente organiza juntas.<br>
       Feito com cuidado para noivas do Brasil e da América Latina.
