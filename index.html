@@ -84,6 +84,20 @@ body{font-family:var(--body);background:#11231A;color:var(--ink);display:flex;ju
 .addcontact svg{flex-shrink:0}
 .addcontact .arrow{margin-left:auto;font-size:18px}
 .wabtn{display:inline-flex;align-items:center;gap:7px;background:#25D366;color:#fff !important;font-weight:700;padding:11px 18px;border-radius:99px;font-size:14px;text-decoration:none;box-shadow:0 2px 8px rgba(37,211,102,.3)}
+/* itens da agenda */
+.agi{display:flex;align-items:center;gap:13px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:9px;cursor:pointer}
+.agdate{width:46px;flex-shrink:0;text-align:center;background:var(--gold-soft);border-radius:9px;padding:6px 0;color:#7a6430}
+.agdate.ev{background:var(--green);color:var(--paper)}
+.agdate .agd{font-family:var(--display);font-size:19px;line-height:1}
+.agdate .agm{font-size:9.5px;text-transform:uppercase;letter-spacing:.05em;margin-top:1px}
+.agbd{flex:1;min-width:0}
+.agt{font-size:14px;font-weight:600;color:var(--ink)}
+.agm2{font-size:11.5px;color:var(--muted);margin-top:2px;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.agm2 svg{width:12px;height:12px}
+.agv{font-family:var(--display);font-size:15px;color:var(--green)}
+/* atalho da agenda na home */
+.agshort{display:flex;align-items:center;gap:11px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin-bottom:9px;cursor:pointer}
+.agshort .agi-ic{width:40px;height:40px;border-radius:10px;background:var(--green);color:var(--paper);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .hr{border:none;border-top:1px solid var(--line);margin:14px 0}
 .dn{font-family:var(--display)}
 button{font-family:var(--body);cursor:pointer}
@@ -1042,6 +1056,8 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       <p class="sub" id="homeSub">Pagamentos próximos e decisões em aberto.</p>
       <div id="homeAttention"></div>
 
+      <div id="homeAgenda"></div>
+
       <div class="card soft">
         <div class="row">
           <div>
@@ -1172,6 +1188,17 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
     </section>
 
     <!-- ANOTAÇÕES -->
+    <section class="screen" id="s-agenda">
+      <button class="back" onclick="go('home')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>
+        Hoje
+      </button>
+      <h2 class="sec">Agenda</h2>
+      <p class="sub">Reuniões, provas, degustações e os pagamentos que vencem — tudo em um lugar.</p>
+      <button class="add" onclick="openEvent()" style="margin-bottom:16px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Agendar compromisso</button>
+      <div id="agendaBody"></div>
+    </section>
+
     <section class="screen" id="s-notes">
       <button class="back" onclick="go(notesFrom)">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>
@@ -1280,6 +1307,20 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       </div>
       <button class="btn p full" onclick="saveQuote()">Salvar orçamento</button>
       <button class="btn d full" id="qDel" style="margin-top:8px;display:none" onclick="delQuote()">Excluir orçamento</button>
+    </div>
+
+    <div class="sheet" id="sh-event" style="display:none">
+      <h3 id="evTitle">Novo compromisso</h3>
+      <p class="sub">Uma reunião, prova, degustação ou qualquer data importante.</p>
+      <div class="f"><label>O que é?</label><input id="evDesc" placeholder="Ex.: Degustação no buffet, prova do vestido…"></div>
+      <div class="frow">
+        <div class="f"><label>Data</label><input id="evDate" type="date"></div>
+        <div class="f"><label>Hora <span class="opt">(opcional)</span></label><input id="evTime" type="time"></div>
+      </div>
+      <div class="f"><label>Local ou link <span class="opt">(opcional)</span></label><input id="evWhere" placeholder="Ex.: Ateliê na Rua X, ou link da videochamada"></div>
+      <div class="f"><label>Observação <span class="opt">(opcional)</span></label><textarea id="evNote" placeholder="Ex.: levar inspirações, confirmar número de convidados…"></textarea></div>
+      <button class="btn p full" onclick="saveEvent()">Salvar na agenda</button>
+      <button class="btn d full" id="evDel" style="margin-top:8px;display:none" onclick="delEvent()">Excluir compromisso</button>
     </div>
 
     <div class="sheet" id="sh-note" style="display:none">
@@ -1690,6 +1731,9 @@ function renderHome(){
   const soon=state.exp.filter(e=>!e.paid&&e.due&&e.due>=today&&e.due<=limISO);
   const undecided=state.cats.filter(c=>c.quotes.length>=2&&!c.quotes.some(q=>q.win));
 
+  // ===== bloco da AGENDA na home: próximos compromissos (manuais + financeiro) =====
+  renderHomeAgenda();
+
   let html='';
   [...late,...soon].sort((a,b)=>a.due.localeCompare(b.due)).slice(0,4).forEach(e=>{
     const isLate=e.due<today;
@@ -1764,6 +1808,42 @@ function renderHome(){
 }
 
 /* =================== DINHEIRO =================== */
+function renderHomeAgenda(){
+  const box=$('homeAgenda'); if(!box) return;
+  const items=collectAgenda();
+  const today=todayISO();
+  const prox=items.filter(i=>i.date>=today).slice(0,3);
+  if(!prox.length){
+    // sem nada agendado: convite discreto para usar a agenda
+    box.innerHTML=`<h2 class="sec" style="margin-top:22px">Agenda</h2>
+      <p class="sub">Reuniões, provas e os pagamentos que vencem.</p>
+      <div class="agshort" onclick="openAgenda()">
+        <div class="agi-ic">${ICONS.cal}</div>
+        <div style="flex:1"><div style="font-weight:600;font-size:14px">Nada agendado ainda</div>
+        <div class="fine">Toque para marcar uma reunião ou prova</div></div>
+        <svg class="chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
+      </div>`;
+    return;
+  }
+  const row=(i)=>{
+    const d=new Date(i.date+'T12:00:00');
+    const dia=d.toLocaleDateString('pt-BR',{day:'2-digit',month:'short'});
+    const late=i.kind==='pay'&&!i.paid&&i.date<today;
+    const isEv=i.kind==='event';
+    return `<div class="li" onclick="${isEv?`openEvent('${i.id}')`:`openExpense('${i.id}')`}">
+      <div class="ic">${isEv?ICONS.cal:ICONS.money}</div>
+      <div class="bd"><div class="t">${esc(i.desc)}${i.time?' · '+i.time:''}</div>
+      <div class="m">${dia}${isEv?(i.where?' · '+esc(i.where):''):(' · '+(i.paid?'pago':'a pagar'))}</div></div>
+      ${i.kind==='pay'?`<div class="v">${brl(i.val)}</div>`:'<svg class="chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>'}
+    </div>`;
+  };
+  box.innerHTML=`<div class="row" style="align-items:center;margin:22px 0 4px">
+      <h2 class="sec" style="margin:0">Agenda</h2>
+      <button class="btn g sm" onclick="openAgenda()">Ver agenda</button>
+    </div>
+    <p class="sub">Seus próximos compromissos e pagamentos.</p>
+    <div class="card" style="padding:6px 14px">${prox.map(row).join('')}</div>`;
+}
 function renderFin(){
   const p=state.profile; if(!p) return;
   const commit=state.exp.reduce((a,e)=>a+e.val,0);
@@ -2886,6 +2966,108 @@ function delTask(){
 }
 
 /* =================== ANOTAÇÕES =================== */
+/* =================== AGENDA =================== */
+let editEv=null;
+function openAgenda(){
+  document.querySelectorAll('.screen').forEach(e=>e.classList.remove('on'));
+  $('s-agenda').classList.add('on');
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('on',b.dataset.s==='home'));
+  $('screens').scrollTop=0;
+  renderAgenda();
+}
+// reúne compromissos manuais + parcelas do financeiro, ordenados por data
+function collectAgenda(){
+  const items=[];
+  (state.events||[]).forEach(ev=>{
+    items.push({kind:'event', id:ev.id, date:ev.date, time:ev.time||'', desc:ev.desc, where:ev.where||'', note:ev.note||''});
+  });
+  state.exp.filter(e=>e.due).forEach(e=>{
+    items.push({kind:'pay', id:e.id, date:e.due, time:'', desc:e.desc, val:e.val, paid:e.paid, cat:e.cat||'Geral'});
+  });
+  items.sort((a,b)=>{
+    const d=String(a.date).localeCompare(String(b.date));
+    return d!==0?d:String(a.time).localeCompare(String(b.time));
+  });
+  return items;
+}
+function renderAgenda(){
+  const items=collectAgenda();
+  const today=todayISO();
+  if(!items.length){
+    $('agendaBody').innerHTML=`<div class="empty">${ICONS.cal}<div class="dn">Agenda vazia</div><p>Agende reuniões, provas e degustações. Os pagamentos que você lançar no Dinheiro também aparecem aqui, automaticamente.</p></div>`;
+    return;
+  }
+  // separar futuros e passados
+  const futuros=items.filter(i=>i.date>=today);
+  const passados=items.filter(i=>i.date<today).reverse();
+  let html='';
+  const row=(i)=>{
+    const d=new Date(i.date+'T12:00:00');
+    const dia=d.toLocaleDateString('pt-BR',{day:'2-digit',month:'short'});
+    const semana=d.toLocaleDateString('pt-BR',{weekday:'short'}).replace('.','');
+    const late=i.kind==='pay'&&!i.paid&&i.date<today;
+    if(i.kind==='pay'){
+      return `<div class="agi" onclick="openExpense('${i.id}')">
+        <div class="agdate"><div class="agd">${dia.split(' ')[0]}</div><div class="agm">${dia.split(' ')[1]}</div></div>
+        <div class="agbd">
+          <div class="agt">${esc(i.desc)} ${i.paid?'<span style=\'color:var(--ok);font-size:11px\'>✓ pago</span>':''}</div>
+          <div class="agm2">${ICONS.money} ${i.paid?'pagamento':'a pagar'} · ${esc(i.cat)} · ${semana}</div>
+        </div>
+        <div style="text-align:right"><div class="agv">${brl(i.val)}</div>${late?'<span class="tag late">ATRASADO</span>':(!i.paid?'<span class="tag due">VENCE</span>':'')}</div>
+      </div>`;
+    }
+    return `<div class="agi" onclick="openEvent('${i.id}')">
+      <div class="agdate ev"><div class="agd">${dia.split(' ')[0]}</div><div class="agm">${dia.split(' ')[1]}</div></div>
+      <div class="agbd">
+        <div class="agt">${esc(i.desc)}${i.time?` · ${i.time}`:''}</div>
+        <div class="agm2">${i.where?esc(i.where)+' · ':''}${semana}${i.note?' · '+esc(i.note):''}</div>
+      </div>
+      <svg class="chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
+    </div>`;
+  };
+  if(futuros.length){
+    html+=`<div class="cap gold" style="margin-bottom:8px">Próximos</div>`;
+    html+=futuros.map(row).join('');
+  }
+  if(passados.length){
+    html+=`<div class="cap" style="margin:18px 0 8px">Já passou</div>`;
+    html+=passados.map(row).join('');
+  }
+  $('agendaBody').innerHTML=html;
+}
+function openEvent(id){
+  editEv = id ? (state.events||[]).find(e=>e.id===id) : null;
+  $('evTitle').textContent = editEv ? 'Editar compromisso' : 'Novo compromisso';
+  $('evDesc').value = editEv?.desc||'';
+  $('evDate').value = editEv?.date||todayISO();
+  $('evTime').value = editEv?.time||'';
+  $('evWhere').value = editEv?.where||'';
+  $('evNote').value = editEv?.note||'';
+  $('evDel').style.display = editEv?'block':'none';
+  openSheet('sh-event');
+}
+function saveEvent(){
+  const desc=$('evDesc').value.trim();
+  const date=$('evDate').value;
+  if(!desc){ toast('O que é o compromisso?'); return; }
+  if(!date){ toast('Escolha a data'); return; }
+  if(!state.events) state.events=[];
+  if(editEv){
+    Object.assign(editEv,{desc,date,time:$('evTime').value,where:$('evWhere').value.trim(),note:$('evNote').value.trim()});
+  } else {
+    state.events.push({id:uid(),desc,date,time:$('evTime').value,where:$('evWhere').value.trim(),note:$('evNote').value.trim()});
+  }
+  editEv=null;
+  persist(); closeSheet(); renderAgenda(); renderHome();
+  toast('Compromisso salvo');
+}
+function delEvent(){
+  if(editEv) state.events=state.events.filter(e=>e!==editEv);
+  editEv=null;
+  persist(); closeSheet(); renderAgenda(); renderHome();
+  toast('Compromisso excluído');
+}
+
 let notesFrom='home', editNt=null;
 function openNotes(){
   const cur=document.querySelector('.nav button.on');
