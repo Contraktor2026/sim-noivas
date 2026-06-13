@@ -2966,6 +2966,12 @@ function __diag(){
   var d=document.getElementById('diagBox');
   if(!d){d=document.createElement('div');d.id='diagBox';d.style.cssText='position:fixed;inset:0;z-index:999999;background:#0a1410;color:#9f9;padding:20px;font:12px/1.5 monospace;white-space:pre-wrap;overflow:auto';document.body.appendChild(d);}
   d.textContent=txt;
+  if(!document.getElementById('diagClose')){
+    var b=document.createElement('button');b.id='diagClose';b.textContent='FECHAR e ver o app';
+    b.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:9999999;background:#A8853B;color:#fff;border:none;padding:14px 24px;border-radius:99px;font:700 14px system-ui';
+    b.onclick=function(){var x=document.getElementById('diagBox');if(x)x.remove();this.remove();};
+    document.body.appendChild(b);
+  }
 }
 window.__trace=window.__trace||[];
 function T(m){ window.__trace.push(m); }
@@ -2986,8 +2992,9 @@ async function bootApp(){
     showTour();
     T('showTour ok');
   }
-  // diagnóstico visível após montar (temporário)
-  setTimeout(__diag, 1500);
+  // garantir render final e medir depois de assentar
+  setTimeout(function(){ try{ if(state.profile){ renderAll(); } }catch(e){} }, 800);
+  setTimeout(__diag, 2500);
 }
 initAuth();
 </script>
