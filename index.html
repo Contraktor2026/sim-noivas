@@ -1347,7 +1347,6 @@ if(window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches){
   });
 }
 if('serviceWorker' in navigator){ navigator.serviceWorker.getRegistrations().then(function(rs){rs.forEach(function(r){r.unregister();});}).catch(function(){}); if(window.caches&&caches.keys){caches.keys().then(function(ks){ks.forEach(function(k){caches.delete(k);});}).catch(function(){});} }
-}
 
 /* ---- demonstração animada da landing: tour completo ---- */
 const dSleep=ms=>new Promise(r=>setTimeout(r,ms));
