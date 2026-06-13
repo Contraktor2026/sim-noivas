@@ -1528,6 +1528,11 @@ async function doLogout(){
   await sb.auth.signOut();
   location.reload();
 }
+function showOnboarding(){
+  var lg=document.getElementById('login'); if(lg) lg.style.display='none';
+  var sp=document.getElementById('splash'); if(sp) sp.style.display='none';
+  var onb=document.getElementById('onb'); if(onb) onb.style.display='flex';
+}
 function showLogin(msg){
   var sp=document.getElementById('splash'); if(sp) sp.style.display='none';
   var lg=document.getElementById('login'); if(lg) lg.style.display='flex';
@@ -1558,12 +1563,22 @@ let state={profile:null,exp:[],cats:[],tasks:[],notes:[]};
 let memOnly=false;
 
 async function load(){
+  let loaded=null;
   try{
-    const r=await window.storage.get(KEY);
-    if(r&&r.value) state=JSON.parse(r.value);
-  }catch(e){ /* primeira vez ou storage indisponível */ }
-  state.notes=state.notes||[];
-  (state.cats||[]).forEach(c=>c.quotes.forEach(q=>{ if(q.fav&&!q.stars) q.stars=5; delete q.fav; }));
+    if(window.storage){
+      const r=await window.storage.get(KEY);
+      if(r&&r.value) loaded=JSON.parse(r.value);
+    }
+  }catch(e){ console.warn('load: storage indisponível, começando vazio'); }
+  // state SEMPRE válido e completo, aconteça o que acontecer
+  state=Object.assign({profile:null,exp:[],cats:[],tasks:[],notes:[]}, loaded||{});
+  state.exp=Array.isArray(state.exp)?state.exp:[];
+  state.cats=Array.isArray(state.cats)?state.cats:[];
+  state.tasks=Array.isArray(state.tasks)?state.tasks:[];
+  state.notes=Array.isArray(state.notes)?state.notes:[];
+  try{
+    state.cats.forEach(c=>{ c.quotes=Array.isArray(c.quotes)?c.quotes:[]; c.quotes.forEach(q=>{ if(q.fav&&!q.stars) q.stars=5; delete q.fav; }); });
+  }catch(e){ console.warn('load: limpeza de cats',e); }
   if(!window.storage) memOnly=true;
 }
 let saveT=null;
@@ -1659,11 +1674,17 @@ function finishOnb(){
     const name=ch.textContent.trim();
     if(!state.cats.some(c=>c.name.toLowerCase()===name.toLowerCase())) state.cats.push({id:uid(),name,quotes:[]});
   });
-  persist();
-  loadSuggested(true);
-  $('onb').style.display='none';
-  renderAll();
-  showTour();
+  // 1) gerar roteiro e salvar, sem deixar que falha alguma trave a tela
+  try{ loadSuggested(true); }catch(e){ console.error('roteiro',e); }
+  try{ persist(); }catch(e){ console.error('persist',e); }
+  // 2) sair do onboarding SEMPRE
+  var onb=document.getElementById('onb'); if(onb) onb.style.display='none';
+  var lg=document.getElementById('login'); if(lg) lg.style.display='none';
+  // 3) montar o app com proteção total
+  try{ renderAll(); }catch(e){ console.error('renderAll',e); }
+  try{ showTour(); }catch(e){ console.error('showTour',e); }
+  // 4) rede de segurança: garantir que a tela principal esteja visível
+  try{ if(typeof go==='function') go('home'); }catch(e){}
 }
 
 /* =================== DICA DO DIA =================== */
@@ -2933,7 +2954,7 @@ function resetAll(){
       }catch(e){}
       state={profile:null,exp:[],cats:[],tasks:[],notes:[]};
       curVendor=null; fornCat=null;
-      $('onb').style.display='flex'; go('home');
+      showOnboarding(); go('home');
       toast('Tudo apagado — recomeçando do zero');
     },
     'Apagar tudo'
@@ -2970,9 +2991,9 @@ async function bootApp(){
   try{ $('fileContract').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast('Contrato recebido — processando…'); handleContractFile(e.target.files[0]); } }); }catch(e){}
   var sp=document.getElementById('splash'); if(sp) sp.style.display='none';
   try{
-    if(!state.profile){ $('onb').style.display='flex'; }
+    if(!state.profile){ showOnboarding(); }
     else { renderAll(); showTour(); }
-  }catch(e){ console.error('render',e); $('onb').style.display='flex'; }
+  }catch(e){ console.error('render',e); showOnboarding(); }
 }
 try{ initAuth(); }catch(e){
   console.error('boot',e);
