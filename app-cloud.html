@@ -147,6 +147,25 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 .phh .dn{font-size:16px;color:var(--green)}
 .phh span{font-size:11.5px;font-weight:700;color:var(--muted)}
 
+/* ===== wizard do onboarding ===== */
+.obprog{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px;position:relative}
+.obprog::before{content:'';position:absolute;top:13px;left:13%;right:13%;height:1px;background:var(--line)}
+.obprog .stp{display:flex;flex-direction:column;align-items:center;gap:5px;position:relative;flex:1}
+.obprog .stp i{width:26px;height:26px;border-radius:50%;border:1.4px solid var(--line);background:#fff;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:12px;font-weight:800;color:var(--muted);font-family:'Karla',sans-serif;transition:.2s}
+.obprog .stp span{font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.obprog .stp.cur i{background:var(--green);border-color:var(--green);color:var(--paper)}
+.obprog .stp.cur span{color:var(--green)}
+.obprog .stp.ok i{background:var(--gold-soft);border-color:var(--gold);color:#7a6430}
+.obstep{display:none}
+.obstep.on{display:block;animation:obfade .25s}
+@keyframes obfade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.stagecard{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:9px;cursor:pointer;background:#fff;transition:.15s;font-size:14px;font-weight:600;color:var(--ink)}
+.stagecard svg{flex-shrink:0;color:var(--gold)}
+.stagecard.on{border-color:var(--green);background:var(--green);color:var(--paper)}
+.stagecard.on svg{color:var(--gold-soft)}
+.obnav{display:flex;gap:10px;margin-top:16px}
+.obnav .btn{flex:1}
+.obnote{font-size:11.5px;color:var(--muted)}
 /* ===== chips de seleção (onboarding) ===== */
 .selchips{display:flex;flex-wrap:wrap;gap:8px}
 .selchip{padding:8px 14px;border:1px solid var(--line);border-radius:99px;font-size:13px;font-weight:600;color:var(--ink);cursor:pointer;user-select:none;background:#fff;transition:.15s}
@@ -975,49 +994,86 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 </svg></div>
     </div>
     <div class="panel">
-      <h3>Sobre o grande dia</h3>
-      <div class="ps">Essas informações personalizam tudo e ficam salvas só para você.</div>
-      <div class="frow">
-        <div class="f"><label>Seu nome</label><input id="obA" placeholder="Ana"></div>
-        <div class="f"><label>Nome do par</label><input id="obB" placeholder="Pedro"></div>
+      <div class="obprog" id="obProg">
+        <div class="stp cur"><i>1</i><span>Sua etapa</span></div>
+        <div class="stp"><i>2</i><span>O casal</span></div>
+        <div class="stp"><i>3</i><span>A festa</span></div>
+        <div class="stp"><i>4</i><span>A equipe</span></div>
       </div>
-      <div class="f"><label>Data do casamento</label><input id="obDate" type="date"></div>
-      <div class="frow">
-        <div class="f" style="flex:2"><label>País</label><input id="obCountry" value="Brasil"></div>
-        <div class="f" style="flex:1"><label>Estado</label><input id="obUF" placeholder="SC" maxlength="2" style="text-transform:uppercase"></div>
-      </div>
-      <div class="f"><label>Cidade <span class="opt">(opcional)</span></label><input id="obCity" placeholder="Florianópolis"></div>
-      <div class="frow">
-        <div class="f"><label>Convidados <span class="opt">(estimativa)</span></label><input id="obGuests" type="number" inputmode="numeric" placeholder="120"></div>
-        <div class="f"><label>Orçamento total (R$)</label><input id="obBudget" type="text" inputmode="decimal" placeholder="50.000"></div>
-      </div>
-      <div class="f"><label>Estilo do casamento <span class="opt">(opcional)</span></label>
-        <div class="selchips" id="obStyle">
-          <span class="selchip" onclick="selChip(this,true)">Praia</span>
-          <span class="selchip" onclick="selChip(this,true)">Campo</span>
-          <span class="selchip" onclick="selChip(this,true)">Igreja</span>
-          <span class="selchip" onclick="selChip(this,true)">Salão</span>
-          <span class="selchip" onclick="selChip(this,true)">Mini wedding</span>
-          <span class="selchip" onclick="selChip(this,true)">Civil</span>
+
+      <div class="obstep on" id="obs1">
+        <h3>Bem-vinda! Em que etapa vocês estão?</h3>
+        <div class="ps">Começando agora ou na reta final, o SIM. se ajusta a você.</div>
+        <div id="obStage">
+          <div class="stagecard" onclick="selStage(this)" data-v="Sonhando"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-4.6-9.5-9A5.5 5.5 0 0112 6.5 5.5 5.5 0 0121.5 12c-2.5 4.4-9.5 9-9.5 9z"/></svg>Ainda sonhando com o pedido</div>
+          <div class="stagecard" onclick="selStage(this)" data-v="Recém-noivos"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="14" r="6"/><circle cx="15" cy="10" r="6"/></svg>Recém-noivos, explorando ideias</div>
+          <div class="stagecard" onclick="selStage(this)" data-v="Planejando sem local"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg>Planejando, mas ainda sem o local</div>
+          <div class="stagecard" onclick="selStage(this)" data-v="Local reservado"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 11l9-7 9 7v9a1 1 0 01-1 1h-5v-6h-6v6H4a1 1 0 01-1-1z"/></svg>Local reservado, montando o resto</div>
+          <div class="stagecard" onclick="selStage(this)" data-v="Reta final"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 01-10 0zM7 5H4a3 3 0 003 4M17 5h3a3 3 0 01-3 4"/></svg>Reta final, só faltam detalhes</div>
         </div>
+        <div class="obnav"><button class="btn p" onclick="obGo(2)">Próximo</button></div>
       </div>
-      <div class="f"><label>O que você pretende contratar <span class="opt">(toque para marcar)</span></label>
-        <div class="selchips" id="obCats">
-          <span class="selchip" onclick="selChip(this)">Espaço</span>
-          <span class="selchip" onclick="selChip(this)">Buffet</span>
-          <span class="selchip" onclick="selChip(this)">Fotografia</span>
-          <span class="selchip" onclick="selChip(this)">Decoração</span>
-          <span class="selchip" onclick="selChip(this)">Música ou DJ</span>
-          <span class="selchip" onclick="selChip(this)">Vestido e traje</span>
-          <span class="selchip" onclick="selChip(this)">Doces e bolo</span>
-          <span class="selchip" onclick="selChip(this)">Cerimonial</span>
-          <span class="selchip" onclick="selChip(this)">Beleza</span>
-          <span class="selchip" onclick="selChip(this)">Convites</span>
+
+      <div class="obstep" id="obs2">
+        <h3>Como todo grande amor, começa pelo básico.</h3>
+        <div class="ps">Os nomes viram o monograma de vocês.</div>
+        <div class="frow">
+          <div class="f"><label>Seu nome</label><input id="obA" placeholder="Ana"></div>
+          <div class="f"><label>E do seu amor</label><input id="obB" placeholder="Pedro"></div>
         </div>
+        <div class="f"><label>Data do casamento <span class="opt">(pode mudar depois, sem culpa)</span></label><input id="obDate" type="date"></div>
+        <label style="display:flex;align-items:center;gap:9px;margin:-2px 0 6px;cursor:pointer">
+          <input type="checkbox" id="obTBD" onchange="document.getElementById('obDate').disabled=this.checked" style="width:17px;height:17px;accent-color:var(--green)">
+          <span class="obnote" style="font-size:13px;color:var(--ink)">Ainda estamos decidindo a data</span>
+        </label>
+        <div class="obnav"><button class="btn g" onclick="obGo(1)">Voltar</button><button class="btn p" onclick="obGo(3)">Próximo</button></div>
       </div>
-      <button class="btn p full" onclick="finishOnb()">Começar a organizar</button>
-      <p class="fine" style="text-align:center;margin-top:10px">Tudo pode ser ajustado depois, em Ajustes.</p>
-    </div>
+
+      <div class="obstep" id="obs3">
+        <h3>Agora, o cenário do grande dia.</h3>
+        <div class="ps">Não se preocupe: tudo pode ser ajustado depois.</div>
+        <div class="frow">
+          <div class="f" style="flex:2"><label>País</label><input id="obCountry" value="Brasil"></div>
+          <div class="f" style="flex:1"><label>Estado</label><input id="obUF" placeholder="SC" maxlength="2" style="text-transform:uppercase"></div>
+        </div>
+        <div class="f"><label>Cidade <span class="opt">(opcional)</span></label><input id="obCity" placeholder="Florianópolis"></div>
+        <div class="frow">
+          <div class="f"><label>Convidados <span class="opt">(estimativa)</span></label><input id="obGuests" type="number" inputmode="numeric" placeholder="120"></div>
+          <div class="f"><label>Orçamento total (R$)</label><input id="obBudget" type="text" inputmode="decimal" placeholder="50.000"></div>
+        </div>
+        <div class="f"><label>Estilo do casamento <span class="opt">(opcional)</span></label>
+          <div class="selchips" id="obStyle">
+            <span class="selchip" onclick="selChip(this,true)">Praia</span>
+            <span class="selchip" onclick="selChip(this,true)">Campo</span>
+            <span class="selchip" onclick="selChip(this,true)">Igreja</span>
+            <span class="selchip" onclick="selChip(this,true)">Salão</span>
+            <span class="selchip" onclick="selChip(this,true)">Mini wedding</span>
+            <span class="selchip" onclick="selChip(this,true)">Civil</span>
+          </div>
+        </div>
+        <div class="obnav"><button class="btn g" onclick="obGo(2)">Voltar</button><button class="btn p" onclick="obGo(4)">Próximo</button></div>
+      </div>
+
+      <div class="obstep" id="obs4">
+        <h3>Quem vai fazer esse dia acontecer?</h3>
+        <div class="ps">Marque o que vocês pretendem contratar. Eu já deixo as cotações preparadas, e te aviso o que ainda falta cotar.</div>
+        <div class="f">
+          <div class="selchips" id="obCats">
+            <span class="selchip" onclick="selChip(this)">Espaço</span>
+            <span class="selchip" onclick="selChip(this)">Buffet</span>
+            <span class="selchip" onclick="selChip(this)">Fotografia</span>
+            <span class="selchip" onclick="selChip(this)">Decoração</span>
+            <span class="selchip" onclick="selChip(this)">Música ou DJ</span>
+            <span class="selchip" onclick="selChip(this)">Vestido e traje</span>
+            <span class="selchip" onclick="selChip(this)">Doces e bolo</span>
+            <span class="selchip" onclick="selChip(this)">Cerimonial</span>
+            <span class="selchip" onclick="selChip(this)">Beleza</span>
+            <span class="selchip" onclick="selChip(this)">Convites</span>
+          </div>
+        </div>
+        <div class="obnav"><button class="btn g" onclick="obGo(3)">Voltar</button><button class="btn p" onclick="finishOnb()">Começar a organizar</button></div>
+        <p class="fine" style="text-align:center;margin-top:10px">Tudo pode ser ajustado depois, em Ajustes.</p>
+      </div>
   </div>
 
   <!-- ============ APP ============ -->
@@ -1635,18 +1691,46 @@ function go(s){
 function openSettings(){ go('set'); }
 
 /* =================== ONBOARDING =================== */
+function selStage(el){ [...el.parentNode.children].forEach(c=>c.classList.remove('on')); el.classList.add('on'); }
+function obGo(n){
+  const cur=document.querySelector('.obstep.on');
+  const curN=parseInt(cur.id.slice(3));
+  if(n>curN){ // validações ao avançar
+    if(curN===1 && !document.querySelector('#obStage .stagecard.on')){ toast('Escolha a etapa que mais parece com vocês'); return; }
+    if(curN===2){
+      if(!$('obA').value.trim()||!$('obB').value.trim()){ toast('Conta para mim os nomes do casal'); return; }
+      if(!$('obDate').value && !$('obTBD').checked){ toast('Escolha a data, ou marque "Ainda estamos decidindo"'); return; }
+    }
+    if(curN===3){
+      const budget=parseBRL($('obBudget').value);
+      if(!budget||budget<=0){ toast('Defina um orçamento inicial — pode ajustar depois'); return; }
+    }
+  }
+  document.querySelectorAll('.obstep').forEach(e=>e.classList.remove('on'));
+  $('obs'+n).classList.add('on');
+  document.querySelectorAll('#obProg .stp').forEach((e,i)=>{
+    e.classList.toggle('cur', i===n-1);
+    e.classList.toggle('ok', i<n-1);
+    if(i<n-1) e.querySelector('i').textContent='✓'; else e.querySelector('i').textContent=String(i+1);
+  });
+  document.querySelector('#onb').scrollTop=0;
+}
 function selChip(el,single){
   if(single){ [...el.parentNode.children].forEach(c=>{ if(c!==el) c.classList.remove('on'); }); }
   el.classList.toggle('on');
 }
 function finishOnb(){
-  const a=$('obA').value.trim(), b=$('obB').value.trim(), d=$('obDate').value;
+  const a=$('obA').value.trim(), b=$('obB').value.trim();
+  const tbd=$('obTBD')&&$('obTBD').checked;
+  let d=$('obDate').value;
+  if(!d&&tbd){ const t=new Date(); t.setFullYear(t.getFullYear()+1); d=t.toISOString().slice(0,10); }
   const budget=parseBRL($('obBudget').value);
   if(!a||!b){ toast('Conta para mim os nomes do casal'); return; }
-  if(!d){ toast('Escolha a data do casamento'); return; }
+  if(!d){ toast('Escolha a data, ou marque "Ainda estamos decidindo"'); return; }
   if(!budget||budget<=0){ toast('Defina um orçamento inicial — pode ajustar depois'); return; }
   const styleEl=document.querySelector('#obStyle .selchip.on');
-  state.profile={a,b,date:d,city:$('obCity').value.trim(),uf:$('obUF').value.trim().toUpperCase(),country:$('obCountry').value.trim()||'Brasil',guests:parseInt($('obGuests').value)||null,budget,style:styleEl?styleEl.textContent.trim():''};
+  const stageEl=document.querySelector('#obStage .stagecard.on');
+  state.profile={a,b,date:d,dateTBD:!!(tbd&&!$('obDate').value),city:$('obCity').value.trim(),uf:$('obUF').value.trim().toUpperCase(),country:$('obCountry').value.trim()||'Brasil',guests:parseInt($('obGuests').value)||null,budget,style:styleEl?styleEl.textContent.trim():'',stage:stageEl?stageEl.dataset.v:''};
   document.querySelectorAll('#obCats .selchip.on').forEach(ch=>{
     const name=ch.textContent.trim();
     if(!state.cats.some(c=>c.name.toLowerCase()===name.toLowerCase())) state.cats.push({id:uid(),name,quotes:[]});
@@ -1700,6 +1784,11 @@ function renderHome(){
   const dt=new Date(p.date+'T12:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'});
   const loc=[p.city,p.uf].filter(Boolean).join(', ')+((p.country&&p.country.trim()&&p.country.trim().toLowerCase()!=='brasil')?' · '+p.country.trim():'');
   $('heroPlace').textContent = dt + (loc? ' · '+loc : '');
+  if(p.dateTBD){
+    $('chip').textContent='data a definir';
+    $('heroPlace').textContent = (loc||'O grande dia vem aí') + ' · data a decidir';
+    $('heroCount').innerHTML='SIM<small> · escolham a data com calma</small>';
+  }
   $('heroCount').innerHTML = days>0 ? days+'<small>'+dword+' para o sim</small>'
                        : days===0 ? 'É hoje<small>!</small>'
                        : 'Felizes para sempre';
@@ -2869,7 +2958,7 @@ function fillSettings(){
 function saveSettings(){
   const a=$('stA').value.trim(), b=$('stB').value.trim(), d=$('stDate').value, budget=parseBRL($('stBudget').value);
   if(!a||!b||!d||!budget){toast('Nomes, data e orçamento são necessários');return;}
-  Object.assign(state.profile,{a,b,date:d,city:$('stCity').value.trim(),uf:$('stUF').value.trim().toUpperCase(),country:$('stCountry').value.trim()||'Brasil',guests:parseInt($('stGuests').value)||null,budget});
+  Object.assign(state.profile,{a,b,date:d,dateTBD:false,city:$('stCity').value.trim(),uf:$('stUF').value.trim().toUpperCase(),country:$('stCountry').value.trim()||'Brasil',guests:parseInt($('stGuests').value)||null,budget});
   persist(); renderAll();
   toast('Ajustes salvos');
 }
