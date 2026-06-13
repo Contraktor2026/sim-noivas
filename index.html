@@ -1439,8 +1439,8 @@ if(window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches){
     const r=document.querySelector('#login .lgrule'); if(r) r.style.display='none';
   });
 }
-if('serviceWorker' in navigator && location.protocol==='https:'){
-  navigator.serviceWorker.register('./sw.js').catch(()=>{});
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.getRegistrations().then(rs=>rs.forEach(r=>r.unregister())).catch(()=>{});
 }
 
 /* ---- demonstração animada da landing: tour completo ---- */
