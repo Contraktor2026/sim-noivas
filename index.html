@@ -1402,13 +1402,35 @@ window.storage={
 
 /* ---- instalação (PWA) ---- */
 let deferredPrompt=null;
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;});
+const IS_IOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault(); deferredPrompt=e;
+  const b=document.getElementById('btnInstall');
+  if(b) b.style.borderColor='var(--gold)';
+});
+window.addEventListener('appinstalled',()=>{
+  const b=document.getElementById('btnInstall'); if(b) b.style.display='none';
+  const h=document.getElementById('iosHint'); if(h) h.style.display='none';
+  const r=document.querySelector('#login .lgrule'); if(r) r.style.display='none';
+});
+document.addEventListener('DOMContentLoaded',()=>{
+  if(IS_IOS){
+    const b=document.getElementById('btnInstall');
+    if(b) b.lastChild.textContent='Adicionar à tela inicial';
+  }
+});
 async function doInstall(){
   if(deferredPrompt){
     deferredPrompt.prompt();
-    await deferredPrompt.userChoice; deferredPrompt=null;
-  } else {
-    document.getElementById('iosHint').style.display='block';
+    const r=await deferredPrompt.userChoice; deferredPrompt=null;
+    return;
+  }
+  const h=document.getElementById('iosHint');
+  if(h){
+    h.innerHTML = IS_IOS
+      ? 'No iPhone: toque em <b>Compartilhar</b> (o quadrado com a seta) e depois em <b>Adicionar à Tela de Início</b>.'
+      : 'No Android: toque no menu <b>⋮</b> do navegador e escolha <b>Adicionar à tela inicial</b> (ou <b>Instalar app</b>).';
+    h.style.display='block';
   }
 }
 if(window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches){
