@@ -2623,8 +2623,20 @@ function renderChk(){
     const M=monthsLeft();
     html+=`<div class="card soft" style="display:flex;gap:10px;align-items:flex-start">
       <span style="color:var(--gold);flex-shrink:0;margin-top:1px">${SPARK}</span>
-      <p class="fine" style="margin:0"><b style="color:var(--green)">Roteiro adaptado ao seu tempo.</b> Como faltam ${fmtTempo(M)} para o casamento, reorganizei as etapas do plano de 12 meses para caberem no seu prazo — começando agora.</p>
+      <p class="fine" style="margin:0"><b style="color:var(--green)">Roteiro adaptado ao seu tempo.</b> Como faltam ${fmtTempo(M)} para o casamento, reorganizei as etapas do plano completo para caberem no seu prazo, começando agora.</p>
     </div>`;
+    // aviso de acúmulo: detectar a fase mais cheia entre as tarefas pendentes
+    const pend=state.tasks.filter(t=>!t.done);
+    const cont={};
+    pend.forEach(t=>{ const f=t.phase||'Outras'; cont[f]=(cont[f]||0)+1; });
+    let faseTop='', maxT=0;
+    Object.keys(cont).forEach(f=>{ if(cont[f]>maxT){ maxT=cont[f]; faseTop=f; } });
+    if(M<=7 && maxT>=8){
+      html+=`<div class="card" style="border-color:rgba(168,133,59,.5);background:var(--gold-soft);display:flex;gap:10px;align-items:flex-start;margin-top:-2px">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#7a6430" stroke-width="1.8" style="flex-shrink:0;margin-top:1px"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+        <p class="fine" style="margin:0;color:#7a6430"><b>Atenção ao ritmo:</b> com o casamento próximo, várias tarefas se concentraram em <b>${esc(faseTop)}</b> (${maxT} itens). Vale priorizar o que tem prazo (espaço, buffet, foto) e, se puder, contar com ajuda para não sobrecarregar.</p>
+      </div>`;
+    }
   }
 
   const known=state.phaseOrder&&state.phaseOrder.length?state.phaseOrder:PHASES.filter(Boolean);
