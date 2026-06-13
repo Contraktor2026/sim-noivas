@@ -1416,7 +1416,7 @@ window.addEventListener('appinstalled',()=>{
 document.addEventListener('DOMContentLoaded',()=>{
   if(IS_IOS){
     const b=document.getElementById('btnInstall');
-    if(b) b.lastChild.textContent='Adicionar à tela inicial';
+    if(b){ const n=[...b.childNodes].reverse().find(x=>x.nodeType===3&&x.textContent.trim()); if(n) n.textContent=' Adicionar à tela inicial'; }
   }
 });
 async function doInstall(){
