@@ -43,6 +43,12 @@ body{font-family:var(--body);background:#11231A;color:var(--ink);display:flex;ju
 .cap.gold{color:var(--gold)}
 /* cabeçalhos das seções de fornecedores */
 /* abas internas de fornecedores */
+/* chips de seleção de fornecedores no onboarding */
+.fchips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.fchip{border:1.4px solid var(--line);background:#fff;border-radius:99px;padding:9px 14px;font-size:13px;font-weight:600;color:var(--ink);cursor:pointer;transition:.15s;user-select:none;display:inline-flex;align-items:center;gap:6px}
+.fchip.on{border-color:var(--green);background:var(--green);color:var(--paper)}
+.fchip.on::before{content:'✓';font-size:11px;font-weight:800}
+.fchip .x{font-size:15px;line-height:1;opacity:.6}
 .ftabs{display:flex;background:#EFEBE0;border-radius:12px;padding:4px;gap:4px;margin-bottom:18px}
 .ftab{flex:1;border:none;background:transparent;padding:10px 8px;border-radius:9px;font-family:var(--body);font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:.15s}
 .ftab .cnt{font-size:11px;min-width:18px;height:18px;border-radius:9px;background:rgba(0,0,0,.08);color:inherit;display:inline-flex;align-items:center;justify-content:center;padding:0 5px}
@@ -976,6 +982,29 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
         <div class="f"><label>Convidados <span class="opt">(estimativa)</span></label><input id="obGuests" type="number" inputmode="numeric" placeholder="120"></div>
         <div class="f"><label>Orçamento total (R$)</label><input id="obBudget" type="text" inputmode="decimal" placeholder="50.000"></div>
       </div>
+      <div class="f" style="margin-top:4px">
+        <label>Quais fornecedores você pretende contratar? <span class="opt">(toque para marcar)</span></label>
+        <div class="fchips" id="obVendors">
+          <span class="fchip" onclick="togFchip(this)">Espaço</span>
+          <span class="fchip" onclick="togFchip(this)">Buffet</span>
+          <span class="fchip" onclick="togFchip(this)">Fotografia</span>
+          <span class="fchip" onclick="togFchip(this)">Vídeo</span>
+          <span class="fchip" onclick="togFchip(this)">Decoração</span>
+          <span class="fchip" onclick="togFchip(this)">Música / DJ</span>
+          <span class="fchip" onclick="togFchip(this)">Bolo e doces</span>
+          <span class="fchip" onclick="togFchip(this)">Vestido</span>
+          <span class="fchip" onclick="togFchip(this)">Traje do noivo</span>
+          <span class="fchip" onclick="togFchip(this)">Cerimonial</span>
+          <span class="fchip" onclick="togFchip(this)">Cabelo e maquiagem</span>
+          <span class="fchip" onclick="togFchip(this)">Convites</span>
+          <span class="fchip" onclick="togFchip(this)">Lembrancinhas</span>
+          <span class="fchip" onclick="togFchip(this)">Carro</span>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:9px">
+          <input id="obVendorOther" placeholder="Outro fornecedor…" style="flex:1" onkeydown="if(event.key==='Enter'){event.preventDefault();addFchip();}">
+          <button type="button" class="btn g" style="padding:0 16px;white-space:nowrap" onclick="addFchip()">Adicionar</button>
+        </div>
+      </div>
       <button class="btn p full" onclick="finishOnb()">Começar a organizar</button>
       <p class="fine" style="text-align:center;margin-top:10px">Tudo pode ser ajustado depois, em Ajustes.</p>
     </div>
@@ -1597,6 +1626,21 @@ function go(s){
 function openSettings(){ go('set'); }
 
 /* =================== ONBOARDING =================== */
+function togFchip(el){ el.classList.toggle('on'); }
+function addFchip(){
+  const inp=$('obVendorOther');
+  const v=inp.value.trim();
+  if(!v) return;
+  // evitar duplicado
+  const existe=[...document.querySelectorAll('#obVendors .fchip')].some(c=>c.textContent.trim().toLowerCase()===v.toLowerCase());
+  if(existe){ inp.value=''; toast('Esse já está na lista'); return; }
+  const chip=document.createElement('span');
+  chip.className='fchip on';
+  chip.textContent=v;
+  chip.onclick=function(){ togFchip(this); };
+  $('obVendors').appendChild(chip);
+  inp.value='';
+}
 function finishOnb(){
   const a=$('obA').value.trim(), b=$('obB').value.trim(), d=$('obDate').value;
   const budget=parseBRL($('obBudget').value);
@@ -1604,6 +1648,14 @@ function finishOnb(){
   if(!d){ toast('Escolha a data do casamento'); return; }
   if(!budget||budget<=0){ toast('Defina um orçamento inicial — pode ajustar depois'); return; }
   state.profile={a,b,date:d,city:$('obCity').value.trim(),uf:$('obUF').value.trim().toUpperCase(),country:$('obCountry').value.trim()||'Brasil',guests:parseInt($('obGuests').value)||null,budget};
+  // criar as categorias de fornecedores que a noiva marcou — a aba "Em cotação" já nasce povoada
+  const escolhidos=[...document.querySelectorAll('#obVendors .fchip.on')].map(c=>c.textContent.trim());
+  escolhidos.forEach(nome=>{
+    if(!state.cats.some(c=>c.name.toLowerCase()===nome.toLowerCase())){
+      state.cats.push({id:uid(),name:nome,quotes:[]});
+    }
+  });
+  if(escolhidos.length) state.fornTab='quote'; // já abre na aba que tem conteúdo
   persist();
   $('onb').style.display='none';
   renderAll();
