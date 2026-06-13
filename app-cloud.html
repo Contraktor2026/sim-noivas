@@ -1348,6 +1348,19 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 /* =================== CONFIGURAÇÃO (PREENCHA) ===================
    Crie um projeto em https://supabase.com, rode o supabase-setup.sql
    e cole abaixo a URL e a anon key (Settings → API). */
+/* capturador global: nunca deixa a tela branca sem explicação */
+window.__simErr=function(msg){
+  try{
+    var d=document.getElementById('simErrBox');
+    if(!d){ d=document.createElement('div'); d.id='simErrBox';
+      d.style.cssText='position:fixed;inset:0;z-index:99999;background:#1F3D2B;color:#FAF9F5;padding:24px;font:14px/1.6 system-ui;overflow:auto';
+      document.body.appendChild(d); }
+    d.innerHTML='<div style="max-width:520px;margin:40px auto"><div style="font-size:20px;font-family:Marcellus,serif;color:#C9A961;margin-bottom:10px">Encontramos um detalhe técnico</div><p style="margin-bottom:14px">Estamos a postos para resolver. Detalhe do erro (mande print para o suporte):</p><pre style="background:rgba(0,0,0,.25);padding:12px;border-radius:8px;white-space:pre-wrap;font-size:12px;color:#FFD9A8">'+msg+'</pre><button onclick="location.reload()" style="margin-top:16px;background:#A8853B;color:#fff;border:none;padding:12px 20px;border-radius:99px;font-weight:700">Recarregar</button></div>';
+  }catch(e){}
+};
+window.addEventListener('error',function(ev){ window.__simErr((ev.message||'erro')+'\n'+(ev.filename||'')+':'+(ev.lineno||'')); });
+window.addEventListener('unhandledrejection',function(ev){ window.__simErr('Promessa rejeitada: '+((ev.reason&&ev.reason.message)||ev.reason||'desconhecido')); });
+
 const SUPABASE_URL='https://omdzifdpnuvtofkwwuau.supabase.co';
 const SUPABASE_ANON_KEY='sb_publishable_qfpZimfti9lqVZZOH0vdtA_FSvUCxmU';
 
