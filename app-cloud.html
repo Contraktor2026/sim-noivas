@@ -1073,8 +1073,9 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       </div>
       <div class="card">
         <div class="cap" style="margin-bottom:8px">Lista sugerida</div>
-        <p class="fine" style="margin-bottom:10px">Carrego o roteiro do casamento brasileiro <b>adaptado ao tempo que falta até a sua data</b> — mesmo que não sejam mais 12 meses. Tudo editável.</p>
-        <button class="btn g full" onclick="loadSuggested()">Carregar roteiro sugerido</button>
+        <p class="fine" style="margin-bottom:10px">Carrego o roteiro do casamento brasileiro <b>adaptado ao tempo que falta até a sua data</b>. Escolha a versão completa (todos os detalhes) ou essencial (os passos imprescindíveis).</p>
+        <button class="btn p full" onclick="loadSuggested('full')">Roteiro completo</button>
+        <button class="btn g full" style="margin-top:8px" onclick="loadSuggested('ess')">Roteiro essencial</button>
       </div>
       <div class="card">
         <div class="cap" style="margin-bottom:8px">Conta</div>
@@ -2480,59 +2481,59 @@ const SUGGESTED=[
   [12,'Comemorar o noivado com quem vocês amam'],
   [12,'Criar um e-mail só para o casamento'],
   [12,'Conversar sobre a visão do casamento: tamanho, clima e prioridades'],
-  [12,'Definir o orçamento total e quem contribui'],
-  [12,'Decidir a cidade e a data do casamento'],
-  [11.5,'Iniciar a lista de convidados'],
-  [11.5,'Pesquisar e contratar assessoria ou cerimonial'],
-  [11,'Começar a busca pelo vestido dos sonhos'],
+  [12,'Definir o orçamento total e quem contribui',1],
+  [12,'Decidir a cidade e a data do casamento',1],
+  [11.5,'Iniciar a lista de convidados',1],
+  [11.5,'Pesquisar e contratar assessoria ou cerimonial',1],
+  [11,'Começar a busca pelo vestido dos sonhos',1],
   // 12 a 8 meses
-  [10.5,'Visitar espaços e reservar a cerimônia e a festa'],
+  [10.5,'Visitar espaços e reservar a cerimônia e a festa',1],
   [10,'Pedir orçamentos de buffet e agendar degustações'],
-  [10,'Contratar o buffet'],
-  [9.5,'Definir onde passar a lua de mel'],
+  [10,'Contratar o buffet',1],
+  [9.5,'Definir onde passar a lua de mel',1],
   [9,'Iniciar os procedimentos legais do casamento'],
   [9,'Reservar o dia da noiva e do noivo (salão, hospedagem)'],
-  [8.5,'Contratar banda ou DJ, incluindo pista de dança'],
+  [8.5,'Contratar banda ou DJ, incluindo pista de dança',1],
   [8.5,'Definir serviços de entretenimento (cabine de foto, totem, atrações)'],
-  [8,'Criar o site do casamento e a lista de presentes'],
-  [8,'Contratar foto e vídeo'],
+  [8,'Criar o site do casamento e a lista de presentes',1],
+  [8,'Contratar foto e vídeo',1],
   [7.5,'Fazer o ensaio pré-wedding (sessão de fotos do casal)'],
   // 8 a 5 meses
-  [7,'Contratar a decoração'],
-  [6.5,'Escolher os padrinhos e madrinhas e convidá-los'],
-  [6.5,'Enviar o save the date (digital é prático e econômico)'],
+  [7,'Contratar a decoração',1],
+  [6.5,'Escolher os padrinhos e madrinhas e convidá-los',1],
+  [6.5,'Enviar o save the date (digital é prático e econômico)',1],
   [6,'Escolher a decoração da cerimônia e da festa'],
-  [6,'Comprar as alianças'],
+  [6,'Comprar as alianças',1],
   [6,'Rever a lista de convidados'],
-  [5.5,'Escolher o vestido e iniciar as provas'],
+  [5.5,'Escolher o vestido e iniciar as provas',1],
   [5,'Contratar o bar e o serviço de bebidas'],
   // 5 a 2 meses
-  [4.5,'Escolher o traje do noivo'],
-  [4.5,'Escolher os convites e a caixa dos padrinhos'],
+  [4.5,'Escolher o traje do noivo',1],
+  [4.5,'Escolher os convites e a caixa dos padrinhos',1],
   [4.2,'Fechar a lista de convidados'],
   [4,'Encomendar a papelaria (convite, tags, menu)'],
   [4,'Definir as lembrancinhas'],
-  [3.5,'Contratar bolo, doces e bem-casados'],
+  [3.5,'Contratar bolo, doces e bem-casados',1],
   [3.5,'Planejar a lua de mel e reservar passagens'],
   [3.5,'Verificar vacinas e documentos para a viagem de lua de mel'],
   [3,'Escolher o sapato e os acessórios da noiva e do noivo'],
-  [3,'Separar documentos e marcar o casamento civil no cartório'],
+  [3,'Separar documentos e marcar o casamento civil no cartório',1],
   [3,'Definir pajens e daminhas'],
   [2.5,'Organizar chá de panela, chá bar ou chá de lingerie'],
-  [2.5,'Definir o buquê e os detalhes da decoração'],
+  [2.5,'Definir o buquê e os detalhes da decoração',1],
   [2.5,'Iniciar tratamentos de pele e cuidados de beleza'],
   [2.5,'Comprar as forminhas dos doces'],
-  [2,'Entregar os convites'],
+  [2,'Entregar os convites',1],
   // Último mês
-  [1.5,'Reservar hotel para a noite de núpcias'],
-  [1.5,'Definir o carro para a cerimônia'],
-  [1.2,'Prova final do vestido, cabelo e maquiagem'],
+  [1.5,'Reservar hotel para a noite de núpcias',1],
+  [1.5,'Definir o carro para a cerimônia',1],
+  [1.2,'Prova final do vestido, cabelo e maquiagem',1],
   [1.2,'Prova final do traje do noivo'],
-  [1,'Confirmar presença dos convidados (RSVP)'],
-  [1,'Confirmar com o buffet a quantidade de convidados'],
-  [1,'Definir a ordem do cortejo e as músicas da cerimônia'],
-  [0.8,'Montar o mapa de mesas'],
-  [0.7,'Alinhamento final com assessoria e fornecedores'],
+  [1,'Confirmar presença dos convidados (RSVP)',1],
+  [1,'Confirmar com o buffet a quantidade de convidados',1],
+  [1,'Definir a ordem do cortejo e as músicas da cerimônia',1],
+  [0.8,'Montar o mapa de mesas',1],
+  [0.7,'Alinhamento final com assessoria e fornecedores',1],
   [0.6,'Fazer o pagamento final dos fornecedores'],
   [0.35,'Agendar depilação, manicure e limpeza de pele'],
   [0.5,'Entregar cópia dos contratos ao cerimonial'],
@@ -2599,25 +2600,38 @@ function fmtTempo(M){
   const d=Math.max(1,Math.round(M*30.44));
   return d+(d===1?' dia':' dias');
 }
-function loadSuggested(){
+function loadSuggested(mode){
+  mode=mode||'full';
   const plan=buildPlan();
   const existing=new Set(state.tasks.map(t=>t.t));
   let n=0;
-  SUGGESTED.forEach(([m,t])=>{
+  SUGGESTED.forEach(item=>{
+    const m=item[0], t=item[1], ess=item[2]===1;
+    if(mode==='ess' && !ess) return;   // versão essencial: só as marcadas
     if(existing.has(t)) return;
     state.tasks.push({id:uid(),t,phase:plan.label(m),done:false});
     n++;
   });
   state.phaseOrder=plan.order;
-  state.planMeta={adapted:plan.adapted,months:Math.round(plan.M*10)/10,created:todayISO()};
+  state.planMeta={adapted:plan.adapted,months:Math.round(plan.M*10)/10,created:todayISO(),mode};
   persist(); renderChk(); go('chk');
-  toast(n? (plan.adapted?'Roteiro adaptado para os '+fmtTempo(plan.M)+' que faltam':'Roteiro completo carregado') : 'O roteiro já está na sua lista',true);
+  const nome = mode==='ess'?'essencial':'completo';
+  toast(n? (plan.adapted?'Roteiro '+nome+' adaptado para os '+fmtTempo(plan.M)+' que faltam':'Roteiro '+nome+' carregado') : 'O roteiro já está na sua lista',true);
 }
 function renderChk(){
   if(!state.tasks.length){
     $('chkSummary').style.display='none';
-    $('chkBody').innerHTML=`<div class="empty">${ICONS.ring}<div class="dn">Sua lista está vazia</div><p>Adicione suas tarefas, ou carregue o <b>roteiro sugerido</b> —<br>eu organizo as etapas conforme o tempo que falta.</p>
-    <button class="btn g" style="margin-top:14px" onclick="loadSuggested()">Carregar roteiro sugerido</button></div>`;
+    $('chkBody').innerHTML=`<div class="empty">${ICONS.ring}<div class="dn">Sua lista está vazia</div><p>Escolha por onde começar. Eu organizo as etapas conforme o tempo que falta até a sua data.</p>
+    <div class="card" style="text-align:left;margin-top:16px;border-color:rgba(168,133,59,.4)">
+      <div class="dn" style="font-size:16px;color:var(--green)">Roteiro completo</div>
+      <p class="fine" style="margin:4px 0 10px">Todas as etapas do casamento, do orçamento ao altar. Para quem quer cuidar de cada detalhe.</p>
+      <button class="btn p full" onclick="loadSuggested('full')">Carregar roteiro completo</button>
+    </div>
+    <div class="card" style="text-align:left">
+      <div class="dn" style="font-size:16px;color:var(--green)">Roteiro essencial</div>
+      <p class="fine" style="margin:4px 0 10px">Os passos imprescindíveis, sem se perder nos detalhes. Para quem prefere o caminho mais direto.</p>
+      <button class="btn g full" onclick="loadSuggested('ess')">Carregar roteiro essencial</button>
+    </div></div>`;
     return;
   }
   $('chkSummary').style.display='block';
