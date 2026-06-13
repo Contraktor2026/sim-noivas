@@ -104,6 +104,37 @@ body{font-family:var(--body);background:#11231A;color:var(--ink);display:flex;ju
 .agmonth .ml{font-family:var(--display);font-size:15px;color:var(--green);text-transform:capitalize;white-space:nowrap}
 .agmonth .my{font-size:12px;color:var(--gold);font-weight:700}
 .agmonth .line{flex:1;height:1px;background:var(--line)}
+/* ===== convidados ===== */
+.gsum{background:var(--green);border-radius:14px;padding:18px;color:var(--paper);margin-bottom:14px}
+.gsum .big{font-family:var(--display);font-size:30px;line-height:1}
+.gsum .big small{font-size:14px;color:#C8D4C6;font-family:var(--body)}
+.gsum .brk{display:flex;gap:14px;margin-top:13px;flex-wrap:wrap}
+.gsum .bk{display:flex;align-items:center;gap:6px;font-size:12.5px;color:#DCE6DA}
+.gsum .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.gsum .ppl{margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.16);font-size:13px;color:#DCE6DA}
+.gsum .ppl b{color:var(--paper);font-family:var(--display);font-size:16px}
+.gfilters{display:flex;gap:7px;margin-bottom:14px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px}
+.gfilter{flex-shrink:0;border:1.3px solid var(--line);background:#fff;border-radius:99px;padding:7px 14px;font-size:12.5px;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap}
+.gfilter.on{border-color:var(--green);background:var(--green);color:var(--paper)}
+.ggroup{font-family:var(--display);font-size:14px;color:var(--green);margin:16px 0 8px;display:flex;align-items:center;gap:8px}
+.ggroup .line{flex:1;height:1px;background:var(--line)}
+.gitem{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:8px;cursor:pointer}
+.gitem .gav{width:38px;height:38px;border-radius:50%;background:var(--gold-soft);color:#7a6430;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:16px;flex-shrink:0}
+.gitem .gbd{flex:1;min-width:0}
+.gitem .gn{font-size:14px;font-weight:600;color:var(--ink)}
+.gitem .gm{font-size:11.5px;color:var(--muted);margin-top:1px}
+.gbadge{font-size:9.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:4px 9px;border-radius:99px;flex-shrink:0}
+.gbadge.yes{background:#E3F0E3;color:#2a7a3f}
+.gbadge.pending{background:var(--gold-soft);color:#7a6430}
+.gbadge.no{background:#F0E8E8;color:#9a5a5a}
+/* engrenagem de ajustes no hero */
+.gearbtn{position:absolute;top:12px;right:12px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.14);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--paper);z-index:2;transition:.15s}
+.gearbtn:active{background:rgba(255,255,255,.26)}
+.gstatus{display:flex;gap:8px}
+.gstatus button{flex:1;border:1.3px solid var(--line);background:#fff;border-radius:9px;padding:10px 6px;font-family:var(--body);font-size:12.5px;font-weight:700;color:var(--muted);cursor:pointer}
+.gstatus button.on[data-s=yes]{border-color:#2a7a3f;background:#E3F0E3;color:#2a7a3f}
+.gstatus button.on[data-s=pending]{border-color:var(--gold);background:var(--gold-soft);color:#7a6430}
+.gstatus button.on[data-s=no]{border-color:#9a5a5a;background:#F0E8E8;color:#9a5a5a}
 .hr{border:none;border-top:1px solid var(--line);margin:14px 0}
 .dn{font-family:var(--display)}
 button{font-family:var(--body);cursor:pointer}
@@ -714,7 +745,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
             <button data-s="fin"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="2.5" y="6" width="19" height="13" rx="2"/><path d="M2.5 10h19M7 15h4"/></svg>Dinheiro</button>
             <button data-s="forn" class="on"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M20 7h-4V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2H4a1.5 1.5 0 00-1.5 1.5V19A1.5 1.5 0 004 20.5h16A1.5 1.5 0 0021.5 19V8.5A1.5 1.5 0 0020 7zM10 7V5h4v2"/></svg>Fornec.</button>
             <button data-s="chk"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg>Tarefas</button>
-            <button data-s="set"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a7.7 7.7 0 00.1-6l-2.2.4a6 6 0 00-1.7-1.7l.4-2.2a7.7 7.7 0 00-6 0l.4 2.2a6 6 0 00-1.7 1.7L6.5 9a7.7 7.7 0 000 6l2.2-.4a6 6 0 001.7 1.7l-.4 2.2a7.7 7.7 0 006 0l-.4-2.2a6 6 0 001.7-1.7z"/></svg>Ajustes</button>
+            <button data-s="guests"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="9" cy="8" r="3"/><path d="M2.5 20a6.5 6.5 0 0113 0"/><path d="M16 5.5a3 3 0 010 5.8M21.5 20a6.5 6.5 0 00-4.5-6.2"/></svg>Convidados</button>
           </nav>
           <div class="dtoast" id="dmoToast"></div>
         
@@ -1051,6 +1082,9 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
     <!-- HOJE -->
     <section class="screen on" id="s-home">
       <div class="hero">
+        <button class="gearbtn" onclick="go('set')" aria-label="Ajustes">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a7.7 7.7 0 00.1-6l-2.2.4a6 6 0 00-1.7-1.7l.4-2.2a7.7 7.7 0 00-6 0l.4 2.2a6 6 0 00-1.7 1.7L6.5 9a7.7 7.7 0 000 6l2.2-.4a6 6 0 001.7 1.7l-.4 2.2a7.7 7.7 0 006 0l-.4-2.2a6 6 0 001.7-1.7z"/></svg>
+        </button>
         <div class="mono"><span id="monoTxt">&amp;</span></div>
         <div class="names" id="heroNames">—</div>
         <div class="place" id="heroPlace">—</div>
@@ -1144,6 +1178,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 
     <!-- AJUSTES -->
     <section class="screen" id="s-set">
+      <button class="back" onclick="go('home')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>Hoje</button>
       <h2 class="sec">Ajustes</h2>
       <p class="sub">Os dados do seu casamento, do seu jeito.</p>
       <div class="card">
@@ -1194,6 +1229,20 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
     </section>
 
     <!-- ANOTAÇÕES -->
+    <section class="screen" id="s-guests">
+      <h2 class="sec">Convidados</h2>
+      <p class="sub">Quem você quer ao seu lado no grande dia.</p>
+      <div id="guestSummary"></div>
+      <button class="add" onclick="openGuest()" style="margin:4px 0 16px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Adicionar convidado</button>
+      <div class="gfilters" id="guestFilters">
+        <button class="gfilter on" data-f="all" onclick="guestFilter('all')">Todos</button>
+        <button class="gfilter" data-f="yes" onclick="guestFilter('yes')">Confirmados</button>
+        <button class="gfilter" data-f="pending" onclick="guestFilter('pending')">Pendentes</button>
+        <button class="gfilter" data-f="no" onclick="guestFilter('no')">Não vão</button>
+      </div>
+      <div id="guestsBody"></div>
+    </section>
+
     <section class="screen" id="s-agenda">
       <button class="back" onclick="go('home')">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>
@@ -1230,8 +1279,8 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M20 7h-4V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2H4a1.5 1.5 0 00-1.5 1.5V19A1.5 1.5 0 004 20.5h16A1.5 1.5 0 0021.5 19V8.5A1.5 1.5 0 0020 7zM10 7V5h4v2"/></svg>Fornecedores</button>
     <button data-s="chk" onclick="go('chk')">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg>Tarefas</button>
-    <button data-s="set" onclick="go('set')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a7.7 7.7 0 00.1-6l-2.2.4a6 6 0 00-1.7-1.7l.4-2.2a7.7 7.7 0 00-6 0l.4 2.2a6 6 0 00-1.7 1.7L6.5 9a7.7 7.7 0 000 6l2.2-.4a6 6 0 001.7 1.7l-.4 2.2a7.7 7.7 0 006 0l-.4-2.2a6 6 0 001.7-1.7z"/></svg>Ajustes</button>
+    <button data-s="guests" onclick="go('guests')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="9" cy="8" r="3"/><path d="M2.5 20a6.5 6.5 0 0113 0"/><path d="M16 5.5a3 3 0 010 5.8M21.5 20a6.5 6.5 0 00-4.5-6.2"/></svg>Convidados</button>
   </nav>
 
   <div class="toast" id="toast"></div>
@@ -1313,6 +1362,36 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       </div>
       <button class="btn p full" onclick="saveQuote()">Salvar orçamento</button>
       <button class="btn d full" id="qDel" style="margin-top:8px;display:none" onclick="delQuote()">Excluir orçamento</button>
+    </div>
+
+    <div class="sheet" id="sh-guest" style="display:none">
+      <h3 id="gsTitle">Novo convidado</h3>
+      <p class="sub">Adicione quem você quer convidar. Pode confirmar a presença depois.</p>
+      <div class="f"><label>Nome</label><input id="gsName" placeholder="Ex.: Tia Marta, João e Maria…"></div>
+      <div class="f"><label>Grupo <span class="opt">(opcional)</span></label>
+        <div class="fchips" id="gsGroups">
+          <span class="fchip" onclick="pickGroup(this)">Família da noiva</span>
+          <span class="fchip" onclick="pickGroup(this)">Família do noivo</span>
+          <span class="fchip" onclick="pickGroup(this)">Amigos</span>
+          <span class="fchip" onclick="pickGroup(this)">Trabalho</span>
+          <span class="fchip" onclick="pickGroup(this)">Padrinhos</span>
+        </div>
+        <input id="gsGroupOther" placeholder="Ou digite um grupo…" style="margin-top:8px">
+      </div>
+      <div class="frow">
+        <div class="f"><label>Acompanhantes <span class="opt">(além do convidado)</span></label><input id="gsComp" type="number" inputmode="numeric" placeholder="0" min="0"></div>
+        <div class="f"><label>WhatsApp <span class="opt">(opcional)</span></label><input id="gsPhone" inputmode="tel" placeholder="48 99999-0000"></div>
+      </div>
+      <div class="f"><label>Presença</label>
+        <div class="gstatus" id="gsStatus">
+          <button type="button" data-s="pending" class="on" onclick="pickStatus('pending')">Pendente</button>
+          <button type="button" data-s="yes" onclick="pickStatus('yes')">Confirmado</button>
+          <button type="button" data-s="no" onclick="pickStatus('no')">Não vai</button>
+        </div>
+      </div>
+      <div class="f"><label>Observação <span class="opt">(opcional)</span></label><textarea id="gsNote" placeholder="Ex.: restrição alimentar, vem de outra cidade…"></textarea></div>
+      <button class="btn p full" onclick="saveGuest()">Salvar convidado</button>
+      <button class="btn d full" id="gsDel" style="margin-top:8px;display:none" onclick="delGuest()">Excluir convidado</button>
     </div>
 
     <div class="sheet" id="sh-event" style="display:none">
@@ -1617,7 +1696,7 @@ async function initAuth(){
 
 /* =================== ESTADO + PERSISTÊNCIA =================== */
 const KEY='sim-noivas-v1';
-let state={profile:null,exp:[],cats:[],tasks:[],notes:[]};
+let state={profile:null,exp:[],cats:[],tasks:[],notes:[],guests:[]};
 let memOnly=false;
 
 async function load(){
@@ -1626,6 +1705,8 @@ async function load(){
     if(r&&r.value) state=JSON.parse(r.value);
   }catch(e){ /* primeira vez ou storage indisponível */ }
   state.notes=state.notes||[];
+  state.guests=state.guests||[];
+  state.events=state.events||[];
   (state.cats||[]).forEach(c=>c.quotes.forEach(q=>{ if(q.fav&&!q.stars) q.stars=5; delete q.fav; }));
   if(!window.storage) memOnly=true;
 }
@@ -1674,6 +1755,7 @@ function go(s){
   document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('on',b.dataset.s===s));
   $('screens').scrollTop=0;
   if(s==='set') fillSettings();
+  if(s==='guests') renderGuests();
 }
 function openSettings(){ go('set'); }
 
@@ -2972,6 +3054,100 @@ function delTask(){
 }
 
 /* =================== ANOTAÇÕES =================== */
+/* =================== CONVIDADOS =================== */
+let editGuest=null, guestFilterMode='all', gsStatus='pending';
+function renderGuests(){
+  const gs=state.guests||[];
+  const yes=gs.filter(g=>g.status==='yes');
+  const pend=gs.filter(g=>(g.status||'pending')==='pending');
+  const no=gs.filter(g=>g.status==='no');
+  const headcount=yes.reduce((a,g)=>a+1+(parseInt(g.comp)||0),0);
+  const sum=$('guestSummary');
+  if(gs.length){
+    sum.innerHTML=`<div class="gsum">
+      <div class="big">${yes.length}<small> de ${gs.length} confirmados</small></div>
+      <div class="brk">
+        <span class="bk"><span class="dot" style="background:#7fd49a"></span>${yes.length} confirmados</span>
+        <span class="bk"><span class="dot" style="background:#e9c877"></span>${pend.length} pendentes</span>
+        <span class="bk"><span class="dot" style="background:#dd9b9b"></span>${no.length} não vão</span>
+      </div>
+      <div class="ppl">Total de <b>${headcount}</b> ${headcount===1?'pessoa confirmada':'pessoas confirmadas'} com acompanhantes — o número para fechar com o buffet.</div>
+    </div>`;
+  } else { sum.innerHTML=''; }
+  document.querySelectorAll('#guestFilters .gfilter').forEach(b=>b.classList.toggle('on',b.dataset.f===guestFilterMode));
+  const body=$('guestsBody');
+  if(!gs.length){
+    body.innerHTML=`<div class="empty">${ICONS.ring}<div class="dn">Nenhum convidado ainda</div><p>Comece a montar sua lista. Adicione nomes, organize por grupo e marque quem confirmou presença.</p></div>`;
+    return;
+  }
+  let list = guestFilterMode==='all' ? gs : gs.filter(g=>(g.status||'pending')===guestFilterMode);
+  if(!list.length){
+    body.innerHTML=`<div class="empty" style="padding:24px">${ICONS.ring}<div class="dn">Ninguém nesse filtro</div><p>Toque em "Todos" para ver a lista completa.</p></div>`;
+    return;
+  }
+  const groups={};
+  list.forEach(g=>{ const k=g.group||'Sem grupo'; (groups[k]=groups[k]||[]).push(g); });
+  let html='';
+  Object.keys(groups).forEach(grp=>{
+    html+=`<div class="ggroup"><span>${esc(grp)}</span><span class="line"></span></div>`;
+    html+=groups[grp].map(g=>{
+      const st=g.status||'pending';
+      const label=st==='yes'?'Confirmado':st==='no'?'Não vai':'Pendente';
+      const comp=parseInt(g.comp)||0;
+      return `<div class="gitem" onclick="openGuest('${g.id}')">
+        <div class="gav">${esc((g.name[0]||'?').toUpperCase())}</div>
+        <div class="gbd"><div class="gn">${esc(g.name)}</div>
+        <div class="gm">${comp>0?('+'+comp+' acompanhante'+(comp>1?'s':'')):'sem acompanhante'}${g.note?' · '+esc(g.note):''}</div></div>
+        <span class="gbadge ${st}">${label}</span>
+      </div>`;
+    }).join('');
+  });
+  body.innerHTML=html;
+}
+function guestFilter(f){ guestFilterMode=f; renderGuests(); }
+function pickGroup(el){ document.querySelectorAll('#gsGroups .fchip').forEach(c=>c.classList.remove('on')); el.classList.add('on'); $('gsGroupOther').value=''; }
+function pickStatus(st){ gsStatus=st; document.querySelectorAll('#gsStatus button').forEach(b=>b.classList.toggle('on',b.dataset.s===st)); }
+function openGuest(id){
+  editGuest = id ? (state.guests||[]).find(g=>g.id===id) : null;
+  $('gsTitle').textContent = editGuest ? 'Editar convidado' : 'Novo convidado';
+  $('gsName').value = editGuest?.name||'';
+  $('gsComp').value = editGuest?.comp||'';
+  $('gsPhone').value = editGuest?.phone||'';
+  $('gsNote').value = editGuest?.note||'';
+  document.querySelectorAll('#gsGroups .fchip').forEach(c=>c.classList.remove('on'));
+  $('gsGroupOther').value='';
+  const grp=editGuest?.group||'';
+  if(grp){
+    let matched=false;
+    document.querySelectorAll('#gsGroups .fchip').forEach(c=>{ if(c.textContent.trim()===grp){ c.classList.add('on'); matched=true; } });
+    if(!matched) $('gsGroupOther').value=grp;
+  }
+  pickStatus(editGuest?.status||'pending');
+  $('gsDel').style.display = editGuest?'block':'none';
+  openSheet('sh-guest');
+}
+function saveGuest(){
+  const name=$('gsName').value.trim();
+  if(!name){ toast('Qual o nome do convidado?'); return; }
+  let group='';
+  const chip=document.querySelector('#gsGroups .fchip.on');
+  if(chip) group=chip.textContent.trim();
+  if($('gsGroupOther').value.trim()) group=$('gsGroupOther').value.trim();
+  const data={name,group,comp:parseInt($('gsComp').value)||0,phone:$('gsPhone').value.trim(),note:$('gsNote').value.trim(),status:gsStatus};
+  if(!state.guests) state.guests=[];
+  if(editGuest){ Object.assign(editGuest,data); }
+  else { state.guests.push({id:uid(),...data}); }
+  editGuest=null;
+  persist(); closeSheet(); renderGuests();
+  toast('Convidado salvo');
+}
+function delGuest(){
+  if(editGuest) state.guests=state.guests.filter(g=>g!==editGuest);
+  editGuest=null;
+  persist(); closeSheet(); renderGuests();
+  toast('Convidado removido');
+}
+
 /* =================== AGENDA =================== */
 let editEv=null;
 function openAgenda(){
