@@ -1551,8 +1551,11 @@ function showLogin(msg){
   var lg=document.getElementById('login'); if(lg) lg.style.display='flex';
   if(msg){ var m=document.getElementById('lgMsg'); if(m) m.textContent=msg; }
 }
+window.__trace=[];
+function T(m){ window.__trace.push(m+' @'+Date.now()%100000); }
 async function initAuth(){
   try{
+    T('initAuth inicio');
     var sp=document.getElementById('splash'); if(sp) sp.style.display='flex';
     if(!window.supabase){ showLogin('Não consegui carregar a conexão. Verifique a internet e recarregue.'); return; }
     if(!sb||SUPABASE_URL.includes('COLE_AQUI')){ showLogin('Configuração pendente do servidor.'); return; }
@@ -1562,8 +1565,10 @@ async function initAuth(){
       new Promise((res)=>setTimeout(()=>res('TIMEOUT'),6000))
     ]);
     if(session==='TIMEOUT'){ showLogin('A conexão demorou. Toque em Entrar para tentar de novo.'); return; }
-    if(session){ sbUser=session.user; await bootApp(); }
-    else { showLogin(); }
+    T('sessao='+(session==='TIMEOUT'?'timeout':(session?'sim':'nao')));
+    if(session==='TIMEOUT'){ showLogin('A conexão demorou. Toque em Entrar para tentar de novo.'); return; }
+    if(session){ sbUser=session.user; T('vai bootApp'); await bootApp(); T('bootApp terminou'); }
+    else { T('showLogin'); showLogin(); }
   }catch(e){
     console.error('initAuth',e);
     showLogin('Não consegui conectar agora. Recarregue a página, por favor.');
@@ -2998,15 +3003,24 @@ function askConfirm(title,msg,onYes,yesLabel){
 /* =================== INIT =================== */
 function renderAll(){ renderHome(); renderFin(); renderForn(); renderChk(); }
 async function bootApp(){
-  try{ await load(); }catch(e){ console.error('load',e); }
+  T('bootApp: vai load');
+  try{ await load(); T('load ok, profile='+(state.profile?'sim':'nao')); }catch(e){ T('load ERRO:'+e.message); console.error('load',e); }
   try{ ['obBudget','stBudget','exVal','qVal','pcVal'].forEach(id=>maskMoney($(id))); }catch(e){}
   try{ $('fileQuote').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast('Arquivo recebido — processando…'); handleQuoteFile(e.target.files[0]); } }); }catch(e){}
   try{ $('fileContract').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast('Contrato recebido — processando…'); handleContractFile(e.target.files[0]); } }); }catch(e){}
   var sp=document.getElementById('splash'); if(sp) sp.style.display='none';
+  T('splash escondida');
   try{
-    if(!state.profile){ showOnboarding(); }
-    else { renderAll(); showTour(); }
-  }catch(e){ console.error('render',e); showOnboarding(); }
+    if(!state.profile){ T('sem perfil: onboarding'); showOnboarding(); }
+    else { T('com perfil: renderAll'); renderAll(); T('renderAll ok'); showTour(); T('showTour ok'); }
+  }catch(e){ T('render ERRO:'+e.message); window.__simErr('Erro ao montar: '+e.message+'\n\nRastro:\n'+window.__trace.join('\n')); showOnboarding(); }
+  T('bootApp fim');
+  // socorro: se depois de 1.2s nada estiver visível, mostrar o rastro
+  setTimeout(function(){
+    var vis=['login','onb','screens'].map(function(id){var e=document.getElementById(id);if(!e)return id+'?';var st=getComputedStyle(e);return id+'='+(st.display!=='none'&&e.offsetHeight>0?'VISIVEL':'oculto');});
+    var algoVisivel=vis.some(function(v){return v.indexOf('VISIVEL')>=0;});
+    if(!algoVisivel){ window.__simErr('Nada visível após boot.\n\nCamadas: '+vis.join(', ')+'\n\nRastro do boot:\n'+window.__trace.join('\n')); }
+  },1200);
 }
 try{ initAuth(); }catch(e){
   console.error('boot',e);
