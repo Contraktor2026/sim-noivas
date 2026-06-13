@@ -98,6 +98,12 @@ body{font-family:var(--body);background:#11231A;color:var(--ink);display:flex;ju
 /* atalho da agenda na home */
 .agshort{display:flex;align-items:center;gap:11px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin-bottom:9px;cursor:pointer}
 .agshort .agi-ic{width:40px;height:40px;border-radius:10px;background:var(--green);color:var(--paper);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+/* cabeçalho de mês na agenda */
+.agmonth{display:flex;align-items:center;gap:10px;margin:18px 0 10px}
+.agmonth:first-child{margin-top:2px}
+.agmonth .ml{font-family:var(--display);font-size:15px;color:var(--green);text-transform:capitalize;white-space:nowrap}
+.agmonth .my{font-size:12px;color:var(--gold);font-weight:700}
+.agmonth .line{flex:1;height:1px;background:var(--line)}
 .hr{border:none;border-top:1px solid var(--line);margin:14px 0}
 .dn{font-family:var(--display)}
 button{font-family:var(--body);cursor:pointer}
@@ -3026,13 +3032,29 @@ function renderAgenda(){
       <svg class="chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
     </div>`;
   };
+  const anoAtual=new Date().getFullYear();
+  const groupByMonth=(list)=>{
+    let out='', mesAtual='';
+    list.forEach(i=>{
+      const d=new Date(i.date+'T12:00:00');
+      const chave=d.getFullYear()+'-'+d.getMonth();
+      if(chave!==mesAtual){
+        mesAtual=chave;
+        const nomeMes=d.toLocaleDateString('pt-BR',{month:'long'});
+        const ano=d.getFullYear();
+        out+=`<div class="agmonth"><span class="ml">${nomeMes}</span>${ano!==anoAtual?`<span class="my">${ano}</span>`:''}<span class="line"></span></div>`;
+      }
+      out+=row(i);
+    });
+    return out;
+  };
   if(futuros.length){
-    html+=`<div class="cap gold" style="margin-bottom:8px">Próximos</div>`;
-    html+=futuros.map(row).join('');
+    html+=`<div class="cap gold" style="margin-bottom:4px">Próximos</div>`;
+    html+=groupByMonth(futuros);
   }
   if(passados.length){
-    html+=`<div class="cap" style="margin:18px 0 8px">Já passou</div>`;
-    html+=passados.map(row).join('');
+    html+=`<div class="cap" style="margin:22px 0 4px">Já passou</div>`;
+    html+=groupByMonth(passados);
   }
   $('agendaBody').innerHTML=html;
 }
