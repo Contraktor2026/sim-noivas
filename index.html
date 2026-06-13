@@ -2802,7 +2802,6 @@ function personalizedSuggested(){
   // categorias marcadas no cadastro que o roteiro base não cobre
   const catNames=(state.cats||[]).map(c=>c.name.toLowerCase());
   if(catNames.some(n=>n.includes('beleza'))) list.push([5,'Escolher equipe de beleza: cabelo e maquiagem']);
-  if(catNames.some(n=>n.includes('cerimonial'))) doneSetKeep=null; // já coberto no base
 
   return {list,doneSet};
 }
