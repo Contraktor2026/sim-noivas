@@ -687,7 +687,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 
           <div class="dscene" id="dsc8">
             <div class="dlive"><i></i> SIGA O ROTEIRO</div>
-            <h3 class="dn" style="font-size:19px;color:var(--green);margin:9px 0 8px">Sua lista</h3>
+            <h3 class="dn" style="font-size:19px;color:var(--green);margin:9px 0 8px">Suas tarefas</h3>
             <div class="phh"><div class="dn" style="font-size:14.5px">8 a 6 meses antes</div><span>2 de 3</span></div>
             <div class="task" id="dmoTask"><div class="ck"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="tt" style="font-size:13px">Fechar o buffet</div></div>
             <div class="task done"><div class="ck"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="tt" style="font-size:13px">Definir a paleta de cores</div></div>
@@ -713,7 +713,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
             <button data-s="home"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M3 11l9-7 9 7v9a1 1 0 01-1 1h-5v-6h-6v6H4a1 1 0 01-1-1z"/></svg>Hoje</button>
             <button data-s="fin"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="2.5" y="6" width="19" height="13" rx="2"/><path d="M2.5 10h19M7 15h4"/></svg>Dinheiro</button>
             <button data-s="forn" class="on"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M20 7h-4V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2H4a1.5 1.5 0 00-1.5 1.5V19A1.5 1.5 0 004 20.5h16A1.5 1.5 0 0021.5 19V8.5A1.5 1.5 0 0020 7zM10 7V5h4v2"/></svg>Fornec.</button>
-            <button data-s="chk"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg>Lista</button>
+            <button data-s="chk"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg>Tarefas</button>
             <button data-s="set"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a7.7 7.7 0 00.1-6l-2.2.4a6 6 0 00-1.7-1.7l.4-2.2a7.7 7.7 0 00-6 0l.4 2.2a6 6 0 00-1.7 1.7L6.5 9a7.7 7.7 0 000 6l2.2-.4a6 6 0 001.7 1.7l-.4 2.2a7.7 7.7 0 006 0l-.4-2.2a6 6 0 001.7-1.7z"/></svg>Ajustes</button>
           </nav>
           <div class="dtoast" id="dmoToast"></div>
@@ -1129,7 +1129,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 
     <!-- LISTA -->
     <section class="screen" id="s-chk">
-      <h2 class="sec">Lista da noiva</h2>
+      <h2 class="sec">Tarefas</h2>
       <p class="sub">Seu passo a passo até o altar.</p>
       <div class="card soft" id="chkSummary" style="display:none">
         <div class="row fine"><span><b id="chkPct">0%</b> concluído</span><span id="chkNums"></span></div>
@@ -1229,7 +1229,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
     <button data-s="forn" onclick="go('forn')">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M20 7h-4V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2H4a1.5 1.5 0 00-1.5 1.5V19A1.5 1.5 0 004 20.5h16A1.5 1.5 0 0021.5 19V8.5A1.5 1.5 0 0020 7zM10 7V5h4v2"/></svg>Fornecedores</button>
     <button data-s="chk" onclick="go('chk')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg>Lista</button>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg>Tarefas</button>
     <button data-s="set" onclick="go('set')">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a7.7 7.7 0 00.1-6l-2.2.4a6 6 0 00-1.7-1.7l.4-2.2a7.7 7.7 0 00-6 0l.4 2.2a6 6 0 00-1.7 1.7L6.5 9a7.7 7.7 0 000 6l2.2-.4a6 6 0 001.7 1.7l-.4 2.2a7.7 7.7 0 006 0l-.4-2.2a6 6 0 001.7-1.7z"/></svg>Ajustes</button>
   </nav>
@@ -2866,7 +2866,7 @@ function loadSuggested(mode, feitos){
 function renderChk(){
   if(!state.tasks.length){
     $('chkSummary').style.display='none';
-    $('chkBody').innerHTML=`<div class="empty">${ICONS.ring}<div class="dn">Sua lista está vazia</div><p>Escolha por onde começar. Eu organizo as etapas conforme o tempo que falta até a sua data.</p>
+    $('chkBody').innerHTML=`<div class="empty">${ICONS.ring}<div class="dn">Você ainda não tem tarefas</div><p>Escolha por onde começar. Eu organizo as etapas conforme o tempo que falta até a sua data.</p>
     <div class="card" style="text-align:left;margin-top:16px;border-color:rgba(168,133,59,.4)">
       <div class="dn" style="font-size:16px;color:var(--green)">Roteiro completo</div>
       <p class="fine" style="margin:4px 0 10px">Todas as etapas do casamento, do orçamento ao altar. Para quem quer cuidar de cada detalhe.</p>
@@ -3142,7 +3142,7 @@ function delNote(){
 
 /* =================== GUIA DE BOAS-VINDAS =================== */
 const TOUR=[
- {t:'Bem-vinda ao SIM.',b:'Embaixo ficam as 5 áreas do app: <b>Hoje</b> (seu resumo), <b>Dinheiro</b>, <b>Fornecedores</b>, <b>Lista</b> e <b>Ajustes</b>. Toque nos ícones para ir e voltar quando quiser.',
+ {t:'Bem-vinda ao SIM.',b:'Embaixo ficam as 5 áreas do app: <b>Hoje</b> (seu resumo), <b>Dinheiro</b>, <b>Fornecedores</b>, <b>Tarefas</b> e <b>Ajustes</b>. Toque nos ícones para ir e voltar quando quiser.',
   i:'<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 11l9-7 9 7v9a1 1 0 01-1 1h-5v-6h-6v6H4a1 1 0 01-1-1z"/></svg>'},
  {t:'Guarde os orçamentos',b:'Em <b>Fornecedores</b>, crie uma categoria (Buffet, Fotografia…) e toque em <b>+ Adicionar orçamento</b>. Dica: cole a mensagem do WhatsApp do fornecedor que eu preencho os dados para você.',
   i:'<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg>'},
@@ -3150,7 +3150,7 @@ const TOUR=[
   i:'<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg>'},
  {t:'Dinheiro sob controle',b:'Em <b>Dinheiro</b>, lance despesas com valor e vencimento — só digitar os números, a vírgula entra sozinha. Eu organizo por mês e aviso na tela <b>Hoje</b> o que está chegando.',
   i:'<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="6" width="19" height="13" rx="2"/><circle cx="12" cy="12.5" r="3"/></svg>'},
- {t:'Sua lista e anotações',b:'Na <b>Lista</b>, carregue o roteiro de tarefas adaptado ao tempo que falta. E a <b>caneta no topo</b> guarda qualquer anotação solta. Pronta para começar?',
+ {t:'Suas tarefas e anotações',b:'Em <b>Tarefas</b>, carregue o roteiro adaptado ao tempo que falta. E a <b>caneta no topo</b> guarda qualquer anotação solta. Pronta para começar?',
   i:'<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 3l4 4L8 20l-5 1 1-5z"/></svg>'},
 ];
 let tourIdx=0;
