@@ -42,6 +42,12 @@ body{font-family:var(--body);background:#11231A;color:var(--ink);display:flex;ju
 .cap{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:600}
 .cap.gold{color:var(--gold)}
 /* cabeçalhos das seções de fornecedores */
+/* abas internas de fornecedores */
+.ftabs{display:flex;background:#EFEBE0;border-radius:12px;padding:4px;gap:4px;margin-bottom:18px}
+.ftab{flex:1;border:none;background:transparent;padding:10px 8px;border-radius:9px;font-family:var(--body);font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:.15s}
+.ftab .cnt{font-size:11px;min-width:18px;height:18px;border-radius:9px;background:rgba(0,0,0,.08);color:inherit;display:inline-flex;align-items:center;justify-content:center;padding:0 5px}
+.ftab.on{background:var(--paper);color:var(--green);box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.ftab.on .cnt{background:var(--green);color:var(--paper)}
 .fsec{display:flex;align-items:center;gap:9px;margin:6px 0 12px}
 .fsec .ico{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .fsec .tit{font-family:var(--display);font-size:19px;line-height:1.1}
@@ -55,6 +61,18 @@ body{font-family:var(--body);background:#11231A;color:var(--ink);display:flex;ju
 .fwrap.hired{background:linear-gradient(180deg,rgba(31,61,43,.04),transparent);border-radius:14px;padding:12px 12px 4px;margin:0 -12px 8px}
 .fwrap.quote{padding-top:8px}
 .fdivider{height:1px;background:var(--line);margin:20px 0 18px}
+/* cards grandes dos contratados (destaque) */
+.hcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:11px;cursor:pointer;position:relative;overflow:hidden}
+.hcard::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--green)}
+.hcard .top{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.hcard .av{width:46px;height:46px;border-radius:12px;background:var(--green);color:var(--paper);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:20px;flex-shrink:0}
+.hcard .nm{font-family:var(--display);font-size:18px;color:var(--ink);line-height:1.15}
+.hcard .ct{font-size:12px;color:var(--muted);margin-top:2px;display:flex;align-items:center;gap:5px}
+.hcard .badge{display:inline-flex;align-items:center;gap:4px;background:var(--green);color:var(--paper);font-size:9.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:3px 8px;border-radius:99px}
+.hcard .val{font-family:var(--display);font-size:20px;color:var(--green);margin-left:auto}
+.hcard .payrow{display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--muted);padding-top:11px;border-top:1px solid #F0EDE3}
+.hcard .paybar{height:6px;border-radius:99px;background:#EFEBE0;overflow:hidden;margin-top:7px}
+.hcard .paybar i{display:block;height:100%;background:var(--gold);border-radius:99px}
 .hr{border:none;border-top:1px solid var(--line);margin:14px 0}
 .dn{font-family:var(--display)}
 button{font-family:var(--body);cursor:pointer}
@@ -1037,6 +1055,10 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
     <section class="screen" id="s-forn">
       <h2 class="sec">Fornecedores</h2>
       <p class="sub">Seus contratos fechados e as cotações em andamento.</p>
+      <div class="ftabs" id="fornTabs">
+        <button class="ftab on" data-tab="hired" onclick="fornTab('hired')">Contratados <span class="cnt" id="cntHired">0</span></button>
+        <button class="ftab" data-tab="quote" onclick="fornTab('quote')">Em cotação <span class="cnt" id="cntQuote">0</span></button>
+      </div>
       <div id="fornBody"></div>
     </section>
 
@@ -1800,57 +1822,78 @@ const SPARK='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke=
 
 /* ---- visão geral ---- */
 function renderForn(){
-  let html='';
-
-  // contratados
+  // contar para os badges das abas
   const hired=[];
   state.cats.forEach(c=>c.quotes.filter(q=>q.win).forEach(q=>hired.push({c,q})));
-  if(hired.length){
-    html+=`<div class="fwrap hired">
-    <div class="fsec hired">
-      <div class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12l5 5L20 6"/></svg></div>
-      <div><div class="tit">Já contratados</div><div class="sub">${hired.length} ${hired.length>1?'fornecedores fechados':'fornecedor fechado'} · pode comemorar</div></div>
-    </div>
-    <div class="card" style="padding:6px 14px;margin-bottom:0">`+hired.map(({c,q})=>{
-      const linked=state.exp.filter(e=>e.vendorId===q.id);
-      const paid=linked.filter(e=>e.paid).reduce((a,e)=>a+e.val,0);
-      const m=linked.length? `${brl(paid)} pagos de ${brl(q.val)}` : 'monte o plano de pagamento';
-      return `<div class="li" onclick="openVendor('${c.id}','${q.id}')">
-        <div class="ic" style="font-family:var(--display);font-size:15px">${esc((q.name[0]||'?').toUpperCase())}</div>
-        <div class="bd"><div class="t">${esc(q.name)}</div><div class="m">${esc(c.name)} · ${m}</div></div>
-        <div class="v">${brl(q.val)}</div>
-      </div>`;
-    }).join('')+`</div>`;
-
-    // economia
-    let sav=0;
-    state.cats.forEach(c=>{
-      const w=c.quotes.find(q=>q.win);
-      if(w&&c.quotes.length>=2){ const avg=c.quotes.reduce((a,q)=>a+q.val,0)/c.quotes.length; sav+=Math.max(0,avg-w.val); }
-    });
-    if(sav>0) html+=`<div class="card green" style="margin-top:10px;margin-bottom:0"><div class="cap gold">Economia das suas escolhas</div>
-      <div class="num">${brl(Math.round(sav))}</div>
-      <div class="fine">comparando o contratado com a média dos orçamentos recebidos</div></div>`;
-    html+=`</div>`; // fecha .fwrap.hired
-  }
-
-  // em cotação
   const open=state.cats.filter(c=>!c.quotes.some(q=>q.win));
-  if(hired.length && open.length) html+=`<div class="fdivider"></div>`;
-  html+=`<div class="fwrap quote">`;
-  if(open.length || !hired.length){
-    html+=`<div class="fsec quote">
-      <div class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M7 12h10M10 18h4"/></svg></div>
-      <div><div class="tit">Em cotação</div><div class="sub">${open.length? 'comparando orçamentos para decidir' : 'comece a guardar seus orçamentos'}</div></div>
-    </div>`;
+  if($('cntHired')) $('cntHired').textContent=hired.length;
+  if($('cntQuote')) $('cntQuote').textContent=open.length;
+
+  const tab=state.fornTab||'hired';
+  // refletir aba ativa nos botões
+  document.querySelectorAll('#fornTabs .ftab').forEach(b=>b.classList.toggle('on',b.dataset.tab===tab));
+
+  let html='';
+  if(tab==='hired'){
+    html+=renderHiredTab(hired);
+  } else {
+    html+=renderQuoteTab(open);
   }
-  if(!open.length && !hired.length){
+  $('fornBody').innerHTML=html;
+}
+
+function renderHiredTab(hired){
+  let html='';
+  if(!hired.length){
+    return `<div class="empty">${ICONS.ring}<div class="dn">Nenhum contratado ainda</div><p>Quando você fechar um fornecedor na aba <b>Em cotação</b>, ele aparece aqui — com o plano de pagamento e os contratos guardados.</p>
+    <button class="btn g" style="margin-top:14px" onclick="fornTab('quote')">Ver cotações em andamento</button></div>`;
+  }
+  // cards grandes, um por contratado
+  html+=hired.map(({c,q})=>{
+    const linked=state.exp.filter(e=>e.vendorId===q.id);
+    const paid=linked.filter(e=>e.paid).reduce((a,e)=>a+e.val,0);
+    const pct=q.val>0?Math.min(100,Math.round(paid/q.val*100)):0;
+    const payInfo = linked.length
+      ? `<span>${brl(paid)} de ${brl(q.val)}</span><span style="color:var(--green);font-weight:700">${pct}% pago</span>`
+      : `<span>Monte o plano de pagamento</span><span style="color:var(--gold)">›</span>`;
+    return `<div class="hcard" onclick="openVendor('${c.id}','${q.id}')">
+      <div class="top">
+        <div class="av">${esc((q.name[0]||'?').toUpperCase())}</div>
+        <div style="flex:1;min-width:0">
+          <div class="nm">${esc(q.name)}</div>
+          <div class="ct"><span class="badge"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6"/></svg>${esc(c.name)}</span></div>
+        </div>
+        <div class="val">${brl(q.val)}</div>
+      </div>
+      <div class="payrow">${payInfo}</div>
+      ${linked.length?`<div class="paybar"><i style="width:${pct}%"></i></div>`:''}
+    </div>`;
+  }).join('');
+
+  // economia (destaque, no fim dos contratados)
+  let sav=0;
+  state.cats.forEach(c=>{
+    const w=c.quotes.find(q=>q.win);
+    if(w&&c.quotes.length>=2){ const avg=c.quotes.reduce((a,q)=>a+q.val,0)/c.quotes.length; sav+=Math.max(0,avg-w.val); }
+  });
+  if(sav>0) html+=`<div class="card green" style="margin-top:4px"><div class="cap gold">Economia das suas escolhas</div>
+    <div class="num">${brl(Math.round(sav))}</div>
+    <div class="fine">comparando o contratado com a média dos orçamentos recebidos</div></div>`;
+  return html;
+}
+
+function renderQuoteTab(open){
+  let html='';
+  const hasCats=state.cats.length>0;
+  if(!open.length && !hasCats){
     html+=`<div class="howto">
       <div class="st"><b>1</b><span class="tx">Crie uma categoria — Buffet, Fotografia, Decoração…</span></div>
       <div class="st"><b>2</b><span class="tx">Guarde cada orçamento que receber: digitando ou <strong>anexando a foto/PDF</strong>, que o app preenche sozinho</span></div>
       <div class="st"><b>3</b><span class="tx">Avalie com estrelas — atendimento, estilo, indicação — e compare além do preço</span></div>
       <div class="st"><b>4</b><span class="tx">Contrate — nasce a página do contrato, com parcelas</span></div>
     </div>`;
+  } else if(!open.length){
+    html+=`<div class="empty" style="padding:30px 16px">${ICONS.ring}<div class="dn">Tudo contratado!</div><p>Você não tem cotações em aberto. Quer adicionar um novo fornecedor para cotar?</p></div>`;
   }
   if(open.length){
     html+=open.map(c=>{
@@ -1872,12 +1915,15 @@ function renderForn(){
         <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
       </div>`;
     }).join('');
-  }else if(hired.length){
-    html+=`<p class="fine" style="margin-bottom:10px">Nenhuma cotação em aberto.</p>`;
   }
   html+=`<button class="add" onclick="openSheet('sh-cat')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Nova categoria</button>`;
-  html+=`</div>`; // fecha .fwrap.quote
-  $('fornBody').innerHTML=html;
+  return html;
+}
+
+function fornTab(tab){
+  state.fornTab=tab;
+  renderForn();
+  $('screens').scrollTop=0;
 }
 
 /* ---- página da categoria ---- */
