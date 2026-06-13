@@ -10,6 +10,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="manifest" href="./manifest.json">
 <meta name="theme-color" content="#1F3D2B">
+<link rel="icon" type="image/png" href="./icon-192.png">
 <link rel="apple-touch-icon" href="./icon-180.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -247,6 +248,8 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 .howto .st .tx{flex:1;line-height:1.5}
 .howto .st .tx strong{color:#4c493e;font-weight:700}
 .fileln{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--green);background:var(--green-soft);border:none;border-radius:8px;padding:7px 11px;cursor:pointer}
+.rdot{display:inline-block;color:var(--gold);line-height:0}
+.rdot svg{height:.62em;width:auto;vertical-align:-.01em;margin-left:.07em}
 #login .brandring{width:96px;height:96px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;position:relative;color:#C9A961}
 #login .brandring svg{position:absolute;inset:0;width:100%;height:100%}
 #login .brandring span{font-family:'Marcellus',serif;font-size:32px;color:#FAF9F5;letter-spacing:1px;position:relative}
@@ -366,8 +369,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
   <!-- ============ LOGIN ============ -->
   <div class="onb" id="login" style="display:none;z-index:58">
     <div class="top">
-      <div class="brandring"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M 50.0 6.0 A 9.8 9.8 0 0 1 66.8 9.3 A 9.8 9.8 0 0 1 81.1 18.9 A 9.8 9.8 0 0 1 90.7 33.2 A 9.8 9.8 0 0 1 94.0 50.0 A 9.8 9.8 0 0 1 90.7 66.8 A 9.8 9.8 0 0 1 81.1 81.1 A 9.8 9.8 0 0 1 66.8 90.7 A 9.8 9.8 0 0 1 50.0 94.0 A 9.8 9.8 0 0 1 33.2 90.7 A 9.8 9.8 0 0 1 18.9 81.1 A 9.8 9.8 0 0 1 9.3 66.8 A 9.8 9.8 0 0 1 6.0 50.0 A 9.8 9.8 0 0 1 9.3 33.2 A 9.8 9.8 0 0 1 18.9 18.9 A 9.8 9.8 0 0 1 33.2 9.3 A 9.8 9.8 0 0 1 50.0 6.0 Z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="50" cy="50" r="35" fill="none" stroke="currentColor" stroke-width="1" opacity=".7"/><path d="M50 9.5 l1.6 3.4 3.4 1.6 -3.4 1.6 -1.6 3.4 -1.6 -3.4 -3.4 -1.6 3.4 -1.6 Z" fill="currentColor"/></svg><span>S<i>.</i></span></div>
-      <div class="wm">SIM<i>.</i></div>
+      <div class="wm">SIM<span class="rdot"><svg viewBox="0 0 20 28" aria-hidden="true"><path d="M10 2.5 l3 4.2 -3 4.2 -3 -4.2 Z" fill="currentColor"/><circle cx="10" cy="19" r="6.8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></span></div>
       <div class="tagline">Você disse sim.<br>O resto, a gente organiza juntas.</div>
       <svg class="vine" width="200" height="24" viewBox="0 0 200 24" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true">
   <path d="M6 12 H78 M122 12 H194"/>
@@ -671,7 +673,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
           </div>
 
           <div class="dscene" id="dsc9" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center">
-            <div class="brandring" style="margin-bottom:12px;color:var(--gold)"><svg viewBox="0 0 100 100" aria-hidden="true" style="opacity:.95"><path d="M 50.0 6.0 A 9.8 9.8 0 0 1 66.8 9.3 A 9.8 9.8 0 0 1 81.1 18.9 A 9.8 9.8 0 0 1 90.7 33.2 A 9.8 9.8 0 0 1 94.0 50.0 A 9.8 9.8 0 0 1 90.7 66.8 A 9.8 9.8 0 0 1 81.1 81.1 A 9.8 9.8 0 0 1 66.8 90.7 A 9.8 9.8 0 0 1 50.0 94.0 A 9.8 9.8 0 0 1 33.2 90.7 A 9.8 9.8 0 0 1 18.9 81.1 A 9.8 9.8 0 0 1 9.3 66.8 A 9.8 9.8 0 0 1 6.0 50.0 A 9.8 9.8 0 0 1 9.3 33.2 A 9.8 9.8 0 0 1 18.9 18.9 A 9.8 9.8 0 0 1 33.2 9.3 A 9.8 9.8 0 0 1 50.0 6.0 Z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="50" cy="50" r="35" fill="none" stroke="currentColor" stroke-width="1" opacity=".7"/><path d="M50 9.5 l1.6 3.4 3.4 1.6 -3.4 1.6 -1.6 3.4 -1.6 -3.4 -3.4 -1.6 3.4 -1.6 Z" fill="currentColor"/></svg><span style="color:var(--green)">S<i>.</i></span></div>
+            <div class="wm" style="font-size:34px;color:var(--green);letter-spacing:.18em;margin-bottom:10px">SIM<span class="rdot"><svg viewBox="0 0 20 28" aria-hidden="true"><path d="M10 2.5 l3 4.2 -3 4.2 -3 -4.2 Z" fill="currentColor"/><circle cx="10" cy="19" r="6.8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></span></div>
             <div style="font-family:var(--display);font-size:23px;color:var(--green);line-height:1.3">Do orçamento ao altar,<br>tudo num lugar só.</div>
             <button class="btn p full" style="margin-top:18px" onclick="document.getElementById('lgEmail').scrollIntoView({behavior:'smooth',block:'center'});toggleAuthModeTo('up')">Criar conta grátis</button>
           </div>
@@ -694,7 +696,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       <div class="mockwrap">
 
         <div class="mock"><div class="mockframe"><div class="mockin">
-          <div class="row" style="margin-bottom:10px"><div class="wordmark">SIM<i>.</i></div><div class="chip">243 dias</div></div>
+          <div class="row" style="margin-bottom:10px"><div class="wordmark">SIM<span class="rdot"><svg viewBox="0 0 20 28" aria-hidden="true"><path d="M10 2.5 l3 4.2 -3 4.2 -3 -4.2 Z" fill="currentColor"/><circle cx="10" cy="19" r="6.8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></span></div><div class="chip">243 dias</div></div>
           <div class="hero" style="margin-top:0">
             <div class="mono"><span>A<span style="font-size:.6em;color:var(--gold)"> &amp; </span>P</span></div>
             <div class="names">Ana &amp; Pedro</div>
@@ -959,7 +961,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
   <circle cx="35" cy="20" r="12"/>
   <path d="M21 5 l3.5 3 -3.5 3 -3.5 -3z" fill="currentColor" fill-opacity=".4"/>
 </svg>
-      <div class="wm2">SIM<i style="font-style:normal;color:var(--gold)">.</i></div>
+      <div class="wm2">SIM<span class="rdot"><svg viewBox="0 0 20 28" aria-hidden="true"><path d="M10 2.5 l3 4.2 -3 4.2 -3 -4.2 Z" fill="currentColor"/><circle cx="10" cy="19" r="6.8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></span></div>
       Você disse sim. O resto, a gente organiza juntas.<br>
       Feito com cuidado para noivas do Brasil e da América Latina.
     </div>
@@ -968,12 +970,12 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
     </div>
   </div>
 
-  <div class="splash" id="splash"><div class="wm">SIM<i style="color:var(--gold)">.</i></div></div>
+  <div class="splash" id="splash"><div class="wm">SIM<span class="rdot"><svg viewBox="0 0 20 28" aria-hidden="true"><path d="M10 2.5 l3 4.2 -3 4.2 -3 -4.2 Z" fill="currentColor"/><circle cx="10" cy="19" r="6.8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></span></div></div>
 
   <!-- ============ ONBOARDING ============ -->
   <div class="onb" id="onb" style="display:none">
     <div class="top">
-      <div class="wm">SIM<i>.</i></div>
+      <div class="wm">SIM<span class="rdot"><svg viewBox="0 0 20 28" aria-hidden="true"><path d="M10 2.5 l3 4.2 -3 4.2 -3 -4.2 Z" fill="currentColor"/><circle cx="10" cy="19" r="6.8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></span></div>
       <div class="tagline">Você disse sim.<br>O resto, a gente organiza juntas.</div>
       <div class="heroorn"><svg width="160" height="24" viewBox="0 0 160 24" fill="none" aria-hidden="true">
   <g stroke="currentColor" stroke-width="1.1" fill="none">
@@ -1078,7 +1080,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 
   <!-- ============ APP ============ -->
   <div class="topbar">
-    <div class="wordmark">SIM<i>.</i></div>
+    <div class="wordmark">SIM<span class="rdot"><svg viewBox="0 0 20 28" aria-hidden="true"><path d="M10 2.5 l3 4.2 -3 4.2 -3 -4.2 Z" fill="currentColor"/><circle cx="10" cy="19" r="6.8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></span></div>
     <div style="display:flex;align-items:center;gap:8px">
       <button onclick="openNotes()" aria-label="Anotações" style="background:var(--card);border:1px solid var(--line);border-radius:99px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;color:var(--green)">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M17 3l4 4L8 20l-5 1 1-5z"/></svg>
