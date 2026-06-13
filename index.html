@@ -2554,6 +2554,14 @@ function rangeLabel(a,b){
 /* monta o plano conforme o tempo que falta */
 function buildPlan(){
   const M=monthsLeft();
+  // casamento distante (13+ meses): estica o começo com uma fase de planejamento antecipado
+  if(M>=13){
+    const topo=Math.ceil(M);            // ex.: 20 meses
+    const L1=topo+' a 12 meses antes';  // ex.: "20 a 12 meses antes"
+    const order=[L1,'12 a 8 meses antes','8 a 5 meses antes','5 a 2 meses antes','Último mês','Semana do casamento'];
+    const std=m=> m>=12?L1 : m>=8?'12 a 8 meses antes' : m>=5?'8 a 5 meses antes' : m>1.1?'5 a 2 meses antes' : m>0.35?'Último mês':'Semana do casamento';
+    return {adapted:false,M,order,label:std};
+  }
   if(M>=11.5){
     const std=m=> m>=11?'Primeiros passos' : m>=8?'12 a 8 meses antes' : m>=5?'8 a 5 meses antes' : m>1.1?'5 a 2 meses antes' : m>0.35?'Último mês':'Semana do casamento';
     return {adapted:false,M,order:PHASES.filter(Boolean),label:std};
