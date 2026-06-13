@@ -130,6 +130,31 @@ body{font-family:var(--body);background:#11231A;color:var(--ink);display:flex;ju
 /* engrenagem de ajustes no hero */
 .gearbtn{position:absolute;top:12px;right:12px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.14);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--paper);z-index:2;transition:.15s}
 .gearbtn:active{background:rgba(255,255,255,.26)}
+/* ===== página pública de RSVP ===== */
+#rsvp{position:fixed;inset:0;z-index:200;background:linear-gradient(180deg,#F4F1EA,#EDE8DC);overflow-y:auto;display:flex}
+.rsvp-wrap{width:100%;max-width:440px;margin:auto;padding:24px 18px}
+.rsvp-card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:30px 22px 18px;box-shadow:0 8px 30px rgba(31,61,43,.08);text-align:center;position:relative}
+.rsvp-orn{margin-bottom:14px}
+.rsvp-invite{font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.rsvp-names{font-family:var(--display);font-size:30px;color:var(--green);line-height:1.15;margin:10px 0 6px}
+.rsvp-date{font-size:14px;color:var(--muted)}
+.rsvp-line{height:1px;background:var(--line);margin:20px 0}
+.rsvp-card .f{text-align:left}
+.rsvp-yn{display:flex;gap:9px}
+.rsvp-yn button{flex:1;border:1.4px solid var(--line);background:#fff;border-radius:10px;padding:13px 8px;font-family:var(--body);font-size:14px;font-weight:700;color:var(--muted);cursor:pointer;transition:.15s}
+.rsvp-yn button.on[data-v=yes]{border-color:var(--green);background:#E8F0E8;color:var(--green)}
+.rsvp-yn button.on[data-v=no]{border-color:#9a5a5a;background:#F0E8E8;color:#9a5a5a}
+.rsvp-check{width:64px;height:64px;border-radius:50%;background:#E8F0E8;display:flex;align-items:center;justify-content:center;margin:8px auto 14px}
+.rsvp-tmsg{font-family:var(--display);font-size:22px;color:var(--green)}
+.rsvp-foot{margin-top:18px;font-size:11px;color:var(--muted);letter-spacing:.04em}
+/* seção do link na tela de convidados */
+.linkcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+.linkbox{display:flex;align-items:center;gap:8px;background:#F4F1EA;border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:12.5px;color:var(--ink);word-break:break-all}
+.linkact{display:flex;gap:8px;flex-wrap:wrap}
+.rsvp-inbox{background:var(--gold-soft);border:1px solid rgba(168,133,59,.3);border-radius:12px;padding:13px 15px;margin-bottom:9px;display:flex;align-items:center;gap:11px}
+.rsvp-inbox .rin-bd{flex:1;min-width:0}
+.rsvp-inbox .rin-n{font-size:14px;font-weight:700;color:var(--ink)}
+.rsvp-inbox .rin-m{font-size:11.5px;color:var(--muted);margin-top:1px}
 .gstatus{display:flex;gap:8px}
 .gstatus button{flex:1;border:1.3px solid var(--line);background:#fff;border-radius:9px;padding:10px 6px;font-family:var(--body);font-size:12.5px;font-weight:700;color:var(--muted);cursor:pointer}
 .gstatus button.on[data-s=yes]{border-color:#2a7a3f;background:#E3F0E3;color:#2a7a3f}
@@ -437,6 +462,37 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 <div class="app">
 
   <!-- ============ LOGIN ============ -->
+  <!-- ============ RSVP PÚBLICO (convidado confirma presença) ============ -->
+  <div id="rsvp" style="display:none">
+    <div class="rsvp-wrap">
+      <div class="rsvp-card" id="rsvpCard">
+        <div class="rsvp-orn" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 12 12" fill="#A8853B"><path d="M6 0l1.8 4.2L12 6 7.8 7.8 6 12 4.2 7.8 0 6l4.2-1.8z"/></svg></div>
+        <div class="rsvp-invite">Você está convidado(a) para o casamento de</div>
+        <div class="rsvp-names" id="rsvpNames">—</div>
+        <div class="rsvp-date" id="rsvpDate"></div>
+        <div class="rsvp-line"></div>
+        <div id="rsvpForm">
+          <div class="f"><label>Seu nome completo</label><input id="rsName" placeholder="Como você quer aparecer na lista"></div>
+          <div class="f"><label>Você vai poder comparecer?</label>
+            <div class="rsvp-yn" id="rsYN">
+              <button type="button" data-v="yes" class="on" onclick="rsPick('yes')">Sim, vou! 🤍</button>
+              <button type="button" data-v="no" onclick="rsPick('no')">Não poderei</button>
+            </div>
+          </div>
+          <div class="f" id="rsCompWrap"><label>Quantas pessoas no total? <span class="opt">(contando você)</span></label><input id="rsComp" type="number" inputmode="numeric" min="1" value="1"></div>
+          <div class="f"><label>Deixe um recado para os noivos <span class="opt">(opcional)</span></label><textarea id="rsMsg" placeholder="Um votinho de carinho…"></textarea></div>
+          <button class="btn p full" id="rsSend" onclick="submitRSVP()">Enviar confirmação</button>
+        </div>
+        <div id="rsvpThanks" style="display:none;text-align:center">
+          <div class="rsvp-check"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#1F3D2B" stroke-width="2.4"><path d="M4 12l5 5L20 6"/></svg></div>
+          <div class="rsvp-tmsg" id="rsvpTMsg">Presença confirmada!</div>
+          <p class="fine" id="rsvpTSub" style="margin-top:6px">Obrigada por confirmar. Os noivos já foram avisados com carinho.</p>
+        </div>
+        <div class="rsvp-foot">com <span class="rdot" style="color:#A8853B">SIM<svg viewBox="0 0 20 28" style="height:.7em;width:auto;vertical-align:-.02em" aria-hidden="true"><path d="M10 2.5 l3 4.2 -3 4.2 -3 -4.2 Z" fill="currentColor"/><circle cx="10" cy="19" r="6.8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></span></div>
+      </div>
+    </div>
+  </div>
+
   <div class="onb" id="login" style="display:none;z-index:58">
     <div class="top">
       <div class="brandring"><span>S<i>.</i></span></div>
@@ -1233,6 +1289,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       <h2 class="sec">Convidados</h2>
       <p class="sub">Quem você quer ao seu lado no grande dia.</p>
       <div id="guestSummary"></div>
+      <div id="rsvpSection"></div>
       <button class="add" onclick="openGuest()" style="margin:4px 0 16px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Adicionar convidado</button>
       <div class="gfilters" id="guestFilters">
         <button class="gfilter on" data-f="all" onclick="guestFilter('all')">Todos</button>
@@ -1681,7 +1738,60 @@ async function doLogout(){
   await sb.auth.signOut();
   location.reload();
 }
+let rsStatus='yes', rsSlug='';
+async function showRSVP(slug){
+  rsSlug=slug;
+  ['splash','login','onb'].forEach(function(id){ var e=document.getElementById(id); if(e) e.style.display='none'; });
+  var sc=document.getElementById('screens'); if(sc) sc.style.display='none';
+  var nv=document.getElementById('nav'); if(nv) nv.style.display='none';
+  var r=document.getElementById('rsvp'); if(r) r.style.display='flex';
+  try{
+    const {data,error}=await sb.rpc('get_public_wedding',{p_slug:slug});
+    if(error) throw error;
+    const w = Array.isArray(data)?data[0]:data;
+    if(!w){ document.getElementById('rsvpNames').textContent='Convite não encontrado'; document.getElementById('rsvpForm').style.display='none'; return; }
+    document.getElementById('rsvpNames').textContent=w.names||'Os noivos';
+    if(w.wdate){
+      try{
+        const d=new Date(w.wdate+'T12:00:00');
+        document.getElementById('rsvpDate').textContent=d.toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'});
+      }catch(e){ document.getElementById('rsvpDate').textContent=w.wdate; }
+    }
+  }catch(e){
+    document.getElementById('rsvpNames').textContent='Não foi possível carregar';
+    document.getElementById('rsvpForm').style.display='none';
+  }
+}
+function rsPick(v){
+  rsStatus=v;
+  document.querySelectorAll('#rsYN button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));
+  document.getElementById('rsCompWrap').style.display = v==='yes'?'block':'none';
+}
+async function submitRSVP(){
+  const name=document.getElementById('rsName').value.trim();
+  if(!name){ toast('Conte seu nome para confirmar'); return; }
+  const comp=rsStatus==='yes' ? Math.max(0,(parseInt(document.getElementById('rsComp').value)||1)-1) : 0;
+  const msg=document.getElementById('rsMsg').value.trim();
+  const btn=document.getElementById('rsSend'); btn.disabled=true; btn.textContent='Enviando…';
+  try{
+    const {data,error}=await sb.rpc('submit_rsvp',{p_slug:rsSlug,p_name:name,p_status:rsStatus,p_companions:comp,p_message:msg});
+    if(error||data===false) throw (error||new Error('slug inválido'));
+    document.getElementById('rsvpForm').style.display='none';
+    document.getElementById('rsvpThanks').style.display='block';
+    if(rsStatus==='no'){
+      document.getElementById('rsvpTMsg').textContent='Resposta enviada';
+      document.getElementById('rsvpTSub').textContent='Que pena que não poderá ir. Obrigada por avisar com carinho!';
+    }
+  }catch(e){
+    btn.disabled=false; btn.textContent='Enviar confirmação';
+    toast('Não foi possível enviar. Tente de novo.');
+  }
+}
+
 async function initAuth(){
+  // visitante chegou por um link de confirmação? mostra a página pública de RSVP
+  var rsvpSlug=new URLSearchParams(location.search).get('c');
+  if(rsvpSlug){ showRSVP(rsvpSlug); return; }
   document.getElementById('splash').style.display='flex';
   if(!sb||SUPABASE_URL.includes('COLE_AQUI')){
     document.getElementById('splash').style.display='none';
@@ -3075,6 +3185,7 @@ function renderGuests(){
     </div>`;
   } else { sum.innerHTML=''; }
   document.querySelectorAll('#guestFilters .gfilter').forEach(b=>b.classList.toggle('on',b.dataset.f===guestFilterMode));
+  renderLinkSection();
   const body=$('guestsBody');
   if(!gs.length){
     body.innerHTML=`<div class="empty">${ICONS.ring}<div class="dn">Nenhum convidado ainda</div><p>Comece a montar sua lista. Adicione nomes, organize por grupo e marque quem confirmou presença.</p></div>`;
@@ -3146,6 +3257,82 @@ function delGuest(){
   editGuest=null;
   persist(); closeSheet(); renderGuests();
   toast('Convidado removido');
+}
+
+/* ----- link de confirmação (RSVP) ----- */
+let lastRSVPs=[];
+function slugify(x){ return (x||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,24)||'casal'; }
+function linkURL(){ return location.origin+'/?c='+state.publicSlug; }
+function renderLinkSection(){
+  const box=$('rsvpSection'); if(!box) return;
+  if(!state.publicSlug){
+    box.innerHTML=`<div class="linkcard">
+      <div class="dn" style="font-size:16px;color:var(--green)">Confirmação online</div>
+      <p class="fine" style="margin:4px 0 10px">Crie um link para enviar aos convidados no WhatsApp. Eles confirmam presença sozinhos, e as respostas caem aqui.</p>
+      <button class="btn p full" onclick="createRSVPLink()">Criar link de confirmação</button>
+    </div>`;
+    return;
+  }
+  box.innerHTML=`<div class="linkcard">
+    <div class="dn" style="font-size:16px;color:var(--green)">Link de confirmação</div>
+    <p class="fine" style="margin:4px 0 4px">Envie aos convidados. As respostas aparecem abaixo.</p>
+    <div class="linkbox">${esc(linkURL())}</div>
+    <div class="linkact">
+      <button class="btn g" onclick="copyLink()">Copiar link</button>
+      <a class="wabtn" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent('Estamos muito felizes em convidar você para o nosso casamento. Confirme sua presença aqui: '+linkURL())}">${ICONS.wa} WhatsApp</a>
+    </div>
+  </div>
+  <div id="rsvpReceived"></div>`;
+  loadRSVPs();
+}
+async function createRSVPLink(){
+  if(!sbUser){ toast('Entre na sua conta para criar o link'); return; }
+  if(!state.profile){ toast('Complete seu cadastro primeiro'); return; }
+  const names=(state.profile.a||'')+' & '+(state.profile.b||'');
+  const slug=slugify((state.profile.a||'')+'-'+(state.profile.b||''))+'-'+Math.random().toString(36).slice(2,6);
+  try{
+    const {error}=await sb.from('sim_public').upsert({slug,owner_id:sbUser.id,names,wdate:state.profile.date||'',mode:'open',updated_at:new Date().toISOString()});
+    if(error) throw error;
+    state.publicSlug=slug;
+    persist(); renderLinkSection();
+    toast('Link criado!');
+  }catch(e){ toast('Não foi possível criar o link agora'); }
+}
+function copyLink(){
+  const url=linkURL();
+  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(url).then(()=>toast('Link copiado!'),()=>toast('Copie o link manualmente')); }
+  else toast('Copie o link manualmente');
+}
+async function loadRSVPs(){
+  const box=$('rsvpReceived'); if(!box||!state.publicSlug||!sb||!sbUser) return;
+  try{
+    const {data,error}=await sb.from('sim_rsvp').select('*').eq('slug',state.publicSlug).order('created_at',{ascending:false});
+    if(error) throw error;
+    lastRSVPs=data||[];
+    if(!lastRSVPs.length){ box.innerHTML='<p class="fine" style="margin-top:10px;text-align:center">Ainda não há confirmações. Compartilhe o link acima 🤍</p>'; return; }
+    state.rsvpDone=state.rsvpDone||[];
+    const novos=lastRSVPs.filter(r=>!state.rsvpDone.includes(r.id)).length;
+    let html=`<div class="cap gold" style="margin:18px 0 8px">Confirmações recebidas (${lastRSVPs.length}${novos?(' · '+novos+' novas'):''})</div>`;
+    html+=lastRSVPs.map(r=>{
+      const done=state.rsvpDone.includes(r.id);
+      const comp=r.companions||0;
+      const vai=r.status!=='no';
+      return `<div class="rsvp-inbox">
+        <div class="rin-bd"><div class="rin-n">${esc(r.guest_name)} <span style="font-size:11px;color:${vai?'#2a7a3f':'#9a5a5a'}">${vai?'✓ vai':'✕ não vai'}</span></div>
+        <div class="rin-m">${comp>0?('+'+comp+' acompanhante'+(comp>1?'s':'')+' · '):''}${r.message?('“'+esc(r.message)+'”'):'sem recado'}</div></div>
+        ${done?'<span class="gbadge yes">Na lista</span>':`<button class="btn g sm" onclick="addRSVPGuest('${r.id}')">Adicionar</button>`}
+      </div>`;
+    }).join('');
+    box.innerHTML=html;
+  }catch(e){ box.innerHTML=''; }
+}
+function addRSVPGuest(id){
+  const r=lastRSVPs.find(x=>x.id===id); if(!r) return;
+  state.guests=state.guests||[];
+  state.guests.push({id:uid(),name:r.guest_name,group:'Confirmados pelo link',comp:r.companions||0,phone:'',note:r.message||'',status:r.status==='no'?'no':'yes'});
+  state.rsvpDone=state.rsvpDone||[]; state.rsvpDone.push(id);
+  persist(); renderGuests();
+  toast(r.guest_name+' entrou na lista');
 }
 
 /* =================== AGENDA =================== */
