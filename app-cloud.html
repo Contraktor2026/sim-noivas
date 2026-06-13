@@ -2476,33 +2476,52 @@ function saveParc(){
 const PHASES=['Primeiros passos','12 a 8 meses antes','8 a 5 meses antes','5 a 2 meses antes','Último mês','Semana do casamento',''];
 /* cada tarefa tem um "momento ideal" em meses antes do casamento (plano cheio de 12) */
 const SUGGESTED=[
+  // Primeiros passos (12+ meses)
   [12,'Definir o orçamento total e quem contribui'],
+  [12,'Conversar sobre a visão do casamento: tamanho, clima e prioridades'],
   [12,'Sonhar o estilo: dia, noite, praia, campo, clássico'],
-  [12,'Montar a primeira lista de convidados'],
-  [11.5,'Escolher a data e visitar espaços'],
-  [10,'Reservar o espaço da cerimônia e recepção'],
+  [12,'Montar a primeira lista de convidados (estimativa)'],
+  [11.5,'Escolher possíveis datas e visitar espaços'],
+  [11,'Definir como dividir e controlar os gastos'],
+  // 12 a 8 meses
+  [10.5,'Reservar o espaço da cerimônia e recepção'],
   [10,'Pedir orçamentos de buffet e agendar degustações'],
   [9.5,'Contratar fotografia e vídeo'],
   [9,'Contratar cerimonial ou assessoria do dia'],
+  [8.5,'Pesquisar e reservar hospedagem para convidados de fora'],
+  [8,'Criar uma conta ou pasta para organizar inspirações'],
+  // 8 a 5 meses
   [7.5,'Escolher o vestido e iniciar as provas'],
   [7,'Definir traje do par e dos padrinhos'],
-  [6.5,'Contratar música: cerimônia e festa'],
-  [6,'Definir decoração e paleta de cores'],
-  [5.5,'Enviar o save the date'],
+  [6.5,'Contratar música: cerimônia e festa (DJ ou banda)'],
+  [6,'Definir decoração, flores e paleta de cores'],
+  [5.5,'Montar o site do casamento e enviar o save the date'],
+  [5,'Escolher os padrinhos e madrinhas e convidá-los'],
+  // 5 a 2 meses
   [4.5,'Dar entrada nos papéis do casamento civil no cartório'],
   [4,'Encomendar convites e papelaria'],
   [3.5,'Fechar doces, bolo e bem-casados'],
+  [3.5,'Comprar as alianças'],
   [3,'Definir lembrancinhas'],
+  [3,'Planejar a lua de mel e reservar passagens'],
   [2.5,'Criar a lista de presentes'],
-  [1,'Prova final do vestido e ajustes'],
-  [1,'Confirmar presença dos convidados'],
+  [2,'Enviar os convites'],
+  // Último mês
+  [1.2,'Prova final do vestido e ajustes'],
+  [1,'Confirmar presença dos convidados (RSVP)'],
+  [1,'Definir o cardápio final com o buffet'],
   [0.8,'Montar o mapa de mesas'],
   [0.7,'Alinhar cronograma do dia com todos os fornecedores'],
   [0.6,'Teste de cabelo e maquiagem'],
+  [0.5,'Fazer o pagamento final dos fornecedores'],
+  [0.5,'Escolher e ensaiar a música da entrada e da valsa'],
+  // Semana do casamento
   [0.25,'Separar documentos, alianças e itens da cerimônia'],
   [0.25,'Confirmar horários com cada fornecedor'],
   [0.2,'Preparar a mala da lua de mel'],
-  [0.15,'Delegar o celular a alguém de confiança no grande dia'],
+  [0.2,'Montar o kit de emergência da noiva'],
+  [0.15,'Delegar o celular e os pagamentos a alguém de confiança'],
+  [0.1,'Descansar, hidratar e aproveitar a véspera'],
 ];
 function monthsLeft(){
   if(!state.profile) return 12;
