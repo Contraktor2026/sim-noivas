@@ -1541,6 +1541,13 @@ async function doLogout(){
   await sb.auth.signOut();
   location.reload();
 }
+function showApp(){
+  ['login','splash','onb'].forEach(function(id){ var e=document.getElementById(id); if(e) e.style.display='none'; });
+  var sc=document.getElementById('screens'); if(sc){ sc.style.display='block'; sc.style.flex='1'; }
+  var nv=document.getElementById('nav'); if(nv) nv.style.display='flex';
+  // garantir que uma tela esteja ativa
+  if(!document.querySelector('.screen.on')){ var h=document.getElementById('s-home'); if(h) h.classList.add('on'); }
+}
 function showOnboarding(){
   var lg=document.getElementById('login'); if(lg) lg.style.display='none';
   var sp=document.getElementById('splash'); if(sp) sp.style.display='none';
@@ -1700,8 +1707,9 @@ function finishOnb(){
   var lg=document.getElementById('login'); if(lg) lg.style.display='none';
   // 3) montar o app com proteção total
   try{ renderAll(); }catch(e){ console.error('renderAll',e); }
+  try{ showApp(); }catch(e){ console.error('showApp',e); }
   try{ showTour(); }catch(e){ console.error('showTour',e); }
-  // 4) rede de segurança: garantir que a tela principal esteja visível
+  // 4) rede de segurança final
   try{ if(typeof go==='function') go('home'); }catch(e){}
 }
 
@@ -3012,14 +3020,17 @@ async function bootApp(){
   T('splash escondida');
   try{
     if(!state.profile){ T('sem perfil: onboarding'); showOnboarding(); }
-    else { T('com perfil: renderAll'); renderAll(); T('renderAll ok'); showTour(); T('showTour ok'); }
+    else { T('com perfil: renderAll'); renderAll(); T('renderAll ok'); showApp(); T('showApp ok'); showTour(); T('showTour ok'); }
   }catch(e){ T('render ERRO:'+e.message); window.__simErr('Erro ao montar: '+e.message+'\n\nRastro:\n'+window.__trace.join('\n')); showOnboarding(); }
   T('bootApp fim');
   // socorro: se depois de 1.2s nada estiver visível, mostrar o rastro
   setTimeout(function(){
     var vis=['login','onb','screens'].map(function(id){var e=document.getElementById(id);if(!e)return id+'?';var st=getComputedStyle(e);return id+'='+(st.display!=='none'&&e.offsetHeight>0?'VISIVEL':'oculto');});
     var algoVisivel=vis.some(function(v){return v.indexOf('VISIVEL')>=0;});
-    if(!algoVisivel){ window.__simErr('Nada visível após boot.\n\nCamadas: '+vis.join(', ')+'\n\nRastro do boot:\n'+window.__trace.join('\n')); }
+    if(!algoVisivel){ T('socorro: forcando showApp'); try{ showApp(); }catch(e){} 
+      // se AINDA assim nada, aí sim mostra o diagnóstico
+      setTimeout(function(){ var s2=document.getElementById('screens'); if(!s2||s2.offsetHeight<=0){ window.__simErr('Tela não montou.\n\nCamadas: '+vis.join(', ')+'\n\nRastro:\n'+window.__trace.join('\n')); } },300);
+    }
   },1200);
 }
 try{ initAuth(); }catch(e){
