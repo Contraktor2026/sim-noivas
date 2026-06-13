@@ -1580,17 +1580,28 @@ async function doLogout(){
   await sb.auth.signOut();
   location.reload();
 }
+function showLogin(msg){
+  var sp=document.getElementById('splash'); if(sp) sp.style.display='none';
+  var lg=document.getElementById('login'); if(lg) lg.style.display='flex';
+  if(msg){ var m=document.getElementById('lgMsg'); if(m) m.textContent=msg; }
+}
 async function initAuth(){
-  document.getElementById('splash').style.display='flex';
-  if(!sb||SUPABASE_URL.includes('COLE_AQUI')){
-    document.getElementById('splash').style.display='none';
-    document.getElementById('login').style.display='flex';
-    document.getElementById('lgMsg').textContent='Configuração pendente: cole a URL e a anon key do Supabase no código.';
-    return;
+  try{
+    var sp=document.getElementById('splash'); if(sp) sp.style.display='flex';
+    if(!window.supabase){ showLogin('Não consegui carregar a conexão. Verifique a internet e recarregue.'); return; }
+    if(!sb||SUPABASE_URL.includes('COLE_AQUI')){ showLogin('Configuração pendente do servidor.'); return; }
+    // timeout: se o Supabase não responder em 6s, mostra o login mesmo assim
+    const session=await Promise.race([
+      sb.auth.getSession().then(r=>r&&r.data?r.data.session:null),
+      new Promise((res)=>setTimeout(()=>res('TIMEOUT'),6000))
+    ]);
+    if(session==='TIMEOUT'){ showLogin('A conexão demorou. Toque em Entrar para tentar de novo.'); return; }
+    if(session){ sbUser=session.user; await bootApp(); }
+    else { showLogin(); }
+  }catch(e){
+    console.error('initAuth',e);
+    showLogin('Não consegui conectar agora. Recarregue a página, por favor.');
   }
-  const {data}=await sb.auth.getSession();
-  if(data&&data.session){ sbUser=data.session.user; await bootApp(); }
-  else { document.getElementById('splash').style.display='none'; document.getElementById('login').style.display='flex'; }
 }
 
 /* =================== ESTADO + PERSISTÊNCIA =================== */
@@ -3005,13 +3016,15 @@ function askConfirm(title,msg,onYes,yesLabel){
 /* =================== INIT =================== */
 function renderAll(){ renderHome(); renderFin(); renderForn(); renderChk(); }
 async function bootApp(){
-  await load();
-  ['obBudget','stBudget','exVal','qVal','pcVal'].forEach(id=>maskMoney($(id)));
-  $('fileQuote').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast('Arquivo recebido — processando…'); handleQuoteFile(e.target.files[0]); } });
-  $('fileContract').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast('Contrato recebido — processando…'); handleContractFile(e.target.files[0]); } });
-  $('splash').style.display='none';
-  if(!state.profile){ $('onb').style.display='flex'; }
-  else { renderAll(); showTour(); }
+  try{ await load(); }catch(e){ console.error('load',e); }
+  try{ ['obBudget','stBudget','exVal','qVal','pcVal'].forEach(id=>maskMoney($(id))); }catch(e){}
+  try{ $('fileQuote').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast('Arquivo recebido — processando…'); handleQuoteFile(e.target.files[0]); } }); }catch(e){}
+  try{ $('fileContract').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast('Contrato recebido — processando…'); handleContractFile(e.target.files[0]); } }); }catch(e){}
+  var sp=document.getElementById('splash'); if(sp) sp.style.display='none';
+  try{
+    if(!state.profile){ $('onb').style.display='flex'; }
+    else { renderAll(); showTour(); }
+  }catch(e){ console.error('render',e); $('onb').style.display='flex'; }
 }
 try{ initAuth(); }catch(e){
   console.error('boot',e);
