@@ -8,12 +8,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<link rel="manifest" href="./manifest.json">
 <meta name="theme-color" content="#1F3D2B">
+<link rel="icon" type="image/png" href="./icon-192.png">
 <link rel="apple-touch-icon" href="./icon-180.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="SIM.">
 <style>
 :root{
   --paper:#FAF9F5;
@@ -147,6 +144,25 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 .phh .dn{font-size:16px;color:var(--green)}
 .phh span{font-size:11.5px;font-weight:700;color:var(--muted)}
 
+/* ===== wizard do onboarding ===== */
+.obprog{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px;position:relative}
+.obprog::before{content:'';position:absolute;top:13px;left:13%;right:13%;height:1px;background:var(--line)}
+.obprog .stp{display:flex;flex-direction:column;align-items:center;gap:5px;position:relative;flex:1}
+.obprog .stp i{width:26px;height:26px;border-radius:50%;border:1.4px solid var(--line);background:#fff;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:12px;font-weight:800;color:var(--muted);font-family:'Karla',sans-serif;transition:.2s}
+.obprog .stp span{font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.obprog .stp.cur i{background:var(--green);border-color:var(--green);color:var(--paper)}
+.obprog .stp.cur span{color:var(--green)}
+.obprog .stp.ok i{background:var(--gold-soft);border-color:var(--gold);color:#7a6430}
+.obstep{display:none}
+.obstep.on{display:block;animation:obfade .25s}
+@keyframes obfade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.stagecard{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:9px;cursor:pointer;background:#fff;transition:.15s;font-size:14px;font-weight:600;color:var(--ink)}
+.stagecard svg{flex-shrink:0;color:var(--gold)}
+.stagecard.on{border-color:var(--green);background:var(--green);color:var(--paper)}
+.stagecard.on svg{color:var(--gold-soft)}
+.obnav{display:flex;gap:10px;margin-top:16px}
+.obnav .btn{flex:1}
+.obnote{font-size:11.5px;color:var(--muted)}
 /* ===== chips de seleção (onboarding) ===== */
 .selchips{display:flex;flex-wrap:wrap;gap:8px}
 .selchip{padding:8px 14px;border:1px solid var(--line);border-radius:99px;font-size:13px;font-weight:600;color:var(--ink);cursor:pointer;user-select:none;background:#fff;transition:.15s}
@@ -228,6 +244,8 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 .howto .st .tx{flex:1;line-height:1.5}
 .howto .st .tx strong{color:#4c493e;font-weight:700}
 .fileln{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--green);background:var(--green-soft);border:none;border-radius:8px;padding:7px 11px;cursor:pointer}
+.rdot{display:inline-block;color:var(--gold);line-height:0}
+.rdot svg{height:.62em;width:auto;vertical-align:-.01em;margin-left:.07em}
 #login .brandring{width:96px;height:96px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;position:relative;color:#C9A961}
 #login .brandring svg{position:absolute;inset:0;width:100%;height:100%}
 #login .brandring span{font-family:'Marcellus',serif;font-size:32px;color:#FAF9F5;letter-spacing:1px;position:relative}
@@ -347,8 +365,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
   <!-- ============ LOGIN ============ -->
   <div class="onb" id="login" style="display:none;z-index:58">
     <div class="top">
-      <div class="brandring"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M 50.0 6.0 A 9.8 9.8 0 0 1 66.8 9.3 A 9.8 9.8 0 0 1 81.1 18.9 A 9.8 9.8 0 0 1 90.7 33.2 A 9.8 9.8 0 0 1 94.0 50.0 A 9.8 9.8 0 0 1 90.7 66.8 A 9.8 9.8 0 0 1 81.1 81.1 A 9.8 9.8 0 0 1 66.8 90.7 A 9.8 9.8 0 0 1 50.0 94.0 A 9.8 9.8 0 0 1 33.2 90.7 A 9.8 9.8 0 0 1 18.9 81.1 A 9.8 9.8 0 0 1 9.3 66.8 A 9.8 9.8 0 0 1 6.0 50.0 A 9.8 9.8 0 0 1 9.3 33.2 A 9.8 9.8 0 0 1 18.9 18.9 A 9.8 9.8 0 0 1 33.2 9.3 A 9.8 9.8 0 0 1 50.0 6.0 Z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="50" cy="50" r="35" fill="none" stroke="currentColor" stroke-width="1" opacity=".7"/><path d="M50 9.5 l1.6 3.4 3.4 1.6 -3.4 1.6 -1.6 3.4 -1.6 -3.4 -3.4 -1.6 3.4 -1.6 Z" fill="currentColor"/></svg><span>S<i>.</i></span></div>
-      <div class="wm">SIM<i>.</i></div>
+      <div class="wm">SIM<span class="rdot"><svg viewBox="0 0 20 28" aria-hidden="true"><path d="M10 2.5 l3 4.2 -3 4.2 -3 -4.2 Z" fill="currentColor"/><circle cx="10" cy="19" r="6.8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></span></div>
       <div class="tagline">Você disse sim.<br>O resto, a gente organiza juntas.</div>
       <svg class="vine" width="200" height="24" viewBox="0 0 200 24" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true">
   <path d="M6 12 H78 M122 12 H194"/>
@@ -368,11 +385,6 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       <button class="btn g full" style="margin-top:8px" onclick="toggleAuthMode()" id="lgSwitch">Já tenho conta</button>
       <p class="fine" style="text-align:center;margin-top:10px;color:#8a948c">Sem cartão de crédito · seus dados são só seus</p>
       <p class="fine" id="lgMsg" style="text-align:center;margin-top:10px;min-height:18px"></p>
-      <div class="lgrule"><small>No celular</small></div>
-      <button class="btn g full" style="margin-top:12px" id="btnInstall" onclick="doInstall()">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:6px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Instalar o app
-      </button>
-      <p class="fine" id="iosHint" style="display:none;margin-top:10px;text-align:center">No iPhone: toque em <b>Compartilhar</b> e depois em <b>Adicionar à Tela de Início</b>.<br>No Android: menu <b>⋮</b> do navegador → <b>Adicionar à tela inicial</b>.</p>
       <div class="lgfoot">Feito para noivas do Brasil</div>
     </div>
 
@@ -652,7 +664,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
           </div>
 
           <div class="dscene" id="dsc9" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center">
-            <div class="brandring" style="margin-bottom:12px;color:var(--gold)"><svg viewBox="0 0 100 100" aria-hidden="true" style="opacity:.95"><path d="M 50.0 6.0 A 9.8 9.8 0 0 1 66.8 9.3 A 9.8 9.8 0 0 1 81.1 18.9 A 9.8 9.8 0 0 1 90.7 33.2 A 9.8 9.8 0 0 1 94.0 50.0 A 9.8 9.8 0 0 1 90.7 66.8 A 9.8 9.8 0 0 1 81.1 81.1 A 9.8 9.8 0 0 1 66.8 90.7 A 9.8 9.8 0 0 1 50.0 94.0 A 9.8 9.8 0 0 1 33.2 90.7 A 9.8 9.8 0 0 1 18.9 81.1 A 9.8 9.8 0 0 1 9.3 66.8 A 9.8 9.8 0 0 1 6.0 50.0 A 9.8 9.8 0 0 1 9.3 33.2 A 9.8 9.8 0 0 1 18.9 18.9 A 9.8 9.8 0 0 1 33.2 9.3 A 9.8 9.8 0 0 1 50.0 6.0 Z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="50" cy="50" r="35" fill="none" stroke="currentColor" stroke-width="1" opacity=".7"/><path d="M50 9.5 l1.6 3.4 3.4 1.6 -3.4 1.6 -1.6 3.4 -1.6 -3.4 -3.4 -1.6 3.4 -1.6 Z" fill="currentColor"/></svg><span style="color:var(--green)">S<i>.</i></span></div>
+            <div class="wm" style="font-size:34px;color:var(--green);letter-spacing:.18em;margin-bottom:10px">SIM<span class="rdot"><svg viewBox="0 0 20 28" aria-hidden="true"><path d="M10 2.5 l3 4.2 -3 4.2 -3 -4.2 Z" fill="currentColor"/><circle cx="10" cy="19" r="6.8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></span></div>
             <div style="font-family:var(--display);font-size:23px;color:var(--green);line-height:1.3">Do orçamento ao altar,<br>tudo num lugar só.</div>
             <button class="btn p full" style="margin-top:18px" onclick="document.getElementById('lgEmail').scrollIntoView({behavior:'smooth',block:'center'});toggleAuthModeTo('up')">Criar conta grátis</button>
           </div>
@@ -671,33 +683,8 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       <div class="mocklabel" style="margin-bottom:26px">Tour guiado: do orçamento colado ao roteiro, sem digitar nada</div>
 
       <div class="ldkicker">Por dentro</div>
-      <div class="ldtitle" style="font-size:24px">Todas as telas,<br>no mesmo capricho</div>
+      <div class="ldtitle" style="font-size:24px">O coração do app,<br>de perto</div>
       <div class="mockwrap">
-
-        <div class="mock"><div class="mockframe"><div class="mockin">
-          <div class="row" style="margin-bottom:10px"><div class="wordmark">SIM<i>.</i></div><div class="chip">243 dias</div></div>
-          <div class="hero" style="margin-top:0">
-            <div class="mono"><span>A<span style="font-size:.6em;color:var(--gold)"> &amp; </span>P</span></div>
-            <div class="names">Ana &amp; Pedro</div>
-            <div class="place">12 de setembro de 2026 · Garopaba, SC</div>
-            <div class="count">243<small> dias para o sim</small></div>
-            <div class="ornament"><svg width="10" height="10" viewBox="0 0 12 12" fill="var(--gold)"><path d="M6 0l1.8 4.2L12 6 7.8 7.8 6 12 4.2 7.8 0 6l4.2-1.8z"/></svg></div>
-          </div>
-          <h2 class="sec" style="font-size:19px">Precisa de você</h2>
-          <div class="card" style="padding:4px 14px">
-            <div class="li"><div class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2.5" y="6" width="19" height="13" rx="2"/><circle cx="12" cy="12.5" r="3"/></svg></div>
-              <div class="bd"><div class="t">Sinal do buffet</div><div class="m">vence 20 de jun · Buffet</div></div>
-              <div style="text-align:right"><div class="v">R$ 4.650,00</div><span class="tag due">EM BREVE</span></div></div>
-            <div class="li"><div class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div>
-              <div class="bd"><div class="t">Decoração: 3 orçamentos</div><div class="m">Compare e escolha</div></div>
-              <span class="tag due">DECIDIR</span></div>
-          </div>
-          <div class="card soft">
-            <div class="row"><div><div class="cap">Visão do orçamento</div><div class="num" style="font-size:24px">R$ 23.100,00 livres</div></div></div>
-            <div class="meter"><i style="width:58%"></i></div>
-            <div class="fine"><b>R$ 31.900,00</b> comprometidos de R$ 55.000,00</div>
-          </div>
-        </div></div><div class="mocklabel">Tela Hoje: o resumo do casamento</div></div>
 
         <div class="mock"><div class="mockframe"><div class="mockin">
           <h2 class="sec" style="margin-top:4px">Dinheiro</h2>
@@ -751,43 +738,8 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
           <div class="card" style="display:flex;gap:8px;align-items:center;font-size:13px;font-weight:700;color:var(--green)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5l-8.5 8.5a5.5 5.5 0 01-7.8-7.8L13 4a3.7 3.7 0 015.2 5.2l-8.2 8.2a1.8 1.8 0 01-2.6-2.6l7.6-7.6"/></svg> Contrato anexado e lido pelo SIM.</div>
         </div></div><div class="mocklabel">A página de cada fornecedor</div></div>
 
-        <div class="mock"><div class="mockframe"><div class="mockin">
-          <h2 class="sec" style="margin-top:4px">Sua lista</h2>
-          <p class="sub">O roteiro completo, fase a fase, até o altar.</p>
-          <div class="phh"><div class="dn" style="font-size:15px">12 a 9 meses antes</div><span>3 de 4</span></div>
-          <div class="task done"><div class="ck"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="tt" style="font-size:13px">Definir orçamento e número de convidados</div></div>
-          <div class="task done"><div class="ck"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="tt" style="font-size:13px">Reservar o espaço da festa</div></div>
-          <div class="task done"><div class="ck"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="tt" style="font-size:13px">Fechar fotografia</div></div>
-          <div class="task"><div class="ck"></div><div class="tt" style="font-size:13px">Escolher o buffet</div></div>
-          <div class="phh" style="margin-top:12px"><div class="dn" style="font-size:15px">8 a 6 meses antes</div><span>0 de 3</span></div>
-          <div class="task"><div class="ck"></div><div class="tt" style="font-size:13px">Enviar o save the date</div></div>
-          <div class="task"><div class="ck"></div><div class="tt" style="font-size:13px">Definir decoração e paleta</div></div>
-          <div class="task"><div class="ck"></div><div class="tt" style="font-size:13px">Provar e reservar o vestido</div></div>
-        </div></div><div class="mocklabel">Lista: o roteiro que se adapta ao seu tempo</div></div>
-
-        <div class="mock"><div class="mockframe"><div class="mockin">
-          <h2 class="sec" style="margin-top:4px">Anotações</h2>
-          <p class="sub">As ideias do casamento, sempre à mão.</p>
-          <div class="card" style="padding:12px 14px">
-            <div style="font-size:13.5px;font-weight:700">Perguntar ao buffet sobre opção vegana</div>
-            <div class="fine" style="margin-top:3px">hoje · 14:20</div>
-          </div>
-          <div class="card" style="padding:12px 14px">
-            <div style="font-size:13.5px;font-weight:700">Referências de buquê: tons terrosos, eucalipto e astromélias</div>
-            <div class="fine" style="margin-top:3px">ontem · 21:08</div>
-          </div>
-          <div class="card" style="padding:12px 14px">
-            <div style="font-size:13.5px;font-weight:700">Música da entrada: versão instrumental de Can't Help Falling in Love</div>
-            <div class="fine" style="margin-top:3px">terça · 19:44</div>
-          </div>
-          <div class="card" style="padding:12px 14px">
-            <div style="font-size:13.5px;font-weight:700">Lembrancinha: mini vela com tag do monograma</div>
-            <div class="fine" style="margin-top:3px">segunda · 10:12</div>
-          </div>
-        </div></div><div class="mocklabel">Anotações: o bloco que acompanha qualquer tela</div></div>
-
       </div>
-      <div class="mockhint">Arraste para o lado: são cinco telas para espiar</div>
+      <div class="mockhint">Arraste para o lado e espie as duas telas</div>
     </section>
 
     <div class="ldsec">
@@ -940,7 +892,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
   <circle cx="35" cy="20" r="12"/>
   <path d="M21 5 l3.5 3 -3.5 3 -3.5 -3z" fill="currentColor" fill-opacity=".4"/>
 </svg>
-      <div class="wm2">SIM<i style="font-style:normal;color:var(--gold)">.</i></div>
+      <div class="wm2">SIM<span class="rdot"><svg viewBox="0 0 20 28" aria-hidden="true"><path d="M10 2.5 l3 4.2 -3 4.2 -3 -4.2 Z" fill="currentColor"/><circle cx="10" cy="19" r="6.8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></span></div>
       Você disse sim. O resto, a gente organiza juntas.<br>
       Feito com cuidado para noivas do Brasil e da América Latina.
     </div>
@@ -949,12 +901,12 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
     </div>
   </div>
 
-  <div class="splash" id="splash"><div class="wm">SIM<i style="color:var(--gold)">.</i></div></div>
+  <div class="splash" id="splash"><div class="wm">SIM<span class="rdot"><svg viewBox="0 0 20 28" aria-hidden="true"><path d="M10 2.5 l3 4.2 -3 4.2 -3 -4.2 Z" fill="currentColor"/><circle cx="10" cy="19" r="6.8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></span></div></div>
 
   <!-- ============ ONBOARDING ============ -->
   <div class="onb" id="onb" style="display:none">
     <div class="top">
-      <div class="wm">SIM<i>.</i></div>
+      <div class="wm">SIM<span class="rdot"><svg viewBox="0 0 20 28" aria-hidden="true"><path d="M10 2.5 l3 4.2 -3 4.2 -3 -4.2 Z" fill="currentColor"/><circle cx="10" cy="19" r="6.8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></span></div>
       <div class="tagline">Você disse sim.<br>O resto, a gente organiza juntas.</div>
       <div class="heroorn"><svg width="160" height="24" viewBox="0 0 160 24" fill="none" aria-hidden="true">
   <g stroke="currentColor" stroke-width="1.1" fill="none">
@@ -975,54 +927,91 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 </svg></div>
     </div>
     <div class="panel">
-      <h3>Sobre o grande dia</h3>
-      <div class="ps">Essas informações personalizam tudo e ficam salvas só para você.</div>
-      <div class="frow">
-        <div class="f"><label>Seu nome</label><input id="obA" placeholder="Ana"></div>
-        <div class="f"><label>Nome do par</label><input id="obB" placeholder="Pedro"></div>
+      <div class="obprog" id="obProg">
+        <div class="stp cur"><i>1</i><span>Sua etapa</span></div>
+        <div class="stp"><i>2</i><span>O casal</span></div>
+        <div class="stp"><i>3</i><span>A festa</span></div>
+        <div class="stp"><i>4</i><span>A equipe</span></div>
       </div>
-      <div class="f"><label>Data do casamento</label><input id="obDate" type="date"></div>
-      <div class="frow">
-        <div class="f" style="flex:2"><label>País</label><input id="obCountry" value="Brasil"></div>
-        <div class="f" style="flex:1"><label>Estado</label><input id="obUF" placeholder="SC" maxlength="2" style="text-transform:uppercase"></div>
-      </div>
-      <div class="f"><label>Cidade <span class="opt">(opcional)</span></label><input id="obCity" placeholder="Florianópolis"></div>
-      <div class="frow">
-        <div class="f"><label>Convidados <span class="opt">(estimativa)</span></label><input id="obGuests" type="number" inputmode="numeric" placeholder="120"></div>
-        <div class="f"><label>Orçamento total (R$)</label><input id="obBudget" type="text" inputmode="decimal" placeholder="50.000"></div>
-      </div>
-      <div class="f"><label>Estilo do casamento <span class="opt">(opcional)</span></label>
-        <div class="selchips" id="obStyle">
-          <span class="selchip" onclick="selChip(this,true)">Praia</span>
-          <span class="selchip" onclick="selChip(this,true)">Campo</span>
-          <span class="selchip" onclick="selChip(this,true)">Igreja</span>
-          <span class="selchip" onclick="selChip(this,true)">Salão</span>
-          <span class="selchip" onclick="selChip(this,true)">Mini wedding</span>
-          <span class="selchip" onclick="selChip(this,true)">Civil</span>
+
+      <div class="obstep on" id="obs1">
+        <h3>Bem-vinda! Em que etapa vocês estão?</h3>
+        <div class="ps">Começando agora ou na reta final, o SIM. se ajusta a você.</div>
+        <div id="obStage">
+          <div class="stagecard" onclick="selStage(this)" data-v="Sonhando"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-4.6-9.5-9A5.5 5.5 0 0112 6.5 5.5 5.5 0 0121.5 12c-2.5 4.4-9.5 9-9.5 9z"/></svg>Ainda sonhando com o pedido</div>
+          <div class="stagecard" onclick="selStage(this)" data-v="Recém-noivos"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="14" r="6"/><circle cx="15" cy="10" r="6"/></svg>Recém-noivos, explorando ideias</div>
+          <div class="stagecard" onclick="selStage(this)" data-v="Planejando sem local"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg>Planejando, mas ainda sem o local</div>
+          <div class="stagecard" onclick="selStage(this)" data-v="Local reservado"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 11l9-7 9 7v9a1 1 0 01-1 1h-5v-6h-6v6H4a1 1 0 01-1-1z"/></svg>Local reservado, montando o resto</div>
+          <div class="stagecard" onclick="selStage(this)" data-v="Reta final"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 01-10 0zM7 5H4a3 3 0 003 4M17 5h3a3 3 0 01-3 4"/></svg>Reta final, só faltam detalhes</div>
         </div>
+        <div class="obnav"><button class="btn p" onclick="obGo(2)">Próximo</button></div>
       </div>
-      <div class="f"><label>O que você pretende contratar <span class="opt">(toque para marcar)</span></label>
-        <div class="selchips" id="obCats">
-          <span class="selchip" onclick="selChip(this)">Espaço</span>
-          <span class="selchip" onclick="selChip(this)">Buffet</span>
-          <span class="selchip" onclick="selChip(this)">Fotografia</span>
-          <span class="selchip" onclick="selChip(this)">Decoração</span>
-          <span class="selchip" onclick="selChip(this)">Música ou DJ</span>
-          <span class="selchip" onclick="selChip(this)">Vestido e traje</span>
-          <span class="selchip" onclick="selChip(this)">Doces e bolo</span>
-          <span class="selchip" onclick="selChip(this)">Cerimonial</span>
-          <span class="selchip" onclick="selChip(this)">Beleza</span>
-          <span class="selchip" onclick="selChip(this)">Convites</span>
+
+      <div class="obstep" id="obs2">
+        <h3>Como todo grande amor, começa pelo básico.</h3>
+        <div class="ps">Os nomes viram o monograma de vocês.</div>
+        <div class="frow">
+          <div class="f"><label>Seu nome</label><input id="obA" placeholder="Ana"></div>
+          <div class="f"><label>E do seu amor</label><input id="obB" placeholder="Pedro"></div>
         </div>
+        <div class="f"><label>Data do casamento <span class="opt">(pode mudar depois, sem culpa)</span></label><input id="obDate" type="date"></div>
+        <label style="display:flex;align-items:center;gap:9px;margin:-2px 0 6px;cursor:pointer">
+          <input type="checkbox" id="obTBD" onchange="document.getElementById('obDate').disabled=this.checked" style="width:17px;height:17px;accent-color:var(--green)">
+          <span class="obnote" style="font-size:13px;color:var(--ink)">Ainda estamos decidindo a data</span>
+        </label>
+        <div class="obnav"><button class="btn g" onclick="obGo(1)">Voltar</button><button class="btn p" onclick="obGo(3)">Próximo</button></div>
       </div>
-      <button class="btn p full" onclick="finishOnb()">Começar a organizar</button>
-      <p class="fine" style="text-align:center;margin-top:10px">Tudo pode ser ajustado depois, em Ajustes.</p>
-    </div>
+
+      <div class="obstep" id="obs3">
+        <h3>Agora, o cenário do grande dia.</h3>
+        <div class="ps">Não se preocupe: tudo pode ser ajustado depois.</div>
+        <div class="frow">
+          <div class="f" style="flex:2"><label>País</label><input id="obCountry" value="Brasil"></div>
+          <div class="f" style="flex:1"><label>Estado</label><input id="obUF" placeholder="SC" maxlength="2" style="text-transform:uppercase"></div>
+        </div>
+        <div class="f"><label>Cidade <span class="opt">(opcional)</span></label><input id="obCity" placeholder="Florianópolis"></div>
+        <div class="frow">
+          <div class="f"><label>Convidados <span class="opt">(estimativa)</span></label><input id="obGuests" type="number" inputmode="numeric" placeholder="120"></div>
+          <div class="f"><label>Orçamento total (R$)</label><input id="obBudget" type="text" inputmode="decimal" placeholder="50.000"></div>
+        </div>
+        <div class="f"><label>Estilo do casamento <span class="opt">(opcional)</span></label>
+          <div class="selchips" id="obStyle">
+            <span class="selchip" onclick="selChip(this,true)">Praia</span>
+            <span class="selchip" onclick="selChip(this,true)">Campo</span>
+            <span class="selchip" onclick="selChip(this,true)">Igreja</span>
+            <span class="selchip" onclick="selChip(this,true)">Salão</span>
+            <span class="selchip" onclick="selChip(this,true)">Mini wedding</span>
+            <span class="selchip" onclick="selChip(this,true)">Civil</span>
+          </div>
+        </div>
+        <div class="obnav"><button class="btn g" onclick="obGo(2)">Voltar</button><button class="btn p" onclick="obGo(4)">Próximo</button></div>
+      </div>
+
+      <div class="obstep" id="obs4">
+        <h3>Quem vai fazer esse dia acontecer?</h3>
+        <div class="ps">Marque o que vocês pretendem contratar. Eu já deixo as cotações preparadas, e te aviso o que ainda falta cotar.</div>
+        <div class="f">
+          <div class="selchips" id="obCats">
+            <span class="selchip" onclick="selChip(this)">Espaço</span>
+            <span class="selchip" onclick="selChip(this)">Buffet</span>
+            <span class="selchip" onclick="selChip(this)">Fotografia</span>
+            <span class="selchip" onclick="selChip(this)">Decoração</span>
+            <span class="selchip" onclick="selChip(this)">Música ou DJ</span>
+            <span class="selchip" onclick="selChip(this)">Vestido e traje</span>
+            <span class="selchip" onclick="selChip(this)">Doces e bolo</span>
+            <span class="selchip" onclick="selChip(this)">Cerimonial</span>
+            <span class="selchip" onclick="selChip(this)">Beleza</span>
+            <span class="selchip" onclick="selChip(this)">Convites</span>
+          </div>
+        </div>
+        <div class="obnav"><button class="btn g" onclick="obGo(3)">Voltar</button><button class="btn p" onclick="finishOnb()">Começar a organizar</button></div>
+        <p class="fine" style="text-align:center;margin-top:10px">Tudo pode ser ajustado depois, em Ajustes.</p>
+      </div>
   </div>
 
   <!-- ============ APP ============ -->
   <div class="topbar">
-    <div class="wordmark">SIM<i>.</i></div>
+    <div class="wordmark">SIM<span class="rdot"><svg viewBox="0 0 20 28" aria-hidden="true"><path d="M10 2.5 l3 4.2 -3 4.2 -3 -4.2 Z" fill="currentColor"/><circle cx="10" cy="19" r="6.8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></span></div>
     <div style="display:flex;align-items:center;gap:8px">
       <button onclick="openNotes()" aria-label="Anotações" style="background:var(--card);border:1px solid var(--line);border-radius:99px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;color:var(--green)">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M17 3l4 4L8 20l-5 1 1-5z"/></svg>
@@ -1402,28 +1391,6 @@ window.storage={
   }
 };
 
-/* ---- instalação (PWA) ---- */
-let deferredPrompt=null;
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;});
-async function doInstall(){
-  if(deferredPrompt){
-    deferredPrompt.prompt();
-    await deferredPrompt.userChoice; deferredPrompt=null;
-  } else {
-    document.getElementById('iosHint').style.display='block';
-  }
-}
-if(window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches){
-  document.addEventListener('DOMContentLoaded',()=>{
-    const b=document.getElementById('btnInstall'); if(b) b.style.display='none';
-    const r=document.querySelector('#login .lgrule'); if(r) r.style.display='none';
-  });
-}
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.getRegistrations().then(rs=>rs.forEach(r=>r.unregister())).catch(()=>{});
-  if(window.caches&&caches.keys) caches.keys().then(ks=>ks.forEach(k=>caches.delete(k))).catch(()=>{});
-}
-
 /* ---- demonstração animada da landing: tour completo ---- */
 const dSleep=ms=>new Promise(r=>setTimeout(r,ms));
 async function dType(el,txt,speed){ el.textContent=''; for(const ch of txt){ el.textContent+=ch; await dSleep(speed); } }
@@ -1512,18 +1479,19 @@ async function demoLoop(){
     }catch(e){ await dSleep(2000); }
   }
 }
-demoLoop();
+try{ demoLoop(); }catch(e){ console.warn('demo indisponível',e); }
 
 /* CTA flutuante acompanha a rolagem da landing */
-(function(){
+try{
   const lg=document.getElementById('login'), bar=document.getElementById('stickycta');
-  if(!lg||!bar) return;
-  lg.addEventListener('scroll',()=>{
-    const nearTop=lg.scrollTop<560;
-    const nearBottom=lg.scrollTop+lg.clientHeight>lg.scrollHeight-260;
-    bar.classList.toggle('show', !nearTop && !nearBottom);
-  },{passive:true});
-})();
+  if(lg&&bar){
+    lg.addEventListener('scroll',()=>{
+      const nearTop=lg.scrollTop<560;
+      const nearBottom=lg.scrollTop+lg.clientHeight>lg.scrollHeight-260;
+      bar.classList.toggle('show', !nearTop && !nearBottom);
+    },{passive:true});
+  }
+}catch(e){ console.warn('cta indisponível',e); }
 
 /* ---- autenticação ---- */
 let authMode='up';
@@ -1560,17 +1528,28 @@ async function doLogout(){
   await sb.auth.signOut();
   location.reload();
 }
+function showLogin(msg){
+  var sp=document.getElementById('splash'); if(sp) sp.style.display='none';
+  var lg=document.getElementById('login'); if(lg) lg.style.display='flex';
+  if(msg){ var m=document.getElementById('lgMsg'); if(m) m.textContent=msg; }
+}
 async function initAuth(){
-  document.getElementById('splash').style.display='flex';
-  if(!sb||SUPABASE_URL.includes('COLE_AQUI')){
-    document.getElementById('splash').style.display='none';
-    document.getElementById('login').style.display='flex';
-    document.getElementById('lgMsg').textContent='Configuração pendente: cole a URL e a anon key do Supabase no código.';
-    return;
+  try{
+    var sp=document.getElementById('splash'); if(sp) sp.style.display='flex';
+    if(!window.supabase){ showLogin('Não consegui carregar a conexão. Verifique a internet e recarregue.'); return; }
+    if(!sb||SUPABASE_URL.includes('COLE_AQUI')){ showLogin('Configuração pendente do servidor.'); return; }
+    // timeout: se o Supabase não responder em 6s, mostra o login mesmo assim
+    const session=await Promise.race([
+      sb.auth.getSession().then(r=>r&&r.data?r.data.session:null),
+      new Promise((res)=>setTimeout(()=>res('TIMEOUT'),6000))
+    ]);
+    if(session==='TIMEOUT'){ showLogin('A conexão demorou. Toque em Entrar para tentar de novo.'); return; }
+    if(session){ sbUser=session.user; await bootApp(); }
+    else { showLogin(); }
+  }catch(e){
+    console.error('initAuth',e);
+    showLogin('Não consegui conectar agora. Recarregue a página, por favor.');
   }
-  const {data}=await sb.auth.getSession();
-  if(data&&data.session){ sbUser=data.session.user; await bootApp(); }
-  else { document.getElementById('splash').style.display='none'; document.getElementById('login').style.display='flex'; }
 }
 
 /* =================== ESTADO + PERSISTÊNCIA =================== */
@@ -1636,23 +1615,52 @@ function go(s){
 function openSettings(){ go('set'); }
 
 /* =================== ONBOARDING =================== */
+function selStage(el){ [...el.parentNode.children].forEach(c=>c.classList.remove('on')); el.classList.add('on'); }
+function obGo(n){
+  const cur=document.querySelector('.obstep.on');
+  const curN=parseInt(cur.id.slice(3));
+  if(n>curN){ // validações ao avançar
+    if(curN===1 && !document.querySelector('#obStage .stagecard.on')){ toast('Escolha a etapa que mais parece com vocês'); return; }
+    if(curN===2){
+      if(!$('obA').value.trim()||!$('obB').value.trim()){ toast('Conta para mim os nomes do casal'); return; }
+      if(!$('obDate').value && !$('obTBD').checked){ toast('Escolha a data, ou marque "Ainda estamos decidindo"'); return; }
+    }
+    if(curN===3){
+      const budget=parseBRL($('obBudget').value);
+      if(!budget||budget<=0){ toast('Defina um orçamento inicial — pode ajustar depois'); return; }
+    }
+  }
+  document.querySelectorAll('.obstep').forEach(e=>e.classList.remove('on'));
+  $('obs'+n).classList.add('on');
+  document.querySelectorAll('#obProg .stp').forEach((e,i)=>{
+    e.classList.toggle('cur', i===n-1);
+    e.classList.toggle('ok', i<n-1);
+    if(i<n-1) e.querySelector('i').textContent='✓'; else e.querySelector('i').textContent=String(i+1);
+  });
+  document.querySelector('#onb').scrollTop=0;
+}
 function selChip(el,single){
   if(single){ [...el.parentNode.children].forEach(c=>{ if(c!==el) c.classList.remove('on'); }); }
   el.classList.toggle('on');
 }
 function finishOnb(){
-  const a=$('obA').value.trim(), b=$('obB').value.trim(), d=$('obDate').value;
+  const a=$('obA').value.trim(), b=$('obB').value.trim();
+  const tbd=$('obTBD')&&$('obTBD').checked;
+  let d=$('obDate').value;
+  if(!d&&tbd){ const t=new Date(); t.setFullYear(t.getFullYear()+1); d=t.toISOString().slice(0,10); }
   const budget=parseBRL($('obBudget').value);
   if(!a||!b){ toast('Conta para mim os nomes do casal'); return; }
-  if(!d){ toast('Escolha a data do casamento'); return; }
+  if(!d){ toast('Escolha a data, ou marque "Ainda estamos decidindo"'); return; }
   if(!budget||budget<=0){ toast('Defina um orçamento inicial — pode ajustar depois'); return; }
   const styleEl=document.querySelector('#obStyle .selchip.on');
-  state.profile={a,b,date:d,city:$('obCity').value.trim(),uf:$('obUF').value.trim().toUpperCase(),country:$('obCountry').value.trim()||'Brasil',guests:parseInt($('obGuests').value)||null,budget,style:styleEl?styleEl.textContent.trim():''};
+  const stageEl=document.querySelector('#obStage .stagecard.on');
+  state.profile={a,b,date:d,dateTBD:!!(tbd&&!$('obDate').value),city:$('obCity').value.trim(),uf:$('obUF').value.trim().toUpperCase(),country:$('obCountry').value.trim()||'Brasil',guests:parseInt($('obGuests').value)||null,budget,style:styleEl?styleEl.textContent.trim():'',stage:stageEl?stageEl.dataset.v:''};
   document.querySelectorAll('#obCats .selchip.on').forEach(ch=>{
     const name=ch.textContent.trim();
     if(!state.cats.some(c=>c.name.toLowerCase()===name.toLowerCase())) state.cats.push({id:uid(),name,quotes:[]});
   });
   persist();
+  loadSuggested(true);
   $('onb').style.display='none';
   renderAll();
   showTour();
@@ -1701,6 +1709,11 @@ function renderHome(){
   const dt=new Date(p.date+'T12:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'});
   const loc=[p.city,p.uf].filter(Boolean).join(', ')+((p.country&&p.country.trim()&&p.country.trim().toLowerCase()!=='brasil')?' · '+p.country.trim():'');
   $('heroPlace').textContent = dt + (loc? ' · '+loc : '');
+  if(p.dateTBD){
+    $('chip').textContent='data a definir';
+    $('heroPlace').textContent = (loc||'O grande dia vem aí') + ' · data a decidir';
+    $('heroCount').innerHTML='SIM<small> · escolham a data com calma</small>';
+  }
   $('heroCount').innerHTML = days>0 ? days+'<small>'+dword+' para o sim</small>'
                        : days===0 ? 'É hoje<small>!</small>'
                        : 'Felizes para sempre';
@@ -2686,18 +2699,51 @@ function fmtTempo(M){
   const d=Math.max(1,Math.round(M*30.44));
   return d+(d===1?' dia':' dias');
 }
-function loadSuggested(){
+function personalizedSuggested(){
+  const p=state.profile||{};
+  const list=SUGGESTED.map(x=>[...x]);
+  const doneSet=new Set();
+
+  // o que o cadastro já respondeu nasce riscado
+  if(p.budget) doneSet.add('Definir o orçamento total e quem contribui');
+  if(p.style) doneSet.add('Sonhar o estilo: dia, noite, praia, campo, clássico');
+  if(p.guests) doneSet.add('Montar a primeira lista de convidados');
+  if(p.stage==='Local reservado'||p.stage==='Reta final'){
+    doneSet.add('Escolher a data e visitar espaços');
+    doneSet.add('Reservar o espaço da cerimônia e recepção');
+  }
+  if(p.date&&!p.dateTBD&&p.stage!=='Local reservado'&&p.stage!=='Reta final'){
+    // a data já existe; o que falta é visitar espaços
+    const i=list.findIndex(x=>x[1]==='Escolher a data e visitar espaços');
+    if(i>=0) list[i][1]='Visitar e comparar espaços';
+  }
+
+  // toques do estilo escolhido
+  if(p.style==='Praia') list.push([7,'Garantir plano B de chuva e vento com o espaço na praia']);
+  if(p.style==='Campo') list.push([7,'Planejar transporte e estacionamento dos convidados']);
+  if(p.style==='Igreja') list.push([9,'Reservar a igreja e verificar o curso de noivos']);
+
+  // categorias marcadas no cadastro que o roteiro base não cobre
+  const catNames=(state.cats||[]).map(c=>c.name.toLowerCase());
+  if(catNames.some(n=>n.includes('beleza'))) list.push([5,'Escolher equipe de beleza: cabelo e maquiagem']);
+
+  return {list,doneSet};
+}
+function loadSuggested(silent){
   const plan=buildPlan();
   const existing=new Set(state.tasks.map(t=>t.t));
+  const {list,doneSet}=personalizedSuggested();
   let n=0;
-  SUGGESTED.forEach(([m,t])=>{
+  list.forEach(([m,t])=>{
     if(existing.has(t)) return;
-    state.tasks.push({id:uid(),t,phase:plan.label(m),done:false});
+    state.tasks.push({id:uid(),t,phase:plan.label(m),done:doneSet.has(t)});
     n++;
   });
   state.phaseOrder=plan.order;
   state.planMeta={adapted:plan.adapted,months:Math.round(plan.M*10)/10,created:todayISO()};
-  persist(); renderChk(); go('chk');
+  persist(); renderChk();
+  if(silent) return;
+  go('chk');
   toast(n? (plan.adapted?'Roteiro adaptado para os '+fmtTempo(plan.M)+' que faltam':'Roteiro completo carregado') : 'O roteiro já está na sua lista',true);
 }
 function renderChk(){
@@ -2870,7 +2916,7 @@ function fillSettings(){
 function saveSettings(){
   const a=$('stA').value.trim(), b=$('stB').value.trim(), d=$('stDate').value, budget=parseBRL($('stBudget').value);
   if(!a||!b||!d||!budget){toast('Nomes, data e orçamento são necessários');return;}
-  Object.assign(state.profile,{a,b,date:d,city:$('stCity').value.trim(),uf:$('stUF').value.trim().toUpperCase(),country:$('stCountry').value.trim()||'Brasil',guests:parseInt($('stGuests').value)||null,budget});
+  Object.assign(state.profile,{a,b,date:d,dateTBD:false,city:$('stCity').value.trim(),uf:$('stUF').value.trim().toUpperCase(),country:$('stCountry').value.trim()||'Brasil',guests:parseInt($('stGuests').value)||null,budget});
   persist(); renderAll();
   toast('Ajustes salvos');
 }
@@ -2918,15 +2964,22 @@ function askConfirm(title,msg,onYes,yesLabel){
 /* =================== INIT =================== */
 function renderAll(){ renderHome(); renderFin(); renderForn(); renderChk(); }
 async function bootApp(){
-  await load();
-  ['obBudget','stBudget','exVal','qVal','pcVal'].forEach(id=>maskMoney($(id)));
-  $('fileQuote').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast('Arquivo recebido — processando…'); handleQuoteFile(e.target.files[0]); } });
-  $('fileContract').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast('Contrato recebido — processando…'); handleContractFile(e.target.files[0]); } });
-  $('splash').style.display='none';
-  if(!state.profile){ $('onb').style.display='flex'; }
-  else { renderAll(); showTour(); }
+  try{ await load(); }catch(e){ console.error('load',e); }
+  try{ ['obBudget','stBudget','exVal','qVal','pcVal'].forEach(id=>maskMoney($(id))); }catch(e){}
+  try{ $('fileQuote').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast('Arquivo recebido — processando…'); handleQuoteFile(e.target.files[0]); } }); }catch(e){}
+  try{ $('fileContract').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast('Contrato recebido — processando…'); handleContractFile(e.target.files[0]); } }); }catch(e){}
+  var sp=document.getElementById('splash'); if(sp) sp.style.display='none';
+  try{
+    if(!state.profile){ $('onb').style.display='flex'; }
+    else { renderAll(); showTour(); }
+  }catch(e){ console.error('render',e); $('onb').style.display='flex'; }
 }
-initAuth();
+try{ initAuth(); }catch(e){
+  console.error('boot',e);
+  var lg=document.getElementById('login'), sp=document.getElementById('splash');
+  if(sp) sp.style.display='none';
+  if(lg) lg.style.display='flex';
+}
 </script>
 </body>
 </html>
