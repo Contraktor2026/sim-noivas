@@ -1,11 +1,12 @@
-/* SIM. service worker — sempre busca da rede, nunca serve versão velha */
-const SW_VERSION='sim-v3';
+/* SIM. — service worker de auto-remoção (resolve cache preso) */
 self.addEventListener('install', () => self.skipWaiting());
-self.addEventListener('activate', (e) => {
+self.addEventListener('activate', async (e) => {
   e.waitUntil((async () => {
     const keys = await caches.keys();
     await Promise.all(keys.map(k => caches.delete(k)));
-    await self.clients.claim();
+    await self.registration.unregister();
+    const clients = await self.clients.matchAll();
+    clients.forEach(c => c.navigate(c.url));
   })());
 });
-self.addEventListener('fetch', (e) => { e.respondWith(fetch(e.request).catch(()=>caches.match(e.request))); });
+/* não intercepta mais nada: tudo vai direto à rede */
