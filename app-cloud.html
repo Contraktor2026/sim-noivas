@@ -2600,23 +2600,48 @@ function fmtTempo(M){
   const d=Math.max(1,Math.round(M*30.44));
   return d+(d===1?' dia':' dias');
 }
-function loadSuggested(mode){
+function switchRoteiro(mode){
+  const atual=(state.planMeta&&state.planMeta.mode)||'full';
+  if(mode===atual){ toast('Você já está no roteiro '+(mode==='ess'?'essencial':'completo')); return; }
+  // guardar o que estava concluído (por texto) para repor
+  const feitos=new Set(state.tasks.filter(t=>t.done).map(t=>t.t));
+  const temEditadas=state.tasks.some(t=>t.custom);
+  askConfirm(
+    mode==='ess'?'Mudar para o essencial?':'Mudar para o completo?',
+    mode==='ess'
+      ? 'Vou deixar só os passos imprescindíveis, numerados. Suas marcações de concluído são mantidas. Tarefas que você adicionou à mão continuam na lista.'
+      : 'Vou trazer todas as etapas, organizadas por fase. Suas marcações de concluído são mantidas.',
+    ()=>{
+      // preservar tarefas personalizadas (adicionadas pela noiva)
+      const custom=state.tasks.filter(t=>t.custom);
+      state.tasks=custom;
+      loadSuggested(mode, feitos);
+    },
+    mode==='ess'?'Usar essencial':'Usar completo'
+  );
+}
+function loadSuggested(mode, feitos){
   mode=mode||'full';
+  feitos=feitos||new Set();
   const plan=buildPlan();
   const existing=new Set(state.tasks.map(t=>t.t));
-  let n=0;
+  let n=0, num=0;
   SUGGESTED.forEach(item=>{
     const m=item[0], t=item[1], ess=item[2]===1;
     if(mode==='ess' && !ess) return;   // versão essencial: só as marcadas
     if(existing.has(t)) return;
-    state.tasks.push({id:uid(),t,phase:plan.label(m),done:false});
+    num++;
+    // essencial: sem fase, com número de ordem. completo: organizado por fase.
+    const phase = mode==='ess' ? '' : plan.label(m);
+    state.tasks.push({id:uid(),t,phase,done:feitos.has(t),num: mode==='ess'?num:null});
     n++;
   });
-  state.phaseOrder=plan.order;
-  state.planMeta={adapted:plan.adapted,months:Math.round(plan.M*10)/10,created:todayISO(),mode};
+  if(mode==='ess'){ state.phaseOrder=[]; }
+  else { state.phaseOrder=plan.order; }
+  state.planMeta={adapted: mode==='ess'?false:plan.adapted, months:Math.round(plan.M*10)/10,created:todayISO(),mode};
   persist(); renderChk(); go('chk');
   const nome = mode==='ess'?'essencial':'completo';
-  toast(n? (plan.adapted?'Roteiro '+nome+' adaptado para os '+fmtTempo(plan.M)+' que faltam':'Roteiro '+nome+' carregado') : 'O roteiro já está na sua lista',true);
+  toast(n? (mode==='ess'?'Roteiro essencial carregado': (plan.adapted?'Roteiro completo adaptado para os '+fmtTempo(plan.M)+' que faltam':'Roteiro completo carregado')) : 'O roteiro já está na sua lista',true);
 }
 function renderChk(){
   if(!state.tasks.length){
@@ -2641,7 +2666,14 @@ function renderChk(){
   $('chkNums').textContent=done+' de '+state.tasks.length;
   $('chkMeter').style.width=pct+'%';
 
+  const modo=(state.planMeta&&state.planMeta.mode)||'full';
   let html='';
+  // troca de versão do roteiro
+  html+=`<div style="display:flex;gap:8px;margin-bottom:12px">
+    <button class="btn ${modo==='full'?'p':'g'} sm" style="flex:1" onclick="switchRoteiro('full')">Completo</button>
+    <button class="btn ${modo==='ess'?'p':'g'} sm" style="flex:1" onclick="switchRoteiro('ess')">Essencial</button>
+  </div>`;
+
   if(state.planMeta&&state.planMeta.adapted){
     const M=monthsLeft();
     html+=`<div class="card soft" style="display:flex;gap:10px;align-items:flex-start">
@@ -2662,22 +2694,30 @@ function renderChk(){
     }
   }
 
-  const known=state.phaseOrder&&state.phaseOrder.length?state.phaseOrder:PHASES.filter(Boolean);
-  const extras=[...new Set(state.tasks.map(t=>t.phase||''))].filter(f=>f&&!known.includes(f));
-  const phaseSeq=[...known,...extras,''];
-  phaseSeq.forEach(ph=>{
-    const ts=state.tasks.filter(t=>(t.phase||'')===ph);
-    if(!ts.length) return;
-    const fd=ts.filter(t=>t.done).length;
-    html+=`<div class="phh"><div class="dn">${esc(ph)||'Outras tarefas'}</div><span>${fd}/${ts.length}</span></div>`;
-    html+=ts.map(t=>`
+  const taskRow=(t,prefix)=>`
       <div class="task ${t.done?'done':''}" role="checkbox" aria-checked="${t.done}" tabindex="0"
            onclick="togTask('${t.id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();togTask('${t.id}')}">
         <div class="ck">${t.done?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6"/></svg>':''}</div>
-        <div class="tt">${esc(t.t)}</div>
+        <div class="tt">${prefix||''}${esc(t.t)}</div>
         <button class="edit" aria-label="Editar tarefa" onclick="event.stopPropagation();openTask('${t.id}')">${ICONS.pen}</button>
-      </div>`).join('');
-  });
+      </div>`;
+
+  if(modo==='ess'){
+    // lista numerada simples, sem fases (como o checklist do Casamentos.com)
+    let i=0;
+    html+=state.tasks.map(t=>{ i++; return taskRow(t, `<b style="color:var(--gold);margin-right:7px">${i}.</b>`); }).join('');
+  } else {
+    const known=state.phaseOrder&&state.phaseOrder.length?state.phaseOrder:PHASES.filter(Boolean);
+    const extras=[...new Set(state.tasks.map(t=>t.phase||''))].filter(f=>f&&!known.includes(f));
+    const phaseSeq=[...known,...extras,''];
+    phaseSeq.forEach(ph=>{
+      const ts=state.tasks.filter(t=>(t.phase||'')===ph);
+      if(!ts.length) return;
+      const fd=ts.filter(t=>t.done).length;
+      html+=`<div class="phh"><div class="dn">${esc(ph)||'Outras tarefas'}</div><span>${fd}/${ts.length}</span></div>`;
+      html+=ts.map(t=>taskRow(t)).join('');
+    });
+  }
   $('chkBody').innerHTML=html;
 }
 function togTask(id){
@@ -2702,7 +2742,7 @@ function saveTask(){
   const t=$('tkText').value.trim();
   if(!t){toast('Escreva a tarefa');return;}
   if(editTk){ editTk.t=t; editTk.phase=$('tkPhase').value; }
-  else state.tasks.push({id:uid(),t,phase:$('tkPhase').value,done:false});
+  else state.tasks.push({id:uid(),t,phase:$('tkPhase').value,done:false,custom:true});
   persist(); closeSheet(); renderChk();
   toast(editTk?'Tarefa atualizada':'Tarefa adicionada');
 }
