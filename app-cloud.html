@@ -1348,19 +1348,6 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 /* =================== CONFIGURAÇÃO (PREENCHA) ===================
    Crie um projeto em https://supabase.com, rode o supabase-setup.sql
    e cole abaixo a URL e a anon key (Settings → API). */
-/* capturador global: nunca deixa a tela branca sem explicação */
-window.__simErr=function(msg){
-  try{
-    var d=document.getElementById('simErrBox');
-    if(!d){ d=document.createElement('div'); d.id='simErrBox';
-      d.style.cssText='position:fixed;inset:0;z-index:99999;background:#1F3D2B;color:#FAF9F5;padding:24px;font:14px/1.6 system-ui;overflow:auto';
-      document.body.appendChild(d); }
-    d.innerHTML='<div style="max-width:520px;margin:40px auto"><div style="font-size:20px;font-family:Marcellus,serif;color:#C9A961;margin-bottom:10px">Encontramos um detalhe técnico</div><p style="margin-bottom:14px">Estamos a postos para resolver. Detalhe do erro (mande print para o suporte):</p><pre style="background:rgba(0,0,0,.25);padding:12px;border-radius:8px;white-space:pre-wrap;font-size:12px;color:#FFD9A8">'+msg+'</pre><button onclick="location.reload()" style="margin-top:16px;background:#A8853B;color:#fff;border:none;padding:12px 20px;border-radius:99px;font-weight:700">Recarregar</button></div>';
-  }catch(e){}
-};
-window.addEventListener('error',function(ev){ window.__simErr((ev.message||'erro')+'\n'+(ev.filename||'')+':'+(ev.lineno||'')); });
-window.addEventListener('unhandledrejection',function(ev){ window.__simErr('Promessa rejeitada: '+((ev.reason&&ev.reason.message)||ev.reason||'desconhecido')); });
-
 const SUPABASE_URL='https://omdzifdpnuvtofkwwuau.supabase.co';
 const SUPABASE_ANON_KEY='sb_publishable_qfpZimfti9lqVZZOH0vdtA_FSvUCxmU';
 
@@ -1492,19 +1479,18 @@ async function demoLoop(){
     }catch(e){ await dSleep(2000); }
   }
 }
-try{ demoLoop(); }catch(e){ console.warn('demo indisponível',e); }
+demoLoop();
 
 /* CTA flutuante acompanha a rolagem da landing */
-try{
+(function(){
   const lg=document.getElementById('login'), bar=document.getElementById('stickycta');
-  if(lg&&bar){
-    lg.addEventListener('scroll',()=>{
-      const nearTop=lg.scrollTop<560;
-      const nearBottom=lg.scrollTop+lg.clientHeight>lg.scrollHeight-260;
-      bar.classList.toggle('show', !nearTop && !nearBottom);
-    },{passive:true});
-  }
-}catch(e){ console.warn('cta indisponível',e); }
+  if(!lg||!bar) return;
+  lg.addEventListener('scroll',()=>{
+    const nearTop=lg.scrollTop<560;
+    const nearBottom=lg.scrollTop+lg.clientHeight>lg.scrollHeight-260;
+    bar.classList.toggle('show', !nearTop && !nearBottom);
+  },{passive:true});
+})();
 
 /* ---- autenticação ---- */
 let authMode='up';
@@ -1541,45 +1527,17 @@ async function doLogout(){
   await sb.auth.signOut();
   location.reload();
 }
-function showApp(){
-  ['login','splash','onb'].forEach(function(id){ var e=document.getElementById(id); if(e) e.style.display='none'; });
-  var sc=document.getElementById('screens'); if(sc){ sc.style.display='block'; sc.style.flex='1'; }
-  var nv=document.getElementById('nav'); if(nv) nv.style.display='flex';
-  // garantir que uma tela esteja ativa
-  if(!document.querySelector('.screen.on')){ var h=document.getElementById('s-home'); if(h) h.classList.add('on'); }
-}
-function showOnboarding(){
-  var lg=document.getElementById('login'); if(lg) lg.style.display='none';
-  var sp=document.getElementById('splash'); if(sp) sp.style.display='none';
-  var onb=document.getElementById('onb'); if(onb) onb.style.display='flex';
-}
-function showLogin(msg){
-  var sp=document.getElementById('splash'); if(sp) sp.style.display='none';
-  var lg=document.getElementById('login'); if(lg) lg.style.display='flex';
-  if(msg){ var m=document.getElementById('lgMsg'); if(m) m.textContent=msg; }
-}
-window.__trace=[];
-function T(m){ window.__trace.push(m+' @'+Date.now()%100000); }
 async function initAuth(){
-  try{
-    T('initAuth inicio');
-    var sp=document.getElementById('splash'); if(sp) sp.style.display='flex';
-    if(!window.supabase){ showLogin('Não consegui carregar a conexão. Verifique a internet e recarregue.'); return; }
-    if(!sb||SUPABASE_URL.includes('COLE_AQUI')){ showLogin('Configuração pendente do servidor.'); return; }
-    // timeout: se o Supabase não responder em 6s, mostra o login mesmo assim
-    const session=await Promise.race([
-      sb.auth.getSession().then(r=>r&&r.data?r.data.session:null),
-      new Promise((res)=>setTimeout(()=>res('TIMEOUT'),6000))
-    ]);
-    if(session==='TIMEOUT'){ showLogin('A conexão demorou. Toque em Entrar para tentar de novo.'); return; }
-    T('sessao='+(session==='TIMEOUT'?'timeout':(session?'sim':'nao')));
-    if(session==='TIMEOUT'){ showLogin('A conexão demorou. Toque em Entrar para tentar de novo.'); return; }
-    if(session){ sbUser=session.user; T('vai bootApp'); await bootApp(); T('bootApp terminou'); }
-    else { T('showLogin'); showLogin(); }
-  }catch(e){
-    console.error('initAuth',e);
-    showLogin('Não consegui conectar agora. Recarregue a página, por favor.');
+  document.getElementById('splash').style.display='flex';
+  if(!sb||SUPABASE_URL.includes('COLE_AQUI')){
+    document.getElementById('splash').style.display='none';
+    document.getElementById('login').style.display='flex';
+    document.getElementById('lgMsg').textContent='Configuração pendente: cole a URL e a anon key do Supabase no código.';
+    return;
   }
+  const {data}=await sb.auth.getSession();
+  if(data&&data.session){ sbUser=data.session.user; await bootApp(); }
+  else { document.getElementById('splash').style.display='none'; document.getElementById('login').style.display='flex'; }
 }
 
 /* =================== ESTADO + PERSISTÊNCIA =================== */
@@ -1588,22 +1546,12 @@ let state={profile:null,exp:[],cats:[],tasks:[],notes:[]};
 let memOnly=false;
 
 async function load(){
-  let loaded=null;
   try{
-    if(window.storage){
-      const r=await window.storage.get(KEY);
-      if(r&&r.value) loaded=JSON.parse(r.value);
-    }
-  }catch(e){ console.warn('load: storage indisponível, começando vazio'); }
-  // state SEMPRE válido e completo, aconteça o que acontecer
-  state=Object.assign({profile:null,exp:[],cats:[],tasks:[],notes:[]}, loaded||{});
-  state.exp=Array.isArray(state.exp)?state.exp:[];
-  state.cats=Array.isArray(state.cats)?state.cats:[];
-  state.tasks=Array.isArray(state.tasks)?state.tasks:[];
-  state.notes=Array.isArray(state.notes)?state.notes:[];
-  try{
-    state.cats.forEach(c=>{ c.quotes=Array.isArray(c.quotes)?c.quotes:[]; c.quotes.forEach(q=>{ if(q.fav&&!q.stars) q.stars=5; delete q.fav; }); });
-  }catch(e){ console.warn('load: limpeza de cats',e); }
+    const r=await window.storage.get(KEY);
+    if(r&&r.value) state=JSON.parse(r.value);
+  }catch(e){ /* primeira vez ou storage indisponível */ }
+  state.notes=state.notes||[];
+  (state.cats||[]).forEach(c=>c.quotes.forEach(q=>{ if(q.fav&&!q.stars) q.stars=5; delete q.fav; }));
   if(!window.storage) memOnly=true;
 }
 let saveT=null;
@@ -1699,18 +1647,11 @@ function finishOnb(){
     const name=ch.textContent.trim();
     if(!state.cats.some(c=>c.name.toLowerCase()===name.toLowerCase())) state.cats.push({id:uid(),name,quotes:[]});
   });
-  // 1) gerar roteiro e salvar, sem deixar que falha alguma trave a tela
-  try{ loadSuggested(true); }catch(e){ console.error('roteiro',e); }
-  try{ persist(); }catch(e){ console.error('persist',e); }
-  // 2) sair do onboarding SEMPRE
-  var onb=document.getElementById('onb'); if(onb) onb.style.display='none';
-  var lg=document.getElementById('login'); if(lg) lg.style.display='none';
-  // 3) montar o app com proteção total
-  try{ renderAll(); }catch(e){ console.error('renderAll',e); }
-  try{ showApp(); }catch(e){ console.error('showApp',e); }
-  try{ showTour(); }catch(e){ console.error('showTour',e); }
-  // 4) rede de segurança final
-  try{ if(typeof go==='function') go('home'); }catch(e){}
+  persist();
+  loadSuggested(true);
+  $('onb').style.display='none';
+  renderAll();
+  showTour();
 }
 
 /* =================== DICA DO DIA =================== */
@@ -2980,7 +2921,7 @@ function resetAll(){
       }catch(e){}
       state={profile:null,exp:[],cats:[],tasks:[],notes:[]};
       curVendor=null; fornCat=null;
-      showOnboarding(); go('home');
+      $('onb').style.display='flex'; go('home');
       toast('Tudo apagado — recomeçando do zero');
     },
     'Apagar tudo'
@@ -3011,25 +2952,19 @@ function askConfirm(title,msg,onYes,yesLabel){
 /* =================== INIT =================== */
 function renderAll(){ renderHome(); renderFin(); renderForn(); renderChk(); }
 async function bootApp(){
-  T('bootApp: vai load');
-  try{ await load(); T('load ok, profile='+(state.profile?'sim':'nao')); }catch(e){ T('load ERRO:'+e.message); console.error('load',e); }
-  try{ ['obBudget','stBudget','exVal','qVal','pcVal'].forEach(id=>maskMoney($(id))); }catch(e){}
-  try{ $('fileQuote').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast('Arquivo recebido — processando…'); handleQuoteFile(e.target.files[0]); } }); }catch(e){}
-  try{ $('fileContract').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast('Contrato recebido — processando…'); handleContractFile(e.target.files[0]); } }); }catch(e){}
-  var sp=document.getElementById('splash'); if(sp) sp.style.display='none';
-  T('splash escondida');
-  try{
-    if(!state.profile){ T('sem perfil: onboarding'); showOnboarding(); }
-    else { T('com perfil: renderAll'); renderAll(); T('renderAll ok'); showApp(); T('showApp ok'); showTour(); T('showTour ok'); }
-  }catch(e){ T('render ERRO:'+e.message); window.__simErr('Erro ao montar: '+e.message+'\n\nRastro:\n'+window.__trace.join('\n')); showOnboarding(); }
-  T('bootApp fim');
+  await load();
+  ['obBudget','stBudget','exVal','qVal','pcVal'].forEach(id=>maskMoney($(id)));
+  $('fileQuote').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast('Arquivo recebido — processando…'); handleQuoteFile(e.target.files[0]); } });
+  $('fileContract').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast('Contrato recebido — processando…'); handleContractFile(e.target.files[0]); } });
+  $('splash').style.display='none';
+  $('login').style.display='none';
+  if(!state.profile){ $('onb').style.display='flex'; }
+  else {
+    $('onb').style.display='none';
+    renderAll(); showTour();
+  }
 }
-try{ initAuth(); }catch(e){
-  console.error('boot',e);
-  var lg=document.getElementById('login'), sp=document.getElementById('splash');
-  if(sp) sp.style.display='none';
-  if(lg) lg.style.display='flex';
-}
+initAuth();
 </script>
 </body>
 </html>
