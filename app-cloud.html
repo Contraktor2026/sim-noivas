@@ -41,6 +41,20 @@ body{font-family:var(--body);background:#11231A;color:var(--ink);display:flex;ju
 /* ===== utilities ===== */
 .cap{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:600}
 .cap.gold{color:var(--gold)}
+/* cabeçalhos das seções de fornecedores */
+.fsec{display:flex;align-items:center;gap:9px;margin:6px 0 12px}
+.fsec .ico{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.fsec .tit{font-family:var(--display);font-size:19px;line-height:1.1}
+.fsec .sub{font-size:11px;color:var(--muted);margin-top:1px}
+.fsec.hired .ico{background:var(--green);color:var(--paper)}
+.fsec.hired .tit{color:var(--green)}
+.fsec.quote .ico{background:var(--gold-soft);color:#7a6430}
+.fsec.quote .tit{color:#7a6430}
+/* área das seções com leve separação */
+.fwrap{margin-bottom:6px}
+.fwrap.hired{background:linear-gradient(180deg,rgba(31,61,43,.04),transparent);border-radius:14px;padding:12px 12px 4px;margin:0 -12px 8px}
+.fwrap.quote{padding-top:8px}
+.fdivider{height:1px;background:var(--line);margin:20px 0 18px}
 .hr{border:none;border-top:1px solid var(--line);margin:14px 0}
 .dn{font-family:var(--display)}
 button{font-family:var(--body);cursor:pointer}
@@ -1792,8 +1806,12 @@ function renderForn(){
   const hired=[];
   state.cats.forEach(c=>c.quotes.filter(q=>q.win).forEach(q=>hired.push({c,q})));
   if(hired.length){
-    html+=`<div class="cap gold" style="margin:4px 0 8px">Contratados</div>
-    <div class="card" style="padding:6px 14px">`+hired.map(({c,q})=>{
+    html+=`<div class="fwrap hired">
+    <div class="fsec hired">
+      <div class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12l5 5L20 6"/></svg></div>
+      <div><div class="tit">Já contratados</div><div class="sub">${hired.length} ${hired.length>1?'fornecedores fechados':'fornecedor fechado'} · pode comemorar</div></div>
+    </div>
+    <div class="card" style="padding:6px 14px;margin-bottom:0">`+hired.map(({c,q})=>{
       const linked=state.exp.filter(e=>e.vendorId===q.id);
       const paid=linked.filter(e=>e.paid).reduce((a,e)=>a+e.val,0);
       const m=linked.length? `${brl(paid)} pagos de ${brl(q.val)}` : 'monte o plano de pagamento';
@@ -1810,14 +1828,22 @@ function renderForn(){
       const w=c.quotes.find(q=>q.win);
       if(w&&c.quotes.length>=2){ const avg=c.quotes.reduce((a,q)=>a+q.val,0)/c.quotes.length; sav+=Math.max(0,avg-w.val); }
     });
-    if(sav>0) html+=`<div class="card green"><div class="cap gold">Economia das suas escolhas</div>
+    if(sav>0) html+=`<div class="card green" style="margin-top:10px;margin-bottom:0"><div class="cap gold">Economia das suas escolhas</div>
       <div class="num">${brl(Math.round(sav))}</div>
       <div class="fine">comparando o contratado com a média dos orçamentos recebidos</div></div>`;
+    html+=`</div>`; // fecha .fwrap.hired
   }
 
   // em cotação
   const open=state.cats.filter(c=>!c.quotes.some(q=>q.win));
-  html+=`<div class="cap gold" style="margin:${hired.length?'18px':'4px'} 0 8px">Em cotação</div>`;
+  if(hired.length && open.length) html+=`<div class="fdivider"></div>`;
+  html+=`<div class="fwrap quote">`;
+  if(open.length || !hired.length){
+    html+=`<div class="fsec quote">
+      <div class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M7 12h10M10 18h4"/></svg></div>
+      <div><div class="tit">Em cotação</div><div class="sub">${open.length? 'comparando orçamentos para decidir' : 'comece a guardar seus orçamentos'}</div></div>
+    </div>`;
+  }
   if(!open.length && !hired.length){
     html+=`<div class="howto">
       <div class="st"><b>1</b><span class="tx">Crie uma categoria — Buffet, Fotografia, Decoração…</span></div>
@@ -1850,6 +1876,7 @@ function renderForn(){
     html+=`<p class="fine" style="margin-bottom:10px">Nenhuma cotação em aberto.</p>`;
   }
   html+=`<button class="add" onclick="openSheet('sh-cat')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Nova categoria</button>`;
+  html+=`</div>`; // fecha .fwrap.quote
   $('fornBody').innerHTML=html;
 }
 
