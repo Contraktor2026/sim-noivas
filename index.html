@@ -2951,18 +2951,43 @@ function askConfirm(title,msg,onYes,yesLabel){
 
 /* =================== INIT =================== */
 function renderAll(){ renderHome(); renderFin(); renderForn(); renderChk(); }
+function __diag(){
+  function info(id){var e=document.getElementById(id);if(!e)return id+'=ausente';var s=getComputedStyle(e);return id+': disp='+s.display+' h='+e.offsetHeight+'px vis='+s.visibility;}
+  var app=document.querySelector('.app');
+  var txt='DIAGNÓSTICO\n\n'
+    +'janela: '+window.innerWidth+'x'+window.innerHeight+'\n'
+    +'.app: h='+(app?app.offsetHeight:'?')+'px\n'
+    +info('splash')+'\n'+info('login')+'\n'+info('onb')+'\n'+info('screens')+'\n'
+    +'screen ativa: '+(document.querySelector('.screen.on')?document.querySelector('.screen.on').id:'NENHUMA')+'\n'
+    +'s-home filhos: '+(document.getElementById('s-home')?document.getElementById('s-home').children.length:'?')+'\n'
+    +'sbUser: '+(window.sbUser?'sim':'nao')+'\n'
+    +'state.profile: '+(window.state&&window.state.profile?'sim':'nao')+'\n'
+    +'rastro: '+(window.__trace?window.__trace.join(' > '):'(vazio)');
+  var d=document.getElementById('diagBox');
+  if(!d){d=document.createElement('div');d.id='diagBox';d.style.cssText='position:fixed;inset:0;z-index:999999;background:#0a1410;color:#9f9;padding:20px;font:12px/1.5 monospace;white-space:pre-wrap;overflow:auto';document.body.appendChild(d);}
+  d.textContent=txt;
+}
+window.__trace=window.__trace||[];
+function T(m){ window.__trace.push(m); }
 async function bootApp(){
   await load();
   ['obBudget','stBudget','exVal','qVal','pcVal'].forEach(id=>maskMoney($(id)));
   $('fileQuote').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast('Arquivo recebido — processando…'); handleQuoteFile(e.target.files[0]); } });
   $('fileContract').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast('Contrato recebido — processando…'); handleContractFile(e.target.files[0]); } });
+  T('load done, profile='+(state.profile?'sim':'nao'));
   $('splash').style.display='none';
   $('login').style.display='none';
-  if(!state.profile){ $('onb').style.display='flex'; }
+  if(!state.profile){ $('onb').style.display='flex'; T('mostrou onb'); }
   else {
     $('onb').style.display='none';
-    renderAll(); showTour();
+    T('vai renderAll');
+    renderAll();
+    T('renderAll ok');
+    showTour();
+    T('showTour ok');
   }
+  // diagnóstico visível após montar (temporário)
+  setTimeout(__diag, 1500);
 }
 initAuth();
 </script>
