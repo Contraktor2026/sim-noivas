@@ -1531,18 +1531,19 @@ async function demoLoop(){
     }catch(e){ await dSleep(2000); }
   }
 }
-demoLoop();
+try{ demoLoop(); }catch(e){ console.warn('demo indisponível',e); }
 
 /* CTA flutuante acompanha a rolagem da landing */
-(function(){
+try{
   const lg=document.getElementById('login'), bar=document.getElementById('stickycta');
-  if(!lg||!bar) return;
-  lg.addEventListener('scroll',()=>{
-    const nearTop=lg.scrollTop<560;
-    const nearBottom=lg.scrollTop+lg.clientHeight>lg.scrollHeight-260;
-    bar.classList.toggle('show', !nearTop && !nearBottom);
-  },{passive:true});
-})();
+  if(lg&&bar){
+    lg.addEventListener('scroll',()=>{
+      const nearTop=lg.scrollTop<560;
+      const nearBottom=lg.scrollTop+lg.clientHeight>lg.scrollHeight-260;
+      bar.classList.toggle('show', !nearTop && !nearBottom);
+    },{passive:true});
+  }
+}catch(e){ console.warn('cta indisponível',e); }
 
 /* ---- autenticação ---- */
 let authMode='up';
@@ -3012,7 +3013,12 @@ async function bootApp(){
   if(!state.profile){ $('onb').style.display='flex'; }
   else { renderAll(); showTour(); }
 }
-initAuth();
+try{ initAuth(); }catch(e){
+  console.error('boot',e);
+  var lg=document.getElementById('login'), sp=document.getElementById('splash');
+  if(sp) sp.style.display='none';
+  if(lg) lg.style.display='flex';
+}
 </script>
 </body>
 </html>
