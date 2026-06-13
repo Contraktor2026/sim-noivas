@@ -34,7 +34,9 @@
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%}
 body{font-family:var(--body);background:#11231A;color:var(--ink);display:flex;justify-content:center}
-.app{width:100%;max-width:440px;min-height:100dvh;background:var(--paper);display:flex;flex-direction:column;position:relative;overflow:hidden}
+.rdot{display:inline-block;color:var(--gold);line-height:0}
+.rdot svg{height:.62em;width:auto;vertical-align:-.01em;margin-left:.07em}
+.app{width:100%;max-width:440px;height:100vh;height:100dvh;min-height:560px;background:var(--paper);display:flex;flex-direction:column;position:relative;overflow:hidden}
 
 /* ===== utilities ===== */
 .cap{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:600}
@@ -52,7 +54,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
 .chip{font-size:11.5px;font-weight:700;letter-spacing:.06em;color:var(--green);border:1px solid var(--line);background:var(--card);border-radius:99px;padding:6px 12px}
 
 /* ===== screens ===== */
-.screens{flex:1;overflow-y:auto;padding:0 18px 108px}
+.screens{flex:1 1 auto;height:100vh;height:100dvh;min-height:560px;overflow-y:auto;padding:0 18px 108px}
 .screen{display:none;animation:f .3s ease}
 .screen.on{display:block}
 @keyframes f{from{opacity:0;transform:translateY(8px)}to{opacity:1}}
@@ -344,7 +346,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
   <div class="onb" id="login" style="display:none;z-index:58">
     <div class="top">
       <div class="brandring"><span>S<i>.</i></span></div>
-      <div class="wm">SIM<i>.</i></div>
+      <div class="wm">SIM<span class="rdot"><svg viewBox="0 0 20 28" aria-hidden="true"><path d="M10 2.5 l3 4.2 -3 4.2 -3 -4.2 Z" fill="currentColor"/><circle cx="10" cy="19" r="6.8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></span></div>
       <div class="tagline">Você disse sim.<br>O resto, a gente organiza juntas.</div>
       <svg class="vine" width="200" height="24" viewBox="0 0 200 24" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true">
   <path d="M6 12 H78 M122 12 H194"/>
@@ -662,7 +664,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       <div class="mockwrap">
 
         <div class="mock"><div class="mockframe"><div class="mockin">
-          <div class="row" style="margin-bottom:10px"><div class="wordmark">SIM<i>.</i></div><div class="chip">243 dias</div></div>
+          <div class="row" style="margin-bottom:10px"><div class="wordmark">SIM<span class="rdot"><svg viewBox="0 0 20 28" aria-hidden="true"><path d="M10 2.5 l3 4.2 -3 4.2 -3 -4.2 Z" fill="currentColor"/><circle cx="10" cy="19" r="6.8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></span></div><div class="chip">243 dias</div></div>
           <div class="hero" style="margin-top:0">
             <div class="mono"><span>A<span style="font-size:.6em;color:var(--gold)"> &amp; </span>P</span></div>
             <div class="names">Ana &amp; Pedro</div>
@@ -891,7 +893,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
   <circle cx="35" cy="20" r="12"/>
   <path d="M21 5 l3.5 3 -3.5 3 -3.5 -3z" fill="currentColor" fill-opacity=".4"/>
 </svg>
-      <div class="wm2">SIM<i style="font-style:normal;color:var(--gold)">.</i></div>
+      <div class="wm2">SIM<span class="rdot"><svg viewBox="0 0 20 28" aria-hidden="true"><path d="M10 2.5 l3 4.2 -3 4.2 -3 -4.2 Z" fill="currentColor"/><circle cx="10" cy="19" r="6.8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></span></div>
       Você disse sim. O resto, a gente organiza juntas.<br>
       Feito com cuidado para noivas do Brasil e da América Latina.
     </div>
@@ -900,12 +902,12 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
     </div>
   </div>
 
-  <div class="splash" id="splash"><div class="wm">SIM<i style="color:var(--gold)">.</i></div></div>
+  <div class="splash" id="splash"><div class="wm">SIM<span class="rdot"><svg viewBox="0 0 20 28" aria-hidden="true"><path d="M10 2.5 l3 4.2 -3 4.2 -3 -4.2 Z" fill="currentColor"/><circle cx="10" cy="19" r="6.8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></span></div></div>
 
   <!-- ============ ONBOARDING ============ -->
   <div class="onb" id="onb" style="display:none">
     <div class="top">
-      <div class="wm">SIM<i>.</i></div>
+      <div class="wm">SIM<span class="rdot"><svg viewBox="0 0 20 28" aria-hidden="true"><path d="M10 2.5 l3 4.2 -3 4.2 -3 -4.2 Z" fill="currentColor"/><circle cx="10" cy="19" r="6.8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></span></div>
       <div class="tagline">Você disse sim.<br>O resto, a gente organiza juntas.</div>
       <div class="heroorn"><svg width="160" height="24" viewBox="0 0 160 24" fill="none" aria-hidden="true">
   <g stroke="currentColor" stroke-width="1.1" fill="none">
@@ -949,7 +951,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 
   <!-- ============ APP ============ -->
   <div class="topbar">
-    <div class="wordmark">SIM<i>.</i></div>
+    <div class="wordmark">SIM<span class="rdot"><svg viewBox="0 0 20 28" aria-hidden="true"><path d="M10 2.5 l3 4.2 -3 4.2 -3 -4.2 Z" fill="currentColor"/><circle cx="10" cy="19" r="6.8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></span></div>
     <div style="display:flex;align-items:center;gap:8px">
       <button onclick="openNotes()" aria-label="Anotações" style="background:var(--card);border:1px solid var(--line);border-radius:99px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;color:var(--green)">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M17 3l4 4L8 20l-5 1 1-5z"/></svg>
@@ -2784,8 +2786,9 @@ async function bootApp(){
   $('fileQuote').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast('Arquivo recebido — processando…'); handleQuoteFile(e.target.files[0]); } });
   $('fileContract').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast('Contrato recebido — processando…'); handleContractFile(e.target.files[0]); } });
   $('splash').style.display='none';
+  $('login').style.display='none';
   if(!state.profile){ $('onb').style.display='flex'; }
-  else { renderAll(); showTour(); }
+  else { $('onb').style.display='none'; renderAll(); showTour(); }
 }
 initAuth();
 </script>
