@@ -1524,8 +1524,8 @@ function persist(){
 /* =================== HELPERS =================== */
 const $=id=>document.getElementById(id);
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
-const brl=v=>Math.round(v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL',minimumFractionDigits:0,maximumFractionDigits:0});
-const fmtNum=v=>Math.round(v||0).toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0});
+const brl=v=>{v=v||0; const temC=Math.round(v*100)%100!==0; return v.toLocaleString('pt-BR',{style:'currency',currency:'BRL',minimumFractionDigits:temC?2:0,maximumFractionDigits:2});};
+const fmtNum=v=>{v=v||0; const temC=Math.round(v*100)%100!==0; return v.toLocaleString('pt-BR',{minimumFractionDigits:temC?2:0,maximumFractionDigits:2});};
 /* máscara de dinheiro: digite só números, o app formata 60.000.000,00 sozinho */
 function maskMoney(el){
   if(!el) return;
