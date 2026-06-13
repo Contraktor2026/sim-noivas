@@ -3003,12 +3003,13 @@ function renderAgenda(){
   let html='';
   const row=(i)=>{
     const d=new Date(i.date+'T12:00:00');
-    const dia=d.toLocaleDateString('pt-BR',{day:'2-digit',month:'short'});
+    const ddia=d.toLocaleDateString('pt-BR',{day:'2-digit'});
+    const dmes=d.toLocaleDateString('pt-BR',{month:'short'}).replace('.','');
     const semana=d.toLocaleDateString('pt-BR',{weekday:'short'}).replace('.','');
     const late=i.kind==='pay'&&!i.paid&&i.date<today;
     if(i.kind==='pay'){
       return `<div class="agi" onclick="openExpense('${i.id}')">
-        <div class="agdate"><div class="agd">${dia.split(' ')[0]}</div><div class="agm">${dia.split(' ')[1]}</div></div>
+        <div class="agdate"><div class="agd">${ddia}</div><div class="agm">${dmes}</div></div>
         <div class="agbd">
           <div class="agt">${esc(i.desc)} ${i.paid?'<span style=\'color:var(--ok);font-size:11px\'>✓ pago</span>':''}</div>
           <div class="agm2">${ICONS.money} ${i.paid?'pagamento':'a pagar'} · ${esc(i.cat)} · ${semana}</div>
@@ -3017,7 +3018,7 @@ function renderAgenda(){
       </div>`;
     }
     return `<div class="agi" onclick="openEvent('${i.id}')">
-      <div class="agdate ev"><div class="agd">${dia.split(' ')[0]}</div><div class="agm">${dia.split(' ')[1]}</div></div>
+      <div class="agdate ev"><div class="agd">${ddia}</div><div class="agm">${dmes}</div></div>
       <div class="agbd">
         <div class="agt">${esc(i.desc)}${i.time?` · ${i.time}`:''}</div>
         <div class="agm2">${i.where?esc(i.where)+' · ':''}${semana}${i.note?' · '+esc(i.note):''}</div>
