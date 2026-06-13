@@ -1736,6 +1736,7 @@ function finishOnb(){
     if(!state.cats.some(c=>c.name.toLowerCase()===name.toLowerCase())) state.cats.push({id:uid(),name,quotes:[]});
   });
   persist();
+  loadSuggested(true);
   $('onb').style.display='none';
   renderAll();
   showTour();
@@ -2774,18 +2775,52 @@ function fmtTempo(M){
   const d=Math.max(1,Math.round(M*30.44));
   return d+(d===1?' dia':' dias');
 }
-function loadSuggested(){
+function personalizedSuggested(){
+  const p=state.profile||{};
+  const list=SUGGESTED.map(x=>[...x]);
+  const doneSet=new Set();
+
+  // o que o cadastro já respondeu nasce riscado
+  if(p.budget) doneSet.add('Definir o orçamento total e quem contribui');
+  if(p.style) doneSet.add('Sonhar o estilo: dia, noite, praia, campo, clássico');
+  if(p.guests) doneSet.add('Montar a primeira lista de convidados');
+  if(p.stage==='Local reservado'||p.stage==='Reta final'){
+    doneSet.add('Escolher a data e visitar espaços');
+    doneSet.add('Reservar o espaço da cerimônia e recepção');
+  }
+  if(p.date&&!p.dateTBD&&p.stage!=='Local reservado'&&p.stage!=='Reta final'){
+    // a data já existe; o que falta é visitar espaços
+    const i=list.findIndex(x=>x[1]==='Escolher a data e visitar espaços');
+    if(i>=0) list[i][1]='Visitar e comparar espaços';
+  }
+
+  // toques do estilo escolhido
+  if(p.style==='Praia') list.push([7,'Garantir plano B de chuva e vento com o espaço na praia']);
+  if(p.style==='Campo') list.push([7,'Planejar transporte e estacionamento dos convidados']);
+  if(p.style==='Igreja') list.push([9,'Reservar a igreja e verificar o curso de noivos']);
+
+  // categorias marcadas no cadastro que o roteiro base não cobre
+  const catNames=(state.cats||[]).map(c=>c.name.toLowerCase());
+  if(catNames.some(n=>n.includes('beleza'))) list.push([5,'Escolher equipe de beleza: cabelo e maquiagem']);
+  if(catNames.some(n=>n.includes('cerimonial'))) doneSetKeep=null; // já coberto no base
+
+  return {list,doneSet};
+}
+function loadSuggested(silent){
   const plan=buildPlan();
   const existing=new Set(state.tasks.map(t=>t.t));
+  const {list,doneSet}=personalizedSuggested();
   let n=0;
-  SUGGESTED.forEach(([m,t])=>{
+  list.forEach(([m,t])=>{
     if(existing.has(t)) return;
-    state.tasks.push({id:uid(),t,phase:plan.label(m),done:false});
+    state.tasks.push({id:uid(),t,phase:plan.label(m),done:doneSet.has(t)});
     n++;
   });
   state.phaseOrder=plan.order;
   state.planMeta={adapted:plan.adapted,months:Math.round(plan.M*10)/10,created:todayISO()};
-  persist(); renderChk(); go('chk');
+  persist(); renderChk();
+  if(silent) return;
+  go('chk');
   toast(n? (plan.adapted?'Roteiro adaptado para os '+fmtTempo(plan.M)+' que faltam':'Roteiro completo carregado') : 'O roteiro já está na sua lista',true);
 }
 function renderChk(){
