@@ -147,6 +147,13 @@ body{font-family:var(--body);background:#11231A;color:var(--ink);display:flex;ju
 .rsvp-check{width:64px;height:64px;border-radius:50%;background:#E8F0E8;display:flex;align-items:center;justify-content:center;margin:8px auto 14px}
 .rsvp-tmsg{font-family:var(--display);font-size:22px;color:var(--green)}
 .rsvp-foot{margin-top:18px;font-size:11px;color:var(--muted);letter-spacing:.04em}
+.rscomp{background:#F4F1EA;border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:8px}
+.rscomp input{margin-bottom:8px}
+.rscomp-row{display:flex;gap:8px;align-items:center}
+.rskind{display:flex;gap:6px;flex:1}
+.rskind button{flex:1;border:1.3px solid var(--line);background:#fff;border-radius:8px;padding:8px 4px;font-family:var(--body);font-size:12px;font-weight:700;color:var(--muted);cursor:pointer}
+.rskind button.on{border-color:var(--green);background:#E8F0E8;color:var(--green)}
+.rscomp-x{flex-shrink:0;width:32px;height:32px;border-radius:8px;border:none;background:rgba(0,0,0,.05);color:var(--muted);font-size:13px;cursor:pointer}
 /* seção do link na tela de convidados */
 .linkcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
 .linkbox{display:flex;align-items:center;gap:8px;background:#F4F1EA;border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:12.5px;color:var(--ink);word-break:break-all}
@@ -478,14 +485,18 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
         <div class="rsvp-date" id="rsvpDate"></div>
         <div class="rsvp-line"></div>
         <div id="rsvpForm">
-          <div class="f"><label>Seu nome completo</label><input id="rsName" placeholder="Como você quer aparecer na lista"></div>
+          <div class="f"><label>Seu nome completo</label><input id="rsName" placeholder="Nome e sobrenome"></div>
           <div class="f"><label>Você vai poder comparecer?</label>
             <div class="rsvp-yn" id="rsYN">
               <button type="button" data-v="yes" class="on" onclick="rsPick('yes')">Sim, vou! 🤍</button>
               <button type="button" data-v="no" onclick="rsPick('no')">Não poderei</button>
             </div>
           </div>
-          <div class="f" id="rsCompWrap"><label>Quantas pessoas no total? <span class="opt">(contando você)</span></label><input id="rsComp" type="number" inputmode="numeric" min="1" value="1"></div>
+          <div class="f" id="rsCompWrap">
+            <label>Vai levar acompanhantes? <span class="opt">(opcional)</span></label>
+            <div id="rsCompList"></div>
+            <button type="button" class="btn g full" onclick="rsAddComp()" style="margin-top:2px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-1px;margin-right:4px"><path d="M12 5v14M5 12h14"/></svg>Adicionar acompanhante</button>
+          </div>
           <div class="f"><label>Deixe um recado para os noivos <span class="opt">(opcional)</span></label><textarea id="rsMsg" placeholder="Um votinho de carinho…"></textarea></div>
           <button class="btn p full" id="rsSend" onclick="submitRSVP()">Enviar confirmação</button>
         </div>
@@ -1293,6 +1304,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
     <!-- ANOTAÇÕES -->
     <section class="screen" id="s-guests">
       <h2 class="sec">Convidados</h2>
+      <div id="guestIntro"></div>
       <div class="ftabs" id="guestTabs">
         <button class="ftab on" data-tab="mine" onclick="guestTab('mine')">Minha lista <span class="cnt" id="cntMine">0</span></button>
         <button class="ftab" data-tab="rsvp" onclick="guestTab('rsvp')">Confirmações <span class="cnt" id="cntRsvp">0</span></button>
@@ -1753,7 +1765,22 @@ async function doLogout(){
   await sb.auth.signOut();
   location.reload();
 }
-let rsStatus='yes', rsSlug='';
+let rsStatus='yes', rsSlug='', rsComps=[];
+function rsAddComp(){ rsComps.push({name:'',kind:'adult'}); renderRsComps(); }
+function renderRsComps(){
+  const box=document.getElementById('rsCompList'); if(!box) return;
+  box.innerHTML=rsComps.map((c,i)=>`
+    <div class="rscomp">
+      <input placeholder="Nome completo do acompanhante" value="${(c.name||'').replace(/"/g,'&quot;')}" oninput="rsComps[${i}].name=this.value">
+      <div class="rscomp-row">
+        <div class="rskind">
+          <button type="button" class="${c.kind!=='child'?'on':''}" onclick="rsComps[${i}].kind='adult';renderRsComps()">Adulto</button>
+          <button type="button" class="${c.kind==='child'?'on':''}" onclick="rsComps[${i}].kind='child';renderRsComps()">Criança</button>
+        </div>
+        <button type="button" class="rscomp-x" title="Remover" onclick="rsComps.splice(${i},1);renderRsComps()">✕</button>
+      </div>
+    </div>`).join('');
+}
 async function showRSVP(slug){
   rsSlug=slug;
   ['splash','login','onb'].forEach(function(id){ var e=document.getElementById(id); if(e) e.style.display='none'; });
@@ -1784,12 +1811,18 @@ function rsPick(v){
 }
 async function submitRSVP(){
   const name=document.getElementById('rsName').value.trim();
-  if(!name){ toast('Conte seu nome para confirmar'); return; }
-  const comp=rsStatus==='yes' ? Math.max(0,(parseInt(document.getElementById('rsComp').value)||1)-1) : 0;
+  if(!name){ toast('Conte seu nome completo para confirmar'); return; }
+  let detail=[];
+  if(rsStatus==='yes'){
+    detail=rsComps.map(c=>({name:(c.name||'').trim(),kind:c.kind==='child'?'child':'adult'})).filter(c=>c.name);
+    const faltaNome=rsComps.some(c=>!(c.name||'').trim());
+    if(faltaNome){ toast('Coloque o nome completo de cada acompanhante'); return; }
+  }
+  const comp=detail.length;
   const msg=document.getElementById('rsMsg').value.trim();
   const btn=document.getElementById('rsSend'); btn.disabled=true; btn.textContent='Enviando…';
   try{
-    const {data,error}=await sb.rpc('submit_rsvp',{p_slug:rsSlug,p_name:name,p_status:rsStatus,p_companions:comp,p_message:msg});
+    const {data,error}=await sb.rpc('submit_rsvp',{p_slug:rsSlug,p_name:name,p_status:rsStatus,p_companions:comp,p_message:msg,p_detail:detail});
     if(error||data===false) throw (error||new Error('slug inválido'));
     document.getElementById('rsvpForm').style.display='none';
     document.getElementById('rsvpThanks').style.display='block';
@@ -3181,8 +3214,16 @@ function delTask(){
 /* =================== ANOTAÇÕES =================== */
 /* =================== CONVIDADOS =================== */
 let editGuest=null, guestFilterMode='all', gsStatus='pending';
+function dismissGuestIntro(){ state.guestIntroSeen=true; persist(); if($('guestIntro')) $('guestIntro').innerHTML=''; }
 function renderGuests(){
   const tab=state.guestTab||'mine';
+  if($('guestIntro')){
+    $('guestIntro').innerHTML = state.guestIntroSeen ? '' : `<div class="card soft" style="position:relative;padding-right:34px">
+      <button onclick="dismissGuestIntro()" aria-label="Entendi" style="position:absolute;top:10px;right:10px;border:none;background:none;color:var(--muted);font-size:17px;cursor:pointer;line-height:1">✕</button>
+      <p class="fine" style="margin:0 0 7px"><b style="color:var(--green)">Minha lista</b> é onde ficam todos que você quer convidar — você organiza e acompanha quem confirmou.</p>
+      <p class="fine" style="margin:0"><b style="color:var(--green)">Confirmações</b> recebe as respostas do link. Você revisa cada uma com um toque e ela entra na sua lista, sem duplicar.</p>
+    </div>`;
+  }
   document.querySelectorAll('#guestTabs .ftab').forEach(b=>b.classList.toggle('on',b.dataset.tab===tab));
   if($('cntMine')) $('cntMine').textContent=(state.guests||[]).length;
   if($('tabMine')) $('tabMine').style.display=tab==='mine'?'block':'none';
@@ -3230,10 +3271,11 @@ function renderMyList(){
       const st=g.status||'pending';
       const label=st==='yes'?'Confirmado':st==='no'?'Não vai':'Pendente';
       const comp=parseInt(g.comp)||0;
+      const cs=(g.compDetail&&g.compDetail.length)?compNames(g.compDetail):'';
       return `<div class="gitem" onclick="openGuest('${g.id}')">
         <div class="gav">${esc((g.name[0]||'?').toUpperCase())}</div>
         <div class="gbd"><div class="gn">${esc(g.name)}</div>
-        <div class="gm">${comp>0?('+'+comp+' acompanhante'+(comp>1?'s':'')):'sem acompanhante'}${g.note?' · '+esc(g.note):''}</div></div>
+        <div class="gm">${cs?('com '+cs):(comp>0?('+'+comp+' acompanhante'+(comp>1?'s':'')):'sem acompanhante')}${g.note?' · '+esc(g.note):''}</div></div>
         <span class="gbadge ${st}">${label}</span>
       </div>`;
     }).join('');
@@ -3327,6 +3369,12 @@ function copyLink(){
   if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(url).then(()=>toast('Link copiado!'),()=>toast('Copie o link manualmente')); }
   else toast('Copie o link manualmente');
 }
+function compNames(arr){ return (arr||[]).map(c=>esc(c.name)+(c.kind==='child'?' (criança)':' (adulto)')).join(', '); }
+function compStr(r){
+  const d=Array.isArray(r.companions_detail)?r.companions_detail:[];
+  if(d.length) return compNames(d);
+  const c=r.companions||0; return c>0?(c+' acompanhante'+(c>1?'s':'')):'';
+}
 async function loadRSVPs(){
   if(!state.publicSlug||!sb||!sbUser) return;
   try{
@@ -3361,9 +3409,9 @@ function renderReviewQueue(){
   let html=`<div class="cap gold" style="margin:16px 0 4px">${pend.length} ${pend.length===1?'confirmação nova':'confirmações novas'} para revisar</div>
     <p class="fine" style="margin:0 0 12px">Eu já procurei cada pessoa na sua lista. Confirme com um toque.</p>`;
   html+=pend.map(r=>{
-    const comp=r.companions||0, vai=r.status!=='no', m=matchGuest(r.guest_name);
+    const vai=r.status!=='no', m=matchGuest(r.guest_name), cs=compStr(r);
     const info=`<div class="rin-n">${esc(r.guest_name)} <span style="font-size:11px;color:${vai?'#2a7a3f':'#9a5a5a'}">${vai?'✓ vai':'✕ não vai'}</span></div>
-      <div class="rin-m">${comp>0?('+'+comp+' acompanhante'+(comp>1?'s':'')+' · '):''}${r.message?('“'+esc(r.message)+'”'):'sem recado'}</div>`;
+      <div class="rin-m">${cs?('com '+cs+' · '):''}${r.message?('“'+esc(r.message)+'”'):'sem recado'}</div>`;
     if(m){
       return `<div class="revcard">
         <div class="rin-bd">${info}</div>
@@ -3390,7 +3438,7 @@ function confirmMatch(rsvpId,guestId){
   const r=lastRSVPs.find(x=>x.id===rsvpId), g=(state.guests||[]).find(x=>x.id===guestId);
   if(!r||!g) return;
   g.status = r.status==='no'?'no':'yes';
-  if(r.status!=='no'){ const c=parseInt(r.companions)||0; if(c>(parseInt(g.comp)||0)) g.comp=c; }
+  if(r.status!=='no'){ const c=parseInt(r.companions)||0; if(c>(parseInt(g.comp)||0)) g.comp=c; if(Array.isArray(r.companions_detail)&&r.companions_detail.length) g.compDetail=r.companions_detail; }
   if(r.message && !g.note) g.note=r.message;
   state.rsvpDone=state.rsvpDone||[]; state.rsvpDone.push(rsvpId);
   persist(); renderGuests();
@@ -3399,7 +3447,7 @@ function confirmMatch(rsvpId,guestId){
 function addRSVPNew(rsvpId){
   const r=lastRSVPs.find(x=>x.id===rsvpId); if(!r) return;
   state.guests=state.guests||[];
-  state.guests.push({id:uid(),name:r.guest_name,group:'Confirmados pelo link',comp:r.companions||0,phone:'',note:r.message||'',status:r.status==='no'?'no':'yes'});
+  state.guests.push({id:uid(),name:r.guest_name,group:'Confirmados pelo link',comp:r.companions||0,compDetail:Array.isArray(r.companions_detail)?r.companions_detail:[],phone:'',note:r.message||'',status:r.status==='no'?'no':'yes'});
   state.rsvpDone=state.rsvpDone||[]; state.rsvpDone.push(rsvpId);
   persist(); renderGuests();
   toast(r.guest_name+' entrou na lista');
