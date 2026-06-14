@@ -156,6 +156,11 @@ body{font-family:var(--body);background:#11231A;color:var(--ink);display:flex;ju
 .rsvp-inbox .rin-n{font-size:14px;font-weight:700;color:var(--ink)}
 .rsvp-inbox .rin-m{font-size:11.5px;color:var(--muted);margin-top:1px}
 .rin-x{flex-shrink:0;width:28px;height:28px;border-radius:50%;border:none;background:rgba(0,0,0,.05);color:var(--muted);font-size:13px;cursor:pointer}
+.revcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin-bottom:10px}
+.revmatch{font-size:12.5px;margin:9px 0;padding:8px 11px;border-radius:8px;background:#F4F1EA;color:var(--ink)}
+.revmatch.hit{background:#E8F0E8;color:var(--green)}
+.revact{display:flex;gap:8px}
+.revact .btn{flex:1}
 .gstatus{display:flex;gap:8px}
 .gstatus button{flex:1;border:1.3px solid var(--line);background:#fff;border-radius:9px;padding:10px 6px;font-family:var(--body);font-size:12.5px;font-weight:700;color:var(--muted);cursor:pointer}
 .gstatus button.on[data-s=yes]{border-color:#2a7a3f;background:#E3F0E3;color:#2a7a3f}
@@ -1305,7 +1310,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
         <div id="guestsBody"></div>
       </div>
       <div id="tabRsvp" style="display:none">
-        <p class="sub">As respostas que chegam pelo link, separadas da sua lista.</p>
+        <p class="sub">Confirme as respostas do link — elas entram direto na sua lista.</p>
         <div id="rsvpSection"></div>
       </div>
     </section>
@@ -3295,7 +3300,7 @@ function renderLinkSection(){
   }
   box.innerHTML=`<div class="linkcard">
     <div class="dn" style="font-size:16px;color:var(--green)">Link de confirmação</div>
-    <p class="fine" style="margin:4px 0 4px">Envie aos convidados pelo WhatsApp. As respostas aparecem aqui, sem misturar com a sua lista.</p>
+    <p class="fine" style="margin:4px 0 4px">Envie aos convidados pelo WhatsApp. Quando responderem, você revisa aqui com um toque e a pessoa entra na sua lista.</p>
     <div class="linkbox">${esc(linkURL())}</div>
     <div class="linkact">
       <button class="btn g" onclick="copyLink()">Copiar link</button>
@@ -3328,46 +3333,81 @@ async function loadRSVPs(){
     const {data,error}=await sb.from('sim_rsvp').select('*').eq('slug',state.publicSlug).order('created_at',{ascending:false});
     if(error) throw error;
     lastRSVPs=data||[];
-    if($('cntRsvp')) $('cntRsvp').textContent=lastRSVPs.length;
-    renderRSVPList();
+    state.rsvpDone=state.rsvpDone||[];
+    const pend=lastRSVPs.filter(r=>!state.rsvpDone.includes(r.id)).length;
+    if($('cntRsvp')) $('cntRsvp').textContent=pend;
+    renderReviewQueue();
   }catch(e){}
 }
-function renderRSVPList(){
+function normName(s){ return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim(); }
+function matchGuest(rsvpName){
+  const n=normName(rsvpName); if(!n) return null;
+  const gs=state.guests||[];
+  let g=gs.find(x=>normName(x.name)===n); if(g) return g;
+  g=gs.find(x=>{ const gn=normName(x.name); return gn && (gn.startsWith(n+' ')||n.startsWith(gn+' ')); }); if(g) return g;
+  const first=n.split(' ')[0];
+  return gs.find(x=>normName(x.name).split(' ')[0]===first)||null;
+}
+function renderReviewQueue(){
   const box=$('rsvpReceived'); if(!box) return;
   if(!lastRSVPs.length){ box.innerHTML='<p class="fine" style="margin-top:12px;text-align:center">Ainda não há confirmações. Compartilhe o link acima 🤍</p>'; return; }
-  const vao=lastRSVPs.filter(r=>r.status!=='no');
-  const naovao=lastRSVPs.filter(r=>r.status==='no');
-  const pessoas=vao.reduce((a,r)=>a+1+(parseInt(r.companions)||0),0);
-  let html=`<div class="gsum" style="margin-top:6px">
-    <div class="big">${vao.length}<small> ${vao.length===1?'confirmou':'confirmaram'} pelo link</small></div>
-    <div class="brk">
-      <span class="bk"><span class="dot" style="background:#7fd49a"></span>${vao.length} vão</span>
-      <span class="bk"><span class="dot" style="background:#dd9b9b"></span>${naovao.length} não vão</span>
-    </div>
-    <div class="ppl">Somando acompanhantes, <b>${pessoas}</b> ${pessoas===1?'pessoa confirmada':'pessoas confirmadas'} pelo link.</div>
-  </div>`;
-  html+=`<div class="cap gold" style="margin:18px 0 8px">Quem respondeu</div>`;
-  html+=lastRSVPs.map(r=>{
-    const comp=r.companions||0;
-    const vai=r.status!=='no';
-    return `<div class="rsvp-inbox">
-      <div class="rin-bd"><div class="rin-n">${esc(r.guest_name)} <span style="font-size:11px;color:${vai?'#2a7a3f':'#9a5a5a'}">${vai?'✓ vai':'✕ não vai'}</span></div>
-      <div class="rin-m">${comp>0?('+'+comp+' acompanhante'+(comp>1?'s':'')+' · '):''}${r.message?('“'+esc(r.message)+'”'):'sem recado'}</div></div>
-      <button class="rin-x" title="Remover resposta" onclick="delRSVP('${r.id}')">✕</button>
+  state.rsvpDone=state.rsvpDone||[];
+  const pend=lastRSVPs.filter(r=>!state.rsvpDone.includes(r.id));
+  const feitas=lastRSVPs.length-pend.length;
+  if(!pend.length){
+    box.innerHTML=`<div class="card soft" style="text-align:center;margin-top:12px"><div class="dn" style="color:var(--green)">Tudo em dia ✓</div><p class="fine" style="margin-top:4px">Todas as ${lastRSVPs.length} ${lastRSVPs.length===1?'confirmação já está':'confirmações já estão'} na sua lista.</p></div>`;
+    return;
+  }
+  let html=`<div class="cap gold" style="margin:16px 0 4px">${pend.length} ${pend.length===1?'confirmação nova':'confirmações novas'} para revisar</div>
+    <p class="fine" style="margin:0 0 12px">Eu já procurei cada pessoa na sua lista. Confirme com um toque.</p>`;
+  html+=pend.map(r=>{
+    const comp=r.companions||0, vai=r.status!=='no', m=matchGuest(r.guest_name);
+    const info=`<div class="rin-n">${esc(r.guest_name)} <span style="font-size:11px;color:${vai?'#2a7a3f':'#9a5a5a'}">${vai?'✓ vai':'✕ não vai'}</span></div>
+      <div class="rin-m">${comp>0?('+'+comp+' acompanhante'+(comp>1?'s':'')+' · '):''}${r.message?('“'+esc(r.message)+'”'):'sem recado'}</div>`;
+    if(m){
+      return `<div class="revcard">
+        <div class="rin-bd">${info}</div>
+        <div class="revmatch hit">Na sua lista parece ser <b>${esc(m.name)}</b></div>
+        <div class="revact">
+          <button class="btn p sm" onclick="confirmMatch('${r.id}','${m.id}')">É ${esc(m.name.split(' ')[0])}</button>
+          <button class="btn g sm" onclick="addRSVPNew('${r.id}')">É outra pessoa</button>
+        </div>
+      </div>`;
+    }
+    return `<div class="revcard">
+      <div class="rin-bd">${info}</div>
+      <div class="revmatch">Não encontrei essa pessoa na sua lista.</div>
+      <div class="revact">
+        <button class="btn p sm" onclick="addRSVPNew('${r.id}')">Adicionar à lista</button>
+        <button class="btn g sm" onclick="ignoreRSVP('${r.id}')">Ignorar</button>
+      </div>
     </div>`;
   }).join('');
+  if(feitas>0) html+=`<p class="fine" style="margin-top:14px;text-align:center">${feitas} ${feitas===1?'confirmação já revisada':'confirmações já revisadas'} e na sua lista.</p>`;
   box.innerHTML=html;
 }
-function delRSVP(id){
-  askConfirm('Remover esta resposta?','Ela some das suas confirmações. Use para apagar respostas duplicadas ou indevidas.',async()=>{
-    try{
-      await sb.from('sim_rsvp').delete().eq('id',id);
-      lastRSVPs=lastRSVPs.filter(r=>r.id!==id);
-      if($('cntRsvp')) $('cntRsvp').textContent=lastRSVPs.length;
-      renderRSVPList();
-      toast('Resposta removida');
-    }catch(e){ toast('Não foi possível remover'); }
-  },'Remover');
+function confirmMatch(rsvpId,guestId){
+  const r=lastRSVPs.find(x=>x.id===rsvpId), g=(state.guests||[]).find(x=>x.id===guestId);
+  if(!r||!g) return;
+  g.status = r.status==='no'?'no':'yes';
+  if(r.status!=='no'){ const c=parseInt(r.companions)||0; if(c>(parseInt(g.comp)||0)) g.comp=c; }
+  if(r.message && !g.note) g.note=r.message;
+  state.rsvpDone=state.rsvpDone||[]; state.rsvpDone.push(rsvpId);
+  persist(); renderGuests();
+  toast(g.name+' atualizada na lista');
+}
+function addRSVPNew(rsvpId){
+  const r=lastRSVPs.find(x=>x.id===rsvpId); if(!r) return;
+  state.guests=state.guests||[];
+  state.guests.push({id:uid(),name:r.guest_name,group:'Confirmados pelo link',comp:r.companions||0,phone:'',note:r.message||'',status:r.status==='no'?'no':'yes'});
+  state.rsvpDone=state.rsvpDone||[]; state.rsvpDone.push(rsvpId);
+  persist(); renderGuests();
+  toast(r.guest_name+' entrou na lista');
+}
+function ignoreRSVP(rsvpId){
+  state.rsvpDone=state.rsvpDone||[]; state.rsvpDone.push(rsvpId);
+  persist(); renderGuests();
+  toast('Confirmação ignorada');
 }
 function addRSVPGuest(id){
   const r=lastRSVPs.find(x=>x.id===id); if(!r) return;
