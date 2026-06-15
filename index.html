@@ -2375,16 +2375,6 @@ function renderHiredTab(hired){
       ${linked.length?`<div class="paybar"><i style="width:${pct}%"></i></div>`:''}
     </div>`;
   }).join('');
-
-  // economia (destaque, no fim dos contratados)
-  let sav=0;
-  state.cats.forEach(c=>{
-    const w=c.quotes.find(q=>q.win);
-    if(w&&c.quotes.length>=2){ const avg=c.quotes.reduce((a,q)=>a+q.val,0)/c.quotes.length; sav+=Math.max(0,avg-w.val); }
-  });
-  if(sav>0) html+=`<div class="card green" style="margin-top:4px"><div class="cap gold">Economia das suas escolhas</div>
-    <div class="num">${brl(Math.round(sav))}</div>
-    <div class="fine">comparando o contratado com a média dos orçamentos recebidos</div></div>`;
   return html;
 }
 
