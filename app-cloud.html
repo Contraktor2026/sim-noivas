@@ -139,6 +139,17 @@ body{font-family:var(--body);background:#11231A;color:var(--ink);display:flex;ju
 .rsvp-names{font-family:var(--display);font-size:30px;color:var(--green);line-height:1.15;margin:10px 0 6px}
 .rsvp-date{font-size:14px;color:var(--muted)}
 .rsvp-line{height:1px;background:var(--line);margin:20px 0}
+.rsvp-msg{font-size:14px;line-height:1.55;color:#5b5749;margin:14px 0 0;white-space:pre-wrap;font-style:italic}
+.rc-preview{border-radius:14px;padding:20px 16px;text-align:center;margin-bottom:16px;border:1px solid var(--line);transition:.2s}
+.rc-preview .pv-orn{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;margin-bottom:7px}
+.rc-preview .pv-names{font-family:var(--display);font-size:21px;color:var(--green)}
+.rc-preview .pv-msg{font-size:12.5px;color:#5b5749;margin-top:8px;line-height:1.5;white-space:pre-wrap;font-style:italic}
+.rc-papers{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:8px}
+.rc-paper{border:1.4px solid var(--line);border-radius:11px;padding:8px;cursor:pointer;text-align:center;background:#fff}
+.rc-paper.on{border-color:var(--green);box-shadow:0 0 0 2px rgba(31,61,43,.12)}
+.rc-paper .sw{height:32px;border-radius:7px;margin-bottom:6px;border:1px solid rgba(0,0,0,.05)}
+.rc-paper .pn{font-size:12px;font-weight:700;color:var(--ink);line-height:1.1}
+.rc-paper .pd{font-size:9.5px;color:var(--muted);margin-top:1px}
 .rsvp-card .f{text-align:left}
 .rsvp-yn{display:flex;gap:9px}
 .rsvp-yn button{flex:1;border:1.4px solid var(--line);background:#fff;border-radius:10px;padding:13px 8px;font-family:var(--body);font-size:14px;font-weight:700;color:var(--muted);cursor:pointer;transition:.15s}
@@ -496,6 +507,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
         <div class="rsvp-invite">Você está convidado(a) para o casamento de</div>
         <div class="rsvp-names" id="rsvpNames">—</div>
         <div class="rsvp-date" id="rsvpDate"></div>
+        <div class="rsvp-msg" id="rsvpMsg" style="display:none"></div>
         <div class="rsvp-line"></div>
         <div id="rsvpForm">
           <div class="f"><label>Seu nome completo</label><input id="rsName" placeholder="Nome e sobrenome"></div>
@@ -1475,6 +1487,17 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       <button class="btn d full" id="qDel" style="margin-top:8px;display:none" onclick="delQuote()">Excluir orçamento</button>
     </div>
 
+    <div class="sheet" id="sh-rsvp-custom" style="display:none">
+      <h3>Personalizar a página</h3>
+      <p class="sub">Um recado seu e a cor do papel, para a confirmação ter a cara do seu casamento. O convite, a pessoa já recebeu — aqui é só a confirmação.</p>
+      <div id="rcPreview" class="rc-preview"></div>
+      <div class="f"><label>Mensagem de boas-vindas <span class="opt">(opcional)</span></label><textarea id="rcMsg" maxlength="240" placeholder="Ex.: Que alegria ter você com a gente! Confirme sua presença abaixo." oninput="rcRenderPreview()"></textarea></div>
+      <div class="f"><label>Cor do papel</label>
+        <div class="rc-papers" id="rcPapers"></div>
+      </div>
+      <button class="btn p full" onclick="savePublicCustom()">Salvar personalização</button>
+    </div>
+
     <div class="sheet" id="sh-guest" style="display:none">
       <h3 id="gsTitle">Novo convidado</h3>
       <p class="sub">Adicione quem você quer convidar. Pode confirmar a presença depois.</p>
@@ -1792,6 +1815,22 @@ async function doLogout(){
   await sb.auth.signOut();
   location.reload();
 }
+const RSVP_PAPERS={
+  classico:{nome:'Clássico',sub:'igreja, salão',bg:'linear-gradient(180deg,#F4F1EA,#EAE3D4)',accent:'#A8853B'},
+  praia:{nome:'Praia',sub:'pé na areia',bg:'linear-gradient(180deg,#EEF2F0,#D9E8E3)',accent:'#5E9B91'},
+  campo:{nome:'Campo',sub:'rústico, ao ar livre',bg:'linear-gradient(180deg,#F1EEE1,#E0DECA)',accent:'#7E8A63'},
+  jardim:{nome:'Jardim',sub:'romântico, floral',bg:'linear-gradient(180deg,#F8F0EC,#EFDEDA)',accent:'#BE7E78'},
+  boho:{nome:'Boho',sub:'pôr do sol, terroso',bg:'linear-gradient(180deg,#F6ECE1,#ECD9C6)',accent:'#C0844F'}
+};
+function applyRsvpTheme(info){
+  let i=info; if(typeof i==='string'){ try{ i=JSON.parse(i); }catch(e){ i={}; } } i=i||{};
+  const t=RSVP_PAPERS[i.paper]||RSVP_PAPERS.classico;
+  const el=document.getElementById('rsvp'); if(el) el.style.background=t.bg;
+  document.querySelectorAll('#rsvp .rsvp-invite').forEach(e=>e.style.color=t.accent);
+  const orn=document.querySelector('#rsvp .rsvp-orn svg path'); if(orn) orn.setAttribute('fill',t.accent);
+  const m=document.getElementById('rsvpMsg');
+  if(m){ if(i.msg){ m.textContent=i.msg; m.style.display='block'; } else { m.style.display='none'; } }
+}
 let rsStatus='yes', rsSlug='', rsComps=[];
 function rsAddComp(){ rsComps.push({name:'',kind:'adult'}); renderRsComps(); }
 function renderRsComps(){
@@ -1826,6 +1865,7 @@ async function showRSVP(slug){
         document.getElementById('rsvpDate').textContent=d.toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'});
       }catch(e){ document.getElementById('rsvpDate').textContent=w.wdate; }
     }
+    applyRsvpTheme(w.info);
   }catch(e){
     document.getElementById('rsvpNames').textContent='Não foi possível carregar';
     document.getElementById('rsvpForm').style.display='none';
@@ -3438,21 +3478,63 @@ function renderLinkSection(){
       <button class="btn g" onclick="copyLink()">Copiar link</button>
       <a class="wabtn" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent('Estamos muito felizes em convidar você para o nosso casamento. Confirme sua presença aqui: '+linkURL())}">${ICONS.wa} WhatsApp</a>
     </div>
+    <button class="btn g full" style="margin-top:9px" onclick="openRsvpCustom()">Personalizar a página</button>
   </div>
   <div id="rsvpReceived"></div>`;
+}
+function publicRow(){
+  return {
+    slug: state.publicSlug,
+    owner_id: sbUser.id,
+    names: (state.profile.a||'')+' & '+(state.profile.b||''),
+    wdate: state.profile.date||'',
+    mode: 'open',
+    info: { msg: state.publicMsg||'', paper: state.publicPaper||'classico' },
+    updated_at: new Date().toISOString()
+  };
 }
 async function createRSVPLink(){
   if(!sbUser){ toast('Entre na sua conta para criar o link'); return; }
   if(!state.profile){ toast('Complete seu cadastro primeiro'); return; }
-  const names=(state.profile.a||'')+' & '+(state.profile.b||'');
-  const slug=slugify((state.profile.a||'')+'-'+(state.profile.b||''))+'-'+Math.random().toString(36).slice(2,6);
+  state.publicSlug=slugify((state.profile.a||'')+'-'+(state.profile.b||''))+'-'+Math.random().toString(36).slice(2,6);
+  if(!state.publicPaper) state.publicPaper='classico';
   try{
-    const {error}=await sb.from('sim_public').upsert({slug,owner_id:sbUser.id,names,wdate:state.profile.date||'',mode:'open',updated_at:new Date().toISOString()});
+    const {error}=await sb.from('sim_public').upsert(publicRow());
     if(error) throw error;
-    state.publicSlug=slug;
     persist(); renderLinkSection();
     toast('Link criado!');
-  }catch(e){ toast('Não foi possível criar o link agora'); }
+  }catch(e){ state.publicSlug=null; toast('Não foi possível criar o link agora'); }
+}
+let rcPaper='classico';
+function openRsvpCustom(){
+  rcPaper=state.publicPaper||'classico';
+  $('rcMsg').value=state.publicMsg||'';
+  $('rcPapers').innerHTML=Object.keys(RSVP_PAPERS).map(function(k){
+    var t=RSVP_PAPERS[k];
+    return '<div class="rc-paper'+(k===rcPaper?' on':'')+'" data-k="'+k+'" onclick="rcPick(\''+k+'\')"><div class="sw" style="background:'+t.bg+'"></div><div class="pn">'+t.nome+'</div><div class="pd">'+t.sub+'</div></div>';
+  }).join('');
+  rcRenderPreview();
+  openSheet('sh-rsvp-custom');
+}
+function rcPick(k){ rcPaper=k; document.querySelectorAll('#rcPapers .rc-paper').forEach(function(c){ c.classList.toggle('on',c.dataset.k===k); }); rcRenderPreview(); }
+function rcRenderPreview(){
+  const t=RSVP_PAPERS[rcPaper]||RSVP_PAPERS.classico;
+  const names=state.profile?((state.profile.a||'')+' & '+(state.profile.b||'')):'Ana & Pedro';
+  const msg=($('rcMsg')?$('rcMsg').value:'')||'';
+  const pv=$('rcPreview'); if(!pv) return;
+  pv.style.background=t.bg;
+  pv.innerHTML='<div class="pv-orn" style="color:'+t.accent+'">Confirmação de presença</div><div class="pv-names">'+esc(names)+'</div>'+(msg?'<div class="pv-msg">'+esc(msg)+'</div>':'');
+}
+async function savePublicCustom(){
+  if(!state.publicSlug){ toast('Crie o link primeiro'); return; }
+  state.publicMsg=($('rcMsg').value||'').trim();
+  state.publicPaper=rcPaper;
+  try{
+    const {error}=await sb.from('sim_public').upsert(publicRow());
+    if(error) throw error;
+    persist(); closeSheet(); renderLinkSection();
+    toast('Página personalizada');
+  }catch(e){ toast('Não foi possível salvar agora'); }
 }
 function copyLink(){
   const url=linkURL();
