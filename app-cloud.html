@@ -2081,9 +2081,34 @@ function renderHome(){
         </div>`).join('')}
       </div>`;
     }else{
-      $('homeHead').textContent='Precisa de você';
-      $('homeSub').textContent='Nada pendente por enquanto.';
-      $('homeAttention').innerHTML=`<div class="empty">${ICONS.ring}<div class="dn">Tudo em dia</div><p>Nenhum pagamento próximo nem decisão pendente.<br>Aproveite o noivado.</p></div>`;
+      const tips=[
+        'Peça sempre o contrato assinado ao fechar um fornecedor.',
+        'Guarde uma reserva de uns 10% do orçamento para imprevistos.',
+        'Marque a degustação do buffet com bons meses de antecedência.',
+        'Confirme o horário de montagem com o espaço e a decoração.',
+        'Faça o ensaio pré-wedding com calma — rende fotos lindas.',
+        'Combine por escrito as datas e formas de pagamento de cada fornecedor.',
+        'Defina a data nos convites: ajuda os convidados a confirmarem.',
+        'Liste os fornecedores essenciais antes de pensar nos opcionais.'
+      ];
+      const tip=tips[new Date().getDate()%tips.length];
+      const sug=[];
+      if(!state.guests||!state.guests.length) sug.push({t:'Monte sua lista de convidados',d:'quem você quer ao seu lado no grande dia',go:"go('guests')"});
+      else if(!state.publicSlug) sug.push({t:'Crie o link de confirmação',d:'os convidados confirmam presença sozinhos',go:"go('guests')"});
+      if(!state.events||!state.events.length) sug.push({t:'Agende reuniões e provas',d:'degustação, prova do vestido, visita ao espaço',go:"openAgenda()"});
+      if(state.tasks&&state.tasks.some(t=>!t.done)) sug.push({t:'Siga seu roteiro de tarefas',d:'há passos esperando por você',go:"go('chk')"});
+      if(state.cats.length<3) sug.push({t:'Adicione mais fornecedores',d:'fotografia, decoração, música, doces…',go:"go('forn')"});
+      $('homeHead').textContent='Próximos passos';
+      $('homeSub').textContent='Sem pendências no que você registrou — veja o que dá pra adiantar.';
+      let inner='';
+      if(sug.length){
+        inner+=`<div class="cap gold" style="margin-bottom:4px">Que tal adiantar</div>`;
+        inner+=sug.slice(0,3).map(x=>`<div class="li" onclick="${x.go}"><div class="ic" style="color:var(--gold)">${CHEV}</div><div class="bd"><div class="t">${x.t}</div><div class="m">${x.d}</div></div></div>`).join('');
+        inner+=`<div class="fine" style="margin-top:10px;padding-top:10px;border-top:1px solid var(--line)"><b style="color:var(--gold)">Dica</b> · ${tip}</div>`;
+      }else{
+        inner+=`<div class="cap gold" style="margin-bottom:6px">Uma dica para você</div><p class="fine">${tip}</p><p class="fine" style="margin-top:8px">Você está em dia com o que registrou. Continue guardando suas demandas aqui — eu acompanho por você.</p>`;
+      }
+      $('homeAttention').innerHTML=`<div class="card">${inner}</div>`;
     }
   }
 
