@@ -150,6 +150,23 @@ body{font-family:var(--body);background:#11231A;color:var(--ink);display:flex;ju
 .rc-paper .sw{height:32px;border-radius:7px;margin-bottom:6px;border:1px solid rgba(0,0,0,.05)}
 .rc-paper .pn{font-size:12px;font-weight:700;color:var(--ink);line-height:1.1}
 .rc-paper .pd{font-size:9.5px;color:var(--muted);margin-top:1px}
+.rc-preview .pv-photo{width:100%;height:120px;border-radius:10px;background-size:cover;background-position:center;margin-bottom:12px}
+.photo-pick{display:flex;align-items:center;gap:11px;width:100%;background:#E8F0E8;border:1.4px dashed var(--green);border-radius:12px;padding:13px 15px;cursor:pointer;color:var(--green);font-family:var(--body);font-weight:700;font-size:13.5px}
+.photo-pick svg{flex-shrink:0}
+.photo-has{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px;margin-top:2px}
+.photo-has .thumb{width:54px;height:54px;border-radius:9px;background-size:cover;background-position:center;flex-shrink:0;border:1px solid var(--line)}
+.photo-has .ph-x{margin-left:auto;border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 11px;font-family:var(--body);font-weight:700;font-size:12.5px;color:var(--danger);cursor:pointer}
+.swrow{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid #F0EDE3}
+.swrow:last-child{border-bottom:none}
+.swrow .swbd{flex:1}
+.swrow .swt{font-size:14px;font-weight:700;color:var(--ink)}
+.swrow .swd{font-size:11.5px;color:var(--muted);margin-top:2px;line-height:1.4}
+.sw{width:46px;height:27px;border-radius:99px;background:var(--line);position:relative;cursor:pointer;flex-shrink:0;transition:.18s;border:none;padding:0}
+.sw.on{background:var(--green)}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:21px;height:21px;border-radius:50%;background:#fff;transition:.18s;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.sw.on::after{left:22px}
+.rscomp-fone{margin-bottom:8px}
+.rsvp-photo{width:100%;height:170px;border-radius:13px;background-size:cover;background-position:center;margin-bottom:18px}
 .rsvp-card .f{text-align:left}
 .rsvp-yn{display:flex;gap:9px}
 .rsvp-yn button{flex:1;border:1.4px solid var(--line);background:#fff;border-radius:10px;padding:13px 8px;font-family:var(--body);font-size:14px;font-weight:700;color:var(--muted);cursor:pointer;transition:.15s}
@@ -515,6 +532,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
   <div id="rsvp" style="display:none">
     <div class="rsvp-wrap">
       <div class="rsvp-card" id="rsvpCard">
+        <div class="rsvp-photo" id="rsvpPhoto" style="display:none"></div>
         <div class="rsvp-orn" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 12 12" fill="#A8853B"><path d="M6 0l1.8 4.2L12 6 7.8 7.8 6 12 4.2 7.8 0 6l4.2-1.8z"/></svg></div>
         <div class="rsvp-invite">Você está convidado(a) para o casamento de</div>
         <div class="rsvp-names" id="rsvpNames">—</div>
@@ -523,6 +541,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
         <div class="rsvp-line"></div>
         <div id="rsvpForm">
           <div class="f"><label>Seu nome completo</label><input id="rsName" placeholder="Nome e sobrenome"></div>
+          <div class="f"><label>Seu telefone de contato</label><input id="rsPhone" inputmode="tel" placeholder="(00) 00000-0000"></div>
           <div class="f"><label>Você vai poder comparecer?</label>
             <div class="rsvp-yn" id="rsYN">
               <button type="button" data-v="yes" class="on" onclick="rsPick('yes')">Sim, vou! 🤍</button>
@@ -534,6 +553,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
             <div id="rsCompList"></div>
             <button type="button" class="btn g full" onclick="rsAddComp()" style="margin-top:2px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-1px;margin-right:4px"><path d="M12 5v14M5 12h14"/></svg>Adicionar acompanhante</button>
           </div>
+          <div class="f" id="rsDietWrap"><label>Restrição alimentar ou alergia <span class="opt">(opcional)</span></label><textarea id="rsDiet" placeholder="Ex.: vegetariana, alergia a amendoim, sem lactose…"></textarea></div>
           <div class="f"><label>Deixe um recado para os noivos <span class="opt">(opcional)</span></label><textarea id="rsMsg" placeholder="Um votinho de carinho…"></textarea></div>
           <button class="btn p full" id="rsSend" onclick="submitRSVP()">Enviar confirmação</button>
         </div>
@@ -1392,6 +1412,41 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       <div id="notesBody"></div>
     </section>
 
+    <section class="screen" id="s-rsvpcustom">
+      <button class="back" onclick="go('guests')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>Confirmações</button>
+      <h2 class="sec">Personalizar a página</h2>
+      <p class="sub">Deixe a página de confirmação com a cara do seu casamento. Veja a prévia enquanto edita.</p>
+
+      <div class="cap gold" style="margin:18px 0 8px">Prévia</div>
+      <div id="rcPreview" class="rc-preview"></div>
+
+      <div class="cap gold" style="margin:22px 0 8px">Foto <span style="color:var(--muted);font-weight:600;text-transform:none;letter-spacing:0">(opcional)</span></div>
+      <p class="fine" style="margin:-2px 0 9px">Uma foto de vocês no topo da página. Pode deixar sem — a página fica linda do mesmo jeito.</p>
+      <input type="file" id="rcPhotoInput" accept="image/*" style="display:none" onchange="setRsvpPhoto(this)">
+      <div id="rcPhotoArea"></div>
+
+      <div class="f" style="margin-top:22px"><label>Mensagem de boas-vindas <span class="opt">(opcional)</span></label><textarea id="rcMsg" maxlength="240" placeholder="Ex.: Que alegria ter você com a gente! Confirme sua presença abaixo." oninput="rcRenderPreview()"></textarea></div>
+
+      <div class="f"><label>Cor do papel</label>
+        <div class="rc-papers" id="rcPapers"></div>
+      </div>
+
+      <div class="cap gold" style="margin:24px 0 4px">Acompanhantes</div>
+      <p class="fine" style="margin:0 0 6px">Você decide o que o convidado pode incluir ao confirmar.</p>
+      <div class="card" style="padding:4px 14px">
+        <div class="swrow">
+          <div class="swbd"><div class="swt">Permitir acompanhantes</div><div class="swd">O convidado pode incluir quem vem com ele.</div></div>
+          <button type="button" class="sw" id="swComp" onclick="toggleAllowComp()" aria-label="Permitir acompanhantes"></button>
+        </div>
+        <div class="swrow" id="swKidsRow">
+          <div class="swbd"><div class="swt">Permitir crianças</div><div class="swd">Desligado, só adultos podem ser incluídos como acompanhantes.</div></div>
+          <button type="button" class="sw" id="swKids" onclick="toggleAllowKids()" aria-label="Permitir crianças"></button>
+        </div>
+      </div>
+
+      <button class="btn p full" style="margin-top:22px" onclick="savePublicCustom()">Salvar personalização</button>
+    </section>
+
   </div>
 
   <nav class="nav" id="nav">
@@ -1486,17 +1541,6 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       </div>
       <button class="btn p full" onclick="saveQuote()">Salvar orçamento</button>
       <button class="btn d full" id="qDel" style="margin-top:8px;display:none" onclick="delQuote()">Excluir orçamento</button>
-    </div>
-
-    <div class="sheet" id="sh-rsvp-custom" style="display:none">
-      <h3>Personalizar a página</h3>
-      <p class="sub">Um recado seu e a cor do papel, para a confirmação ter a cara do seu casamento. O convite, a pessoa já recebeu — aqui é só a confirmação.</p>
-      <div id="rcPreview" class="rc-preview"></div>
-      <div class="f"><label>Mensagem de boas-vindas <span class="opt">(opcional)</span></label><textarea id="rcMsg" maxlength="240" placeholder="Ex.: Que alegria ter você com a gente! Confirme sua presença abaixo." oninput="rcRenderPreview()"></textarea></div>
-      <div class="f"><label>Cor do papel</label>
-        <div class="rc-papers" id="rcPapers"></div>
-      </div>
-      <button class="btn p full" onclick="savePublicCustom()">Salvar personalização</button>
     </div>
 
     <div class="sheet" id="sh-guest" style="display:none">
@@ -1831,19 +1875,29 @@ function applyRsvpTheme(info){
   const orn=document.querySelector('#rsvp .rsvp-orn svg path'); if(orn) orn.setAttribute('fill',t.accent);
   const m=document.getElementById('rsvpMsg');
   if(m){ if(i.msg){ m.textContent=i.msg; m.style.display='block'; } else { m.style.display='none'; } }
+  // foto opcional no topo
+  const ph=document.getElementById('rsvpPhoto');
+  if(ph){ if(i.photo){ ph.style.backgroundImage='url('+i.photo+')'; ph.style.display='block'; } else { ph.style.backgroundImage=''; ph.style.display='none'; } }
+  // permissões de acompanhantes (default: permitido)
+  rsAllowComp = i.allowComp!==false;
+  rsAllowKids = i.allowKids!==false;
+  const cw=document.getElementById('rsCompWrap');
+  if(cw) cw.style.display = (rsAllowComp && rsStatus==='yes') ? 'block' : 'none';
+  if(!rsAllowComp){ rsComps=[]; renderRsComps(); }
 }
-let rsStatus='yes', rsSlug='', rsComps=[];
-function rsAddComp(){ rsComps.push({name:'',kind:'adult'}); renderRsComps(); }
+let rsStatus='yes', rsSlug='', rsComps=[], rsAllowComp=true, rsAllowKids=true;
+function rsAddComp(){ rsComps.push({name:'',kind:'adult',phone:''}); renderRsComps(); }
 function renderRsComps(){
   const box=document.getElementById('rsCompList'); if(!box) return;
   box.innerHTML=rsComps.map((c,i)=>`
     <div class="rscomp">
       <input placeholder="Nome completo do acompanhante" value="${(c.name||'').replace(/"/g,'&quot;')}" oninput="rsComps[${i}].name=this.value">
+      <input class="rscomp-fone" inputmode="tel" placeholder="Telefone ${rsAllowKids?'(se tiver)':'(opcional)'}" value="${(c.phone||'').replace(/"/g,'&quot;')}" oninput="rsComps[${i}].phone=this.value">
       <div class="rscomp-row">
-        <div class="rskind">
+        ${rsAllowKids?`<div class="rskind">
           <button type="button" class="${c.kind!=='child'?'on':''}" onclick="rsComps[${i}].kind='adult';renderRsComps()">Adulto</button>
           <button type="button" class="${c.kind==='child'?'on':''}" onclick="rsComps[${i}].kind='child';renderRsComps()">Criança</button>
-        </div>
+        </div>`:'<div style="flex:1"></div>'}
         <button type="button" class="rscomp-x" title="Remover" onclick="rsComps.splice(${i},1);renderRsComps()">✕</button>
       </div>
     </div>`).join('');
@@ -1875,22 +1929,26 @@ async function showRSVP(slug){
 function rsPick(v){
   rsStatus=v;
   document.querySelectorAll('#rsYN button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));
-  document.getElementById('rsCompWrap').style.display = v==='yes'?'block':'none';
+  const going = v==='yes';
+  document.getElementById('rsCompWrap').style.display = (going && rsAllowComp)?'block':'none';
+  const dw=document.getElementById('rsDietWrap'); if(dw) dw.style.display = going?'block':'none';
 }
 async function submitRSVP(){
   const name=document.getElementById('rsName').value.trim();
   if(!name){ toast('Conte seu nome completo para confirmar'); return; }
+  const phone=document.getElementById('rsPhone').value.trim();
+  if(rsStatus==='yes' && !phone){ toast('Deixe um telefone de contato'); return; }
   let detail=[];
-  if(rsStatus==='yes'){
-    detail=rsComps.map(c=>({name:(c.name||'').trim(),kind:c.kind==='child'?'child':'adult'})).filter(c=>c.name);
-    const faltaNome=rsComps.some(c=>!(c.name||'').trim());
-    if(faltaNome){ toast('Coloque o nome completo de cada acompanhante'); return; }
+  if(rsStatus==='yes' && rsAllowComp){
+    if(rsComps.some(c=>!(c.name||'').trim())){ toast('Coloque o nome completo de cada acompanhante'); return; }
+    detail=rsComps.map(c=>({name:(c.name||'').trim(),kind:(rsAllowKids&&c.kind==='child')?'child':'adult',phone:(c.phone||'').trim()})).filter(c=>c.name);
   }
   const comp=detail.length;
   const msg=document.getElementById('rsMsg').value.trim();
+  const diet=rsStatus==='yes' ? document.getElementById('rsDiet').value.trim() : '';
   const btn=document.getElementById('rsSend'); btn.disabled=true; btn.textContent='Enviando…';
   try{
-    const {data,error}=await sb.rpc('submit_rsvp',{p_slug:rsSlug,p_name:name,p_status:rsStatus,p_companions:comp,p_message:msg,p_detail:detail});
+    const {data,error}=await sb.rpc('submit_rsvp',{p_slug:rsSlug,p_name:name,p_status:rsStatus,p_companions:comp,p_message:msg,p_detail:detail,p_phone:phone,p_diet:diet});
     if(error||data===false) throw (error||new Error('slug inválido'));
     document.getElementById('rsvpForm').style.display='none';
     document.getElementById('rsvpThanks').style.display='block';
@@ -3491,7 +3549,13 @@ function publicRow(){
     names: (state.profile.a||'')+' & '+(state.profile.b||''),
     wdate: state.profile.date||'',
     mode: 'open',
-    info: { msg: state.publicMsg||'', paper: state.publicPaper||'classico' },
+    info: {
+      msg: state.publicMsg||'',
+      paper: state.publicPaper||'classico',
+      photo: state.publicPhoto||'',
+      allowComp: state.publicAllowComp!==false,
+      allowKids: state.publicAllowKids!==false
+    },
     updated_at: new Date().toISOString()
   };
 }
@@ -3509,23 +3573,65 @@ async function createRSVPLink(){
 }
 let rcPaper='classico';
 function openRsvpCustom(){
+  if(!state.publicSlug){ toast('Crie o link primeiro'); return; }
   rcPaper=state.publicPaper||'classico';
   $('rcMsg').value=state.publicMsg||'';
   $('rcPapers').innerHTML=Object.keys(RSVP_PAPERS).map(function(k){
     var t=RSVP_PAPERS[k];
     return '<div class="rc-paper'+(k===rcPaper?' on':'')+'" data-k="'+k+'" onclick="rcPick(\''+k+'\')"><div class="sw" style="background:'+t.bg+'"></div><div class="pn">'+t.nome+'</div><div class="pd">'+t.sub+'</div></div>';
   }).join('');
+  renderRcPhoto();
+  syncSwitches();
   rcRenderPreview();
-  openSheet('sh-rsvp-custom');
+  go('rsvpcustom');
 }
 function rcPick(k){ rcPaper=k; document.querySelectorAll('#rcPapers .rc-paper').forEach(function(c){ c.classList.toggle('on',c.dataset.k===k); }); rcRenderPreview(); }
+function renderRcPhoto(){
+  const a=$('rcPhotoArea'); if(!a) return;
+  if(state.publicPhoto){
+    a.innerHTML='<div class="photo-has"><div class="thumb" style="background-image:url('+state.publicPhoto+')"></div><div style="flex:1"><div style="font-weight:700;font-size:13.5px">Foto adicionada</div><div class="fine">Aparece no topo da página</div></div><button class="ph-x" onclick="removeRsvpPhoto()">Remover</button></div>';
+  }else{
+    a.innerHTML='<button class="photo-pick" onclick="document.getElementById(\'rcPhotoInput\').click()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 8a2 2 0 0 1 2-2h2l1.5-2h7L19 6h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="3.2"/></svg> Adicionar uma foto</button>';
+  }
+}
+function setRsvpPhoto(input){
+  const file=input.files&&input.files[0]; if(!file){ return; }
+  if(!/^image\//.test(file.type)){ toast('Escolha uma imagem'); input.value=''; return; }
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    const img=new Image();
+    img.onload=()=>{
+      const max=1100; let w=img.width, h=img.height;
+      if(w>max){ h=Math.round(h*max/w); w=max; }
+      const cv=document.createElement('canvas'); cv.width=w; cv.height=h;
+      cv.getContext('2d').drawImage(img,0,0,w,h);
+      try{ state.publicPhoto=cv.toDataURL('image/jpeg',0.72); }
+      catch(e){ toast('Não consegui usar essa imagem'); return; }
+      renderRcPhoto(); rcRenderPreview(); toast('Foto adicionada 🤍');
+    };
+    img.onerror=()=>toast('Não consegui abrir a imagem');
+    img.src=ev.target.result;
+  };
+  reader.readAsDataURL(file);
+  input.value='';
+}
+function removeRsvpPhoto(){ state.publicPhoto=''; renderRcPhoto(); rcRenderPreview(); }
+function syncSwitches(){
+  const ac=state.publicAllowComp!==false, ak=state.publicAllowKids!==false;
+  if($('swComp')) $('swComp').classList.toggle('on',ac);
+  if($('swKids')) $('swKids').classList.toggle('on',ak);
+  if($('swKidsRow')) $('swKidsRow').style.display = ac?'flex':'none';
+}
+function toggleAllowComp(){ state.publicAllowComp = state.publicAllowComp===false ? true : false; syncSwitches(); }
+function toggleAllowKids(){ state.publicAllowKids = state.publicAllowKids===false ? true : false; syncSwitches(); }
 function rcRenderPreview(){
   const t=RSVP_PAPERS[rcPaper]||RSVP_PAPERS.classico;
   const names=state.profile?((state.profile.a||'')+' & '+(state.profile.b||'')):'Ana & Pedro';
   const msg=($('rcMsg')?$('rcMsg').value:'')||'';
   const pv=$('rcPreview'); if(!pv) return;
   pv.style.background=t.bg;
-  pv.innerHTML='<div class="pv-orn" style="color:'+t.accent+'">Confirmação de presença</div><div class="pv-names">'+esc(names)+'</div>'+(msg?'<div class="pv-msg">'+esc(msg)+'</div>':'');
+  pv.innerHTML=(state.publicPhoto?'<div class="pv-photo" style="background-image:url('+state.publicPhoto+')"></div>':'')
+    +'<div class="pv-orn" style="color:'+t.accent+'">Confirmação de presença</div><div class="pv-names">'+esc(names)+'</div>'+(msg?'<div class="pv-msg">'+esc(msg)+'</div>':'');
 }
 async function savePublicCustom(){
   if(!state.publicSlug){ toast('Crie o link primeiro'); return; }
@@ -3534,8 +3640,8 @@ async function savePublicCustom(){
   try{
     const {error}=await sb.from('sim_public').upsert(publicRow());
     if(error) throw error;
-    persist(); closeSheet(); renderLinkSection();
-    toast('Página personalizada');
+    persist(); go('guests'); renderLinkSection();
+    toast('Página personalizada 🤍');
   }catch(e){ toast('Não foi possível salvar agora'); }
 }
 function copyLink(){
@@ -3543,7 +3649,7 @@ function copyLink(){
   if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(url).then(()=>toast('Link copiado!'),()=>toast('Copie o link manualmente')); }
   else toast('Copie o link manualmente');
 }
-function compNames(arr){ return (arr||[]).map(c=>esc(c.name)+(c.kind==='child'?' (criança)':' (adulto)')).join(', '); }
+function compNames(arr){ return (arr||[]).map(c=>esc(c.name)+' ('+(c.kind==='child'?'criança':'adulto')+(c.phone?' · '+esc(c.phone):'')+')').join(', '); }
 function compStr(r){
   const d=Array.isArray(r.companions_detail)?r.companions_detail:[];
   if(d.length) return compNames(d);
@@ -3584,8 +3690,12 @@ function renderReviewQueue(){
     <p class="fine" style="margin:0 0 12px">Eu já procurei cada pessoa na sua lista. Confirme com um toque.</p>`;
   html+=pend.map(r=>{
     const vai=r.status!=='no', m=matchGuest(r.guest_name), cs=compStr(r);
+    const extra=[];
+    if(r.phone) extra.push('Tel: '+esc(r.phone));
+    if(r.diet) extra.push('Restrição: '+esc(r.diet));
     const info=`<div class="rin-n">${esc(r.guest_name)} <span style="font-size:11px;color:${vai?'#2a7a3f':'#9a5a5a'}">${vai?'✓ vai':'✕ não vai'}</span></div>
-      <div class="rin-m">${cs?('com '+cs+' · '):''}${r.message?('“'+esc(r.message)+'”'):'sem recado'}</div>`;
+      <div class="rin-m">${cs?('com '+cs+' · '):''}${r.message?('“'+esc(r.message)+'”'):'sem recado'}</div>
+      ${extra.length?`<div class="rin-m" style="color:var(--green)">${extra.join(' · ')}</div>`:''}`;
     if(m){
       return `<div class="revcard">
         <div class="rin-bd">${info}</div>
@@ -3613,6 +3723,8 @@ function confirmMatch(rsvpId,guestId){
   if(!r||!g) return;
   g.status = r.status==='no'?'no':'yes';
   if(r.status!=='no'){ const c=parseInt(r.companions)||0; if(c>(parseInt(g.comp)||0)) g.comp=c; if(Array.isArray(r.companions_detail)&&r.companions_detail.length) g.compDetail=r.companions_detail; }
+  if(r.phone && !g.phone) g.phone=r.phone;
+  if(r.diet) g.diet=r.diet;
   if(r.message && !g.note) g.note=r.message;
   state.rsvpDone=state.rsvpDone||[]; state.rsvpDone.push(rsvpId);
   persist(); renderGuests();
@@ -3621,7 +3733,7 @@ function confirmMatch(rsvpId,guestId){
 function addRSVPNew(rsvpId){
   const r=lastRSVPs.find(x=>x.id===rsvpId); if(!r) return;
   state.guests=state.guests||[];
-  state.guests.push({id:uid(),name:r.guest_name,group:'Confirmados pelo link',comp:r.companions||0,compDetail:Array.isArray(r.companions_detail)?r.companions_detail:[],phone:'',note:r.message||'',status:r.status==='no'?'no':'yes'});
+  state.guests.push({id:uid(),name:r.guest_name,group:'Confirmados pelo link',comp:r.companions||0,compDetail:Array.isArray(r.companions_detail)?r.companions_detail:[],phone:r.phone||'',diet:r.diet||'',note:r.message||'',status:r.status==='no'?'no':'yes'});
   state.rsvpDone=state.rsvpDone||[]; state.rsvpDone.push(rsvpId);
   persist(); renderGuests();
   toast(r.guest_name+' entrou na lista');
