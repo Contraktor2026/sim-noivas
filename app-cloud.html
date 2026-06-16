@@ -699,7 +699,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
               <div class="qh">
                 <div style="flex:1;min-width:0">
                   <div class="qn" style="font-size:14.5px">Alecrim Buffet</div>
-                  <div style="display:flex;gap:5px;margin-top:4px"><span class="tag ok">MENOR PREÇO</span></div>
+                  <div style="display:flex;gap:5px;margin-top:4px"><span class="tag win">CONTRATADO</span></div>
                 </div>
                 <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
                   <div class="qp" style="font-size:15px">R$ 15.500,00</div>
@@ -2434,7 +2434,6 @@ function renderCatPage(){
   const c=state.cats.find(x=>x.id===fornCat);
   if(!c){ go('forn'); return; }
   const sorted=[...c.quotes].sort((a,b)=>(b.stars||0)-(a.stars||0)||a.val-b.val);
-  const min=c.quotes.length?Math.min(...c.quotes.map(q=>q.val)):0;
 
   let html=`<div class="row" style="align-items:baseline"><h2 class="sec">${esc(c.name)}</h2>
     <button class="btn g sm" onclick="openCatEdit()">Renomear</button></div>
@@ -2447,17 +2446,12 @@ function renderCatPage(){
   }else{
     html+=`<p class="fine" style="margin:2px 2px 10px"><span style="color:var(--gold)">★</span> <b>Sua nota</b> — pense em atendimento, estilo do casamento, indicações e diferencial, não só no preço.</p>`;
     html+=sorted.map(q=>{
-      const diff=q.val-min;
       const phone=q.phone?q.phone.replace(/\D/g,''):'';
       return `<div class="quote ${q.win?'win':''}">
         <div class="qh">
           <div style="flex:1;min-width:0">
             <div class="qn">${esc(q.name)}</div>
-            <div style="display:flex;gap:6px;margin-top:5px;flex-wrap:wrap">
-              ${q.win?'<span class="tag win">CONTRATADO</span>':''}
-              ${diff===0&&c.quotes.length>1?'<span class="tag ok">MENOR PREÇO</span>':''}
-              ${diff>0?`<span class="tag due">+${brl(diff)}</span>`:''}
-            </div>
+            ${q.win?'<div style="margin-top:5px"><span class="tag win">CONTRATADO</span></div>':''}
           </div>
           <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
             <div class="qp">${brl(q.val)}</div>
