@@ -240,20 +240,32 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 .add{display:flex;align-items:center;gap:6px;background:none;border:1px dashed var(--gold);color:var(--green);font-weight:700;font-size:13px;border-radius:8px;padding:12px;width:100%;justify-content:center;margin:4px 0 14px}
 
 /* ===== monogram / hero ===== */
-.hero{background:var(--green);border-radius:12px;color:var(--paper);padding:30px 20px 26px;margin-top:8px;text-align:center;position:relative;overflow:hidden}
-.hero::before{content:"";position:absolute;inset:7px;border:1px solid rgba(168,133,59,.6);border-radius:8px;pointer-events:none;z-index:2}
+.hero{background:radial-gradient(135% 90% at 50% -25%,rgba(168,133,59,.22),transparent 55%),linear-gradient(168deg,#264A31 0%,#1F3D2B 52%,#163018 100%);border-radius:20px;color:var(--paper);padding:40px 22px 32px;margin-top:10px;text-align:center;position:relative;overflow:hidden;box-shadow:0 22px 46px -26px rgba(16,34,23,.75)}
+.hero::before{content:"";position:absolute;inset:9px;border:1px solid rgba(168,133,59,.5);border-radius:13px;pointer-events:none;z-index:2}
 .hero-bg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;display:none}
-.hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(165deg,rgba(28,54,38,.66),rgba(24,47,33,.86))}
+.hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(172deg,rgba(28,54,38,.5),rgba(18,38,25,.92))}
 .hero>.mono,.hero>.names,.hero>.place,.hero>.count,.hero>.ornament{position:relative;z-index:2}
-.mono{width:78px;height:78px;border-radius:50%;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;position:relative;background:rgba(31,61,43,.35)}
-.mono::before{content:"";position:absolute;inset:4px;border:1px solid rgba(168,133,59,.5);border-radius:50%}
-.mono span{font-family:var(--display);font-size:28px;color:var(--gold-soft);letter-spacing:.05em}
-.hero .names{font-family:var(--display);font-size:25px;letter-spacing:.04em;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.28)}
-.hero .place{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#E2EBE0;margin-top:5px;font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.25)}
-.hero .count{font-family:var(--display);font-size:52px;margin-top:14px;line-height:1;color:#fff;text-shadow:0 1px 5px rgba(0,0,0,.3)}
-.hero .count small{font-size:17px;letter-spacing:.08em;color:#EAF0E8}
-.hero .ornament{display:flex;align-items:center;gap:10px;justify-content:center;margin-top:12px;color:var(--gold-soft)}
-.hero .ornament::before,.hero .ornament::after{content:"";width:54px;height:1px;background:rgba(168,133,59,.75)}
+.mono{width:70px;height:70px;border-radius:50%;border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;margin:0 auto 15px;position:relative;background:rgba(18,38,25,.4)}
+.mono::before{content:"";position:absolute;inset:5px;border:1px solid rgba(168,133,59,.4);border-radius:50%}
+.mono span{font-family:var(--display);font-size:25px;color:var(--gold-soft);letter-spacing:.04em}
+.hero .names{font-family:var(--display);font-size:29px;letter-spacing:.05em;line-height:1.18;color:#fff;text-shadow:0 1px 5px rgba(0,0,0,.3)}
+.hero .place{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:#DAC9A2;margin-top:9px;font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.3)}
+.hero .ornament{display:flex;align-items:center;gap:12px;justify-content:center;margin:17px 0 3px;color:var(--gold-soft)}
+.hero .ornament::before,.hero .ornament::after{content:"";width:44px;height:1px;background:linear-gradient(90deg,transparent,rgba(168,133,59,.85))}
+.hero .ornament::after{background:linear-gradient(90deg,rgba(168,133,59,.85),transparent)}
+.hero .count{font-family:var(--display);font-size:56px;margin-top:4px;line-height:1;color:#fff;text-shadow:0 2px 9px rgba(0,0,0,.34)}
+.hero .count small{display:block;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#DAC9A2;margin-top:10px;font-weight:600}
+.glance{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:14px}
+.gtile{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 11px;cursor:pointer;position:relative;transition:.15s;box-shadow:0 1px 2px rgba(20,40,27,.03)}
+.gtile:active{transform:scale(.985)}
+.gtile .gl{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.gtile .gv{font-family:var(--display);font-size:20px;color:var(--green);line-height:1.05;margin-top:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gtile .gv small{font-size:.6em;color:var(--muted);font-weight:400}
+.gtile .gv.dgr{color:var(--danger)}
+.gtile .gs{font-size:10px;color:var(--muted);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gtile .gbar{height:4px;background:var(--green-soft);border-radius:99px;overflow:hidden;margin-top:9px}
+.gtile .gbar i{display:block;height:100%;background:var(--gold);border-radius:99px;transition:width .4s}
+.gtile.over .gbar i{background:var(--danger)}
 .photobtn{position:absolute;top:12px;left:12px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.16);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--paper);z-index:3;transition:.15s}
 .photobtn:active{background:rgba(255,255,255,.28)}
 .photobtn.rm{left:54px;background:rgba(0,0,0,.22)}
@@ -1193,9 +1205,11 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
         <div class="mono"><span id="monoTxt">&amp;</span></div>
         <div class="names" id="heroNames">—</div>
         <div class="place" id="heroPlace">—</div>
-        <div class="count" id="heroCount">—</div>
         <div class="ornament" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="var(--gold)"><path d="M6 0l1.8 4.2L12 6 7.8 7.8 6 12 4.2 7.8 0 6l4.2-1.8z"/></svg></div>
+        <div class="count" id="heroCount">—</div>
       </div>
+
+      <div class="glance" id="homeGlance"></div>
 
       <div class="hblock nodiv">
         <div class="hbhead">
@@ -1208,18 +1222,6 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       </div>
 
       <div class="hblock" id="homeAgenda"></div>
-
-      <div class="hblock">
-        <div class="hbhead">
-          <div><h2 class="sec">Orçamento</h2></div>
-          <button class="btn g sm" onclick="go('fin')">Ver tudo</button>
-        </div>
-        <div class="card soft">
-          <div class="num" id="homeBudget">—</div>
-          <div class="meter"><i id="homeMeter"></i></div>
-          <div class="fine" id="homeMeterTxt">—</div>
-        </div>
-      </div>
 
       <div class="hblock" id="homeNotes"></div>
     </section>
@@ -2164,17 +2166,34 @@ function renderHome(){
       : `<div class="fine">Ideia de música, recado de fornecedor, rascunho dos votos — toque para anotar a primeira.</div>`}
   </div>`;
 
+  renderGlance();
+}
+function brlTile(v){ v=Math.round(v||0); if(v>=1000){ const m=v/1000; return (m>=100?String(Math.round(m)):String(Math.round(m*10)/10).replace('.',','))+' mil'; } return String(v); }
+function renderGlance(){
+  const box=$('homeGlance'); if(!box) return;
+  const p=state.profile; if(!p) return;
   const commit=state.exp.reduce((a,e)=>a+e.val,0);
   const over=commit>p.budget;
-  $('homeBudget').textContent = over
-    ? brl(commit-p.budget)+' acima'
-    : brl(p.budget-commit)+' livres';
-  $('homeBudget').style.color = over?'var(--danger)':'';
-  const pct=Math.min(100,commit/p.budget*100);
-  const m=$('homeMeter'); m.style.width=pct+'%'; m.className= over?'over':'';
-  $('homeMeterTxt').innerHTML = over
-    ? `<b>${brl(commit)}</b> comprometidos — o orçamento de ${brl(p.budget)} foi ultrapassado`
-    : `<b>${brl(commit)}</b> comprometidos de ${brl(p.budget)}`;
+  const bpct=p.budget>0?Math.min(100,Math.round(commit/p.budget*100)):0;
+  const gA=state.guests||[]; const gTot=gA.length; const gYes=gA.filter(g=>g.status==='yes').length;
+  const tA=state.tasks||[]; const tTot=tA.length; const tDone=tA.filter(t=>t.done).length;
+  const tiles=[
+    { go:"go('fin')", gl:'Orçamento', over:over,
+      gv:'<small>R$</small> '+brlTile(over?commit-p.budget:p.budget-commit),
+      gs: over?'acima do previsto':'ainda livres', barpct:bpct },
+    { go:"go('guests')", gl:'Convidados', over:false,
+      gv: gTot?String(gTot):'—',
+      gs: gTot?(gYes+' confirmados'):'monte a lista', barpct: gTot?Math.round(gYes/gTot*100):0 },
+    { go:"go('chk')", gl:'Tarefas', over:false,
+      gv: tTot?String(tTot):'—',
+      gs: tTot?(tDone+' feitas'):'monte o roteiro', barpct: tTot?Math.round(tDone/tTot*100):0 },
+  ];
+  box.innerHTML=tiles.map(t=>`<div class="gtile${t.over?' over':''}" onclick="${t.go}">
+    <div class="gl">${t.gl}</div>
+    <div class="gv${t.over?' dgr':''}">${t.gv}</div>
+    <div class="gs">${t.gs}</div>
+    <div class="gbar"><i style="width:${t.barpct}%"></i></div>
+  </div>`).join('');
 }
 
 /* =================== DINHEIRO =================== */
