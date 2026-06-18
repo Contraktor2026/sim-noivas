@@ -133,6 +133,12 @@ body{font-family:var(--body);background:#11231A;color:var(--ink);display:flex;ju
 .gbadge.yes{background:#E3F0E3;color:#2a7a3f}
 .gbadge.pending{background:var(--gold-soft);color:#7a6430}
 .gbadge.no{background:#F0E8E8;color:#9a5a5a}
+.alerg{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;background:#F6E5E2;color:#a23b2b;padding:2px 7px;border-radius:99px;margin-left:7px;vertical-align:1px}
+.gwa{width:34px;height:34px;border-radius:50%;background:#E3F0E3;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#1d8a4e;flex-shrink:0;padding:0}
+.gwa:active{background:#cfe8d6}
+.gsearch{position:relative;margin-bottom:10px}
+.gsearch input{padding-left:38px}
+.gsearch svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
 /* engrenagem de ajustes no hero */
 .gearbtn{position:absolute;top:12px;right:12px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.14);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--paper);z-index:2;transition:.15s}
 .gearbtn:active{background:rgba(255,255,255,.26)}
@@ -1383,7 +1389,12 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       <div id="tabMine">
         <p class="sub">Quem você quer ao seu lado no grande dia. Esta é a sua lista de planejamento.</p>
         <div id="guestSummary"></div>
-        <button class="add" onclick="openGuest()" style="margin:4px 0 16px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Adicionar convidado</button>
+        <button class="add" onclick="openGuest()" style="margin:4px 0 8px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Adicionar convidado</button>
+        <button class="btn g full" style="margin:0 0 16px" onclick="openBulk()">Adicionar vários de uma vez</button>
+        <div class="gsearch" id="guestSearchWrap" style="display:none">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+          <input id="guestSearchBox" placeholder="Buscar por nome ou grupo…" oninput="guestSearchInput(this.value)">
+        </div>
         <div class="gfilters" id="guestFilters">
           <button class="gfilter on" data-f="all" onclick="guestFilter('all')">Todos</button>
           <button class="gfilter" data-f="yes" onclick="guestFilter('yes')">Confirmados</button>
@@ -1597,6 +1608,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
         <div class="f"><label>Acompanhantes <span class="opt">(além do convidado)</span></label><input id="gsComp" type="number" inputmode="numeric" placeholder="0" min="0"></div>
         <div class="f"><label>WhatsApp <span class="opt">(opcional)</span></label><input id="gsPhone" inputmode="tel" placeholder="48 99999-0000"></div>
       </div>
+      <button type="button" class="btn g full" id="gsWa" style="display:none;margin-bottom:14px" onclick="guestWhatsInput()"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:5px"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-2.8.8.8-2.8-.2-.3A8 8 0 1 1 12 20zm4.5-5.9c-.2-.1-1.4-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8.9-.3.2-.6 0a6.6 6.6 0 0 1-1.9-1.2 7.3 7.3 0 0 1-1.4-1.7c-.1-.3 0-.4.1-.5l.4-.5.3-.4v-.4c0-.1-.6-1.5-.8-2s-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3A2.9 2.9 0 0 0 6 9.4a5 5 0 0 0 1.1 2.7 11.5 11.5 0 0 0 4.4 3.9c2.1.8 2.1.6 2.5.5a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .1-1.2c0-.1-.2-.2-.5-.3z"/></svg>Chamar no WhatsApp</button>
       <div class="f"><label>Presença</label>
         <div class="gstatus" id="gsStatus">
           <button type="button" data-s="pending" class="on" onclick="pickStatus('pending')">Pendente</button>
@@ -1604,9 +1616,27 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
           <button type="button" data-s="no" onclick="pickStatus('no')">Não vai</button>
         </div>
       </div>
-      <div class="f"><label>Observação <span class="opt">(opcional)</span></label><textarea id="gsNote" placeholder="Ex.: restrição alimentar, vem de outra cidade…"></textarea></div>
+      <div class="f"><label>Restrição alimentar ou alergia <span class="opt">(opcional)</span></label><input id="gsDiet" placeholder="Ex.: vegetariana, alergia a amendoim, sem lactose…"></div>
+      <div class="f"><label>Observação <span class="opt">(opcional)</span></label><textarea id="gsNote" placeholder="Ex.: vem de outra cidade, precisa de carona…"></textarea></div>
       <button class="btn p full" onclick="saveGuest()">Salvar convidado</button>
       <button class="btn d full" id="gsDel" style="margin-top:8px;display:none" onclick="delGuest()">Excluir convidado</button>
+    </div>
+
+    <div class="sheet" id="sh-bulk" style="display:none">
+      <h3>Adicionar vários</h3>
+      <p class="sub">Cole ou digite um nome por linha. Todos entram como pendentes — você confirma depois.</p>
+      <div class="f"><label>Nomes <span class="opt">(um por linha)</span></label><textarea id="bkNames" rows="7" placeholder="Tia Marta&#10;João e Maria Silva&#10;Carlos Souza"></textarea></div>
+      <div class="f"><label>Grupo para todos <span class="opt">(opcional)</span></label>
+        <div class="fchips" id="bkGroups">
+          <span class="fchip" onclick="pickBulkGroup(this)">Família da noiva</span>
+          <span class="fchip" onclick="pickBulkGroup(this)">Família do noivo</span>
+          <span class="fchip" onclick="pickBulkGroup(this)">Amigos</span>
+          <span class="fchip" onclick="pickBulkGroup(this)">Trabalho</span>
+          <span class="fchip" onclick="pickBulkGroup(this)">Padrinhos</span>
+        </div>
+        <input id="bkGroupOther" placeholder="Ou digite um grupo…" style="margin-top:8px">
+      </div>
+      <button class="btn p full" onclick="saveBulkGuests()">Adicionar à lista</button>
     </div>
 
     <div class="sheet" id="sh-event" style="display:none">
@@ -3439,7 +3469,7 @@ function delTask(){
 
 /* =================== ANOTAÇÕES =================== */
 /* =================== CONVIDADOS =================== */
-let editGuest=null, guestFilterMode='all', gsStatus='pending';
+let editGuest=null, guestFilterMode='all', gsStatus='pending', guestSearch='';
 function dismissGuestIntro(){ state.guestIntroSeen=true; persist(); if($('guestIntro')) $('guestIntro').innerHTML=''; }
 function renderGuests(){
   const tab=state.guestTab||'mine';
@@ -3466,6 +3496,7 @@ function renderMyList(){
   const no=gs.filter(g=>g.status==='no');
   const headcount=yes.reduce((a,g)=>a+guestTotalPeople(g),0);
   if($('btnExport')) $('btnExport').style.display = gs.length? 'block':'none';
+  if($('guestSearchWrap')) $('guestSearchWrap').style.display = gs.length>=8? 'block':'none';
   const sum=$('guestSummary');
   if(gs.length){
     const kids=yes.reduce((a,g)=>a+((g.compDetail||[]).filter(c=>c.kind==='child').length),0);
@@ -3494,8 +3525,12 @@ function renderMyList(){
     return;
   }
   let list = guestFilterMode==='all' ? gs : gs.filter(g=>(g.status||'pending')===guestFilterMode);
+  const q=normName(guestSearch);
+  if(q) list=list.filter(g=> normName(g.name).includes(q) || normName(g.group||'').includes(q));
   if(!list.length){
-    body.innerHTML=`<div class="empty" style="padding:24px">${ICONS.ring}<div class="dn">Ninguém nesse filtro</div><p>Toque em "Todos" para ver a lista completa.</p></div>`;
+    body.innerHTML = q
+      ? `<div class="empty" style="padding:24px">${ICONS.ring}<div class="dn">Nada encontrado</div><p>Nenhum convidado para “${esc(guestSearch)}”. Tente outro nome.</p></div>`
+      : `<div class="empty" style="padding:24px">${ICONS.ring}<div class="dn">Ninguém nesse filtro</div><p>Toque em "Todos" para ver a lista completa.</p></div>`;
     return;
   }
   const groups={};
@@ -3510,8 +3545,9 @@ function renderMyList(){
       const cs=(g.compDetail&&g.compDetail.length)?compNames(g.compDetail):'';
       return `<div class="gitem" onclick="openGuest('${g.id}')">
         <div class="gav">${esc((g.name[0]||'?').toUpperCase())}</div>
-        <div class="gbd"><div class="gn">${esc(g.name)}</div>
+        <div class="gbd"><div class="gn">${esc(g.name)}${g.diet?`<span class="alerg" title="${(g.diet||'').replace(/"/g,'&quot;')}">restrição</span>`:''}</div>
         <div class="gm">${cs?('com '+cs):(comp>0?('+'+comp+' acompanhante'+(comp>1?'s':'')):'sem acompanhante')}${g.note?' · '+esc(g.note):''}</div></div>
+        ${g.phone?`<button class="gwa" title="Chamar no WhatsApp" onclick="event.stopPropagation();guestWhats('${g.id}')"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-2.8.8.8-2.8-.2-.3A8 8 0 1 1 12 20zm4.5-5.9c-.2-.1-1.4-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8.9-.3.2-.6 0a6.6 6.6 0 0 1-1.9-1.2 7.3 7.3 0 0 1-1.4-1.7c-.1-.3 0-.4.1-.5l.4-.5.3-.4v-.4c0-.1-.6-1.5-.8-2s-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3A2.9 2.9 0 0 0 6 9.4a5 5 0 0 0 1.1 2.7 11.5 11.5 0 0 0 4.4 3.9c2.1.8 2.1.6 2.5.5a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .1-1.2c0-.1-.2-.2-.5-.3z"/></svg></button>`:''}
         <span class="gbadge ${st}">${label}</span>
       </div>`;
     }).join('');
@@ -3528,6 +3564,8 @@ function openGuest(id){
   $('gsComp').value = editGuest?.comp||'';
   $('gsPhone').value = editGuest?.phone||'';
   $('gsNote').value = editGuest?.note||'';
+  $('gsDiet').value = editGuest?.diet||'';
+  $('gsWa').style.display = (editGuest && editGuest.phone)?'block':'none';
   document.querySelectorAll('#gsGroups .fchip').forEach(c=>c.classList.remove('on'));
   $('gsGroupOther').value='';
   const grp=editGuest?.group||'';
@@ -3547,7 +3585,7 @@ function saveGuest(){
   const chip=document.querySelector('#gsGroups .fchip.on');
   if(chip) group=chip.textContent.trim();
   if($('gsGroupOther').value.trim()) group=$('gsGroupOther').value.trim();
-  const data={name,group,comp:parseInt($('gsComp').value)||0,phone:$('gsPhone').value.trim(),note:$('gsNote').value.trim(),status:gsStatus};
+  const data={name,group,comp:parseInt($('gsComp').value)||0,phone:$('gsPhone').value.trim(),diet:$('gsDiet').value.trim(),note:$('gsNote').value.trim(),status:gsStatus};
   if(!state.guests) state.guests=[];
   if(editGuest){ Object.assign(editGuest,data); }
   else { state.guests.push({id:uid(),...data}); }
@@ -3560,6 +3598,41 @@ function delGuest(){
   editGuest=null;
   persist(); closeSheet(); renderGuests();
   toast('Convidado removido');
+}
+function guestSearchInput(v){ guestSearch=v; renderMyList(); }
+function waLink(phone, name, status){
+  let digits=(phone||'').replace(/\D/g,''); if(!digits) return null;
+  if(digits.length<=11) digits='55'+digits;
+  const first=(name||'').split(' ')[0];
+  let msg='Oi'+(first?', '+first:'')+'! Tudo bem?';
+  if(status==='pending' && state.publicSlug) msg+=' Passando para lembrar de confirmar presença no nosso casamento: '+linkURL();
+  return 'https://wa.me/'+digits+'?text='+encodeURIComponent(msg);
+}
+function guestWhats(id){
+  const g=(state.guests||[]).find(x=>x.id===id); if(!g) return;
+  const u=waLink(g.phone,g.name,g.status||'pending');
+  if(u) window.open(u,'_blank'); else toast('Esse convidado não tem telefone');
+}
+function guestWhatsInput(){
+  const u=waLink($('gsPhone').value, $('gsName').value, gsStatus);
+  if(u) window.open(u,'_blank'); else toast('Coloque o telefone primeiro');
+}
+function pickBulkGroup(el){ document.querySelectorAll('#bkGroups .fchip').forEach(c=>c.classList.remove('on')); el.classList.add('on'); $('bkGroupOther').value=''; }
+function openBulk(){
+  $('bkNames').value=''; $('bkGroupOther').value='';
+  document.querySelectorAll('#bkGroups .fchip').forEach(c=>c.classList.remove('on'));
+  openSheet('sh-bulk');
+}
+function saveBulkGuests(){
+  const names=($('bkNames').value||'').split('\n').map(s=>s.trim()).filter(Boolean);
+  if(!names.length){ toast('Cole pelo menos um nome'); return; }
+  let group='';
+  const chip=document.querySelector('#bkGroups .fchip.on'); if(chip) group=chip.textContent.trim();
+  if($('bkGroupOther').value.trim()) group=$('bkGroupOther').value.trim();
+  if(!state.guests) state.guests=[];
+  names.forEach(n=> state.guests.push({id:uid(),name:n,group,comp:0,phone:'',diet:'',note:'',status:'pending'}));
+  persist(); closeSheet(); renderGuests();
+  toast(names.length+(names.length===1?' convidado adicionado':' convidados adicionados'));
 }
 
 /* ----- link de confirmação (RSVP) ----- */
