@@ -113,6 +113,12 @@ body{font-family:var(--body);background:#11231A;color:var(--ink);display:flex;ju
 .gsum .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .gsum .ppl{margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.16);font-size:13px;color:#E7F0E5}
 .gsum .ppl b{color:var(--paper);font-family:var(--display);font-size:16px}
+.gsum-bar{height:5px;background:rgba(255,255,255,.18);border-radius:99px;overflow:hidden;margin-top:14px}
+.gsum-bar i{display:block;height:100%;background:var(--gold);border-radius:99px;transition:width .45s}
+.gsum-ppl{display:flex;gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.16)}
+.gsum-ppl .gp{flex:1;text-align:center}
+.gsum-ppl .gpv{font-family:var(--display);font-size:22px;line-height:1;color:var(--paper)}
+.gsum-ppl .gpl{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#C9D8C6;margin-top:6px;font-weight:600}
 .gfilters{display:flex;gap:7px;margin-bottom:14px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px}
 .gfilter{flex-shrink:0;border:1.3px solid var(--line);background:#fff;border-radius:99px;padding:7px 14px;font-size:12.5px;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap}
 .gfilter.on{border-color:var(--green);background:var(--green);color:var(--paper)}
@@ -3458,18 +3464,27 @@ function renderMyList(){
   const yes=gs.filter(g=>g.status==='yes');
   const pend=gs.filter(g=>(g.status||'pending')==='pending');
   const no=gs.filter(g=>g.status==='no');
-  const headcount=yes.reduce((a,g)=>a+1+(parseInt(g.comp)||0),0);
+  const headcount=yes.reduce((a,g)=>a+guestTotalPeople(g),0);
   if($('btnExport')) $('btnExport').style.display = gs.length? 'block':'none';
   const sum=$('guestSummary');
   if(gs.length){
+    const kids=yes.reduce((a,g)=>a+((g.compDetail||[]).filter(c=>c.kind==='child').length),0);
+    const adults=headcount-kids;
+    const pct=gs.length?Math.round(yes.length/gs.length*100):0;
     sum.innerHTML=`<div class="gsum">
       <div class="big">${yes.length}<small> de ${gs.length} confirmados</small></div>
+      <div class="gsum-bar"><i style="width:${pct}%"></i></div>
       <div class="brk">
         <span class="bk"><span class="dot" style="background:#7fd49a"></span>${yes.length} confirmados</span>
         <span class="bk"><span class="dot" style="background:#e9c877"></span>${pend.length} pendentes</span>
         <span class="bk"><span class="dot" style="background:#dd9b9b"></span>${no.length} não vão</span>
       </div>
-      <div class="ppl">Total de <b>${headcount}</b> ${headcount===1?'pessoa confirmada':'pessoas confirmadas'}, já contando os acompanhantes.</div>
+      <div class="gsum-ppl">
+        <div class="gp"><div class="gpv">${headcount}</div><div class="gpl">Pessoas</div></div>
+        <div class="gp"><div class="gpv">${adults}</div><div class="gpl">Adultos</div></div>
+        <div class="gp"><div class="gpv">${kids}</div><div class="gpl">Crianças</div></div>
+      </div>
+      <div style="font-size:11px;color:#C9D8C6;text-align:center;margin-top:11px">Entre os confirmados, já contando os acompanhantes.</div>
     </div>`;
   } else { sum.innerHTML=''; }
   document.querySelectorAll('#guestFilters .gfilter').forEach(b=>b.classList.toggle('on',b.dataset.f===guestFilterMode));
