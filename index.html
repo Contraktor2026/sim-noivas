@@ -1363,7 +1363,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 
     <!-- ANOTAÇÕES -->
     <section class="screen" id="s-guests">
-      <h2 class="sec">Convidados</h2>
+      <div class="row" style="margin:20px 0 2px"><h2 class="sec" style="margin:0">Convidados</h2><button onclick="openSheet('sh-guests-help')" style="border:none;background:none;color:var(--gold);font-family:var(--body);font-size:12.5px;font-weight:700;cursor:pointer;flex-shrink:0;white-space:nowrap">Como funciona?</button></div>
       <div id="guestIntro"></div>
       <div class="ftabs" id="guestTabs">
         <button class="ftab on" data-tab="mine" onclick="guestTab('mine')">Minha lista <span class="cnt" id="cntMine">0</span></button>
@@ -1541,6 +1541,17 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       </div>
       <button class="btn p full" onclick="saveQuote()">Salvar orçamento</button>
       <button class="btn d full" id="qDel" style="margin-top:8px;display:none" onclick="delQuote()">Excluir orçamento</button>
+    </div>
+
+    <div class="sheet" id="sh-guests-help" style="display:none">
+      <h3>Como funciona</h3>
+      <p class="sub">Duas partes que trabalham juntas: a sua lista e as respostas dos convidados.</p>
+      <p class="fine" style="margin:16px 0 3px"><b style="color:var(--green)">Minha lista</b></p>
+      <p class="fine" style="margin:0">Sua lista de quem você quer no casamento. Você adiciona cada pessoa, organiza por grupo e marca quem vai, quem está pendente e quem não vai. É o seu controle.</p>
+      <p class="fine" style="margin:15px 0 3px"><b style="color:var(--green)">Confirmações</b></p>
+      <p class="fine" style="margin:0">O link que você envia aos convidados. Cada um responde sozinho se vai poder ir, com quem vem, telefone e restrições. As respostas chegam numa fila de revisão: o SIM. procura a pessoa na sua lista e você confirma com um toque — sem duplicar nada.</p>
+      <p class="fine" style="margin:16px 0 0;padding-top:14px;border-top:1px solid var(--line)"><b style="color:var(--green)">Resumindo:</b> na Minha lista você diz quem quer; nas Confirmações eles dizem se vêm. A palavra final é sempre sua.</p>
+      <button class="btn p full" style="margin-top:16px" onclick="closeSheet()">Entendi</button>
     </div>
 
     <div class="sheet" id="sh-guest" style="display:none">
