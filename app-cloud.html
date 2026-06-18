@@ -167,6 +167,11 @@ body{font-family:var(--body);background:#11231A;color:var(--ink);display:flex;ju
 .sw.on::after{left:22px}
 .rscomp-fone{margin-bottom:8px}
 .rsvp-photo{width:100%;height:170px;border-radius:13px;background-size:cover;background-position:center;margin-bottom:18px}
+.exopt{display:flex;gap:12px;align-items:center;width:100%;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 14px;cursor:pointer;text-align:left;margin-bottom:10px;font-family:var(--body)}
+.exopt:active{background:#F4F1EA}
+.exopt .exi{width:38px;height:38px;border-radius:9px;background:#E8F0E8;display:flex;align-items:center;justify-content:center;color:var(--green);flex-shrink:0}
+.exopt .ext{font-size:14.5px;font-weight:700;color:var(--ink)}
+.exopt .exd{font-size:11.5px;color:var(--muted);margin-top:2px;line-height:1.4}
 .rsvp-card .f{text-align:left}
 .rsvp-yn{display:flex;gap:9px}
 .rsvp-yn button{flex:1;border:1.4px solid var(--line);background:#fff;border-radius:10px;padding:13px 8px;font-family:var(--body);font-size:14px;font-weight:700;color:var(--muted);cursor:pointer;transition:.15s}
@@ -1380,6 +1385,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
           <button class="gfilter" data-f="no" onclick="guestFilter('no')">Não vão</button>
         </div>
         <div id="guestsBody"></div>
+        <button id="btnExport" class="btn g full" style="margin-top:14px;display:none" onclick="openSheet('sh-export')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:5px"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Exportar lista</button>
       </div>
       <div id="tabRsvp" style="display:none">
         <p class="sub">Confirme as respostas do link — elas entram direto na sua lista.</p>
@@ -1541,6 +1547,19 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       </div>
       <button class="btn p full" onclick="saveQuote()">Salvar orçamento</button>
       <button class="btn d full" id="qDel" style="margin-top:8px;display:none" onclick="delQuote()">Excluir orçamento</button>
+    </div>
+
+    <div class="sheet" id="sh-export" style="display:none">
+      <h3>Exportar lista</h3>
+      <p class="sub">Leve sua lista de convidados pra onde precisar.</p>
+      <button class="exopt" onclick="exportGuestsCSV()">
+        <div class="exi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4h16v16H4z"/><path d="M4 9h16M4 14h16M9 4v16M15 4v16"/></svg></div>
+        <div><div class="ext">Planilha (CSV)</div><div class="exd">Abre no Excel ou Google Sheets. Ideal pra enviar ao buffet ou ao espaço.</div></div>
+      </button>
+      <button class="exopt" onclick="exportGuestsPDF()">
+        <div class="exi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 3h7l5 5v13H7zM14 3v5h5"/><path d="M9 13h6M9 16h6"/></svg></div>
+        <div><div class="ext">PDF para imprimir</div><div class="exd">Lista com o cabeçalho do seu casamento. Salve como PDF ou imprima.</div></div>
+      </button>
     </div>
 
     <div class="sheet" id="sh-guests-help" style="display:none">
@@ -3440,6 +3459,7 @@ function renderMyList(){
   const pend=gs.filter(g=>(g.status||'pending')==='pending');
   const no=gs.filter(g=>g.status==='no');
   const headcount=yes.reduce((a,g)=>a+1+(parseInt(g.comp)||0),0);
+  if($('btnExport')) $('btnExport').style.display = gs.length? 'block':'none';
   const sum=$('guestSummary');
   if(gs.length){
     sum.innerHTML=`<div class="gsum">
@@ -3665,6 +3685,108 @@ function compStr(r){
   const d=Array.isArray(r.companions_detail)?r.companions_detail:[];
   if(d.length) return compNames(d);
   const c=r.companions||0; return c>0?(c+' acompanhante'+(c>1?'s':'')):'';
+}
+/* ---- exportar lista de convidados ---- */
+function guestStatusLabel(st){ return st==='yes'?'Confirmado':st==='no'?'Não vai':'Pendente'; }
+function guestTotalPeople(g){ const cd=(g.compDetail&&g.compDetail.length)?g.compDetail.length:(parseInt(g.comp)||0); return 1+cd; }
+function exportSummary(){
+  const gs=state.guests||[];
+  const yes=gs.filter(g=>g.status==='yes');
+  const pend=gs.filter(g=>(g.status||'pending')==='pending').length;
+  const no=gs.filter(g=>g.status==='no').length;
+  const headcount=yes.reduce((a,g)=>a+guestTotalPeople(g),0);
+  const kids=yes.reduce((a,g)=>a+((g.compDetail||[]).filter(c=>c.kind==='child').length),0);
+  return { yes:yes.length, pend, no, headcount, kids, adults:headcount-kids, total:gs.length };
+}
+function csvCell(v){ v=(v==null?'':String(v)); return /[",;\n]/.test(v) ? '"'+v.replace(/"/g,'""')+'"' : v; }
+function downloadBlob(blob, filename){
+  try{
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a'); a.href=url; a.download=filename;
+    document.body.appendChild(a); a.click();
+    setTimeout(()=>{ document.body.removeChild(a); URL.revokeObjectURL(url); }, 1200);
+  }catch(e){ toast('Não consegui gerar o arquivo'); }
+}
+function exportGuestsCSV(){
+  const gs=state.guests||[];
+  if(!gs.length){ toast('Sua lista está vazia'); return; }
+  const head=['Nome','Grupo','Status','Telefone','Total de pessoas','Acompanhantes','Restrição alimentar','Observação'];
+  const lines=[head.join(';')];
+  gs.forEach(g=>{
+    const cd=(g.compDetail&&g.compDetail.length)?g.compDetail:null;
+    const comp=parseInt(g.comp)||0;
+    const compStr=cd?cd.map(c=>c.name+(c.kind==='child'?' (criança)':' (adulto)')+(c.phone?' '+c.phone:'')).join(' | ')
+                    :(comp>0?(comp+' acompanhante'+(comp>1?'s':'')):'');
+    lines.push([g.name||'',g.group||'',guestStatusLabel(g.status||'pending'),g.phone||'',guestTotalPeople(g),compStr,g.diet||'',g.note||''].map(csvCell).join(';'));
+  });
+  const csv='\ufeff'+lines.join('\r\n');
+  const nm=slugify((state.profile.a||'')+'-'+(state.profile.b||''))||'convidados';
+  downloadBlob(new Blob([csv],{type:'text/csv;charset=utf-8'}), 'convidados-'+nm+'.csv');
+  closeSheet(); toast('Planilha gerada 🤍');
+}
+function exportGuestsPDF(){
+  const gs=state.guests||[];
+  if(!gs.length){ toast('Sua lista está vazia'); return; }
+  const p=state.profile||{};
+  const names=esc((p.a||'')+' & '+(p.b||''));
+  const ini=esc((p.a&&p.a[0]||'').toUpperCase())+' &amp; '+esc((p.b&&p.b[0]||'').toUpperCase());
+  const dt=p.date?new Date(p.date+'T12:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'}):'';
+  const loc=[p.city,p.uf].filter(Boolean).join(', ');
+  const meta=[dt,loc].filter(Boolean).join(' · ');
+  const s=exportSummary();
+  const sumLine=`<b>${s.yes}</b> confirmados · <b>${s.headcount}</b> ${s.headcount===1?'pessoa':'pessoas'} (${s.adults} adultos, ${s.kids} crianças) · ${s.pend} pendentes · ${s.no} não vão`;
+  const groups={}; gs.forEach(g=>{ const k=g.group||'Sem grupo'; (groups[k]=groups[k]||[]).push(g); });
+  let rows='';
+  Object.keys(groups).forEach(grp=>{
+    rows+=`<tr class="grp"><td colspan="6">${esc(grp)} · ${groups[grp].length}</td></tr>`;
+    groups[grp].forEach(g=>{
+      const st=g.status||'pending';
+      const cd=(g.compDetail&&g.compDetail.length)?g.compDetail:null;
+      const comp=parseInt(g.comp)||0;
+      const cstr=cd?cd.map(c=>esc(c.name)+(c.kind==='child'?' (cri.)':'')).join(', '):(comp>0?(comp+''):'—');
+      rows+=`<tr>
+        <td><b>${esc(g.name||'')}</b></td>
+        <td><span class="st-${st}">${guestStatusLabel(st)}</span></td>
+        <td class="ce">${guestTotalPeople(g)}</td>
+        <td>${esc(g.phone||'—')}</td>
+        <td>${cstr||'—'}</td>
+        <td>${esc(g.diet||'—')}</td>
+      </tr>`;
+    });
+  });
+  const today=new Date().toLocaleDateString('pt-BR');
+  const doc=`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Lista de convidados — ${names}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Karla:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Karla',system-ui,sans-serif;color:#21211D;padding:32px 28px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .lh{text-align:center;border-bottom:2px solid #1F3D2B;padding-bottom:16px}
+    .mono{width:58px;height:58px;border-radius:50%;border:1.5px solid #A8853B;display:flex;align-items:center;justify-content:center;margin:0 auto 11px;font-family:'Marcellus',serif;font-size:18px;color:#1F3D2B}
+    .nm{font-family:'Marcellus',serif;font-size:26px;color:#1F3D2B;letter-spacing:.04em}
+    .meta{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#A8853B;font-weight:700;margin-top:7px}
+    .ttl{font-family:'Marcellus',serif;font-size:14px;color:#21211D;margin-top:12px;letter-spacing:.1em;text-transform:uppercase}
+    .sum{font-size:11px;color:#444;text-align:center;margin:13px 0 16px;padding:9px;background:#F4F1EA;border-radius:8px}
+    .sum b{color:#1F3D2B}
+    table{width:100%;border-collapse:collapse;font-size:10px}
+    thead th{background:#1F3D2B;color:#fff;text-align:left;padding:7px 8px;font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.04em}
+    tbody td{padding:6px 8px;border-bottom:1px solid #E3E0D5;vertical-align:top}
+    td.ce{text-align:center}
+    .grp td{background:#EAF0E9;color:#1F3D2B;font-weight:700;font-size:9.5px;text-transform:uppercase;letter-spacing:.05em}
+    .st-yes{color:#2a7a3f;font-weight:700}.st-no{color:#9a5a5a}.st-pending{color:#9a7d2e}
+    .foot{margin-top:18px;text-align:center;font-size:9px;color:#999}
+    tr{page-break-inside:avoid}
+  </style></head><body>
+    <div class="lh"><div class="mono">${ini}</div><div class="nm">${names}</div>${meta?`<div class="meta">${esc(meta)}</div>`:''}<div class="ttl">Lista de convidados</div></div>
+    <div class="sum">${sumLine}</div>
+    <table><thead><tr><th>Nome</th><th>Status</th><th>Pessoas</th><th>Telefone</th><th>Acompanhantes</th><th>Restrição</th></tr></thead><tbody>${rows}</tbody></table>
+    <div class="foot">Gerado pelo SIM. · ${today}</div>
+  </body></html>`;
+  let f=document.getElementById('printFrame');
+  if(!f){ f=document.createElement('iframe'); f.id='printFrame'; f.style.cssText='position:fixed;right:0;bottom:0;width:0;height:0;border:0;opacity:0'; document.body.appendChild(f); }
+  const d=f.contentWindow.document; d.open(); d.write(doc); d.close();
+  closeSheet(); toast('Preparando o PDF…');
+  setTimeout(()=>{ try{ f.contentWindow.focus(); }catch(_){}
+    try{ f.contentWindow.print(); }catch(e){ toast('Não consegui abrir a impressão'); } }, 650);
 }
 async function loadRSVPs(){
   if(!state.publicSlug||!sb||!sbUser) return;
