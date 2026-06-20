@@ -1663,6 +1663,7 @@ function go(s){
   $('screens').scrollTop=0;
   if(s==='set') fillSettings();
   if(s==='guests') renderGuests();
+  maybePageTour(s);
 }
 function openSettings(){ go('set'); }
 
@@ -3712,41 +3713,47 @@ const TOUR=[
   i:'<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 6L9 17l-5-5"/></svg>',
   b:'É só tocar nos ícones lá embaixo para navegar. Bom planejamento — estou aqui para ajudar a cada passo.'},
 ];
-let tourIdx=0;
-function showTour(force){
-  if(!force && state.tourDone) return;
-  tourIdx=0;
-  go('home');
+let tourIdx=0, curTour=TOUR, tourEndCb=null;
+function startTour(steps, onEnd){
+  curTour=steps; tourIdx=0; tourEndCb=onEnd||null;
   $('tour').style.display='block';
   renderTourStep();
   requestAnimationFrame(positionTour);
   window.addEventListener('resize', positionTour);
 }
+function showTour(force){
+  if(!force && state.tourDone) return;
+  go('home');
+  startTour(TOUR, ()=>{ state.tourDone=true; persist(); });
+}
 function renderTourStep(){
-  const st=TOUR[tourIdx];
+  const st=curTour[tourIdx], multi=curTour.length>1;
   $('tourIcon').innerHTML=st.i||''; $('tourIcon').style.display=st.i?'flex':'none';
-  $('tourStepN').textContent='Passo '+(tourIdx+1)+' de '+TOUR.length;
+  $('tourStepN').style.display=multi?'block':'none';
+  if(multi) $('tourStepN').textContent='Passo '+(tourIdx+1)+' de '+curTour.length;
   $('tourTitle').textContent=st.t;
   $('tourBody').innerHTML=st.b;
-  $('tourDots').innerHTML=TOUR.map((_,i)=>`<span style="width:7px;height:7px;border-radius:50%;background:${i===tourIdx?'var(--gold)':'var(--line)'}"></span>`).join('');
-  $('tourNext').textContent = tourIdx===TOUR.length-1 ? 'Começar' : 'Próximo';
-  $('tourSkip').style.display = tourIdx===TOUR.length-1 ? 'none' : 'block';
+  $('tourDots').style.display=multi?'flex':'none';
+  $('tourDots').innerHTML=multi?curTour.map((_,i)=>`<span style="width:7px;height:7px;border-radius:50%;background:${i===tourIdx?'var(--gold)':'var(--line)'}"></span>`).join(''):'';
+  const last=tourIdx===curTour.length-1;
+  $('tourNext').textContent = last ? (curTour===TOUR?'Começar':'Entendi') : 'Próximo';
+  $('tourSkip').style.display = last ? 'none' : 'block';
   positionTour();
 }
 function positionTour(){
-  const st=TOUR[tourIdx];
+  const st=curTour[tourIdx];
   const spot=$('tourSpot'), pop=$('tourPop'), arrow=$('tourArrow'), bd=$('tourBackdrop');
   if(!spot||!pop) return;
   const host=$('tour').getBoundingClientRect();
-  const el = st.tgt ? document.querySelector('#nav button[data-s="'+st.tgt+'"]') : null;
-  if(st.c || !el){
+  let el=null;
+  if(st.tgt) el = /[#. >\[]/.test(st.tgt) ? document.querySelector(st.tgt) : document.querySelector('#nav button[data-s="'+st.tgt+'"]');
+  if(st.c || !el || el.offsetParent===null){
     spot.style.display='none'; arrow.style.display='none';
     bd.style.background='rgba(22,32,24,.58)';
     pop.style.textAlign='center';
     pop.style.left='50%'; pop.style.top='50%'; pop.style.transform='translate(-50%,-50%)';
     return;
   }
-  // passo com ícone: holofote recortando o botão da barra
   bd.style.background='transparent';
   pop.style.textAlign='left'; pop.style.transform='none';
   const r=el.getBoundingClientRect();
@@ -3766,11 +3773,33 @@ function positionTour(){
   arrow.style.left=Math.max(10, Math.min(cx-left-7, popW-24))+'px';
   arrow.style.top = below ? '-7px' : (popH-7)+'px';
 }
-function tourNext(){ if(tourIdx>=TOUR.length-1){ finishTour(); return; } tourIdx++; renderTourStep(); }
-function finishTour(){
+function tourNext(){ if(tourIdx>=curTour.length-1){ endTour(); return; } tourIdx++; renderTourStep(); }
+function endTour(){
   $('tour').style.display='none';
   window.removeEventListener('resize', positionTour);
-  state.tourDone=true; persist();
+  const cb=tourEndCb; tourEndCb=null;
+  if(cb) cb();
+}
+function finishTour(){ endTour(); }
+
+/* tours contextuais — aparecem na primeira vez que cada página é aberta */
+const PAGE_TOURS={
+ fin:[{t:'Dinheiro',tgt:'#s-fin .add',b:'Toque aqui para lançar uma despesa, com valor e vencimento. O app agrupa tudo por mês e destaca o que está atrasado ou chegando.'}],
+ forn:[{t:'Fornecedores',tgt:'#s-forn .add',b:'Crie uma categoria (Buffet, Fotografia…) e adicione os orçamentos que recebeu para comparar lado a lado e escolher com calma.'}],
+ chk:[{t:'Tarefas',tgt:'#s-chk .add',b:'Crie suas tarefas aqui — ou, nos Ajustes, carregue o roteiro pronto que se adapta ao tempo que falta. Vá marcando conforme avança.'}],
+ guests:[
+   {t:'Convidados',tgt:'#guestTabs',b:'Duas abas: em “Minha lista” você monta os convidados; em “Confirmações” acompanha quem respondeu o RSVP.'},
+   {t:'Adicione e convide',tgt:'#s-guests .add',b:'Toque para adicionar convidados (ou colar uma lista inteira). Depois é só gerar o link de confirmação para enviar pelo WhatsApp.'}
+ ],
+};
+function maybePageTour(s){
+  if(!state || !state.tourDone || !state.profile) return;
+  if($('tour').style.display==='block') return;
+  const steps=PAGE_TOURS[s]; if(!steps) return;
+  if(!state.seenPage) state.seenPage={};
+  if(state.seenPage[s]) return;
+  state.seenPage[s]=true; persist();
+  requestAnimationFrame(()=>startTour(steps, null));
 }
 
 /* =================== AJUSTES =================== */
