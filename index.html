@@ -28,6 +28,11 @@
   --muted:#6A6657;
   --danger:#A23B2B;
   --ok:#3F6B4F;
+  --yes:#2A7A3F;
+  --yes-soft:#E3F0E3;
+  --no:#9A5A5A;
+  --no-soft:#F0E8E8;
+  --gold-ink:#7A6430;
   --display:'Marcellus',Georgia,serif;
   --body:'Karla',system-ui,sans-serif;
 }
@@ -60,8 +65,8 @@ body{font-family:var(--body);background:#11231A;color:var(--ink);display:flex;ju
 .fsec .sub{font-size:11.5px;color:var(--muted);margin-top:1px}
 .fsec.hired .ico{background:var(--green);color:var(--paper)}
 .fsec.hired .tit{color:var(--green)}
-.fsec.quote .ico{background:var(--gold-soft);color:#7a6430}
-.fsec.quote .tit{color:#7a6430}
+.fsec.quote .ico{background:var(--gold-soft);color:var(--gold-ink)}
+.fsec.quote .tit{color:var(--gold-ink)}
 /* área das seções com leve separação */
 .fwrap{margin-bottom:6px}
 .fwrap.hired{background:linear-gradient(180deg,rgba(31,61,43,.04),transparent);border-radius:14px;padding:12px 12px 4px;margin:0 -12px 8px}
@@ -86,7 +91,7 @@ body{font-family:var(--body);background:#11231A;color:var(--ink);display:flex;ju
 .wabtn{display:inline-flex;align-items:center;gap:7px;background:#25D366;color:#fff !important;font-weight:700;padding:11px 18px;border-radius:99px;font-size:14px;text-decoration:none;box-shadow:0 2px 8px rgba(37,211,102,.3)}
 /* itens da agenda */
 .agi{display:flex;align-items:center;gap:13px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:9px;cursor:pointer}
-.agdate{width:46px;flex-shrink:0;text-align:center;background:var(--gold-soft);border-radius:9px;padding:6px 0;color:#7a6430}
+.agdate{width:46px;flex-shrink:0;text-align:center;background:var(--gold-soft);border-radius:9px;padding:6px 0;color:var(--gold-ink)}
 .agdate.ev{background:var(--green);color:var(--paper)}
 .agdate .agd{font-family:var(--display);font-size:19px;line-height:1}
 .agdate .agm{font-size:10px;text-transform:uppercase;letter-spacing:.05em;margin-top:1px}
@@ -125,16 +130,16 @@ body{font-family:var(--body);background:#11231A;color:var(--ink);display:flex;ju
 .ggroup{font-family:var(--display);font-size:14px;color:var(--green);margin:16px 0 8px;display:flex;align-items:center;gap:8px}
 .ggroup .line{flex:1;height:1px;background:var(--line)}
 .gitem{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:8px;cursor:pointer}
-.gitem .gav{width:38px;height:38px;border-radius:50%;background:var(--gold-soft);color:#7a6430;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:16px;flex-shrink:0}
+.gitem .gav{width:38px;height:38px;border-radius:50%;background:var(--gold-soft);color:var(--gold-ink);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:16px;flex-shrink:0}
 .gitem .gbd{flex:1;min-width:0}
 .gitem .gn{font-size:14px;font-weight:600;color:var(--ink)}
 .gitem .gm{font-size:12px;color:var(--muted);margin-top:1px}
 .gbadge{font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:4px 9px;border-radius:99px;flex-shrink:0}
-.gbadge.yes{background:#E3F0E3;color:#2a7a3f}
-.gbadge.pending{background:var(--gold-soft);color:#7a6430}
-.gbadge.no{background:#F0E8E8;color:#9a5a5a}
+.gbadge.yes{background:var(--yes-soft);color:var(--yes)}
+.gbadge.pending{background:var(--gold-soft);color:var(--gold-ink)}
+.gbadge.no{background:var(--no-soft);color:var(--no)}
 .alerg{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;background:#F6E5E2;color:#a23b2b;padding:2px 7px;border-radius:99px;margin-left:7px;vertical-align:1px}
-.gwa{width:34px;height:34px;border-radius:50%;background:#E3F0E3;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#1d8a4e;flex-shrink:0;padding:0}
+.gwa{width:34px;height:34px;border-radius:50%;background:var(--yes-soft);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#1d8a4e;flex-shrink:0;padding:0}
 .gwa:active{background:#cfe8d6}
 .gsearch{position:relative;margin-bottom:10px}
 .gsearch input{padding-left:38px}
@@ -188,7 +193,7 @@ body{font-family:var(--body);background:#11231A;color:var(--ink);display:flex;ju
 .rsvp-yn{display:flex;gap:9px}
 .rsvp-yn button{flex:1;border:1.4px solid var(--line);background:#fff;border-radius:10px;padding:13px 8px;font-family:var(--body);font-size:14px;font-weight:700;color:var(--muted);cursor:pointer;transition:.15s}
 .rsvp-yn button.on[data-v=yes]{border-color:var(--green);background:#E8F0E8;color:var(--green)}
-.rsvp-yn button.on[data-v=no]{border-color:#9a5a5a;background:#F0E8E8;color:#9a5a5a}
+.rsvp-yn button.on[data-v=no]{border-color:var(--no);background:var(--no-soft);color:var(--no)}
 .rsvp-check{width:64px;height:64px;border-radius:50%;background:#E8F0E8;display:flex;align-items:center;justify-content:center;margin:8px auto 14px}
 .rsvp-tmsg{font-family:var(--display);font-size:22px;color:var(--green)}
 .rsvp-foot{margin-top:18px;font-size:11px;color:var(--muted);letter-spacing:.04em}
@@ -215,9 +220,9 @@ body{font-family:var(--body);background:#11231A;color:var(--ink);display:flex;ju
 .revact .btn{flex:1}
 .gstatus{display:flex;gap:8px}
 .gstatus button{flex:1;border:1.3px solid var(--line);background:#fff;border-radius:9px;padding:10px 6px;font-family:var(--body);font-size:12.5px;font-weight:700;color:var(--muted);cursor:pointer}
-.gstatus button.on[data-s=yes]{border-color:#2a7a3f;background:#E3F0E3;color:#2a7a3f}
-.gstatus button.on[data-s=pending]{border-color:var(--gold);background:var(--gold-soft);color:#7a6430}
-.gstatus button.on[data-s=no]{border-color:#9a5a5a;background:#F0E8E8;color:#9a5a5a}
+.gstatus button.on[data-s=yes]{border-color:var(--yes);background:var(--yes-soft);color:var(--yes)}
+.gstatus button.on[data-s=pending]{border-color:var(--gold);background:var(--gold-soft);color:var(--gold-ink)}
+.gstatus button.on[data-s=no]{border-color:var(--no);background:var(--no-soft);color:var(--no)}
 .hr{border:none;border-top:1px solid var(--line);margin:14px 0}
 .dn{font-family:var(--display)}
 button{font-family:var(--body);cursor:pointer}
@@ -272,6 +277,9 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 .btn.sm{padding:7px 12px;font-size:12px}
 .btn.full{width:100%;padding:14px;font-size:14.5px}
 .add{display:flex;align-items:center;gap:6px;background:none;border:1px dashed var(--gold);color:var(--green);font-weight:700;font-size:13px;border-radius:8px;padding:12px;width:100%;justify-content:center;margin:4px 0 14px}
+.linkmini{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;background:none;border:none;color:var(--gold);font-family:var(--body);font-weight:700;font-size:12.5px;cursor:pointer;padding:8px;text-align:center}
+.linkmini.muted{color:var(--muted);font-weight:600}
+.linkmini:active{opacity:.55}
 
 /* ===== monogram / hero ===== */
 .hero{background:radial-gradient(135% 90% at 50% -25%,rgba(168,133,59,.22),transparent 55%),linear-gradient(168deg,#264A31 0%,#1F3D2B 52%,#163018 100%);border-radius:20px;color:var(--paper);padding:40px 22px 32px;margin-top:10px;text-align:center;position:relative;overflow:hidden;box-shadow:0 22px 46px -26px rgba(16,34,23,.75)}
@@ -353,8 +361,8 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 
 /* ===== nav ===== */
 .nav{position:absolute;left:0;right:0;bottom:0;background:rgba(250,249,245,.95);backdrop-filter:blur(10px);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:8px 4px calc(12px + env(safe-area-inset-bottom))}
-.nav button{background:none;border:none;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#6E6A5C;padding:5px 8px}
-.nav button svg{stroke:#6E6A5C;stroke-width:1.9}
+.nav button{background:none;border:none;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding:5px 8px}
+.nav button svg{stroke:var(--muted);stroke-width:1.9}
 .nav button.on{color:var(--green)}
 .nav button.on svg{stroke:var(--green)}
 .nav button.on::after{content:"";width:4px;height:4px;border-radius:50%;background:var(--gold);margin-top:1px}
@@ -423,7 +431,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 .importbtn .spin{width:14px;height:14px;border:2px solid var(--gold-soft);border-top-color:transparent;border-radius:50%;animation:sp .8s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
 .howto{background:var(--card);border:1px dashed var(--gold);border-radius:12px;padding:14px 16px;margin-bottom:14px}
-.howto .st{display:flex;gap:10px;align-items:baseline;font-size:12.5px;color:#6f6c61;padding:3px 0}
+.howto .st{display:flex;gap:10px;align-items:baseline;font-size:12.5px;color:var(--muted);padding:3px 0}
 .howto .st b{font-family:var(--display);color:var(--gold);font-size:14px;flex-shrink:0}
 .howto .st .tx{flex:1;line-height:1.5}
 .howto .st .tx strong{color:#4c493e;font-weight:700}
@@ -445,7 +453,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 #login .ldcard{background:var(--paper);border-radius:14px;padding:18px 16px;margin-bottom:10px}
 #login .ldcard .ic{width:34px;height:34px;border:1px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold);margin-bottom:10px}
 #login .ldcard h4{font-family:var(--display);font-size:19px;color:var(--green);margin-bottom:4px}
-#login .ldcard p{font-size:14.5px;color:#6f6c61;line-height:1.6}
+#login .ldcard p{font-size:14.5px;color:var(--muted);line-height:1.6}
 #login .ldstep{display:flex;gap:14px;align-items:flex-start;margin-bottom:16px}
 #login .ldstep .n{font-family:var(--display);font-size:26px;color:var(--gold);line-height:1;min-width:26px}
 #login .ldstep h5{font-family:'Karla',sans-serif;font-weight:700;font-size:15.5px;color:var(--paper);margin-bottom:3px}
@@ -476,7 +484,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 #login .band .ldcard{background:#fff;border:1px solid var(--line);box-shadow:0 10px 26px rgba(31,61,43,.07)}
 #login .band .plan{background:#fff;border:1px solid var(--line);box-shadow:0 10px 26px rgba(31,61,43,.07)}
 #login .band .plan.hl{border:1.5px solid var(--gold)}
-#login .band .betanote{background:var(--gold-soft);border:1px solid rgba(168,133,59,.35);color:#7a6430}
+#login .band .betanote{background:var(--gold-soft);border:1px solid rgba(168,133,59,.35);color:var(--gold-ink)}
 #login .band .betanote b{color:#5d4a20}
 /* ---- molduras de celular (proporção real, conteúdo cheio) ---- */
 #login .mockwrap{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px 2px 14px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
@@ -502,7 +510,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 #login .dfield label{display:block;font-size:9.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
 #login .dfield .dval{background:#fff;border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-size:13.5px;min-height:37px;color:var(--ink);transition:border-color .3s, box-shadow .3s}
 #login .dfield .dval.fill{border-color:var(--gold);box-shadow:0 0 0 3px rgba(168,133,59,.14)}
-#login .diachip{display:inline-flex;align-items:center;gap:6px;background:rgba(168,133,59,.16);border:1px solid rgba(168,133,59,.45);color:#7a6430;font-size:10px;font-weight:800;letter-spacing:1.2px;padding:4px 10px;border-radius:99px;font-family:'Karla',sans-serif;text-transform:uppercase}
+#login .diachip{display:inline-flex;align-items:center;gap:6px;background:rgba(168,133,59,.16);border:1px solid rgba(168,133,59,.45);color:var(--gold-ink);font-size:10px;font-weight:800;letter-spacing:1.2px;padding:4px 10px;border-radius:99px;font-family:'Karla',sans-serif;text-transform:uppercase}
 #login .diachip svg{flex-shrink:0}
 #login .dpress{transition:transform .12s}
 #login .dpress.on{transform:scale(.9)}
@@ -532,7 +540,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 #login .faq summary::-webkit-details-marker{display:none}
 #login .faq summary::after{content:'+';font-family:var(--display);font-size:20px;color:var(--gold);line-height:1;flex-shrink:0}
 #login .faq details[open] summary::after{content:'–'}
-#login .faq .fa{padding:0 15px 13px;font-size:13.5px;color:#6f6c61;line-height:1.6}
+#login .faq .fa{padding:0 15px 13px;font-size:13.5px;color:var(--muted);line-height:1.6}
 #login .stickycta{position:fixed;left:14px;right:14px;bottom:12px;z-index:59;transform:translateY(90px);opacity:0;transition:.28s;pointer-events:none}
 #login .stickycta.show{transform:translateY(0);opacity:1;pointer-events:auto}
 #login .stickycta button{box-shadow:0 12px 30px rgba(22,48,31,.45);font-size:15px;padding:15px}
@@ -661,7 +669,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
     <path d="M80 6 l4.5 6 -4.5 6 -4.5 -6 Z"/>
   </g>
 </svg></div>
-      <p style="text-align:center;font-size:15px;color:#6f6c61;line-height:1.65;margin:-4px 0 22px;font-family:'Karla',sans-serif">O SIM. é a sua assistente de casamento: cuida do dinheiro, dos fornecedores e do passo a passo até o altar. E quando chegar orçamento, manda pra cá: texto do WhatsApp, print ou PDF. Ele lê e preenche tudo.<br><b style="color:var(--green)">Você só decide.</b></p>
+      <p style="text-align:center;font-size:15px;color:var(--muted);line-height:1.65;margin:-4px 0 22px;font-family:'Karla',sans-serif">O SIM. é a sua assistente de casamento: cuida do dinheiro, dos fornecedores e do passo a passo até o altar. E quando chegar orçamento, manda pra cá: texto do WhatsApp, print ou PDF. Ele lê e preenche tudo.<br><b style="color:var(--green)">Você só decide.</b></p>
       <div class="ldcard">
         <div class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
         <h4>Dinheiro sob controle</h4>
@@ -1063,12 +1071,12 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
         <h4>Grátis</h4>
         <div class="price">R$ 0 <small>para sempre</small></div>
         <ul>
-          <li>Painel do casamento com contagem regressiva</li>
-          <li>Financeiro completo com parcelas por mês</li>
-          <li>Comparação de fornecedores e orçamentos</li>
-          <li>Página própria para cada fornecedor: contrato, parcelas e contatos</li>
-          <li>Roteiro adaptado ao seu tempo</li>
-          <li>Anotações e acesso em qualquer aparelho</li>
+          <li>Painel do casamento com contagem regressiva e próximos passos</li>
+          <li>Gerenciamento de orçamento inteligente: parcelas agrupadas por mês, atrasados em destaque e quanto ainda sobra</li>
+          <li>Comparação de fornecedores e orçamentos lado a lado</li>
+          <li>Página própria para cada fornecedor: contrato, parcelas, WhatsApp e Instagram</li>
+          <li>Roteiro que se adapta ao tempo que falta até o grande dia</li>
+          <li>Anotações e acesso em qualquer aparelho, tudo salvo na nuvem</li>
         </ul>
         <button class="btn p full" onclick="document.getElementById('lgEmail').scrollIntoView({behavior:'smooth',block:'center'});toggleAuthModeTo('up')">Criar conta grátis</button>
       </div>
@@ -1078,12 +1086,11 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
         <div class="price">R$ 39,90 <small>/ mês · em breve</small></div>
         <ul>
           <li>Tudo do plano Grátis</li>
-          <li>Leituras por inteligência artificial ilimitadas</li>
-          <li class="dim">Lista de casamento e presentes</li>
-          <li class="dim">Lista de convidados com confirmação de presença</li>
-          <li class="dim">Site do casamento para os convidados</li>
-          <li class="dim">Organização das mesas</li>
-          <li class="dim">Relatório financeiro em PDF e muito mais</li>
+          <li>Leitura de orçamentos por inteligência artificial: mande o texto do WhatsApp, um print ou o PDF e o app preenche valores, condições e parcelas</li>
+          <li>Lista de convidados completa: página de confirmação (RSVP) personalizável, com acompanhantes, crianças e restrições alimentares</li>
+          <li>Busca, adição em lote e lembrete de confirmação pelo WhatsApp</li>
+          <li>Exportar a lista de convidados em CSV e PDF</li>
+          <li class="dim">Organização das mesas e relatório financeiro em PDF (em breve)</li>
         </ul>
         <button class="btn g full" onclick="document.getElementById('lgEmail').scrollIntoView({behavior:'smooth',block:'center'});toggleAuthModeTo('up')">Entrar na fase gratuita</button>
       </div>
@@ -1389,8 +1396,8 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       <div id="tabMine">
         <p class="sub">Quem você quer ao seu lado no grande dia. Esta é a sua lista de planejamento.</p>
         <div id="guestSummary"></div>
-        <button class="add" onclick="openGuest()" style="margin:4px 0 8px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Adicionar convidado</button>
-        <button class="btn g full" style="margin:0 0 16px" onclick="openBulk()">Adicionar vários de uma vez</button>
+        <button class="add" onclick="openGuest()" style="margin:4px 0 4px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Adicionar convidado</button>
+        <button class="linkmini" onclick="openBulk()" style="margin-bottom:14px">ou colar uma lista de nomes</button>
         <div class="gsearch" id="guestSearchWrap" style="display:none">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
           <input id="guestSearchBox" placeholder="Buscar por nome ou grupo…" oninput="guestSearchInput(this.value)">
@@ -1402,7 +1409,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
           <button class="gfilter" data-f="no" onclick="guestFilter('no')">Não vão</button>
         </div>
         <div id="guestsBody"></div>
-        <button id="btnExport" class="btn g full" style="margin-top:14px;display:none" onclick="openSheet('sh-export')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:5px"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Exportar lista</button>
+        <button id="btnExport" class="linkmini muted" style="margin-top:18px;display:none" onclick="openSheet('sh-export')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Exportar lista (CSV ou PDF)</button>
       </div>
       <div id="tabRsvp" style="display:none">
         <p class="sub">Confirme as respostas do link — elas entram direto na sua lista.</p>
@@ -1491,16 +1498,21 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
   <input type="file" id="fileContract" accept="image/*,application/pdf" style="position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip:rect(0 0 0 0)">
 
   <!-- guia de boas-vindas -->
-  <div id="tour" style="display:none;position:absolute;inset:0;background:rgba(22,32,24,.6);z-index:55;align-items:center;justify-content:center;padding:24px">
-    <div style="background:var(--paper);border-radius:16px;padding:24px 20px;max-width:330px;width:100%;text-align:center;position:relative">
-      <div style="position:absolute;inset:6px;border:1px solid rgba(168,133,59,.45);border-radius:12px;pointer-events:none"></div>
-      <div id="tourIcon" style="color:var(--gold);display:flex;justify-content:center;margin-bottom:10px"></div>
-      <h3 class="dn" id="tourTitle" style="font-size:20px;color:var(--green);margin-bottom:8px"></h3>
+  <div id="tour" style="display:none;position:absolute;inset:0;z-index:55;pointer-events:none">
+    <div id="tourBackdrop" style="position:absolute;inset:0;background:rgba(22,32,24,.58);pointer-events:auto;transition:background .2s"></div>
+    <div id="tourSpot" style="position:absolute;border-radius:16px;border:2px solid var(--gold);box-shadow:0 0 0 9999px rgba(22,32,24,.66);display:none;pointer-events:none;transition:left .25s,top .25s,width .25s,height .25s"></div>
+    <div id="tourPop" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:300px;max-width:86vw;background:var(--paper);border-radius:16px;padding:20px 18px;box-shadow:0 18px 50px rgba(22,48,31,.42);pointer-events:auto">
+      <div id="tourArrow" style="position:absolute;width:14px;height:14px;background:var(--paper);transform:rotate(45deg);display:none"></div>
+      <div id="tourIcon" style="color:var(--gold);display:flex;justify-content:center;margin-bottom:8px"></div>
+      <div id="tourStepN" style="color:var(--gold);font-weight:700;letter-spacing:.09em;text-transform:uppercase;font-size:10.5px;margin-bottom:5px;font-family:var(--body)"></div>
+      <h3 class="dn" id="tourTitle" style="font-size:19px;color:var(--green);margin-bottom:6px"></h3>
       <p class="fine" id="tourBody" style="line-height:1.6;font-size:13.5px"></p>
-      <div id="tourDots" style="display:flex;gap:6px;justify-content:center;margin:16px 0 14px"></div>
-      <div style="display:flex;gap:10px">
-        <button class="btn g" style="flex:1" onclick="finishTour()">Pular</button>
-        <button class="btn p" style="flex:2" id="tourNext" onclick="tourNext()">Próximo</button>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:16px;gap:10px">
+        <div id="tourDots" style="display:flex;gap:6px"></div>
+        <div style="display:flex;gap:8px;flex-shrink:0">
+          <button class="btn g" id="tourSkip" style="padding:9px 13px;font-size:13px" onclick="finishTour()">Pular</button>
+          <button class="btn p" id="tourNext" style="padding:9px 16px;font-size:13px" onclick="tourNext()">Próximo</button>
+        </div>
       </div>
     </div>
   </div>
@@ -1915,8 +1927,8 @@ async function doAuth(){
     if(error) throw error;
     if(authMode==='up'&&!data.session){ msg.textContent='Conta criada! Confirme no seu e-mail e depois entre.'; btn.disabled=false; return; }
     sbUser=data.session.user;
-    document.getElementById('login').style.display='none';
-    await bootApp();
+    location.replace('app.html');
+    return;
   }catch(e){
     msg.textContent= /Invalid login/i.test(e.message)?'E-mail ou senha incorretos.':('Erro: '+e.message);
   }
@@ -2029,9 +2041,9 @@ async function submitRSVP(){
 }
 
 async function initAuth(){
-  // visitante chegou por um link de confirmação? mostra a página pública de RSVP
+  // visitante chegou por um link de confirmação? manda pra página pública de RSVP (no app)
   var rsvpSlug=new URLSearchParams(location.search).get('c');
-  if(rsvpSlug){ showRSVP(rsvpSlug); return; }
+  if(rsvpSlug){ location.replace('app.html?c='+encodeURIComponent(rsvpSlug)); return; }
   document.getElementById('splash').style.display='flex';
   if(!sb||SUPABASE_URL.includes('COLE_AQUI')){
     document.getElementById('splash').style.display='none';
@@ -2040,7 +2052,7 @@ async function initAuth(){
     return;
   }
   const {data}=await sb.auth.getSession();
-  if(data&&data.session){ sbUser=data.session.user; await bootApp(); }
+  if(data&&data.session){ location.replace('app.html'); return; }
   else { document.getElementById('splash').style.display='none'; document.getElementById('login').style.display='flex'; }
 }
 
@@ -2601,7 +2613,7 @@ function renderCatPage(){
             ${starsCtl(c.id,q.id,q.stars||0)}
           </div>
         </div>
-        ${q.dif?`<div style="display:flex;gap:7px;align-items:flex-start;margin:8px 0 2px;font-size:12.5px;font-weight:700;color:var(--gold)"><span style="flex-shrink:0;margin-top:1px">${SPARK}</span><span style="color:#7a6430">${esc(q.dif)}</span></div>`:''}
+        ${q.dif?`<div style="display:flex;gap:7px;align-items:flex-start;margin:8px 0 2px;font-size:12.5px;font-weight:700;color:var(--gold)"><span style="flex-shrink:0;margin-top:1px">${SPARK}</span><span style="color:var(--gold-ink)">${esc(q.dif)}</span></div>`:''}
         ${q.inc?`<div class="inc">${esc(q.inc)}</div>`:''}
         <div class="qfoot">
           ${q.win
@@ -3404,8 +3416,8 @@ function renderChk(){
     Object.keys(cont).forEach(f=>{ if(cont[f]>maxT){ maxT=cont[f]; faseTop=f; } });
     if(M<=7 && maxT>=8){
       html+=`<div class="card" style="border-color:rgba(168,133,59,.5);background:var(--gold-soft);display:flex;gap:10px;align-items:flex-start;margin-top:-2px">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#7a6430" stroke-width="1.8" style="flex-shrink:0;margin-top:1px"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
-        <p class="fine" style="margin:0;color:#7a6430"><b>Atenção ao ritmo:</b> com o casamento próximo, várias tarefas se concentraram em <b>${esc(faseTop)}</b> (${maxT} itens). Vale priorizar o que tem prazo (espaço, buffet, foto) e, se puder, contar com ajuda para não sobrecarregar.</p>
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--gold-ink)" stroke-width="1.8" style="flex-shrink:0;margin-top:1px"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+        <p class="fine" style="margin:0;color:var(--gold-ink)"><b>Atenção ao ritmo:</b> com o casamento próximo, várias tarefas se concentraram em <b>${esc(faseTop)}</b> (${maxT} itens). Vale priorizar o que tem prazo (espaço, buffet, foto) e, se puder, contar com ajuda para não sobrecarregar.</p>
       </div>`;
     }
   }
@@ -3545,7 +3557,7 @@ function renderMyList(){
       const cs=(g.compDetail&&g.compDetail.length)?compNames(g.compDetail):'';
       return `<div class="gitem" onclick="openGuest('${g.id}')">
         <div class="gav">${esc((g.name[0]||'?').toUpperCase())}</div>
-        <div class="gbd"><div class="gn">${esc(g.name)}${g.diet?`<span class="alerg" title="${(g.diet||'').replace(/"/g,'&quot;')}">restrição</span>`:''}</div>
+        <div class="gbd"><div class="gn">${esc(g.name)}${g.diet?`<span class="alerg" title="${esc(g.diet)}">restrição</span>`:''}</div>
         <div class="gm">${cs?('com '+cs):(comp>0?('+'+comp+' acompanhante'+(comp>1?'s':'')):'sem acompanhante')}${g.note?' · '+esc(g.note):''}</div></div>
         ${g.phone?`<button class="gwa" title="Chamar no WhatsApp" onclick="event.stopPropagation();guestWhats('${g.id}')"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-2.8.8.8-2.8-.2-.3A8 8 0 1 1 12 20zm4.5-5.9c-.2-.1-1.4-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8.9-.3.2-.6 0a6.6 6.6 0 0 1-1.9-1.2 7.3 7.3 0 0 1-1.4-1.7c-.1-.3 0-.4.1-.5l.4-.5.3-.4v-.4c0-.1-.6-1.5-.8-2s-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3A2.9 2.9 0 0 0 6 9.4a5 5 0 0 0 1.1 2.7 11.5 11.5 0 0 0 4.4 3.9c2.1.8 2.1.6 2.5.5a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .1-1.2c0-.1-.2-.2-.5-.3z"/></svg></button>`:''}
         <span class="gbadge ${st}">${label}</span>
@@ -3914,7 +3926,7 @@ function renderReviewQueue(){
     const extra=[];
     if(r.phone) extra.push('Tel: '+esc(r.phone));
     if(r.diet) extra.push('Restrição: '+esc(r.diet));
-    const info=`<div class="rin-n">${esc(r.guest_name)} <span style="font-size:11px;color:${vai?'#2a7a3f':'#9a5a5a'}">${vai?'✓ vai':'✕ não vai'}</span></div>
+    const info=`<div class="rin-n">${esc(r.guest_name)} <span style="font-size:11px;color:${vai?'var(--yes)':'var(--no)'}">${vai?'✓ vai':'✕ não vai'}</span></div>
       <div class="rin-m">${cs?('com '+cs+' · '):''}${r.message?('“'+esc(r.message)+'”'):'sem recado'}</div>
       ${extra.length?`<div class="rin-m" style="color:var(--green)">${extra.join(' · ')}</div>`:''}`;
     if(m){
@@ -4141,39 +4153,77 @@ function delNote(){
   toast('Anotação excluída');
 }
 
-/* =================== GUIA DE BOAS-VINDAS =================== */
+/* =================== GUIA DE BOAS-VINDAS (tour guiado) =================== */
 const TOUR=[
- {t:'Bem-vinda ao SIM.',b:'Embaixo ficam as 5 áreas do app: <b>Hoje</b> (seu resumo), <b>Dinheiro</b>, <b>Fornecedores</b>, <b>Tarefas</b> e <b>Ajustes</b>. Toque nos ícones para ir e voltar quando quiser.',
-  i:'<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 11l9-7 9 7v9a1 1 0 01-1 1h-5v-6h-6v6H4a1 1 0 01-1-1z"/></svg>'},
- {t:'Guarde os orçamentos',b:'Em <b>Fornecedores</b>, crie uma categoria (Buffet, Fotografia…) e toque em <b>+ Adicionar orçamento</b>. Dica: cole a mensagem do WhatsApp do fornecedor que eu preencho os dados para você.',
-  i:'<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg>'},
- {t:'Avalie e contrate',b:'Dê <b>estrelas</b> pensando em atendimento, estilo e indicação — não só preço. Ao tocar em <b>Contratar</b>, nasce a página do contrato, com parcelas e anexos.',
-  i:'<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg>'},
- {t:'Dinheiro sob controle',b:'Em <b>Dinheiro</b>, lance despesas com valor e vencimento — só digitar os números, a vírgula entra sozinha. Eu organizo por mês e aviso na tela <b>Hoje</b> o que está chegando.',
-  i:'<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="6" width="19" height="13" rx="2"/><circle cx="12" cy="12.5" r="3"/></svg>'},
- {t:'Suas tarefas e anotações',b:'Em <b>Tarefas</b>, carregue o roteiro adaptado ao tempo que falta. E a <b>caneta no topo</b> guarda qualquer anotação solta. Pronta para começar?',
-  i:'<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 3l4 4L8 20l-5 1 1-5z"/></svg>'},
+ {t:'Bem-vinda ao SIM.',c:true,
+  i:'<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s-7-4.6-9.3-9.2C1.2 8.5 2.7 5 6 5c2 0 3.2 1.2 4 2.3C10.8 6.2 12 5 14 5c3.3 0 4.8 3.5 3.3 6.8C19 16.4 12 21 12 21z"/></svg>',
+  b:'Em poucos segundos eu te mostro onde fica cada coisa. É rápido — pode avançar.'},
+ {t:'Hoje',tgt:'home',b:'Seu resumo do casamento: a contagem regressiva, quanto já saiu do orçamento e os próximos passos.'},
+ {t:'Dinheiro',tgt:'fin',b:'Lance cada despesa com valor e vencimento. O app agrupa por mês e destaca o que está atrasado ou chegando.'},
+ {t:'Fornecedores',tgt:'forn',b:'Compare orçamentos lado a lado e guarde contrato, parcelas e contatos de cada fornecedor numa página só.'},
+ {t:'Tarefas',tgt:'chk',b:'O roteiro do casamento, que se adapta ao tempo que falta. Você vai marcando conforme avança.'},
+ {t:'Convidados',tgt:'guests',b:'Monte a lista, receba as confirmações de presença (RSVP) e exporte em PDF ou CSV quando quiser.'},
+ {t:'Tudo pronto.',c:true,
+  i:'<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 6L9 17l-5-5"/></svg>',
+  b:'É só tocar nos ícones lá embaixo para navegar. Bom planejamento — estou aqui para ajudar a cada passo.'},
 ];
 let tourIdx=0;
 function showTour(force){
   if(!force && state.tourDone) return;
-  tourIdx=0; renderTourStep();
-  $('tour').style.display='flex';
+  tourIdx=0;
+  go('home');
+  $('tour').style.display='block';
+  renderTourStep();
+  requestAnimationFrame(positionTour);
+  window.addEventListener('resize', positionTour);
 }
 function renderTourStep(){
   const st=TOUR[tourIdx];
-  $('tourIcon').innerHTML=st.i;
+  $('tourIcon').innerHTML=st.i||''; $('tourIcon').style.display=st.i?'flex':'none';
+  $('tourStepN').textContent='Passo '+(tourIdx+1)+' de '+TOUR.length;
   $('tourTitle').textContent=st.t;
   $('tourBody').innerHTML=st.b;
   $('tourDots').innerHTML=TOUR.map((_,i)=>`<span style="width:7px;height:7px;border-radius:50%;background:${i===tourIdx?'var(--gold)':'var(--line)'}"></span>`).join('');
   $('tourNext').textContent = tourIdx===TOUR.length-1 ? 'Começar' : 'Próximo';
+  $('tourSkip').style.display = tourIdx===TOUR.length-1 ? 'none' : 'block';
+  positionTour();
 }
-function tourNext(){
-  if(tourIdx>=TOUR.length-1){ finishTour(); return; }
-  tourIdx++; renderTourStep();
+function positionTour(){
+  const st=TOUR[tourIdx];
+  const spot=$('tourSpot'), pop=$('tourPop'), arrow=$('tourArrow'), bd=$('tourBackdrop');
+  if(!spot||!pop) return;
+  const host=$('tour').getBoundingClientRect();
+  const el = st.tgt ? document.querySelector('#nav button[data-s="'+st.tgt+'"]') : null;
+  if(st.c || !el){
+    spot.style.display='none'; arrow.style.display='none';
+    bd.style.background='rgba(22,32,24,.58)';
+    pop.style.textAlign='center';
+    pop.style.left='50%'; pop.style.top='50%'; pop.style.transform='translate(-50%,-50%)';
+    return;
+  }
+  bd.style.background='transparent';
+  pop.style.textAlign='left'; pop.style.transform='none';
+  const r=el.getBoundingClientRect();
+  const pad=7, x=r.left-host.left, y=r.top-host.top;
+  spot.style.display='block';
+  spot.style.left=(x-pad)+'px'; spot.style.top=(y-pad)+'px';
+  spot.style.width=(r.width+pad*2)+'px'; spot.style.height=(r.height+pad*2)+'px';
+  const popW=Math.min(300, host.width*0.86); pop.style.width=popW+'px';
+  const cx=x+r.width/2;
+  const left=Math.max(12, Math.min(cx-popW/2, host.width-popW-12));
+  pop.style.left=left+'px';
+  const popH=pop.offsetHeight;
+  let top=(y-pad)-popH-14, below=false;
+  if(top<12){ top=(y+r.height+pad)+14; below=true; }
+  pop.style.top=top+'px';
+  arrow.style.display='block';
+  arrow.style.left=Math.max(10, Math.min(cx-left-7, popW-24))+'px';
+  arrow.style.top = below ? '-7px' : (popH-7)+'px';
 }
+function tourNext(){ if(tourIdx>=TOUR.length-1){ finishTour(); return; } tourIdx++; renderTourStep(); }
 function finishTour(){
   $('tour').style.display='none';
+  window.removeEventListener('resize', positionTour);
   state.tourDone=true; persist();
 }
 
