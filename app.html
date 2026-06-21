@@ -449,17 +449,13 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 #login .lginstall{display:inline-flex;align-items:center;gap:6px;margin:12px auto 0;background:none;border:0;color:var(--muted);font-family:var(--body);font-weight:500;font-size:12.5px;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
 #login .lginstall:active{opacity:.55}
 #login.lgpage{background:var(--paper);justify-content:flex-start;padding:0;overflow-y:auto}
-#login .lghero{position:relative;width:100%;height:42vh;min-height:252px;max-height:386px;flex:none;background-image:url('login.webp');background-size:cover;background-position:center 36%;background-repeat:no-repeat}
+#login .lghero{position:relative;width:100%;height:38vh;min-height:230px;max-height:362px;flex:none;background-image:url('login.webp');background-size:cover;background-position:center 38%;background-repeat:no-repeat}
 #login .lghero::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,transparent 60%,rgba(250,249,245,.5) 85%,var(--paper) 100%)}
-#login .lghero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 44%,rgba(14,22,17,.42) 0%,rgba(14,22,17,.24) 45%,rgba(14,22,17,.12) 75%,transparent 100%)}
-#login .lgbrand{position:absolute;top:44%;left:50%;transform:translate(-50%,-50%);z-index:1;font-family:var(--display);font-size:62px;line-height:1;letter-spacing:.14em;color:#fff;display:inline-flex;align-items:baseline;gap:2px;text-shadow:0 2px 22px rgba(0,0,0,.42)}
-#login .lgbrand .rdot{color:var(--gold);display:inline-flex;align-self:flex-end;margin-bottom:6px}
-#login .lgbrand .rdot svg{width:23px;height:auto}
 #login .lgwrap{width:100%;max-width:372px;margin:0 auto;padding:8px 24px calc(34px + env(safe-area-inset-bottom));text-align:center}
-#login .lgmark{font-family:var(--display);font-size:20px;letter-spacing:.30em;color:var(--green);display:inline-flex;align-items:center;gap:1px;margin:0 0 10px}
+#login .lgmark{font-family:var(--display);font-size:40px;letter-spacing:.14em;color:var(--green);display:inline-flex;align-items:center;gap:2px;margin:2px 0 8px}
 #login .lgmark .rdot{display:inline-flex;color:var(--gold)}
-#login .lgmark .rdot svg{width:13px;height:auto}
-#login .lghead{font-family:var(--display);font-size:32px;line-height:1.18;color:var(--green);margin:0 auto 20px;max-width:320px;text-align:center}
+#login .lgmark .rdot svg{width:16px;height:auto}
+#login .lghead{font-family:var(--display);font-size:26px;line-height:1.2;color:var(--green);margin:0 auto 20px;max-width:320px;text-align:center}
 #login .lgwrap h3{font-family:var(--display);font-size:17px;color:var(--green);margin:0 0 4px;text-align:center}
 #login .lgwrap .ps{font-size:13px;color:var(--muted);margin:0 0 20px;text-align:center}
 #login .lgwrap .f{text-align:left;margin-bottom:11px}
@@ -625,8 +621,9 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
   </div>
 
   <div class="onb lgpage" id="login" style="display:none;z-index:58">
-    <div class="lghero"><div class="lgbrand">SIM<span class="rdot"><svg viewBox="0 0 20 28" aria-hidden="true"><path d="M10 2.5 l3 4.2 -3 4.2 -3 -4.2 Z" fill="currentColor"/><circle cx="10" cy="19" r="6.8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></span></div></div>
+    <div class="lghero"></div>
     <div class="lgwrap">
+      <div class="lgmark">SIM<span class="rdot"><svg viewBox="0 0 20 28" aria-hidden="true"><path d="M10 2.5 l3 4.2 -3 4.2 -3 -4.2 Z" fill="currentColor"/><circle cx="10" cy="19" r="6.8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></span></div>
       <h2 class="lghead">Você disse sim.<br>A gente organiza o resto.</h2>
       <h3 id="lgTitle">Criar conta grátis</h3>
       <div class="ps" id="lgSub">Leva menos de um minuto e é grátis.</div>
