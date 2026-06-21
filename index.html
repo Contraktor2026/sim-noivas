@@ -444,6 +444,10 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 #login .lgrule::before,#login .lgrule::after{content:'';flex:1;height:1px;background:rgba(31,61,43,.18)}
 #login .lgrule small{font-family:'Karla',sans-serif;font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:#7d8a80}
 #login .lgfoot{text-align:center;margin-top:14px;font-family:'Karla',sans-serif;font-size:12.5px;color:#8a948c;letter-spacing:.3px}
+#login .lgswitch{display:block;width:100%;margin-top:14px;background:none;border:0;color:var(--green);font-family:var(--body);font-weight:600;font-size:14px;text-align:center;cursor:pointer;padding:8px;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+#login .lgswitch:active{opacity:.55}
+#login .lginstall{display:inline-flex;align-items:center;gap:6px;margin:12px auto 0;background:none;border:0;color:var(--muted);font-family:var(--body);font-weight:500;font-size:12.5px;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+#login .lginstall:active{opacity:.55}
 #login .ldhint{text-align:center;color:#D2DFD0;font-size:12.5px;letter-spacing:2.5px;text-transform:uppercase;margin:30px 0 8px;font-family:'Karla',sans-serif}
 #login .ldhint svg{display:block;margin:6px auto 0;opacity:.7}
 #login .ldsec{margin-top:34px}
@@ -612,12 +616,12 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       <div class="f"><label>E-mail</label><input id="lgEmail" type="email" autocomplete="email" placeholder="voce@email.com"></div>
       <div class="f"><label>Senha</label><input id="lgPass" type="password" autocomplete="current-password" placeholder="mínimo 6 caracteres"></div>
       <button class="btn p full" id="lgGo" onclick="doAuth()">Começar grátis</button>
-      <button class="btn g full" style="margin-top:8px" onclick="toggleAuthMode()" id="lgSwitch">Já tenho conta</button>
-      <p class="fine" style="text-align:center;margin-top:10px;color:#8a948c">Sem cartão de crédito · seus dados são só seus</p>
-      <p class="fine" id="lgMsg" style="text-align:center;margin-top:10px;min-height:18px"></p>
+      <button class="lgswitch" onclick="toggleAuthMode()" id="lgSwitch">Já tenho conta? Entrar</button>
+      <p class="fine" style="text-align:center;margin-top:12px;color:#8a948c">Sem cartão de crédito · seus dados são só seus</p>
+      <p class="fine" id="lgMsg" style="text-align:center;margin-top:8px;min-height:18px"></p>
       <div class="lgrule"><small>No celular</small></div>
-      <button class="btn g full" style="margin-top:12px" id="btnInstall" onclick="doInstall()">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:6px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Instalar o app
+      <button class="lginstall" id="btnInstall" onclick="doInstall()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Instalar o app
       </button>
       <p class="fine" id="iosHint" style="display:none;margin-top:10px;text-align:center">No iPhone: toque em <b>Compartilhar</b> e depois em <b>Adicionar à Tela de Início</b>.<br>No Android: menu <b>⋮</b> do navegador → <b>Adicionar à tela inicial</b>.</p>
       <div class="lgfoot">Feito para noivas do Brasil</div>
@@ -1908,10 +1912,10 @@ let authMode='up';
 function toggleAuthModeTo(mode){ if(authMode!==mode) toggleAuthMode(); }
 function toggleAuthMode(){
   authMode=authMode==='in'?'up':'in';
-  document.getElementById('lgTitle').textContent=authMode==='in'?'Entrar':'Criar conta';
-  document.getElementById('lgSub').textContent=authMode==='in'?'Acesse com seu e-mail e senha.':'Leva menos de um minuto.';
+  document.getElementById('lgTitle').textContent=authMode==='in'?'Entrar':'Criar conta grátis';
+  document.getElementById('lgSub').textContent=authMode==='in'?'Acesse com seu e-mail e senha.':'Leva menos de um minuto e é grátis.';
   document.getElementById('lgGo').textContent=authMode==='in'?'Entrar':'Começar grátis';
-  document.getElementById('lgSwitch').textContent=authMode==='in'?'Quero criar minha conta':'Já tenho conta';
+  document.getElementById('lgSwitch').textContent=authMode==='in'?'Criar uma conta grátis':'Já tenho conta? Entrar';
   document.getElementById('lgMsg').textContent='';
 }
 async function doAuth(){
