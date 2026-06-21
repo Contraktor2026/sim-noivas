@@ -463,7 +463,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 #login .lgwrap input:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(31,61,43,.10)}
 #login .lgwrap .btn.full{border-radius:999px;margin-top:6px}
 #login .lgwrap .lgreassure{text-align:center;margin-top:12px;color:#8a948c}
-#login .ldhint{text-align:center;color:#D2DFD0;font-size:12.5px;letter-spacing:2.5px;text-transform:uppercase;margin:30px 0 8px;font-family:'Karla',sans-serif}
+#login .ldhint{text-align:center;color:var(--muted);font-size:12.5px;letter-spacing:2.5px;text-transform:uppercase;margin:30px 0 8px;font-family:'Karla',sans-serif}
 #login .ldhint svg{display:block;margin:6px auto 0;opacity:.7}
 #login .ldsec{margin-top:34px}
 #login .ldsec.first{margin-top:10px}
@@ -490,6 +490,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 #login .betanote{background:rgba(168,133,59,.12);border:1px solid rgba(168,133,59,.4);border-radius:12px;padding:14px 16px;font-size:14px;color:var(--gold-soft);line-height:1.55;text-align:center;margin-bottom:14px}
 /* ---- bandas claras: a LP alterna verde e papel ---- */
 #login .band{margin:38px -24px 0;padding:36px 24px 30px;background:var(--paper);position:relative;overflow:hidden}
+#login.lgpage .band{margin:38px 0 0}
 /* ---- ornamentos botânicos ---- */
 #login .orn{position:absolute;pointer-events:none;color:var(--gold);opacity:.4}
 #login .orn.tr{top:-12px;right:-16px;transform:rotate(96deg)}
@@ -626,6 +627,74 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       <button class="lginstall" id="btnInstall" onclick="doInstall()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Instalar o app</button>
       <p class="fine" id="iosHint" style="display:none;margin-top:10px;text-align:center">No iPhone: toque em <b>Compartilhar</b> e depois em <b>Adicionar à Tela de Início</b>.<br>No Android: menu <b>⋮</b> do navegador → <b>Adicionar à tela inicial</b>.</p>
     </div>
+    <div class="ldhint">Conheça o SIM.
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+
+    <section class="band">
+      <svg class="orn tr" width="120" height="120" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+  <path d="M12 112 C 38 86, 58 56, 92 16"/>
+  <path d="M30 92 q-14 -2 -18 -14 q14 2 18 14z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M36 84 q14 -8 24 0 q-14 8 -24 0z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M48 68 q-14 -4 -16 -16 q14 4 16 16z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M54 60 q13 -9 23 -2 q-13 9 -23 2z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M66 44 q-12 -5 -13 -17 q12 5 13 17z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M72 37 q12 -9 21 -3 q-12 9 -21 3z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M82 24 q-9 -5 -9 -15 q9 5 9 15z" fill="currentColor" fill-opacity=".14"/>
+  <circle cx="95" cy="12" r="2.4" fill="currentColor" fill-opacity=".5"/>
+</svg>
+      <svg class="orn bl" width="120" height="120" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+  <path d="M12 112 C 38 86, 58 56, 92 16"/>
+  <path d="M30 92 q-14 -2 -18 -14 q14 2 18 14z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M36 84 q14 -8 24 0 q-14 8 -24 0z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M48 68 q-14 -4 -16 -16 q14 4 16 16z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M54 60 q13 -9 23 -2 q-13 9 -23 2z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M66 44 q-12 -5 -13 -17 q12 5 13 17z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M72 37 q12 -9 21 -3 q-12 9 -21 3z" fill="currentColor" fill-opacity=".14"/>
+  <path d="M82 24 q-9 -5 -9 -15 q9 5 9 15z" fill="currentColor" fill-opacity=".14"/>
+  <circle cx="95" cy="12" r="2.4" fill="currentColor" fill-opacity=".5"/>
+</svg>
+      <div class="ldkicker">O que é</div>
+      <div class="ldtitle">Casar é um <i class="hl">sonho</i>.<br>Organizar não precisa ser um <i class="hl">pesadelo</i>.</div>
+      <div class="orndiv"><svg width="160" height="24" viewBox="0 0 160 24" fill="none" aria-hidden="true">
+  <g stroke="currentColor" stroke-width="1.1" fill="none">
+    <path d="M10 14 C 35 8, 55 9, 71 12"/>
+    <path d="M150 14 C 125 8, 105 9, 89 12"/>
+  </g>
+  <g fill="currentColor" opacity=".85">
+    <path d="M20 12 q 5 -8 12 -3 q -7 7 -12 3 Z"/>
+    <path d="M38 10 q 6 -7 12 -2 q -7 6 -12 2 Z"/>
+    <path d="M30 15 q 6 7 12 3 q -6 -8 -12 -3 Z"/>
+    <path d="M54 12 q 5 -6 10 -2 q -6 6 -10 2 Z"/>
+    <path d="M140 12 q -5 -8 -12 -3 q 7 7 12 3 Z"/>
+    <path d="M122 10 q -6 -7 -12 -2 q 7 6 12 2 Z"/>
+    <path d="M130 15 q -6 7 -12 3 q 6 -8 12 -3 Z"/>
+    <path d="M106 12 q -5 -6 -10 -2 q 6 6 10 2 Z"/>
+    <path d="M80 6 l4.5 6 -4.5 6 -4.5 -6 Z"/>
+  </g>
+</svg></div>
+      <p style="text-align:center;font-size:15px;color:var(--muted);line-height:1.65;margin:-4px 0 22px;font-family:'Karla',sans-serif">O SIM. é a sua assistente de casamento: cuida do dinheiro, dos fornecedores e do passo a passo até o altar. E quando chegar orçamento, manda pra cá: texto do WhatsApp, print ou PDF. Ele lê e preenche tudo.<br><b style="color:var(--green)">Você só decide.</b></p>
+      <div class="ldcard">
+        <div class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <h4>Dinheiro sob controle</h4>
+        <p>Orçamento total, quanto já está comprometido e quanto sobra. Parcelas agrupadas por mês, atrasados em destaque. Sem sustos no fim.</p>
+      </div>
+      <div class="ldcard">
+        <div class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 7.7l5.4-.8z"/></svg></div>
+        <h4>Fornecedores comparados de verdade</h4>
+        <p>Mensagem do WhatsApp, print ou PDF: anexe a proposta e a inteligência artificial preenche valores e condições. Compare por preço, diferencial e avaliação e contrate com segurança.</p>
+      </div>
+      <div class="ldcard">
+        <div class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg></div>
+        <h4>Uma página para cada fornecedor</h4>
+        <p>Cada contratado ganha a sua: contrato anexado, parcelas com vencimento, WhatsApp, Instagram e anotações: tudo num lugar só. E o contrato se lê sozinho: anexe, e o app lança valor, condições e parcelas com as datas certas.</p>
+      </div>
+      <div class="ldcard">
+        <div class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+        <h4>Roteiro no seu ritmo</h4>
+        <p>Um passo a passo que se adapta ao tempo que falta, de 12 meses à reta final. Você sempre sabe o que fazer agora e o que pode esperar.</p>
+      </div>
+    </section>
   </div>
 
   <div class="splash" id="splash"><div class="wm">SIM<span class="rdot"><svg viewBox="0 0 20 28" aria-hidden="true"><path d="M10 2.5 l3 4.2 -3 4.2 -3 -4.2 Z" fill="currentColor"/><circle cx="10" cy="19" r="6.8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></span></div></div>
