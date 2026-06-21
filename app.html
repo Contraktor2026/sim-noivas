@@ -526,6 +526,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 /* ---- demonstração animada ---- */
 #login .demo{display:flex;justify-content:center;margin:4px 0 6px}
 #login .demoframe{width:272px;height:560px;border-radius:32px;border:6px solid #16301F;background:var(--paper);overflow:hidden;position:relative;box-shadow:0 28px 56px rgba(22,48,31,.32),0 6px 14px rgba(22,48,31,.2)}
+#login .demoif{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--paper);pointer-events:none}
 #login .demoframe::after{content:'';position:absolute;top:9px;left:50%;transform:translateX(-50%);width:74px;height:6px;border-radius:99px;background:rgba(31,61,43,.16)}
 #login .dscene{position:absolute;inset:0;padding:34px 18px 18px;opacity:0;transition:opacity .45s;pointer-events:none}
 #login .dscene.on{opacity:1}
@@ -738,184 +739,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 </svg></div>
       <div class="demo">
         <div class="demoframe" id="demoframe">
-
-          <div class="dscene on" id="dsc1">
-            <div class="dlive"><i></i> COLE A PROPOSTA DO WHATSAPP</div>
-            <h3 class="dn" style="font-size:19px;color:var(--green);margin:9px 0 2px">Colar proposta</h3>
-            <p style="font-size:12px;color:var(--muted);margin-bottom:10px">Chegou orçamento? Copie a mensagem e cole.</p>
-            <div class="dbox" style="min-height:170px;font-size:12.5px"><span id="dmoTxt"></span><span class="dcursor"></span></div>
-            <button class="btn p full dpress" id="dmoBtn" style="margin-top:12px">Ler e preencher</button>
-          </div>
-
-          <div class="dscene" id="dsc2">
-            <div class="dlive"><i></i> O SIM. PREENCHE PARA VOCÊ</div>
-            <div style="margin:9px 0 10px"><span class="diachip"><svg width="11" height="11" viewBox="0 0 12 12" fill="currentColor"><path d="M6 0l1.6 4.4L12 6 7.6 7.6 6 12 4.4 7.6 0 6l4.4-1.6z"/></svg> Preenchido pelo SIM.</span></div>
-            <div class="dfield"><label>Fornecedor</label><div class="dval" id="dmoF1"></div></div>
-            <div style="display:flex;gap:8px">
-              <div class="dfield" style="flex:1"><label>Valor</label><div class="dval" id="dmoF2"></div></div>
-              <div class="dfield" style="flex:1"><label>WhatsApp</label><div class="dval" id="dmoF3"></div></div>
-            </div>
-            <div class="dfield"><label>O que inclui</label><div class="dval" id="dmoF4" style="min-height:50px;font-size:12.5px"></div></div>
-            <div class="dfield"><label>Condições</label><div class="dval" id="dmoF5"></div></div>
-            <div class="dfield"><label>Diferencial</label><div class="dval" id="dmoF6"></div></div>
-            <button class="btn p full">Salvar orçamento</button>
-          </div>
-
-          <div class="dscene" id="dsc3">
-            <div class="dlive"><i></i> COMPARE E CONTRATE</div>
-            <h3 class="dn" style="font-size:19px;color:var(--green);margin:9px 0 2px">Buffet</h3>
-            <p style="font-size:11.5px;color:var(--muted);margin-bottom:9px">4 orçamentos · de R$ 15.500 a R$ 20.400</p>
-            <div class="quote win" style="background:#fff;padding:12px">
-              <div class="qh">
-                <div style="flex:1;min-width:0">
-                  <div class="qn" style="font-size:14.5px">Alecrim Buffet</div>
-                  <div style="display:flex;gap:5px;margin-top:4px"><span class="tag win">CONTRATADO</span></div>
-                </div>
-                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
-                  <div class="qp" style="font-size:15px">R$ 15.500,00</div>
-                  <div style="color:var(--gold);font-size:11px;letter-spacing:2px">★★★★★</div>
-                </div>
-              </div>
-              <button class="btn p full sm dpress" id="dmoHire" style="margin-top:9px">Contratar</button>
-            </div>
-            <div class="quote" style="background:#fff;opacity:.7;padding:11px">
-              <div class="qh"><div style="flex:1"><div class="qn" style="font-size:13.5px">Dom Catering</div><div style="margin-top:4px"><span class="tag due">+R$ 1.700,00</span></div></div><div class="qp" style="font-size:13.5px">R$ 17.200,00</div></div>
-            </div>
-            <div class="quote" style="background:#fff;opacity:.6;padding:11px">
-              <div class="qh"><div style="flex:1"><div class="qn" style="font-size:13.5px">Sabor &amp; Festa</div><div style="margin-top:4px"><span class="tag due">+R$ 3.400,00</span><span style="color:var(--gold);font-size:10px;letter-spacing:1.5px;margin-left:6px">★★★★☆</span></div></div><div class="qp" style="font-size:13.5px">R$ 18.900,00</div></div>
-            </div>
-            <div class="quote" style="background:#fff;opacity:.5;padding:11px">
-              <div class="qh"><div style="flex:1"><div class="qn" style="font-size:13.5px">Casa Quintal</div><div style="margin-top:4px"><span class="tag due">+R$ 4.900,00</span><span style="color:var(--gold);font-size:10px;letter-spacing:1.5px;margin-left:6px">★★★☆☆</span></div></div><div class="qp" style="font-size:13.5px">R$ 20.400,00</div></div>
-            </div>
-          </div>
-
-          <div class="dscene" id="dsc4">
-            <div class="dlive"><i></i> PARCELAS CRIADAS NA HORA</div>
-            <h3 class="dn" style="font-size:19px;color:var(--green);margin:9px 0 2px">Plano de pagamento</h3>
-            <p style="font-size:11.5px;color:var(--muted);margin-bottom:9px">Alecrim Buffet · geradas do contrato</p>
-            <div class="vstats" style="margin-bottom:9px">
-              <div class="vstat"><div class="cap">Contrato</div><div class="dn" style="font-size:15px">R$ 15.500,00</div></div>
-              <div class="vstat"><div class="cap">Forma</div><div class="dn" style="font-size:15px">Sinal + 2x</div></div>
-            </div>
-            <div class="card" style="padding:3px 12px" id="dmoParc">
-              <div class="li" style="opacity:0;transition:opacity .4s"><div class="bd"><div class="t" style="font-size:13.5px">Sinal — 30%</div><div class="m">vence 20 de jun</div></div><div style="text-align:right"><div class="v" style="font-size:13.5px">R$ 4.650,00</div><span class="tag due">A PAGAR</span></div></div>
-              <div class="li" style="opacity:0;transition:opacity .4s"><div class="bd"><div class="t" style="font-size:13.5px">Parcela 2/3</div><div class="m">vence 20 de jul</div></div><div style="text-align:right"><div class="v" style="font-size:13.5px">R$ 5.425,00</div><span class="tag due">A PAGAR</span></div></div>
-              <div class="li" style="opacity:0;transition:opacity .4s"><div class="bd"><div class="t" style="font-size:13.5px">Parcela 3/3</div><div class="m">vence 20 de ago</div></div><div style="text-align:right"><div class="v" style="font-size:13.5px">R$ 5.425,00</div><span class="tag due">A PAGAR</span></div></div>
-            </div>
-            <div style="margin-top:10px"><span class="diachip"><svg width="11" height="11" viewBox="0 0 12 12" fill="currentColor"><path d="M6 0l1.6 4.4L12 6 7.6 7.6 6 12 4.4 7.6 0 6l4.4-1.6z"/></svg> Parcelas lançadas pelo SIM.</span></div>
-          </div>
-
-          <div class="dscene" id="dsc5">
-            <div class="dlive"><i></i> A TELA HOJE TE AVISA</div>
-            <div class="hero">
-              <div class="mono"><span style="font-size:20px">A<span style="font-size:.6em;color:var(--gold)"> &amp; </span>P</span></div>
-              <div class="names" style="font-size:19px">Ana &amp; Pedro</div>
-              <div class="count">243<small> dias para o sim</small></div>
-            </div>
-            <h2 class="sec" style="font-size:16px;margin-top:8px">Precisa de você</h2>
-            <div class="card" style="padding:3px 12px">
-              <div class="li" style="padding:9px 0"><div class="bd"><div class="t" style="font-size:13px">Sinal — Alecrim Buffet</div><div class="m">vence 20 de jun · Buffet</div></div><div style="text-align:right"><div class="v" style="font-size:13px">R$ 4.650,00</div><span class="tag due">EM BREVE</span></div></div>
-              <div class="li" style="padding:9px 0"><div class="bd"><div class="t" style="font-size:13px">Decoração: 3 orçamentos</div><div class="m">Compare e escolha</div></div><span class="tag due">DECIDIR</span></div>
-              <div class="li" style="padding:9px 0"><div class="bd"><div class="t" style="font-size:13px">Parcela 2/4 — Lume Foto</div><div class="m">vence 05 de jul · Fotografia</div></div><div style="text-align:right"><div class="v" style="font-size:13px">R$ 2.150,00</div><span class="tag due">30 DIAS</span></div></div>
-            </div>
-            <div class="card soft" style="padding:11px 13px;margin-top:8px">
-              <div class="row"><span class="cap">Visão do orçamento</span><span class="fine"><b>R$ 31.700,00</b> livres</span></div>
-              <div class="meter" style="margin:7px 0 5px"><i style="width:42%"></i></div>
-              <div class="fine" style="font-size:11px">R$ 23.300,00 de R$ 55.000,00 · 6 fornecedores</div>
-            </div>
-            <h2 class="sec" style="font-size:14px;margin:9px 0 6px">Anotações</h2>
-            <div class="card" style="padding:10px 13px">
-              <div style="font-size:12.5px;font-weight:600">Perguntar ao Alecrim sobre opção vegana</div>
-              <div class="fine" style="font-size:10.5px;margin-top:2px">hoje · toque para abrir o bloco</div>
-            </div>
-          </div>
-
-          <div class="dscene" id="dsc6">
-            <div class="dlive"><i></i> PAGUE E ACOMPANHE</div>
-            <h3 class="dn" style="font-size:19px;color:var(--green);margin:9px 0 8px">Dinheiro</h3>
-            <div class="card green" style="padding:13px 14px">
-              <div class="cap gold">Orçamento</div><div class="num" style="font-size:21px">R$ 55.000,00</div>
-              <div class="meter"><i style="width:42%"></i></div>
-              <div class="row" style="font-size:11.5px"><span style="opacity:.85">Comprometido</span><b>R$ 23.300,00</b></div>
-              <div class="row" style="font-size:11.5px;margin-top:3px"><span style="opacity:.85">Livre para gastar</span><b>R$ 31.700,00</b></div>
-            </div>
-            <div class="row" style="margin:9px 0 7px"><span class="cap">Junho de 2026</span><span class="fine"><b>R$ 6.850,00</b> a pagar</span></div>
-            <div class="card" style="padding:3px 12px">
-              <div class="li" style="padding:9px 0"><div class="bd"><div class="t" style="font-size:13px">Sinal — Alecrim</div><div class="m">20 de jun · Buffet</div></div>
-                <div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:4px"><div class="v" style="font-size:13px">R$ 4.650,00</div><span id="dmoPayWrap"><button class="btn p sm dpress" id="dmoPay">Pagar</button></span></div></div>
-              <div class="li" style="padding:9px 0"><div class="bd"><div class="t" style="font-size:13px">Vestido — entrada</div><div class="m">28 de jun · Vestido</div></div><div style="text-align:right"><div class="v" style="font-size:13px">R$ 2.200,00</div><span class="tag due">A PAGAR</span></div></div>
-            </div>
-            <h2 class="sec" style="font-size:14px;margin:8px 0 6px">Onde está o dinheiro</h2>
-            <div class="card" style="padding:9px 13px">
-              <div class="row"><span style="font-size:12px;font-weight:700">Buffet</span><span class="fine"><b>R$ 15.500,00</b> · 33%</span></div>
-              <div class="meter" style="margin:5px 0 7px"><i style="width:33%"></i></div>
-              <div class="row"><span style="font-size:12px;font-weight:700">Fotografia</span><span class="fine" style="font-size:11px"><b>R$ 8.600,00</b> · 18%</span></div>
-              <div class="meter" style="margin:5px 0 7px"><i style="width:18%"></i></div>
-              <div class="row"><span style="font-size:12px;font-weight:700">Vestido</span><span class="fine" style="font-size:11px"><b>R$ 4.400,00</b> · 9%</span></div>
-              <div class="meter" style="margin:5px 0 0"><i style="width:9%"></i></div>
-            </div>
-          </div>
-
-          <div class="dscene" id="dsc7">
-            <div class="dlive"><i></i> FALE COM O FORNECEDOR</div>
-            <div class="vhead" style="padding-top:4px">
-              <div class="vmono" style="width:52px;height:52px;font-size:22px">A</div>
-              <div class="vname" style="font-size:19px">Alecrim Buffet</div>
-              <div class="vcat">Buffet · contratado hoje</div>
-              <div style="color:var(--gold);font-size:13px;letter-spacing:2.5px;margin-top:5px">★★★★★</div>
-              <div class="contactrow" style="margin-top:9px"><a class="dpress" id="dmoWa" style="border-color:var(--gold)">WhatsApp</a><a>(48) 99812-0033</a></div>
-            </div>
-            <div style="font-family:var(--display);font-style:italic;font-size:12.5px;color:var(--gold);text-align:center;margin-top:6px">“Equipe completa e degustação inclusa”</div>
-            <div class="vstats" style="margin-top:9px">
-              <div class="vstat"><div class="cap">Contrato</div><div class="dn" style="font-size:14px">R$ 15.500,00</div></div>
-              <div class="vstat"><div class="cap">Já pago</div><div class="dn" style="font-size:14px;color:var(--ok)">R$ 4.650,00</div></div>
-              <div class="vstat"><div class="cap">A pagar</div><div class="dn" style="font-size:14px">R$ 10.850,00</div></div>
-              <div class="vstat"><div class="cap">Parcelas</div><div class="dn" style="font-size:14px">1 de 3 paga</div></div>
-            </div>
-            <div class="card" style="padding:3px 12px;margin-top:8px">
-              <div class="li" style="padding:8px 0"><div class="bd"><div class="t" style="font-size:13px">Parcela 2/3</div><div class="m">vence 20 de jul</div></div><div style="text-align:right"><div class="v" style="font-size:13px">R$ 5.425,00</div><span class="tag due">A PAGAR</span></div></div>
-            </div>
-            <div class="card" style="display:flex;gap:8px;align-items:center;font-size:12px;font-weight:700;color:var(--green);padding:10px 12px;margin-top:7px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5l-8.5 8.5a5.5 5.5 0 01-7.8-7.8L13 4a3.7 3.7 0 015.2 5.2l-8.2 8.2a1.8 1.8 0 01-2.6-2.6l7.6-7.6"/></svg> Contrato anexado e lido pelo SIM.</div>
-            <h2 class="sec" style="font-size:14px;margin:9px 0 6px">Anotações</h2>
-            <div class="card" style="padding:10px 13px">
-              <div style="font-size:12.5px;font-weight:600">Condições do contrato</div>
-              <div class="fine" style="font-size:11px;margin-top:2px">Sinal de 30% na assinatura; restante em 2x. Degustação para 4 pessoas inclusa.</div>
-            </div>
-          </div>
-
-          <div class="dscene" id="dsc8">
-            <div class="dlive"><i></i> SIGA O ROTEIRO</div>
-            <h3 class="dn" style="font-size:19px;color:var(--green);margin:9px 0 8px">Suas tarefas</h3>
-            <div class="phh"><div class="dn" style="font-size:14.5px">8 a 6 meses antes</div><span>2 de 3</span></div>
-            <div class="task" id="dmoTask"><div class="ck"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="tt" style="font-size:13px">Fechar o buffet</div></div>
-            <div class="task done"><div class="ck"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="tt" style="font-size:13px">Definir a paleta de cores</div></div>
-            <div class="task"><div class="ck"></div><div class="tt" style="font-size:13px">Agendar degustação do cardápio</div></div>
-            <div class="task"><div class="ck"></div><div class="tt" style="font-size:13px">Enviar o save the date</div></div>
-            <div class="phh" style="margin-top:10px"><div class="dn" style="font-size:14.5px">6 a 4 meses antes</div><span>0 de 2</span></div>
-            <div class="task"><div class="ck"></div><div class="tt" style="font-size:13px">Contratar cerimonial ou assessoria do dia</div></div>
-            <div class="task"><div class="ck"></div><div class="tt" style="font-size:13px">Prova do vestido e ajustes</div></div>
-            <div class="task"><div class="ck"></div><div class="tt" style="font-size:13px">Definir música da cerimônia</div></div>
-            <div class="phh" style="margin-top:10px"><div class="dn" style="font-size:14.5px">Último mês</div><span>0 de 2</span></div>
-            <div class="task"><div class="ck"></div><div class="tt" style="font-size:13px">Confirmar horários com fornecedores</div></div>
-            <div class="task"><div class="ck"></div><div class="tt" style="font-size:13px">Montar kit emergência da noiva</div></div>
-            <p style="font-size:11.5px;color:var(--muted);margin-top:7px;text-align:center">O roteiro se adapta ao tempo até o seu casamento.</p>
-          </div>
-
-          <div class="dscene" id="dsc9" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center">
-            <div class="brandring" style="margin-bottom:12px"><span>S<i>.</i></span></div>
-            <div style="font-family:var(--display);font-size:23px;color:var(--green);line-height:1.3">Do orçamento ao altar,<br>tudo num lugar só.</div>
-            <button class="btn p full" style="margin-top:18px" onclick="document.getElementById('lgEmail').scrollIntoView({behavior:'smooth',block:'center'});toggleAuthModeTo('up')">Criar conta grátis</button>
-          </div>
-
-          <nav class="nav dnav" aria-hidden="true">
-            <button data-s="home"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M3 11l9-7 9 7v9a1 1 0 01-1 1h-5v-6h-6v6H4a1 1 0 01-1-1z"/></svg>Hoje</button>
-            <button data-s="fin"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="2.5" y="6" width="19" height="13" rx="2"/><path d="M2.5 10h19M7 15h4"/></svg>Dinheiro</button>
-            <button data-s="forn" class="on"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M20 7h-4V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2H4a1.5 1.5 0 00-1.5 1.5V19A1.5 1.5 0 004 20.5h16A1.5 1.5 0 0021.5 19V8.5A1.5 1.5 0 0020 7zM10 7V5h4v2"/></svg>Fornec.</button>
-            <button data-s="chk"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg>Tarefas</button>
-            <button data-s="guests"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="9" cy="8" r="3"/><path d="M2.5 20a6.5 6.5 0 0113 0"/><path d="M16 5.5a3 3 0 010 5.8M21.5 20a6.5 6.5 0 00-4.5-6.2"/></svg>Convidados</button>
-          </nav>
-          <div class="dtoast" id="dmoToast"></div>
-        
+          <iframe id="demoif" class="demoif" title="SIM. em ação" scrolling="no" loading="lazy"></iframe>
         </div>
       </div>
       <div class="mocklabel" style="margin-bottom:26px">Tour guiado: do orçamento colado ao roteiro, sem digitar nada</div>
@@ -1864,7 +1688,7 @@ async function demoLoop(){
     }catch(e){ await dSleep(2000); }
   }
 }
-if(document.getElementById('demoframe')) demoLoop();
+(function(){ var dif=document.getElementById('demoif'); if(dif && !new URLSearchParams(location.search).has('demo')) dif.src='app.html?demo=1'; })();
 
 /* CTA flutuante acompanha a rolagem da landing */
 (function(){
@@ -2015,6 +1839,7 @@ async function submitRSVP(){
 }
 
 async function initAuth(){
+  if(new URLSearchParams(location.search).has('demo')) return bootDemo();
   // visitante chegou por um link de confirmação? mostra a página pública de RSVP
   var rsvpSlug=new URLSearchParams(location.search).get('c');
   if(rsvpSlug){ showRSVP(rsvpSlug); return; }
@@ -2034,6 +1859,7 @@ async function initAuth(){
 const KEY='sim-noivas-v1';
 let state={profile:null,exp:[],cats:[],tasks:[],notes:[],guests:[]};
 let memOnly=false;
+let DEMO=false;
 
 async function load(){
   try{
@@ -2048,6 +1874,7 @@ async function load(){
 }
 let saveT=null;
 function persist(){
+  if(DEMO) return;
   clearTimeout(saveT);
   saveT=setTimeout(async()=>{
     try{ await window.storage.set(KEY,JSON.stringify(state)); }
@@ -2055,6 +1882,66 @@ function persist(){
   },250);
 }
 
+/* =================== MODO DEMO (app real rodando na vitrine) =================== */
+function dwait(ms){ return new Promise(r=>setTimeout(r,ms)); }
+function demoSeed(){
+  var u=function(){ return uid(); };
+  return {
+    profile:{a:'Marina',b:'Rafael',date:'2026-11-14',city:'Imbituba',uf:'SC',country:'Brasil',guests:120,budget:60000},
+    cats:[
+      {id:u(),name:'Buffet',quotes:[
+        {id:u(),name:'Sabor & Arte',val:18000,stars:5,phone:'48999990000',insta:'saborarte',win:true},
+        {id:u(),name:'Mesa Posta',val:21500,stars:4,phone:'',insta:'mesaposta',win:false}]},
+      {id:u(),name:'Fotografia',quotes:[
+        {id:u(),name:'Fontez Fotografia',val:6500,stars:5,phone:'',insta:'fontezfotografia',win:true},
+        {id:u(),name:'Luz & Cia',val:5200,stars:3,phone:'',insta:'luzecia',win:false}]},
+      {id:u(),name:'Decoração',quotes:[
+        {id:u(),name:'Flor de Lis',val:9000,stars:4,phone:'',insta:'flordelis',win:true}]},
+      {id:u(),name:'Música',quotes:[
+        {id:u(),name:'DJ Marés',val:4200,stars:4,phone:'',insta:'djmares',win:true},
+        {id:u(),name:'Trio Acústico',val:3500,stars:5,phone:'',insta:'trioacustico',win:false}]}
+    ],
+    exp:[
+      {id:u(),desc:'Buffet — entrada',cat:'Buffet',val:6000,due:'2026-06-10',paid:true},
+      {id:u(),desc:'Buffet — parcela 2/3',cat:'Buffet',val:6000,due:'2026-08-10',paid:false},
+      {id:u(),desc:'Fotografia — sinal',cat:'Fotografia',val:2000,due:'2026-05-20',paid:true},
+      {id:u(),desc:'Decoração — entrada',cat:'Decoração',val:4500,due:'2026-07-05',paid:false},
+      {id:u(),desc:'DJ — sinal',cat:'Música',val:2100,due:'2026-06-01',paid:true},
+      {id:u(),desc:'Vestido',cat:'Vestido',val:4800,due:'2026-09-15',paid:false}
+    ],
+    tasks:[
+      {id:u(),t:'Definir a data e reservar o espaço',phase:'Primeiros passos',done:true},
+      {id:u(),t:'Fechar o buffet',phase:'12 a 8 meses antes',done:true},
+      {id:u(),t:'Contratar fotografia e vídeo',phase:'12 a 8 meses antes',done:true},
+      {id:u(),t:'Escolher e provar o vestido',phase:'8 a 5 meses antes',done:false},
+      {id:u(),t:'Enviar os convites',phase:'5 a 2 meses antes',done:false},
+      {id:u(),t:'Montar o cronograma do dia',phase:'Último mês',done:false}
+    ],
+    guests:[
+      {id:u(),name:'Ana Beatriz',group:'Madrinhas',comp:1,phone:'',diet:'',note:'',status:'yes'},
+      {id:u(),name:'Carlos Eduardo',group:'Padrinhos',comp:1,phone:'',diet:'',note:'',status:'yes'},
+      {id:u(),name:'Família Silva',group:'Família',comp:4,phone:'',diet:'',note:'',status:'pending'},
+      {id:u(),name:'Juliana Costa',group:'Amigos',comp:0,phone:'',diet:'Vegetariana',note:'',status:'yes'},
+      {id:u(),name:'Pedro Henrique',group:'Amigos',comp:1,phone:'',diet:'',note:'',status:'no'},
+      {id:u(),name:'Tia Marlene',group:'Família',comp:2,phone:'',diet:'',note:'',status:'pending'}
+    ],
+    notes:[], events:[], tourDone:true, seenPage:{home:1,fin:1,forn:1,chk:1,guests:1}
+  };
+}
+function bootDemo(){
+  DEMO=true; memOnly=true;
+  state=demoSeed();
+  var sp=$('splash'),lg=$('login'),ob=$('onb');
+  if(sp)sp.style.display='none'; if(lg)lg.style.display='none'; if(ob)ob.style.display='none';
+  document.documentElement.classList.add('isdemo');
+  try{ renderAll(); }catch(e){}
+  try{ go('home'); }catch(e){}
+  startDemoCycle();
+}
+async function startDemoCycle(){
+  var seq=['home','fin','forn','chk','guests'], i=0;
+  while(DEMO){ await dwait(2700); i=(i+1)%seq.length; try{ go(seq[i]); }catch(e){} }
+}
 /* =================== HELPERS =================== */
 const $=id=>document.getElementById(id);
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
