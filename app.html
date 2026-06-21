@@ -448,13 +448,16 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 #login .lgswitch:active{opacity:.55}
 #login .lginstall{display:inline-flex;align-items:center;gap:6px;margin:12px auto 0;background:none;border:0;color:var(--muted);font-family:var(--body);font-weight:500;font-size:12.5px;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
 #login .lginstall:active{opacity:.55}
-#login.lgpage{background:var(--paper);justify-content:flex-start}
-#login .lgwrap{width:100%;max-width:372px;margin:auto;padding:40px 0;text-align:center}
-#login .lgwrap .brandring span{color:var(--green)}
-#login .lgkick{font-family:var(--display);font-size:14px;color:var(--gold-ink);letter-spacing:.4px;margin:-2px 0 16px}
-#login .lgwrap h3{font-family:var(--display);font-size:23px;color:var(--green);margin:0 0 5px;text-align:center}
-#login .lgwrap .ps{font-size:13px;color:var(--muted);margin:0 0 22px;text-align:center}
-#login .lgwrap .f{text-align:left;margin-bottom:12px}
+#login.lgpage{background:var(--paper);justify-content:flex-start;padding:0;overflow-y:auto}
+#login .lghero{position:relative;width:100%;height:38vh;min-height:228px;max-height:360px;flex:none;background-image:url('login.webp');background-size:cover;background-position:center 38%;background-repeat:no-repeat}
+#login .lghero::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,transparent 60%,rgba(250,249,245,.5) 85%,var(--paper) 100%)}
+#login .lgwrap{width:100%;max-width:372px;margin:0 auto;padding:8px 24px calc(34px + env(safe-area-inset-bottom));text-align:center}
+#login .lgmark{font-family:var(--display);font-size:29px;letter-spacing:.30em;color:var(--green);display:inline-flex;align-items:center;gap:1px;margin:0 0 12px}
+#login .lgmark .rdot{display:inline-flex;color:var(--gold)}
+#login .lgmark .rdot svg{width:13px;height:auto}
+#login .lgwrap h3{font-family:var(--display);font-size:22px;color:var(--green);margin:0 0 4px;text-align:center}
+#login .lgwrap .ps{font-size:13px;color:var(--muted);margin:0 0 20px;text-align:center}
+#login .lgwrap .f{text-align:left;margin-bottom:11px}
 #login .lgwrap .f label{text-transform:none;letter-spacing:0;font-size:12.5px;font-weight:600;color:var(--muted)}
 #login .lgwrap input{border-radius:11px;padding:13px 14px;font-size:15px;background:#fff}
 #login .lgwrap input:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(31,61,43,.10)}
@@ -609,9 +612,9 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
   </div>
 
   <div class="onb lgpage" id="login" style="display:none;z-index:58">
+    <div class="lghero"></div>
     <div class="lgwrap">
-      <div class="brandring"><span>S<i>.</i></span></div>
-      <div class="lgkick">Você disse sim.</div>
+      <div class="lgmark">SIM<span class="rdot"><svg viewBox="0 0 20 28" aria-hidden="true"><path d="M10 2.5 l3 4.2 -3 4.2 -3 -4.2 Z" fill="currentColor"/><circle cx="10" cy="19" r="6.8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></span></div>
       <h3 id="lgTitle">Criar conta grátis</h3>
       <div class="ps" id="lgSub">Leva menos de um minuto e é grátis.</div>
       <div class="f"><label>E-mail</label><input id="lgEmail" type="email" autocomplete="email" placeholder="voce@email.com"></div>
@@ -620,10 +623,8 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       <p class="fine" id="lgMsg" style="text-align:center;margin-top:10px;min-height:18px"></p>
       <button class="lgswitch" onclick="toggleAuthMode()" id="lgSwitch">Já tenho conta? Entrar</button>
       <p class="fine lgreassure">Sem cartão de crédito · seus dados são só seus</p>
-      <div class="lgrule"><small>No celular</small></div>
       <button class="lginstall" id="btnInstall" onclick="doInstall()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Instalar o app</button>
       <p class="fine" id="iosHint" style="display:none;margin-top:10px;text-align:center">No iPhone: toque em <b>Compartilhar</b> e depois em <b>Adicionar à Tela de Início</b>.<br>No Android: menu <b>⋮</b> do navegador → <b>Adicionar à tela inicial</b>.</p>
-      <div class="lgfoot">Feito para noivas do Brasil</div>
     </div>
   </div>
 
