@@ -372,9 +372,9 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 
 /* ===== nav ===== */
 .nav{position:absolute;left:0;right:0;bottom:0;background:rgba(250,249,245,.95);backdrop-filter:blur(10px);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:8px 4px calc(12px + env(safe-area-inset-bottom))}
-.nav button{background:none;border:none;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding:5px 8px}
-.nav button svg{stroke:var(--muted);stroke-width:1.9}
-.nav button.on{color:var(--green)}
+.nav button{background:none;border:none;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding:7px 9px;border-radius:12px;transition:background .15s}
+.nav button svg{width:24px;height:24px;stroke:var(--muted);stroke-width:1.8}
+.nav button.on{color:var(--green);background:var(--green-soft)}
 .nav button.on svg{stroke:var(--green)}
 .nav button.on::after{content:"";width:4px;height:4px;border-radius:50%;background:var(--gold);margin-top:1px}
 
@@ -831,9 +831,9 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
         <ul>
           <li>Tudo do plano Grátis</li>
           <li>Leitura de orçamentos por inteligência artificial: mande o texto do WhatsApp, um print ou o PDF e o app preenche valores, condições e parcelas</li>
-          <li>Lista de convidados completa: página de confirmação (RSVP) personalizável, com acompanhantes, crianças e restrições alimentares</li>
+          <li>Lista de convidados completa: página de confirmação de presença personalizável, com acompanhantes, crianças e restrições alimentares</li>
           <li>Busca, adição em lote e lembrete de confirmação pelo WhatsApp</li>
-          <li>Exportar a lista de convidados em CSV e PDF</li>
+          <li>Exportar a lista de convidados em planilha e PDF</li>
           <li class="dim">Organização das mesas e relatório financeiro em PDF (em breve)</li>
         </ul>
         <button class="btn g full" onclick="document.getElementById('lgEmail').scrollIntoView({behavior:'smooth',block:'center'});toggleAuthModeTo('up')">Entrar na fase gratuita</button>
@@ -940,6 +940,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
           <span class="fchip" onclick="togFchip(this)">Vestido</span>
           <span class="fchip" onclick="togFchip(this)">Traje do noivo</span>
           <span class="fchip" onclick="togFchip(this)">Cerimonial</span>
+          <span class="fchip" onclick="togFchip(this)">Celebrante</span>
           <span class="fchip" onclick="togFchip(this)">Cabelo e maquiagem</span>
           <span class="fchip" onclick="togFchip(this)">Convites</span>
           <span class="fchip" onclick="togFchip(this)">Lembrancinhas</span>
@@ -1141,7 +1142,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
           <button class="gfilter" data-f="no" onclick="guestFilter('no')">Não vão</button>
         </div>
         <div id="guestsBody"></div>
-        <button id="btnExport" class="linkmini muted" style="margin-top:18px;display:none" onclick="openSheet('sh-export')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Exportar lista (CSV ou PDF)</button>
+        <button id="btnExport" class="linkmini muted" style="margin-top:18px;display:none" onclick="openSheet('sh-export')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Exportar lista (Planilha ou PDF)</button>
       </div>
       <div id="tabRsvp" style="display:none">
         <p class="sub">Confirme as respostas do link — elas entram direto na sua lista.</p>
@@ -1324,7 +1325,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       <p class="sub">Leve sua lista de convidados pra onde precisar.</p>
       <button class="exopt" onclick="exportGuestsCSV()">
         <div class="exi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4h16v16H4z"/><path d="M4 9h16M4 14h16M9 4v16M15 4v16"/></svg></div>
-        <div><div class="ext">Planilha (CSV)</div><div class="exd">Abre no Excel ou Google Sheets. Ideal pra enviar ao buffet ou ao espaço.</div></div>
+        <div><div class="ext">Planilha</div><div class="exd">Abre no Excel ou Google Sheets. Ideal pra enviar ao buffet ou ao espaço.</div></div>
       </button>
       <button class="exopt" onclick="exportGuestsPDF()">
         <div class="exi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 3h7l5 5v13H7zM14 3v5h5"/><path d="M9 13h6M9 16h6"/></svg></div>
@@ -3100,7 +3101,7 @@ const SUGGESTED=[
   [1.5,'Definir o carro para a cerimônia',1],
   [1.2,'Prova final do vestido, cabelo e maquiagem',1],
   [1.2,'Prova final do traje do noivo'],
-  [1,'Confirmar presença dos convidados (RSVP)',1],
+  [1,'Confirmar presença dos convidados',1],
   [1,'Confirmar com o buffet a quantidade de convidados',1],
   [1,'Definir a ordem do cortejo e as músicas da cerimônia',1],
   [0.8,'Montar o mapa de mesas',1],
@@ -4005,7 +4006,7 @@ const TOUR=[
  {t:'Dinheiro',tgt:'fin',b:'Lance cada despesa com valor e vencimento. O app agrupa por mês e destaca o que está atrasado ou chegando.'},
  {t:'Fornecedores',tgt:'forn',b:'Compare orçamentos lado a lado e guarde contrato, parcelas e contatos de cada fornecedor numa página só.'},
  {t:'Tarefas',tgt:'chk',b:'O roteiro do casamento, que se adapta ao tempo que falta. Você vai marcando conforme avança.'},
- {t:'Convidados',tgt:'guests',b:'Monte a lista, receba as confirmações de presença (RSVP) e exporte em PDF ou CSV quando quiser.'},
+ {t:'Convidados',tgt:'guests',b:'Monte a lista, receba as confirmações de presença e exporte em PDF ou planilha quando quiser.'},
  {t:'Tudo pronto.',c:true,
   i:'<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 6L9 17l-5-5"/></svg>',
   b:'É só tocar nos ícones lá embaixo para navegar. Bom planejamento — estou aqui para ajudar a cada passo.'},
