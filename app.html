@@ -429,6 +429,16 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 .importbtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:none;border-radius:10px;background:var(--green);color:var(--gold-soft);font-weight:700;font-size:13.5px;padding:14px;margin-bottom:8px}
 .importbtn[disabled]{opacity:.65}
 .importbtn .spin{width:14px;height:14px;border:2px solid var(--gold-soft);border-top-color:transparent;border-radius:50%;animation:sp .8s linear infinite}
+#thinking{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;background:rgba(31,61,43,.34)}
+#thinking.on{display:flex}
+#thinking .tk-card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:24px 30px;display:flex;flex-direction:column;align-items:center;gap:13px;box-shadow:0 24px 60px rgba(22,48,31,.32)}
+#thinking .tk-ring{position:relative;width:52px;height:52px}
+#thinking .tk-ring>svg{width:100%;height:100%;animation:tkspin 1s linear infinite;display:block}
+#thinking .tk-dot{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+#thinking .tk-dot svg{width:15px;height:15px;animation:tkpulse 1.3s ease-in-out infinite}
+#thinking .tk-label{font-family:var(--display);font-size:16px;color:var(--green)}
+@keyframes tkspin{to{transform:rotate(360deg)}}
+@keyframes tkpulse{0%,100%{opacity:.5;transform:scale(.85)}50%{opacity:1;transform:scale(1.05)}}
 @keyframes sp{to{transform:rotate(360deg)}}
 .howto{background:var(--card);border:1px dashed var(--gold);border-radius:12px;padding:14px 16px;margin-bottom:14px}
 .howto .st{display:flex;gap:10px;align-items:baseline;font-size:12.5px;color:var(--muted);padding:3px 0}
@@ -1291,6 +1301,15 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
   </nav>
 
   <div class="toast" id="toast"></div>
+  <div id="thinking" aria-live="polite">
+    <div class="tk-card">
+      <div class="tk-ring">
+        <svg viewBox="0 0 50 50" fill="none"><circle cx="25" cy="25" r="21" stroke="var(--gold-soft)" stroke-width="4"/><circle cx="25" cy="25" r="21" stroke="var(--gold)" stroke-width="4" stroke-linecap="round" stroke-dasharray="38 120"/></svg>
+        <span class="tk-dot"><svg viewBox="0 0 20 20"><path d="M10 1.5 l4.2 8.5 -4.2 8.5 -4.2 -8.5 Z" fill="var(--gold)"/></svg></span>
+      </div>
+      <div class="tk-label">Lendo com a IA…</div>
+    </div>
+  </div>
 
   <input type="file" id="fileQuote" accept="image/*,application/pdf" style="position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip:rect(0 0 0 0)">
   <input type="file" id="fileContract" accept="image/*,application/pdf" style="position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip:rect(0 0 0 0)">
@@ -1975,6 +1994,9 @@ const parseBRL=s=>{ if(!s)return NaN; s=String(s).replace(/\D/g,''); return s?pa
 const fdate=s=>{ if(!s)return''; return new Date(s+'T12:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'short'}); };
 const todayISO=()=>new Date().toISOString().slice(0,10);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let _tkHideT=null;
+function showThinking(){ clearTimeout(_tkHideT); var el=document.getElementById('thinking'); if(el) el.classList.add('on'); }
+function hideThinking(){ clearTimeout(_tkHideT); _tkHideT=setTimeout(function(){ var el=document.getElementById('thinking'); if(el) el.classList.remove('on'); }, 900); }
 function toast(m,long){const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),long?5000:2300);}
 
 const ICONS={
@@ -2619,12 +2641,15 @@ function pickJSON(text){
 }
 async function callExtract(content){
   /* a leitura roda na Edge Function sim-extract — a chave da IA vive só no servidor */
-  const {data,error}=await sb.functions.invoke('sim-extract',{body:{content}});
-  if(error) throw new Error('leitura indisponível: '+(error.message||'falha na função'));
-  if(data&&data.error) throw new Error('leitura indisponível: '+data.error);
-  const text=data&&data.text||'';
-  console.log('SIM extração:',text);
-  return pickJSON(text);
+  showThinking();
+  try{
+    const {data,error}=await sb.functions.invoke('sim-extract',{body:{content}});
+    if(error) throw new Error('leitura indisponível: '+(error.message||'falha na função'));
+    if(data&&data.error) throw new Error('leitura indisponível: '+data.error);
+    const text=data&&data.text||'';
+    console.log('SIM extração:',text);
+    return pickJSON(text);
+  } finally { hideThinking(); }
 }
 async function extractQuote(mime,b64){
   const prompt='Você está lendo o orçamento/proposta de um fornecedor de casamento brasileiro (pode ser print de conversa de WhatsApp, PDF ou foto de documento). Extraia os dados e responda SOMENTE com um objeto JSON válido, sem markdown, sem comentários e sem texto antes ou depois, exatamente neste formato: {"name":"nome do fornecedor ou empresa","val":0,"phone":"telefone/whatsapp com DDD","insta":"perfil do instagram sem @","email":"e-mail","inc":"resumo curto do que está incluso, até 200 caracteres","dif":"o diferencial ou destaque do fornecedor em poucas palavras (ex.: premiado, estilo documental), se citado"}. O campo "val" é o valor TOTAL da proposta em reais, apenas número com ponto decimal (ex.: 8500 ou 8500.50). Se um campo não existir no documento, use "" (ou 0 para val). Não invente dados.';
