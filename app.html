@@ -1940,7 +1940,21 @@ function bootDemo(){
 }
 async function startDemoCycle(){
   var seq=['home','fin','forn','chk','guests'], i=0;
-  while(DEMO){ await dwait(2700); i=(i+1)%seq.length; try{ go(seq[i]); }catch(e){} }
+  while(DEMO){
+    try{ go(seq[i]); }catch(e){}
+    await dwait(1200);
+    var sc=document.getElementById('screens');
+    var max= sc ? (sc.scrollHeight - sc.clientHeight) : 0;
+    if(max>24){
+      try{ await dScroll('screens', max, 2300); }catch(e){}
+      await dwait(900);
+      try{ await dScroll('screens', 0, 800); }catch(e){}
+      await dwait(300);
+    } else {
+      await dwait(1700);
+    }
+    i=(i+1)%seq.length;
+  }
 }
 /* =================== HELPERS =================== */
 const $=id=>document.getElementById(id);
