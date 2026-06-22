@@ -1995,7 +1995,7 @@ const fdate=s=>{ if(!s)return''; return new Date(s+'T12:00:00').toLocaleDateStri
 const todayISO=()=>new Date().toISOString().slice(0,10);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let _tkHideT=null;
-function showThinking(){ clearTimeout(_tkHideT); var el=document.getElementById('thinking'); if(el) el.classList.add('on'); }
+function showThinking(label){ clearTimeout(_tkHideT); var el=document.getElementById('thinking'); if(el){ if(label){ var l=el.querySelector('.tk-label'); if(l) l.textContent=label; } el.classList.add('on'); } }
 function hideThinking(){ clearTimeout(_tkHideT); _tkHideT=setTimeout(function(){ var el=document.getElementById('thinking'); if(el) el.classList.remove('on'); }, 900); }
 function toast(m,long){const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),long?5000:2300);}
 
@@ -2639,9 +2639,9 @@ function pickJSON(text){
   if(a===-1||b===-1||b<=a) throw new Error('sem JSON');
   return JSON.parse(text.slice(a,b+1));
 }
-async function callExtract(content){
+async function callExtract(content,label){
   /* a leitura roda na Edge Function sim-extract — a chave da IA vive só no servidor */
-  showThinking();
+  showThinking(label||'Lendo com a IA…');
   try{
     const {data,error}=await sb.functions.invoke('sim-extract',{body:{content}});
     if(error) throw new Error('leitura indisponível: '+(error.message||'falha na função'));
@@ -2657,12 +2657,12 @@ async function extractQuote(mime,b64){
     ? {type:'document',source:{type:'base64',media_type:'application/pdf',data:b64}}
     : {type:'image',source:{type:'base64',media_type:mime,data:b64}},
     {type:'text',text:prompt}];
-  try{ return await callExtract(content); }
+  try{ return await callExtract(content,'Lendo a proposta…'); }
   catch(e1){
     if(/leitura indisponível/.test(e1.message)) throw e1;
     // segunda tentativa para falhas de rede ou de formato
     await new Promise(r=>setTimeout(r,800));
-    return await callExtract(content);
+    return await callExtract(content,'Lendo a proposta…');
   }
 }
 async function handleQuoteFile(file){
@@ -2717,7 +2717,7 @@ async function readPasted(){
   btn.disabled=true; btn.innerHTML='<span class="spin"></span> Lendo…';
   try{
     const prompt='Abaixo está o texto de uma proposta/orçamento de fornecedor de casamento brasileiro (geralmente mensagem de WhatsApp). Extraia os dados e responda SOMENTE com um objeto JSON válido, sem markdown e sem texto fora do JSON: {"name":"nome do fornecedor ou empresa","val":0,"phone":"telefone com DDD","insta":"instagram sem @","email":"e-mail","inc":"resumo curto do que está incluso, até 200 caracteres","dif":"o diferencial/destaque do fornecedor em poucas palavras, se citado"}. "val" é o valor TOTAL em reais, número com ponto decimal. Campos ausentes: "" ou 0. Não invente dados.\n\nTEXTO DA PROPOSTA:\n'+txt;
-    const d=await callExtract([{type:'text',text:prompt}]);
+    const d=await callExtract([{type:'text',text:prompt}],'Lendo a proposta…');
     closeSheet();
     openQuote();
     $('qName').value=d.name||'';
@@ -2985,11 +2985,11 @@ async function extractContract(mime,b64){
     ? {type:'document',source:{type:'base64',media_type:'application/pdf',data:b64}}
     : {type:'image',source:{type:'base64',media_type:mime,data:b64}},
     {type:'text',text:prompt}];
-  try{ return await callExtract(content); }
+  try{ return await callExtract(content,'Lendo o contrato…'); }
   catch(e1){
     if(/leitura indisponível/.test(e1.message)) throw e1;
     await new Promise(r=>setTimeout(r,800));
-    return await callExtract(content);
+    return await callExtract(content,'Lendo o contrato…');
   }
 }
 async function handleContractFile(file){
