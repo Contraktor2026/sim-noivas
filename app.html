@@ -61,6 +61,14 @@ body{font-family:var(--body);background:#11231A;color:var(--ink);display:flex;ju
 .ftab .cnt{font-size:11px;min-width:18px;height:18px;border-radius:8px;background:rgba(0,0,0,.08);color:inherit;display:inline-flex;align-items:center;justify-content:center;padding:0 5px}
 .ftab.on{background:var(--paper);color:var(--green);box-shadow:0 1px 4px rgba(0,0,0,.08)}
 .ftab.on .cnt{background:var(--green);color:var(--paper)}
+/* seções da tela de Fornecedores (sem abas: tudo visível) */
+.fsection{margin-bottom:24px}
+.fsection:last-child{margin-bottom:0}
+.fsechead{display:flex;align-items:center;gap:10px;margin:0 0 13px}
+.fsectitle{font-family:var(--display);font-size:18px;font-weight:400;color:var(--green);margin:0;white-space:nowrap}
+.fseccount{font-size:11px;font-weight:700;min-width:20px;height:20px;border-radius:999px;background:var(--green);color:var(--paper);display:inline-flex;align-items:center;justify-content:center;padding:0 6px;font-variant-numeric:tabular-nums}
+.fsechead::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(168,133,59,.5),rgba(168,133,59,0))}
+.fsecempty{font-size:13px;color:var(--muted);background:var(--green-soft);border-radius:12px;padding:13px 15px;line-height:1.45}
 .fsec{display:flex;align-items:center;gap:9px;margin:6px 0 12px}
 .fsec .ico{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .fsec .tit{font-family:var(--display);font-size:18px;line-height:1.1}
@@ -1030,10 +1038,6 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
     <section class="screen" id="s-forn">
       <h2 class="sec">Fornecedores</h2>
       <p class="sub">Seus contratos fechados e as cotações em andamento.</p>
-      <div class="ftabs" id="fornTabs">
-        <button class="ftab on" data-tab="hired" onclick="fornTab('hired')">Contratados <span class="cnt" id="cntHired">0</span></button>
-        <button class="ftab" data-tab="quote" onclick="fornTab('quote')">Em cotação <span class="cnt" id="cntQuote">0</span></button>
-      </div>
       <div id="fornBody"></div>
     </section>
 
@@ -2327,34 +2331,26 @@ const SPARK='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke=
 
 /* ---- visão geral ---- */
 function renderForn(){
-  // contar para os badges das abas
   const hired=[];
   state.cats.forEach(c=>c.quotes.filter(q=>q.win).forEach(q=>hired.push({c,q})));
   const open=state.cats.filter(c=>!c.quotes.some(q=>q.win));
-  if($('cntHired')) $('cntHired').textContent=hired.length;
-  if($('cntQuote')) $('cntQuote').textContent=open.length;
-
-  const tab=state.fornTab||'hired';
-  // refletir aba ativa nos botões
-  document.querySelectorAll('#fornTabs .ftab').forEach(b=>b.classList.toggle('on',b.dataset.tab===tab));
 
   let html='';
-  if(tab==='hired'){
-    html+=renderHiredTab(hired);
-  } else {
-    html+=renderQuoteTab(open);
-  }
+  // ---- CONTRATADOS (em cima: o que já está garantido) ----
+  html+=`<div class="fsection"><div class="fsechead"><h3 class="fsectitle">Contratados</h3>${hired.length?`<span class="fseccount">${hired.length}</span>`:''}</div>`;
+  html+= hired.length ? renderHiredCards(hired)
+    : `<div class="fsecempty">Nada fechado ainda. Quando você escolher um fornecedor logo abaixo, ele vem pra cá com o plano de pagamento e os contratos guardados.</div>`;
+  html+=`</div>`;
+  // ---- EM COTAÇÃO (embaixo: o trabalho em andamento) ----
+  html+=`<div class="fsection"><div class="fsechead"><h3 class="fsectitle">Em cotação</h3>${open.length?`<span class="fseccount">${open.length}</span>`:''}</div>`;
+  html+= renderQuoteTab(open);
+  html+=`</div>`;
   $('fornBody').innerHTML=html;
 }
 
-function renderHiredTab(hired){
-  let html='';
-  if(!hired.length){
-    return `<div class="empty">${ICONS.ring}<div class="dn">Nenhum contratado ainda</div><p>Quando você fechar um fornecedor na aba <b>Em cotação</b>, ele aparece aqui — com o plano de pagamento e os contratos guardados.</p>
-    <button class="btn g" style="margin-top:14px" onclick="fornTab('quote')">Ver cotações em andamento</button></div>`;
-  }
+function renderHiredCards(hired){
   // cards grandes, um por contratado
-  html+=hired.map(({c,q})=>{
+  return hired.map(({c,q})=>{
     const linked=state.exp.filter(e=>e.vendorId===q.id);
     const paid=linked.filter(e=>e.paid).reduce((a,e)=>a+e.val,0);
     const pct=q.val>0?Math.min(100,Math.round(paid/q.val*100)):0;
@@ -2374,7 +2370,6 @@ function renderHiredTab(hired){
       ${linked.length?`<div class="paybar"><i style="width:${pct}%"></i></div>`:''}
     </div>`;
   }).join('');
-  return html;
 }
 
 function renderQuoteTab(open){
