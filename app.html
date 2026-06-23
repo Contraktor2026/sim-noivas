@@ -1237,6 +1237,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 
   <input type="file" id="fileQuote" accept="image/*,application/pdf" style="position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip:rect(0 0 0 0)">
   <input type="file" id="fileContract" accept="image/*,application/pdf" style="position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip:rect(0 0 0 0)">
+  <input type="file" id="fileProof" accept="image/*,application/pdf" style="position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip:rect(0 0 0 0)">
 
   <!-- guia de boas-vindas -->
   <div id="tour" style="display:none;position:absolute;inset:0;z-index:55;pointer-events:none">
@@ -1289,8 +1290,16 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       </div>
       <div class="f"><label>Vencimento</label><input id="exDue" type="date"></div>
       <div class="fcheck"><input type="checkbox" id="exPaid"><label for="exPaid" style="all:unset;font-weight:600">Já está pago</label></div>
+      <div class="f" id="exProofWrap" style="display:none"><label>Comprovante de pagamento</label><div id="exProof"></div></div>
       <button class="btn p full" onclick="saveExpense()">Salvar despesa</button>
       <button class="btn d full" id="exDel" style="margin-top:8px;display:none" onclick="delExpense()">Excluir despesa</button>
+    </div>
+
+    <div class="sheet" id="sh-proof" style="display:none">
+      <h3>Anexar comprovante?</h3>
+      <p class="sub" id="proofSub">Guarde o comprovante deste pagamento — fica salvo junto da despesa.</p>
+      <label class="importbtn" for="fileProof" role="button" tabindex="0" style="margin-bottom:0" onclick="watchPicker('proof')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" style="vertical-align:-2px;margin-right:6px"><path d="M21 11.5l-8.5 8.5a5.5 5.5 0 01-7.8-7.8L13 4a3.7 3.7 0 015.2 5.2l-8.2 8.2a1.8 1.8 0 01-2.6-2.6l7.6-7.6"/></svg>Anexar foto ou PDF</label>
+      <button class="btn g full" style="margin-top:8px" onclick="closeSheet()">Agora não</button>
     </div>
 
     <div class="sheet" id="sh-cat" style="display:none">
@@ -2246,7 +2255,7 @@ function renderFin(){
     const tag=e.paid?'<span class="tag ok">PAGO</span>':(e.due&&e.due<today?'<span class="tag late">ATRASADO</span>':'<span class="tag due">A PAGAR</span>');
     return `<div class="li" onclick="openExpense('${e.id}')">
       <div class="ic">${ICONS.money}</div>
-      <div class="bd"><div class="t">${esc(e.desc)}</div><div class="m">${e.due?fdate(e.due)+' · ':''}${esc(e.cat||'Geral')}</div></div>
+      <div class="bd"><div class="t">${esc(e.desc)}</div><div class="m">${e.due?fdate(e.due)+' · ':''}${esc(e.cat||'Geral')}${e.proofId?' · comprovante':''}</div></div>
       <div style="text-align:right"><div class="v">${brl(e.val)}</div>${tag}</div>
     </div>`;
   };
@@ -2307,6 +2316,9 @@ function openExpense(id,vendorId){
   $('exDue').value=editExp?.due||'';
   $('exPaid').checked=!!editExp?.paid;
   $('exDel').style.display=editExp?'block':'none';
+  proofForExpId = editExp?editExp.id:null;
+  if($('exProofWrap')) $('exProofWrap').style.display = editExp ? 'block' : 'none';
+  if(editExp) renderExpProof();
   openSheet('sh-exp');
 }
 function saveExpense(){
@@ -2874,7 +2886,7 @@ function renderVendor(){
       const tag=e.paid?'<span class="tag ok">PAGO</span>':(e.due&&e.due<today?'<span class="tag late">ATRASADO</span>':'<span class="tag due">A PAGAR</span>');
       return `<div class="li" onclick="openExpense('${e.id}')">
         <div class="ic">${ICONS.money}</div>
-        <div class="bd"><div class="t">${esc(e.desc)}</div><div class="m">${e.due?'vence '+fdate(e.due):'sem vencimento'}</div></div>
+        <div class="bd"><div class="t">${esc(e.desc)}</div><div class="m">${e.due?'vence '+fdate(e.due):'sem vencimento'}${e.proofId?' · comprovante':''}</div></div>
         <div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:5px">
           <div class="v">${brl(e.val)}</div>
           ${e.paid?tag:`<button class="btn p sm" onclick="event.stopPropagation();payExp('${e.id}')">Pagar</button>`}
@@ -3073,6 +3085,47 @@ function finalizePay(e){
   e.paid=true; persist(); renderAll();
   if(curVendor && $('s-vendor').classList.contains('on')) renderVendor();
   toast('Parcela quitada · '+brl(e.val));
+  offerReceipt(e);
+}
+let proofForExpId=null;
+function offerReceipt(e){
+  proofForExpId=e.id;
+  const sub=$('proofSub'); if(sub) sub.textContent='Pagamento de '+brl(e.val)+(e.desc?(' · '+e.desc):'')+'. Guarde o comprovante — fica salvo junto da despesa.';
+  openSheet('sh-proof');
+}
+async function handleProofFile(file){
+  const e=state.exp.find(x=>x.id===proofForExpId);
+  if(!e){ closeSheet(); $('fileProof').value=''; return; }
+  const offerOpen = $('sh-proof') && $('sh-proof').style.display!=='none';
+  try{
+    const {mime,b64}=await prepareFile(file);
+    if(b64.length>=3500000){ toast('Arquivo muito grande (máx ~3,5MB)',true); return; }
+    const id=uid(); const ok=await saveFileData(id,mime,b64);
+    if(ok){ if(e.proofId) await delFileData(e.proofId); e.proofId=id; persist(); renderAll();
+      if(curVendor && $('s-vendor').classList.contains('on')) renderVendor();
+      toast('Comprovante anexado'); }
+    else toast('Não consegui salvar o comprovante',true);
+  }catch(err){ toast('Algo deu errado com o arquivo',true); }
+  finally{
+    $('fileProof').value='';
+    if(offerOpen) closeSheet(); else renderExpProof();
+  }
+}
+function renderExpProof(){
+  const box=$('exProof'); if(!box||!editExp) return;
+  box.innerHTML = editExp.proofId
+    ? `<div style="display:flex;gap:8px;flex-wrap:wrap">
+         <button class="btn p sm" onclick="viewFile('${editExp.proofId}','Comprovante — ${esc(editExp.desc||'despesa')}')">Ver comprovante</button>
+         <label class="btn g sm" for="fileProof" role="button" tabindex="0" onclick="proofForExpId='${editExp.id}';watchPicker('proof')" style="display:inline-flex;align-items:center">Trocar</label>
+         <button class="btn d sm" onclick="removeProof()">Remover</button>
+       </div>`
+    : `<label class="importbtn" for="fileProof" role="button" tabindex="0" style="margin-bottom:0" onclick="proofForExpId='${editExp.id}';watchPicker('proof')">Anexar comprovante (foto ou PDF)</label>`;
+}
+async function removeProof(){
+  if(!editExp||!editExp.proofId) return;
+  await delFileData(editExp.proofId);
+  editExp.proofId=null; persist(); renderAll(); renderExpProof();
+  toast('Comprovante removido');
 }
 function addMonths(iso,m){
   const d=new Date(iso+'T12:00:00'); const day=d.getDate();
@@ -4205,6 +4258,7 @@ function resetAll(){
       try{
         const ids=[];
         state.cats.forEach(c=>c.quotes.forEach(q=>{ if(q.fileId)ids.push(q.fileId); if(q.contractId)ids.push(q.contractId); }));
+        (state.exp||[]).forEach(e=>{ if(e.proofId)ids.push(e.proofId); });
         for(const id of ids) await delFileData(id);
         await window.storage.delete(KEY);
       }catch(e){}
@@ -4245,6 +4299,7 @@ async function bootApp(){
   ['obBudget','stBudget','exVal','qVal','pcVal'].forEach(id=>maskMoney($(id)));
   $('fileQuote').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast('Arquivo recebido — processando…'); handleQuoteFile(e.target.files[0]); } });
   $('fileContract').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast('Contrato recebido — processando…'); handleContractFile(e.target.files[0]); } });
+  $('fileProof').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast('Comprovante recebido…'); handleProofFile(e.target.files[0]); } });
   $('splash').style.display='none';
   $('login').style.display='none';
   if(!state.profile){ $('onb').style.display='flex'; }
