@@ -1042,6 +1042,8 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       <h2 class="sec">Fornecedores</h2>
       <p class="sub">Seus contratos fechados e as cotações em andamento.</p>
       <div id="fornBody"></div>
+      <button class="linkmini muted" style="margin-top:20px" onclick="exportVendorsPDF()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:5px"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Gerar PDF dos fornecedores</button>
+      <p class="fine" style="text-align:center;margin:5px 0 0;color:var(--muted)">Cotações e fornecedores fechados, num documento só.</p>
     </section>
 
     <!-- CATEGORIA (comparar orçamentos) -->
@@ -3874,22 +3876,13 @@ function printHTML(doc){
   toast('Preparando o PDF…');
   setTimeout(()=>{ try{ f.contentWindow.focus(); }catch(_){ } try{ f.contentWindow.print(); }catch(e){ toast('Não consegui abrir a impressão'); } }, 650);
 }
-function buildReportDoc(){
-  const p=state.profile||{};
-  const names=esc((p.a||'')+' & '+(p.b||''));
-  const ini=esc((p.a&&p.a[0]||'').toUpperCase())+' &amp; '+esc((p.b&&p.b[0]||'').toUpperCase());
-  const dt=p.date?new Date(p.date+'T12:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'}):'';
-  const loc=[p.city,p.uf].filter(Boolean).join(', ');
-  const meta=[dt,loc].filter(Boolean).join(' · ');
-  const today=new Date().toLocaleDateString('pt-BR');
-  const exp=state.exp||[], cats=state.cats||[];
-
-  // ---- Finanças ----
+function _reportFin(){
+  const p=state.profile||{}, exp=state.exp||[];
   const budget=Number(p.budget)||0;
   const lancado=exp.reduce((a,e)=>a+(Number(e.val)||0),0);
   const pago=exp.filter(e=>e.paid).reduce((a,e)=>a+(Number(e.val)||0),0);
   const falta=lancado-pago;
-  let finBox=`<div class="fin-sum">
+  const finBox=`<div class="fin-sum">
     ${budget?`<div class="box"><div class="cap">Orçamento</div><div class="v">${brl(budget)}</div></div>`:''}
     <div class="box"><div class="cap">Lançado</div><div class="v">${brl(lancado)}</div></div>
     <div class="box"><div class="cap">Já pago</div><div class="v">${brl(pago)}</div></div>
@@ -3908,8 +3901,10 @@ function buildReportDoc(){
       </tr>`).join('')+
       `<tr class="totrow"><td colspan="3">Total</td><td class="right">${brl(lancado)}</td><td></td></tr></tbody></table>`;
   } else finBody=`<div class="empty-line">Nenhuma despesa lançada ainda.</div>`;
-
-  // ---- Cotações ----
+  return `<div class="section"><div class="sec2">Finanças</div><div class="secrule"></div>${finBox}${finBody}</div>`;
+}
+function _reportCot(){
+  const cats=state.cats||[];
   const cotCats=cats.filter(c=>c.quotes&&c.quotes.length);
   let cotBody;
   if(cotCats.length){
@@ -3925,8 +3920,10 @@ function buildReportDoc(){
       return `<div class="cot-block"><div class="cot-cat">${esc(c.name)} · ${c.quotes.length} orçamento${c.quotes.length>1?'s':''}</div>${qs}</div>`;
     }).join('');
   } else cotBody=`<div class="empty-line">Nenhuma cotação registrada ainda.</div>`;
-
-  // ---- Fornecedores fechados ----
+  return `<div class="section"><div class="sec2">Cotações</div><div class="secrule"></div>${cotBody}</div>`;
+}
+function _reportHir(){
+  const exp=state.exp||[], cats=state.cats||[];
   const hired=[]; cats.forEach(c=>c.quotes.filter(q=>q.win).forEach(q=>hired.push({c,q})));
   let hirBody;
   if(hired.length){
@@ -3946,8 +3943,17 @@ function buildReportDoc(){
     }).join('');
     hirBody=`<table><thead><tr><th>Fornecedor</th><th>Categoria</th><th class="right">Contrato</th><th class="right">Pago</th><th>%</th></tr></thead><tbody>${rows}<tr class="totrow"><td colspan="2">Total contratado</td><td class="right">${brl(tot)}</td><td colspan="2"></td></tr></tbody></table>`;
   } else hirBody=`<div class="empty-line">Nenhum fornecedor contratado ainda.</div>`;
-
-  return `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Relatório — ${names}</title>
+  return `<div class="section"><div class="sec2">Fornecedores fechados</div><div class="secrule"></div>${hirBody}</div>`;
+}
+function _reportShell(title, inner){
+  const p=state.profile||{};
+  const names=esc((p.a||'')+' & '+(p.b||''));
+  const ini=esc((p.a&&p.a[0]||'').toUpperCase())+' &amp; '+esc((p.b&&p.b[0]||'').toUpperCase());
+  const dt=p.date?new Date(p.date+'T12:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'}):'';
+  const loc=[p.city,p.uf].filter(Boolean).join(', ');
+  const meta=[dt,loc].filter(Boolean).join(' · ');
+  const today=new Date().toLocaleDateString('pt-BR');
+  return `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>${esc(title)} — ${names}</title>
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
     body{font-family:'Karla',system-ui,sans-serif;color:#21211D;padding:30px 26px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
@@ -3983,12 +3989,18 @@ function buildReportDoc(){
     tr{page-break-inside:avoid}
     .section{page-break-inside:auto}
   </style></head><body>
-    <div class="lh"><div class="mono">${ini}</div><div class="nm">${names}</div>${meta?`<div class="meta">${esc(meta)}</div>`:''}<div class="ttl">Relatório do casamento</div></div>
-    <div class="section"><div class="sec2">Finanças</div><div class="secrule"></div>${finBox}${finBody}</div>
-    <div class="section"><div class="sec2">Cotações</div><div class="secrule"></div>${cotBody}</div>
-    <div class="section"><div class="sec2">Fornecedores fechados</div><div class="secrule"></div>${hirBody}</div>
+    <div class="lh"><div class="mono">${ini}</div><div class="nm">${names}</div>${meta?`<div class="meta">${esc(meta)}</div>`:''}<div class="ttl">${esc(title)}</div></div>
+    ${inner}
     <div class="foot">Gerado pelo SIM. · ${today}</div>
   </body></html>`;
+}
+function buildReportDoc(){ return _reportShell('Relatório do casamento', _reportFin()+_reportCot()+_reportHir()); }
+function buildVendorsReportDoc(){ return _reportShell('Fornecedores', _reportCot()+_reportHir()); }
+function exportVendorsPDF(){
+  const cats=state.cats||[];
+  if(!cats.length){ toast('Ainda não há fornecedores para o relatório'); return; }
+  printHTML(buildVendorsReportDoc());
+  if($('ov') && $('ov').classList.contains('open')) closeSheet();
 }
 function exportReportsPDF(){
   const exp=state.exp||[], cats=state.cats||[];
