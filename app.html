@@ -1332,6 +1332,12 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       </button>
     </div>
 
+    <div class="sheet" id="sh-contract-confirm" style="display:none">
+      <h3>Confirmar contrato</h3>
+      <p class="sub">Confira o que eu li. Nada muda até você confirmar.</p>
+      <div id="ccBody"></div>
+    </div>
+
     <div class="sheet" id="sh-guests-help" style="display:none">
       <h3>Como funciona</h3>
       <p class="sub">Duas partes que trabalham juntas: a sua lista e as respostas dos convidados.</p>
@@ -2444,7 +2450,7 @@ function renderCatPage(){
     html+=`<p class="fine" style="margin:2px 2px 10px"><span style="color:var(--gold)">★</span> <b>Sua nota</b> — pense em atendimento, estilo do casamento, indicações e diferencial, não só no preço.</p>`;
     html+=sorted.map(q=>{
       const phone=q.phone?q.phone.replace(/\D/g,''):'';
-      return `<div class="quote ${q.win?'win':''}">
+      return `<div class="quote ${q.win?'win':''}" onclick="openVendor('${c.id}','${q.id}')" style="cursor:pointer">
         <div class="qh">
           <div style="flex:1;min-width:0">
             <div class="qn">${esc(q.name)}</div>
@@ -2452,12 +2458,12 @@ function renderCatPage(){
           </div>
           <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
             <div class="qp">${brl(q.val)}</div>
-            ${starsCtl(c.id,q.id,q.stars||0)}
+            <span onclick="event.stopPropagation()">${starsCtl(c.id,q.id,q.stars||0)}</span>
           </div>
         </div>
         ${q.dif?`<div style="display:flex;gap:7px;align-items:flex-start;margin:8px 0 2px;font-size:13px;font-weight:700;color:var(--gold)"><span style="flex-shrink:0;margin-top:1px">${SPARK}</span><span style="color:var(--gold-ink)">${esc(q.dif)}</span></div>`:''}
         ${q.inc?`<div class="inc">${esc(q.inc)}</div>`:''}
-        <div class="qfoot">
+        <div class="qfoot" onclick="event.stopPropagation()">
           ${q.win
             ? `<button class="btn p sm" onclick="openVendor('${c.id}','${q.id}')">Ver contrato</button>`
             : `<button class="btn p sm" onclick="toggleWin('${c.id}','${q.id}',true)">Contratar</button>
@@ -2826,8 +2832,26 @@ function renderVendor(){
         <button class="btn g sm" onclick="fornCat='${c.id}';openQuote('${q.id}')">Editar dados</button>
         ${q.fileId?`<button class="fileln" onclick="viewFile('${q.fileId}','Orçamento — ${esc(q.name)}')">${CLIP} Orçamento original</button>`:''}
       </div>
-    </div>
+    </div>`;
 
+  if(!q.win){
+    html+=`
+    <div class="vstats">
+      <div class="vstat"><div class="cap">Valor do orçamento</div><div class="dn">${brl(q.val)}</div></div>
+      ${q.stars?`<div class="vstat"><div class="cap">Sua nota</div><div class="dn" style="color:var(--gold)">${'★'.repeat(q.stars)}<span style="color:var(--line)">${'★'.repeat(5-q.stars)}</span></div></div>`:''}
+    </div>
+    ${q.inc?`<h2 class="sec" style="font-size:18px">O que está incluso</h2><div class="card"><p style="margin:0;font-size:14px;line-height:1.5">${esc(q.inc)}</p></div>`:''}
+    <h2 class="sec" style="font-size:18px">Anotações</h2>
+    <p class="sub">O que você achou, o que perguntar, o que ainda falta combinar.</p>
+    <div class="card">
+      <div class="f" style="margin-bottom:10px"><textarea id="vNotes" placeholder="Ex.: respondeu rápido · pedir desconto à vista · confirmar se cobre o dia todo">${esc(q.notes||'')}</textarea></div>
+      <button class="btn p full" onclick="saveVendorNotes()">Salvar anotações</button>
+    </div>
+    <button class="btn p full" style="margin-top:6px" onclick="toggleWin('${c.id}','${q.id}',true)">Contratar este fornecedor</button>`;
+    $('vendorBody').innerHTML=html; return;
+  }
+
+  html+=`
     <div class="vstats">
       <div class="vstat"><div class="cap">Valor do contrato</div><div class="dn">${brl(q.val)}</div></div>
       <div class="vstat"><div class="cap">Já pago</div><div class="dn" style="color:var(--ok)">${brl(paid)}</div></div>
@@ -2960,37 +2984,8 @@ async function handleContractFile(file){
       return;
     }
 
-    // aplica os dados lidos
-    const did=[];
-    const v=typeof d.val==='string'?parseBRL(d.val):Number(d.val);
-    if(v&&v>0&&Math.round(v)!==Math.round(q.val)){ q.val=v; did.push('valor atualizado para '+brl(v)); }
-    if(!q.phone&&d.phone) q.phone=String(d.phone);
-    if(!q.insta&&d.insta) q.insta=String(d.insta).replace('@','');
-    if(!q.email&&d.email) q.email=String(d.email);
-    if(d.notes){ q.notes=q.notes? q.notes+'\n— Do contrato: '+d.notes : d.notes; did.push('condições anotadas'); }
-
-    // parcelas
-    let parcels=Array.isArray(d.parcels)?d.parcels.filter(p=>{
-      const pv=typeof p.val==='string'?parseBRL(p.val):Number(p.val);
-      return pv&&pv>0;
-    }):[];
-    persist(); renderAll(); renderVendor();
-    if(parcels.length){
-      const existing=state.exp.filter(e=>e.vendorId===q.id);
-      if(existing.length){
-        toast(did.length?'Contrato lido: '+did.join(' · '):'Contrato lido',true);
-        askConfirm(
-          'Parcelas do contrato',
-          'O contrato traz '+parcels.length+' parcela(s). Substituir as parcelas em aberto já lançadas? As pagas são mantidas.',
-          ()=>applyContractParcels(c.id,q.id,parcels),
-          'Substituir'
-        );
-        return;
-      }
-      applyContractParcels(c.id,q.id,parcels);
-      did.push(parcels.length+' parcela(s) lançada(s) no Dinheiro');
-    }
-    toast(did.length?'Contrato lido: '+did.join(' · '):'Contrato anexado — não encontrei dados novos para lançar',true);
+    // não aplica direto — mostra a confirmação do que foi lido
+    showContractConfirm(c,q,d);
   }catch(e){
     toast(e.message&&e.message.length<70?e.message:'Algo deu errado com o arquivo',true);
   }finally{
@@ -2998,6 +2993,68 @@ async function handleContractFile(file){
     renderVendor();
     $('fileContract').value='';
   }
+}
+let pendingContract=null;
+function showContractConfirm(c,q,d){
+  const v=typeof d.val==='string'?parseBRL(d.val):Number(d.val);
+  const parcels=Array.isArray(d.parcels)?d.parcels.map(p=>({
+    desc:String(p.desc||'Parcela').trim(),
+    val:(typeof p.val==='string'?parseBRL(p.val):Number(p.val))||0,
+    due:/^\d{4}-\d{2}-\d{2}$/.test(p.due||'')?p.due:''
+  })).filter(p=>p.val>0):[];
+  pendingContract={cid:c.id,qid:q.id,d,v,parcels};
+  const sum=parcels.reduce((a,p)=>a+p.val,0);
+  let html=`<div class="card" style="margin-bottom:12px">
+    <div class="row" style="margin-bottom:6px"><span class="cap">Fornecedor</span><b style="color:var(--green)">${esc(q.name)}</b></div>`;
+  if(v&&v>0){
+    html+=`<div class="row" style="margin-bottom:${d.notes?'6px':'0'}"><span class="cap">Valor total</span><b>${brl(v)}</b>${Math.round(v)!==Math.round(q.val)?`<span class="fine" style="margin-left:7px">era ${brl(q.val)}</span>`:''}</div>`;
+  }
+  if(d.notes) html+=`<div style="margin-top:8px"><span class="cap">Condições lidas</span><p class="fine" style="margin:3px 0 0">${esc(d.notes)}</p></div>`;
+  html+=`</div>`;
+  if(parcels.length){
+    html+=`<div class="cap gold" style="margin:0 0 6px">${parcels.length} parcela${parcels.length>1?'s':''} · ${brl(sum)}</div>
+      <div class="card" style="padding:6px 14px">`+parcels.map(p=>`<div class="li" style="cursor:default">
+        <div class="bd"><div class="t">${esc(p.desc)}</div><div class="m">${p.due?'vence '+fdate(p.due):'sem data'}</div></div>
+        <div class="v">${brl(p.val)}</div></div>`).join('')+`</div>`;
+    if(v>0 && Math.abs(sum-v)>1) html+=`<p class="fine" style="margin:8px 2px 0;color:var(--gold-ink)">A soma das parcelas (${brl(sum)}) não bate com o total (${brl(v)}). Dá pra ajustar depois no Dinheiro.</p>`;
+    html+=`<p class="fine" style="margin:8px 2px 0">Ao confirmar, lanço essas parcelas no Dinheiro.</p>`;
+  }else{
+    html+=`<p class="fine" style="margin:2px 2px 8px">Não encontrei parcelas no contrato. Você pode gerar depois com "Gerar parcelas".</p>`;
+  }
+  html+=`<button class="btn p full" style="margin-top:14px" onclick="applyContractData()">Confirmar e lançar</button>`;
+  if(q.contractId) html+=`<button class="btn g full" style="margin-top:8px" onclick="viewFile('${q.contractId}','Contrato — ${esc(q.name)}')">Ver o contrato anexado</button>`;
+  html+=`<button class="btn g full" style="margin-top:8px" onclick="closeSheet()">Agora não</button>`;
+  $('ccBody').innerHTML=html;
+  openSheet('sh-contract-confirm');
+}
+function applyContractData(){
+  if(!pendingContract) return;
+  const {cid,qid,d,v,parcels}=pendingContract;
+  const c=state.cats.find(x=>x.id===cid); const q=c?c.quotes.find(x=>x.id===qid):null;
+  if(!q){ pendingContract=null; closeSheet(); return; }
+  const did=[];
+  if(v&&v>0&&Math.round(v)!==Math.round(q.val)){ q.val=v; did.push('valor para '+brl(v)); }
+  if(!q.phone&&d.phone) q.phone=String(d.phone);
+  if(!q.insta&&d.insta) q.insta=String(d.insta).replace('@','');
+  if(!q.email&&d.email) q.email=String(d.email);
+  if(d.notes){ q.notes=q.notes? q.notes+'\n— Do contrato: '+d.notes : d.notes; did.push('condições anotadas'); }
+  const hadParcels=state.exp.filter(e=>e.vendorId===q.id).length>0;
+  persist();
+  if(parcels.length){
+    pendingContract=null;
+    if(hadParcels){
+      closeSheet();
+      askConfirm('Parcelas do contrato','O contrato traz '+parcels.length+' parcela(s). Substituir as parcelas em aberto já lançadas? As pagas são mantidas.',()=>applyContractParcels(c.id,q.id,parcels),'Substituir');
+      return;
+    }
+    applyContractParcels(c.id,q.id,parcels);
+    renderAll(); closeSheet();
+    toast('Contrato lançado'+(did.length?': '+did.join(' · '):'')+(' · '+parcels.length+' parcela(s)'),true);
+    return;
+  }
+  pendingContract=null;
+  renderAll(); renderVendor(); closeSheet();
+  toast(did.length?'Contrato confirmado: '+did.join(' · '):'Contrato confirmado',true);
 }
 function saveVendorNotes(){
   const {q}=getCur(); if(!q) return;
