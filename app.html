@@ -1357,9 +1357,11 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
         </div>
         <input id="gsGroupOther" placeholder="Ou digite um grupo…" style="margin-top:8px">
       </div>
-      <div class="frow">
-        <div class="f"><label>Acompanhantes <span class="opt">(além do convidado)</span></label><input id="gsComp" type="number" inputmode="numeric" placeholder="0" min="0"></div>
-        <div class="f"><label>WhatsApp <span class="opt">(opcional)</span></label><input id="gsPhone" inputmode="tel" placeholder="48 99999-0000"></div>
+      <div class="f"><label>WhatsApp <span class="opt">(opcional)</span></label><input id="gsPhone" inputmode="tel" placeholder="48 99999-0000"></div>
+      <div class="f">
+        <label>Acompanhantes <span class="opt">(nome e telefone de cada um)</span></label>
+        <div id="gsCompList"></div>
+        <button type="button" class="btn g full" onclick="gsAddComp()" style="margin-top:2px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-1px;margin-right:4px"><path d="M12 5v14M5 12h14"/></svg>Adicionar acompanhante</button>
       </div>
       <button type="button" class="btn g full" id="gsWa" style="display:none;margin-bottom:14px" onclick="guestWhatsInput()"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:5px"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-2.8.8.8-2.8-.2-.3A8 8 0 1 1 12 20zm4.5-5.9c-.2-.1-1.4-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8.9-.3.2-.6 0a6.6 6.6 0 0 1-1.9-1.2 7.3 7.3 0 0 1-1.4-1.7c-.1-.3 0-.4.1-.5l.4-.5.3-.4v-.4c0-.1-.6-1.5-.8-2s-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3A2.9 2.9 0 0 0 6 9.4a5 5 0 0 0 1.1 2.7 11.5 11.5 0 0 0 4.4 3.9c2.1.8 2.1.6 2.5.5a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .1-1.2c0-.1-.2-.2-.5-.3z"/></svg>Chamar no WhatsApp</button>
       <div class="f"><label>Presença</label>
@@ -3392,12 +3394,15 @@ function renderMyList(){
     html+=groups[grp].map(g=>{
       const st=g.status||'pending';
       const label=st==='yes'?'Confirmado':st==='no'?'Não vai':'Pendente';
-      const comp=parseInt(g.comp)||0;
-      const cs=(g.compDetail&&g.compDetail.length)?compNames(g.compDetail):'';
+      const named=(g.compDetail||[]).filter(c=>c.name);
+      const total=guestCompTotal(g);
+      let cs;
+      if(named.length){ cs='com '+compNames(named); const rest=total-named.length; if(rest>0) cs+=' +'+rest; }
+      else cs = total>0 ? ('+'+total+' acompanhante'+(total>1?'s':'')) : 'sem acompanhante';
       return `<div class="gitem" onclick="openGuest('${g.id}')">
         <div class="gav">${esc((g.name[0]||'?').toUpperCase())}</div>
         <div class="gbd"><div class="gn">${esc(g.name)}${g.diet?`<span class="alerg" title="${esc(g.diet)}">restrição</span>`:''}</div>
-        <div class="gm">${cs?('com '+cs):(comp>0?('+'+comp+' acompanhante'+(comp>1?'s':'')):'sem acompanhante')}${g.note?' · '+esc(g.note):''}</div></div>
+        <div class="gm">${cs}${g.note?' · '+esc(g.note):''}</div></div>
         ${g.phone?`<button class="gwa" title="Chamar no WhatsApp" onclick="event.stopPropagation();guestWhats('${g.id}')"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-2.8.8.8-2.8-.2-.3A8 8 0 1 1 12 20zm4.5-5.9c-.2-.1-1.4-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8.9-.3.2-.6 0a6.6 6.6 0 0 1-1.9-1.2 7.3 7.3 0 0 1-1.4-1.7c-.1-.3 0-.4.1-.5l.4-.5.3-.4v-.4c0-.1-.6-1.5-.8-2s-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3A2.9 2.9 0 0 0 6 9.4a5 5 0 0 0 1.1 2.7 11.5 11.5 0 0 0 4.4 3.9c2.1.8 2.1.6 2.5.5a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .1-1.2c0-.1-.2-.2-.5-.3z"/></svg></button>`:''}
         <span class="gbadge ${st}">${label}</span>
       </div>`;
@@ -3408,11 +3413,32 @@ function renderMyList(){
 function guestFilter(f){ guestFilterMode=f; renderGuests(); }
 function pickGroup(el){ document.querySelectorAll('#gsGroups .fchip').forEach(c=>c.classList.remove('on')); el.classList.add('on'); $('gsGroupOther').value=''; }
 function pickStatus(st){ gsStatus=st; document.querySelectorAll('#gsStatus button').forEach(b=>b.classList.toggle('on',b.dataset.s===st)); }
+let gsComps=[];
+function guestCompTotal(g){ return Math.max(parseInt(g.comp)||0, (g.compDetail||[]).filter(c=>c&&c.name).length); }
+function gsAddComp(){ gsComps.push({name:'',kind:'adult',phone:''}); renderGsComps(); }
+function renderGsComps(){
+  const box=$('gsCompList'); if(!box) return;
+  box.innerHTML=gsComps.map((c,i)=>`
+    <div class="rscomp">
+      <input placeholder="Nome do acompanhante" value="${(c.name||'').replace(/"/g,'&quot;')}" oninput="gsComps[${i}].name=this.value">
+      <input class="rscomp-fone" inputmode="tel" placeholder="Telefone (opcional)" value="${(c.phone||'').replace(/"/g,'&quot;')}" oninput="gsComps[${i}].phone=this.value">
+      <div class="rscomp-row">
+        <div class="rskind">
+          <button type="button" class="${c.kind!=='child'?'on':''}" onclick="gsComps[${i}].kind='adult';renderGsComps()">Adulto</button>
+          <button type="button" class="${c.kind==='child'?'on':''}" onclick="gsComps[${i}].kind='child';renderGsComps()">Criança</button>
+        </div>
+        <button type="button" class="rscomp-x" title="Remover" onclick="gsComps.splice(${i},1);renderGsComps()">✕</button>
+      </div>
+    </div>`).join('');
+}
 function openGuest(id){
   editGuest = id ? (state.guests||[]).find(g=>g.id===id) : null;
   $('gsTitle').textContent = editGuest ? 'Editar convidado' : 'Novo convidado';
   $('gsName').value = editGuest?.name||'';
-  $('gsComp').value = editGuest?.comp||'';
+  gsComps = (editGuest && Array.isArray(editGuest.compDetail) && editGuest.compDetail.length)
+    ? editGuest.compDetail.map(c=>({name:c.name||'',kind:c.kind==='child'?'child':'adult',phone:c.phone||''}))
+    : Array.from({length:(editGuest&&parseInt(editGuest.comp))||0},()=>({name:'',kind:'adult',phone:''}));
+  renderGsComps();
   $('gsPhone').value = editGuest?.phone||'';
   $('gsNote').value = editGuest?.note||'';
   $('gsDiet').value = editGuest?.diet||'';
@@ -3436,7 +3462,8 @@ function saveGuest(){
   const chip=document.querySelector('#gsGroups .fchip.on');
   if(chip) group=chip.textContent.trim();
   if($('gsGroupOther').value.trim()) group=$('gsGroupOther').value.trim();
-  const data={name,group,comp:parseInt($('gsComp').value)||0,phone:$('gsPhone').value.trim(),diet:$('gsDiet').value.trim(),note:$('gsNote').value.trim(),status:gsStatus};
+  const cdet=gsComps.map(c=>({name:(c.name||'').trim(),kind:c.kind==='child'?'child':'adult',phone:(c.phone||'').trim()})).filter(c=>c.name);
+  const data={name,group,comp:gsComps.length,compDetail:cdet,phone:$('gsPhone').value.trim(),diet:$('gsDiet').value.trim(),note:$('gsNote').value.trim(),status:gsStatus};
   if(!state.guests) state.guests=[];
   if(editGuest){ Object.assign(editGuest,data); }
   else { state.guests.push({id:uid(),...data}); }
@@ -3628,7 +3655,7 @@ function compStr(r){
 }
 /* ---- exportar lista de convidados ---- */
 function guestStatusLabel(st){ return st==='yes'?'Confirmado':st==='no'?'Não vai':'Pendente'; }
-function guestTotalPeople(g){ const cd=(g.compDetail&&g.compDetail.length)?g.compDetail.length:(parseInt(g.comp)||0); return 1+cd; }
+function guestTotalPeople(g){ return 1+guestCompTotal(g); }
 function exportSummary(){
   const gs=state.guests||[];
   const yes=gs.filter(g=>g.status==='yes');
