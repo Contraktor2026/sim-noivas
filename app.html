@@ -4294,12 +4294,46 @@ function askConfirm(title,msg,onYes,yesLabel){
 
 /* =================== INIT =================== */
 function renderAll(){ renderHome(); renderFin(); renderForn(); renderChk(); }
+// ===== botão "voltar" do celular: fecha a camada de cima em vez de sair do app =====
+let _backExitArmed=false,_backExitT=null;
+function _visEl(el){ return el && el.style.display!=='none' && getComputedStyle(el).display!=='none'; }
+function simAtRoot(){
+  if(_visEl($('login'))) return true;   // login na tela = raiz
+  if(_visEl($('onb'))) return true;     // onboarding na tela = raiz
+  return false;
+}
+function simHandleBack(){
+  // fecha a camada mais "de cima"; devolve true se fechou algo
+  if(typeof curTour!=='undefined' && curTour && curTour!==TOUR && _visEl($('tour'))){ endTour(); return true; }
+  if($('fv') && $('fv').classList.contains('open')){ closeViewer(); return true; }
+  if($('ov') && $('ov').classList.contains('open')){ closeSheet(); return true; }
+  if(simAtRoot()) return false;
+  if(($('s-vendor')&&$('s-vendor').classList.contains('on')) || ($('s-catpage')&&$('s-catpage').classList.contains('on'))){ go('forn'); return true; }
+  if($('s-home') && !$('s-home').classList.contains('on')){ go('home'); return true; }
+  return false; // home, nada aberto
+}
+function initBackButton(){
+  if(typeof DEMO!=='undefined' && DEMO) return;       // não no modo demo (iframe)
+  if(!('pushState' in history)) return;
+  try{ history.pushState({sim:1},''); }catch(e){ return; }
+  window.addEventListener('popstate',()=>{
+    let closed=false;
+    try{ closed=simHandleBack(); }catch(e){ closed=false; }
+    if(closed){ try{history.pushState({sim:1},'');}catch(e){} _backExitArmed=false; clearTimeout(_backExitT); return; }
+    if(_backExitArmed){ history.back(); return; }     // 2º toque: sai
+    _backExitArmed=true; toast('Pressione voltar de novo para sair');
+    try{ history.pushState({sim:1},''); }catch(e){}
+    _backExitT=setTimeout(()=>{_backExitArmed=false;},2000);
+  });
+}
 async function bootApp(){
   await load();
   ['obBudget','stBudget','exVal','qVal','pcVal'].forEach(id=>maskMoney($(id)));
   $('fileQuote').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast('Arquivo recebido — processando…'); handleQuoteFile(e.target.files[0]); } });
   $('fileContract').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast('Contrato recebido — processando…'); handleContractFile(e.target.files[0]); } });
   $('fileProof').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast('Comprovante recebido…'); handleProofFile(e.target.files[0]); } });
+
+  initBackButton();
   $('splash').style.display='none';
   $('login').style.display='none';
   if(!state.profile){ $('onb').style.display='flex'; }
