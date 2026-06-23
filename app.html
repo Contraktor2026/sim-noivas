@@ -1033,6 +1033,8 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 
       <div id="finList"></div>
       <div id="finCats"></div>
+      <button class="linkmini muted" style="margin-top:18px" onclick="exportReportsPDF()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:5px"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Gerar relatório em PDF</button>
+      <p class="fine" style="text-align:center;margin:5px 0 0;color:var(--muted)">Finanças, cotações e fornecedores fechados, num documento só.</p>
     </section>
 
     <!-- FORNECEDORES (visão geral) -->
@@ -3864,6 +3866,135 @@ function exportGuestsPDF(){
   closeSheet(); toast('Preparando o PDF…');
   setTimeout(()=>{ try{ f.contentWindow.focus(); }catch(_){}
     try{ f.contentWindow.print(); }catch(e){ toast('Não consegui abrir a impressão'); } }, 650);
+}
+function printHTML(doc){
+  let f=document.getElementById('printFrame');
+  if(!f){ f=document.createElement('iframe'); f.id='printFrame'; f.style.cssText='position:fixed;right:0;bottom:0;width:0;height:0;border:0;opacity:0'; document.body.appendChild(f); }
+  const d=f.contentWindow.document; d.open(); d.write(doc); d.close();
+  toast('Preparando o PDF…');
+  setTimeout(()=>{ try{ f.contentWindow.focus(); }catch(_){ } try{ f.contentWindow.print(); }catch(e){ toast('Não consegui abrir a impressão'); } }, 650);
+}
+function buildReportDoc(){
+  const p=state.profile||{};
+  const names=esc((p.a||'')+' & '+(p.b||''));
+  const ini=esc((p.a&&p.a[0]||'').toUpperCase())+' &amp; '+esc((p.b&&p.b[0]||'').toUpperCase());
+  const dt=p.date?new Date(p.date+'T12:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'}):'';
+  const loc=[p.city,p.uf].filter(Boolean).join(', ');
+  const meta=[dt,loc].filter(Boolean).join(' · ');
+  const today=new Date().toLocaleDateString('pt-BR');
+  const exp=state.exp||[], cats=state.cats||[];
+
+  // ---- Finanças ----
+  const budget=Number(p.budget)||0;
+  const lancado=exp.reduce((a,e)=>a+(Number(e.val)||0),0);
+  const pago=exp.filter(e=>e.paid).reduce((a,e)=>a+(Number(e.val)||0),0);
+  const falta=lancado-pago;
+  let finBox=`<div class="fin-sum">
+    ${budget?`<div class="box"><div class="cap">Orçamento</div><div class="v">${brl(budget)}</div></div>`:''}
+    <div class="box"><div class="cap">Lançado</div><div class="v">${brl(lancado)}</div></div>
+    <div class="box"><div class="cap">Já pago</div><div class="v">${brl(pago)}</div></div>
+    <div class="box"><div class="cap">Falta pagar</div><div class="v">${brl(falta)}</div></div>
+  </div>`;
+  let finBody;
+  if(exp.length){
+    const sorted=[...exp].sort((a,b)=>(a.cat||'').localeCompare(b.cat||'')||(a.due||'').localeCompare(b.due||''));
+    finBody=`<table><thead><tr><th>Descrição</th><th>Categoria</th><th>Vence</th><th class="right">Valor</th><th>Pago</th></tr></thead><tbody>`+
+      sorted.map(e=>`<tr>
+        <td><b>${esc(e.desc||'—')}</b>${e.proofId?' <span class="chip">compr.</span>':''}</td>
+        <td>${esc(e.cat||'Geral')}</td>
+        <td>${e.due?fdate(e.due):'—'}</td>
+        <td class="right">${brl(Number(e.val)||0)}</td>
+        <td>${e.paid?'<span class="st-yes">✓</span>':'<span class="st-pending">—</span>'}</td>
+      </tr>`).join('')+
+      `<tr class="totrow"><td colspan="3">Total</td><td class="right">${brl(lancado)}</td><td></td></tr></tbody></table>`;
+  } else finBody=`<div class="empty-line">Nenhuma despesa lançada ainda.</div>`;
+
+  // ---- Cotações ----
+  const cotCats=cats.filter(c=>c.quotes&&c.quotes.length);
+  let cotBody;
+  if(cotCats.length){
+    cotBody=cotCats.map(c=>{
+      const qs=c.quotes.map(q=>{
+        const stars=q.stars?('★'.repeat(q.stars)+'<span style="color:#ccc">'+'★'.repeat(5-q.stars)+'</span>'):'';
+        const bits=[stars?`<span style="color:#A8853B">${stars}</span>`:'', q.dif?esc(q.dif):'', q.inc?esc(q.inc):''].filter(Boolean).join(' · ');
+        return `<div class="cot-q">
+          <div class="qline"><div class="qn">${esc(q.name||'—')}${q.win?'<span class="win-badge">CONTRATADO</span>':''}</div><div class="qv">${brl(Number(q.val)||0)}</div></div>
+          ${bits?`<div class="qmeta">${bits}</div>`:''}
+        </div>`;
+      }).join('');
+      return `<div class="cot-block"><div class="cot-cat">${esc(c.name)} · ${c.quotes.length} orçamento${c.quotes.length>1?'s':''}</div>${qs}</div>`;
+    }).join('');
+  } else cotBody=`<div class="empty-line">Nenhuma cotação registrada ainda.</div>`;
+
+  // ---- Fornecedores fechados ----
+  const hired=[]; cats.forEach(c=>c.quotes.filter(q=>q.win).forEach(q=>hired.push({c,q})));
+  let hirBody;
+  if(hired.length){
+    let tot=0;
+    const rows=hired.map(({c,q})=>{
+      const linked=exp.filter(e=>e.vendorId===q.id);
+      const pg=linked.filter(e=>e.paid).reduce((a,e)=>a+(Number(e.val)||0),0);
+      const pct=q.val>0?Math.min(100,Math.round(pg/q.val*100)):0;
+      tot+=Number(q.val)||0;
+      return `<tr>
+        <td><b>${esc(q.name||'—')}</b></td>
+        <td>${esc(c.name)}</td>
+        <td class="right">${brl(Number(q.val)||0)}</td>
+        <td class="right">${brl(pg)}</td>
+        <td class="ce">${pct}%</td>
+      </tr>`;
+    }).join('');
+    hirBody=`<table><thead><tr><th>Fornecedor</th><th>Categoria</th><th class="right">Contrato</th><th class="right">Pago</th><th>%</th></tr></thead><tbody>${rows}<tr class="totrow"><td colspan="2">Total contratado</td><td class="right">${brl(tot)}</td><td colspan="2"></td></tr></tbody></table>`;
+  } else hirBody=`<div class="empty-line">Nenhum fornecedor contratado ainda.</div>`;
+
+  return `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Relatório — ${names}</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Karla',system-ui,sans-serif;color:#21211D;padding:30px 26px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .lh{text-align:center;border-bottom:2px solid #1F3D2B;padding-bottom:15px;margin-bottom:6px}
+    .mono{width:56px;height:56px;border-radius:50%;border:1.5px solid #A8853B;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-family:'Marcellus',serif;font-size:17px;color:#1F3D2B}
+    .nm{font-family:'Marcellus',serif;font-size:25px;color:#1F3D2B;letter-spacing:.04em}
+    .meta{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#A8853B;font-weight:700;margin-top:6px}
+    .ttl{font-family:'Marcellus',serif;font-size:13px;margin-top:11px;letter-spacing:.1em;text-transform:uppercase}
+    .sec2{font-family:'Marcellus',serif;font-size:17px;color:#1F3D2B;margin:24px 0 3px}
+    .secrule{height:1px;width:62px;background:linear-gradient(90deg,#A8853B,rgba(168,133,59,0));margin:0 0 11px}
+    .fin-sum{display:flex;flex-wrap:wrap;gap:9px;margin:4px 0 12px}
+    .fin-sum .box{flex:1;min-width:110px;background:#F4F1EA;border-radius:8px;padding:9px 11px}
+    .fin-sum .cap{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#A8853B;font-weight:700}
+    .fin-sum .v{font-family:'Marcellus',serif;font-size:16px;color:#1F3D2B;margin-top:2px}
+    table{width:100%;border-collapse:collapse;font-size:10px;margin-top:2px}
+    thead th{background:#1F3D2B;color:#fff;text-align:left;padding:6px 8px;font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.04em}
+    th.right{text-align:right}
+    tbody td{padding:6px 8px;border-bottom:1px solid #E3E0D5;vertical-align:top}
+    td.ce{text-align:center}td.right{text-align:right}
+    .totrow td{font-weight:700;color:#1F3D2B;background:#EAF0E9;border-bottom:none}
+    .st-yes{color:#2a7a3f;font-weight:700}.st-pending{color:#9a7d2e}
+    .chip{font-size:8px;background:#EFE6D2;color:#7A6430;padding:1px 4px;border-radius:99px;letter-spacing:.03em}
+    .cot-cat{font-weight:700;color:#1F3D2B;font-size:11px;margin:11px 0 5px;text-transform:uppercase;letter-spacing:.04em}
+    .cot-block{page-break-inside:avoid}
+    .cot-q{border:1px solid #E3E0D5;border-radius:8px;padding:7px 10px;margin-bottom:6px;page-break-inside:avoid}
+    .cot-q .qline{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+    .cot-q .qn{font-weight:700;color:#21211D;font-size:11px}
+    .cot-q .qv{font-family:'Marcellus',serif;color:#1F3D2B;font-size:13px}
+    .cot-q .qmeta{font-size:9.5px;color:#555;margin-top:3px;line-height:1.4}
+    .win-badge{display:inline-block;background:#1F3D2B;color:#fff;font-size:7.5px;padding:1px 5px;border-radius:99px;letter-spacing:.05em;margin-left:6px;vertical-align:1px}
+    .empty-line{font-size:11px;color:#888;font-style:italic;padding:5px 0}
+    .foot{margin-top:20px;text-align:center;font-size:10px;color:#999;border-top:1px solid #E3E0D5;padding-top:10px}
+    tr{page-break-inside:avoid}
+    .section{page-break-inside:auto}
+  </style></head><body>
+    <div class="lh"><div class="mono">${ini}</div><div class="nm">${names}</div>${meta?`<div class="meta">${esc(meta)}</div>`:''}<div class="ttl">Relatório do casamento</div></div>
+    <div class="section"><div class="sec2">Finanças</div><div class="secrule"></div>${finBox}${finBody}</div>
+    <div class="section"><div class="sec2">Cotações</div><div class="secrule"></div>${cotBody}</div>
+    <div class="section"><div class="sec2">Fornecedores fechados</div><div class="secrule"></div>${hirBody}</div>
+    <div class="foot">Gerado pelo SIM. · ${today}</div>
+  </body></html>`;
+}
+function exportReportsPDF(){
+  const exp=state.exp||[], cats=state.cats||[];
+  if(!exp.length && !cats.length){ toast('Ainda não há dados para o relatório'); return; }
+  printHTML(buildReportDoc());
+  if($('ov') && $('ov').classList.contains('open')) closeSheet();
 }
 async function loadRSVPs(){
   if(!state.publicSlug||!sb||!sbUser) return;
