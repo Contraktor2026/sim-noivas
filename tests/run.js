@@ -62,6 +62,20 @@ load().then(({ w, d, A, base, novaData, errors, results }) => {
     A('ID7 volta pro PT', d.querySelector('[data-i18n=exp_save]').textContent === 'Salvar despesa');
   } catch (e) { results.fail++; results.fails.push('I18N-DIN EXCEÇÃO: ' + e.message); }
 
+  // ---------- I18N: tela Fornecedores ----------
+  try {
+    setLang('es');
+    A('IV1 ficha de orçamento: salvar', d.querySelector('[data-i18n=q_save]').textContent === 'Guardar presupuesto');
+    A('IV2 ficha: rótulo fornecedor', d.querySelector('[data-i18n=q_vendor_label]').textContent === 'Proveedor');
+    A('IV3 confirmar contrato', d.querySelector('[data-i18n=cc_title]').textContent === 'Confirmar contrato');
+    A('IV4 plano de pagamento', d.querySelector('[data-i18n=parc_title]').textContent === 'Plan de pago');
+    A('IV5 botão PDF fornecedores', d.querySelector('[data-i18n=vendors_pdf_btn]').textContent === 'Generar PDF de proveedores');
+    A('IV6 chaves dinâmicas existem', w.t('v_hired') === 'Contratados' && w.t('v_quoting') === 'En cotización' && w.t('v_contract_this') === 'Contratar este proveedor');
+    A('IV7 toast dinâmico', w.t('m_q_saved') === 'Presupuesto guardado' && w.t('m_contracted').startsWith('Contratado'));
+    setLang('pt');
+    A('IV8 volta pro PT', d.querySelector('[data-i18n=q_save]').textContent === 'Salvar orçamento');
+  } catch (e) { results.fail++; results.fails.push('I18N-FORN EXCEÇÃO: ' + e.message); }
+
   // ---------- FIN: fluxo de despesa ----------
   try {
     w.STATE = base();
