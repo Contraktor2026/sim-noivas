@@ -1026,26 +1026,26 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       <div class="card green">
         <div class="row">
           <div>
-            <div class="cap gold">Orçamento</div>
+            <div class="cap gold" data-i18n="money_budget_cap">Orçamento</div>
             <div class="num" id="finBudget">—</div>
           </div>
-          <button class="btn sm" style="background:rgba(250,249,245,.14);color:var(--gold-soft)" onclick="openSettings()">Ajustar</button>
+          <button class="btn sm" style="background:rgba(250,249,245,.14);color:var(--gold-soft)" onclick="openSettings()" data-i18n="money_adjust">Ajustar</button>
         </div>
         <div class="meter"><i id="finMeter"></i></div>
-        <div class="row fine"><span>Comprometido: <b id="finCommit">—</b></span><span>Disponível: <b id="finFree">—</b></span></div>
+        <div class="row fine"><span><span data-i18n="money_committed">Comprometido:</span> <b id="finCommit">—</b></span><span><span data-i18n="money_available">Disponível:</span> <b id="finFree">—</b></span></div>
         <hr class="hr" style="border-color:rgba(250,249,245,.18)">
-        <div class="row fine"><span>Já pago: <b id="finPaid">—</b></span><span>A pagar: <b id="finOpen">—</b></span></div>
+        <div class="row fine"><span><span data-i18n="money_paid">Já pago:</span> <b id="finPaid">—</b></span><span><span data-i18n="money_topay">A pagar:</span> <b id="finOpen">—</b></span></div>
       </div>
 
       <button class="add" onclick="openExpense()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-        Adicionar despesa
+        <span data-i18n="money_add">Adicionar despesa</span>
       </button>
 
       <div id="finList"></div>
       <div id="finCats"></div>
-      <button class="linkmini muted" style="margin-top:18px" onclick="exportReportsPDF()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:5px"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Gerar relatório em PDF</button>
-      <p class="fine" style="text-align:center;margin:5px 0 0;color:var(--muted)">Finanças, cotações e fornecedores fechados, num documento só.</p>
+      <button class="linkmini muted" style="margin-top:18px" onclick="exportReportsPDF()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:5px"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span data-i18n="money_report_btn">Gerar relatório em PDF</span></button>
+      <p class="fine" style="text-align:center;margin:5px 0 0;color:var(--muted)" data-i18n="money_report_sub">Finanças, cotações e fornecedores fechados, num documento só.</p>
     </section>
 
     <!-- FORNECEDORES (visão geral) -->
@@ -1290,39 +1290,39 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 
     <div class="sheet" id="sh-exp" style="display:none">
       <h3 id="expTitle">Nova despesa</h3>
-      <p class="sub">Vai aparecer no seu painel com o vencimento.</p>
-      <div class="f"><label>Descrição</label><input id="exDesc" placeholder="Ex.: Sinal do espaço"></div>
+      <p class="sub" data-i18n="exp_sub">Vai aparecer no seu painel com o vencimento.</p>
+      <div class="f"><label data-i18n="exp_desc_label">Descrição</label><input id="exDesc" data-i18n-ph="exp_desc_ph" placeholder="Ex.: Sinal do espaço"></div>
       <div class="frow">
-        <div class="f"><label>Categoria</label><input id="exCat" list="catlist" placeholder="Buffet, Vestido…">
+        <div class="f"><label data-i18n="exp_cat_label">Categoria</label><input id="exCat" list="catlist" data-i18n-ph="exp_cat_ph" placeholder="Buffet, Vestido…">
           <datalist id="catlist">
-            <option>Espaço</option><option>Buffet</option><option>Fotografia e vídeo</option>
-            <option>Decoração</option><option>Vestido e traje</option><option>Música</option>
-            <option>Cerimonial</option><option>Convites e papelaria</option><option>Doces e bolo</option>
-            <option>Beleza</option><option>Lembrancinhas</option><option>Lua de mel</option>
+            <option data-i18n="cat_opt_venue">Espaço</option><option data-i18n="cat_opt_buffet">Buffet</option><option data-i18n="cat_opt_photo">Fotografia e vídeo</option>
+            <option data-i18n="cat_opt_decor">Decoração</option><option data-i18n="cat_opt_dress">Vestido e traje</option><option data-i18n="cat_opt_music">Música</option>
+            <option data-i18n="cat_opt_planner">Cerimonial</option><option data-i18n="cat_opt_invites">Convites e papelaria</option><option data-i18n="cat_opt_cake">Doces e bolo</option>
+            <option data-i18n="cat_opt_beauty">Beleza</option><option data-i18n="cat_opt_favors">Lembrancinhas</option><option data-i18n="cat_opt_honeymoon">Lua de mel</option>
           </datalist>
         </div>
-        <div class="f"><label>Valor (R$)</label><input id="exVal" type="text" inputmode="decimal" placeholder="1.500,00"></div>
+        <div class="f"><label data-i18n="exp_val_label">Valor (R$)</label><input id="exVal" type="text" inputmode="decimal" placeholder="1.500,00"></div>
       </div>
-      <div class="f"><label>Vencimento</label><input id="exDue" type="date"></div>
-      <div class="fcheck"><input type="checkbox" id="exPaid"><label for="exPaid" style="all:unset;font-weight:600">Já está pago</label></div>
-      <div class="f" id="exProofWrap" style="display:none"><label>Comprovante de pagamento</label><div id="exProof"></div></div>
-      <button class="btn p full" onclick="saveExpense()">Salvar despesa</button>
-      <button class="btn d full" id="exDel" style="margin-top:8px;display:none" onclick="delExpense()">Excluir despesa</button>
+      <div class="f"><label data-i18n="exp_due_label">Vencimento</label><input id="exDue" type="date"></div>
+      <div class="fcheck"><input type="checkbox" id="exPaid"><label for="exPaid" style="all:unset;font-weight:600" data-i18n="exp_paid_check">Já está pago</label></div>
+      <div class="f" id="exProofWrap" style="display:none"><label data-i18n="exp_proof_label">Comprovante de pagamento</label><div id="exProof"></div></div>
+      <button class="btn p full" onclick="saveExpense()"><span data-i18n="exp_save">Salvar despesa</span></button>
+      <button class="btn d full" id="exDel" style="margin-top:8px;display:none" onclick="delExpense()"><span data-i18n="exp_del">Excluir despesa</span></button>
     </div>
 
     <div class="sheet" id="sh-proof" style="display:none">
-      <h3>Anexar comprovante?</h3>
-      <p class="sub" id="proofSub">Guarde o comprovante deste pagamento — fica salvo junto da despesa.</p>
-      <label class="importbtn" for="fileProof" role="button" tabindex="0" style="margin-bottom:0" onclick="watchPicker('proof')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" style="vertical-align:-2px;margin-right:6px"><path d="M21 11.5l-8.5 8.5a5.5 5.5 0 01-7.8-7.8L13 4a3.7 3.7 0 015.2 5.2l-8.2 8.2a1.8 1.8 0 01-2.6-2.6l7.6-7.6"/></svg>Anexar foto ou PDF</label>
-      <button class="btn g full" style="margin-top:8px" onclick="closeSheet()">Agora não</button>
+      <h3 data-i18n="proof_title">Anexar comprovante?</h3>
+      <p class="sub" id="proofSub" data-i18n="proof_sub_default">Guarde o comprovante deste pagamento — fica salvo junto da despesa.</p>
+      <label class="importbtn" for="fileProof" role="button" tabindex="0" style="margin-bottom:0" onclick="watchPicker('proof')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" style="vertical-align:-2px;margin-right:6px"><path d="M21 11.5l-8.5 8.5a5.5 5.5 0 01-7.8-7.8L13 4a3.7 3.7 0 015.2 5.2l-8.2 8.2a1.8 1.8 0 01-2.6-2.6l7.6-7.6"/></svg><span data-i18n="proof_attach">Anexar foto ou PDF</span></label>
+      <button class="btn g full" style="margin-top:8px" onclick="closeSheet()" data-i18n="proof_later">Agora não</button>
     </div>
 
     <div class="sheet" id="sh-cat" style="display:none">
       <h3 id="ctTitle">Nova categoria</h3>
-      <p class="sub">Ex.: Buffet, Fotografia, Decoração, Doces…</p>
-      <div class="f"><label>Nome da categoria</label><input id="ctName" placeholder="Buffet"></div>
+      <p class="sub" data-i18n="cat_sub">Ex.: Buffet, Fotografia, Decoração, Doces…</p>
+      <div class="f"><label data-i18n="cat_name_label">Nome da categoria</label><input id="ctName" data-i18n-ph="cat_name_ph" placeholder="Buffet"></div>
       <button class="btn p full" id="ctSave" onclick="saveCat()">Criar categoria</button>
-      <button class="btn d full" id="ctDel" style="margin-top:8px;display:none" onclick="delCat()">Excluir categoria</button>
+      <button class="btn d full" id="ctDel" style="margin-top:8px;display:none" onclick="delCat()"><span data-i18n="cat_del">Excluir categoria</span></button>
     </div>
 
     <div class="sheet" id="sh-quote" style="display:none">
@@ -1805,6 +1805,79 @@ Object.assign(I18N.fr,{
   home_head_needs:'A besoin de vous',home_sub_needs:'Paiements à venir et décisions en attente.',
   home_head_first:'Vos premiers pas',home_sub_first:"L'app travaille pour vous à partir de ce que vous enregistrez.",
   home_head_next:'Prochaines étapes',home_sub_next:'Rien en attente dans ce que vous avez noté — voyez ce que vous pouvez anticiper.'
+});
+// ---- tela Dinheiro ----
+Object.assign(I18N.pt,{
+  money_budget_cap:'Orçamento',money_adjust:'Ajustar',money_committed:'Comprometido:',money_available:'Disponível:',money_paid:'Já pago:',money_topay:'A pagar:',
+  money_add:'Adicionar despesa',money_report_btn:'Gerar relatório em PDF',money_report_sub:'Finanças, cotações e fornecedores fechados, num documento só.',
+  exp_title_new:'Nova despesa',exp_title_edit:'Editar despesa',exp_sub:'Vai aparecer no seu painel com o vencimento.',
+  exp_desc_label:'Descrição',exp_desc_ph:'Ex.: Sinal do espaço',exp_cat_label:'Categoria',exp_cat_ph:'Buffet, Vestido…',
+  exp_val_label:'Valor (R$)',exp_due_label:'Vencimento',exp_paid_check:'Já está pago',exp_proof_label:'Comprovante de pagamento',
+  exp_save:'Salvar despesa',exp_del:'Excluir despesa',
+  cat_opt_venue:'Espaço',cat_opt_buffet:'Buffet',cat_opt_photo:'Fotografia e vídeo',cat_opt_decor:'Decoração',cat_opt_dress:'Vestido e traje',cat_opt_music:'Música',cat_opt_planner:'Cerimonial',cat_opt_invites:'Convites e papelaria',cat_opt_cake:'Doces e bolo',cat_opt_beauty:'Beleza',cat_opt_favors:'Lembrancinhas',cat_opt_honeymoon:'Lua de mel',
+  proof_title:'Anexar comprovante?',proof_sub_default:'Guarde o comprovante deste pagamento — fica salvo junto da despesa.',proof_attach:'Anexar foto ou PDF',proof_later:'Agora não',
+  proof_view:'Ver comprovante',proof_change:'Trocar',proof_remove:'Remover',proof_attach2:'Anexar comprovante (foto ou PDF)',money_proof_chip:'comprovante',
+  m_paid_of:'Pagamento de ',proof_sub_keep:'Guarde o comprovante — fica salvo junto da despesa.',
+  cat_title_new:'Nova categoria',cat_title_edit:'Renomear categoria',cat_sub:'Ex.: Buffet, Fotografia, Decoração, Doces…',cat_name_label:'Nome da categoria',cat_name_ph:'Buffet',cat_save_new:'Criar categoria',cat_del:'Excluir categoria',
+  m_exp_name:'Dê um nome à despesa',m_exp_val:'Informe o valor',m_exp_updated:'Despesa atualizada',m_exp_added:'Despesa registrada',m_exp_deleted:'Despesa excluída',
+  m_paid:'Parcela quitada · ',m_proof_attached:'Comprovante anexado',m_proof_removed:'Comprovante removido',m_proof_received:'Comprovante recebido…',m_proof_savefail:'Não consegui salvar o comprovante',
+  m_file_toobig:'Arquivo muito grande (máx ~3,5MB)',m_file_error:'Algo deu errado com o arquivo',
+  m_cat_name:'Dê um nome à categoria',m_cat_renamed:'Categoria renomeada',m_cat_created:'Categoria criada — registre os orçamentos',m_cat_deleted:'Categoria excluída',
+  m_pdf_preparing:'Preparando o PDF…',m_report_nodata:'Ainda não há dados para o relatório'
+});
+Object.assign(I18N.es,{
+  money_budget_cap:'Presupuesto',money_adjust:'Ajustar',money_committed:'Comprometido:',money_available:'Disponible:',money_paid:'Ya pagado:',money_topay:'Por pagar:',
+  money_add:'Agregar gasto',money_report_btn:'Generar informe en PDF',money_report_sub:'Finanzas, presupuestos y proveedores cerrados, en un solo documento.',
+  exp_title_new:'Nuevo gasto',exp_title_edit:'Editar gasto',exp_sub:'Aparecerá en tu panel con el vencimiento.',
+  exp_desc_label:'Descripción',exp_desc_ph:'Ej.: Anticipo del salón',exp_cat_label:'Categoría',exp_cat_ph:'Banquete, Vestido…',
+  exp_val_label:'Valor (R$)',exp_due_label:'Vencimiento',exp_paid_check:'Ya está pagado',exp_proof_label:'Comprobante de pago',
+  exp_save:'Guardar gasto',exp_del:'Eliminar gasto',
+  cat_opt_venue:'Salón',cat_opt_buffet:'Banquete',cat_opt_photo:'Fotografía y vídeo',cat_opt_decor:'Decoración',cat_opt_dress:'Vestido y traje',cat_opt_music:'Música',cat_opt_planner:'Wedding planner',cat_opt_invites:'Invitaciones y papelería',cat_opt_cake:'Dulces y pastel',cat_opt_beauty:'Belleza',cat_opt_favors:'Recuerditos',cat_opt_honeymoon:'Luna de miel',
+  proof_title:'¿Adjuntar comprobante?',proof_sub_default:'Guarda el comprobante de este pago — queda junto al gasto.',proof_attach:'Adjuntar foto o PDF',proof_later:'Ahora no',
+  proof_view:'Ver comprobante',proof_change:'Cambiar',proof_remove:'Quitar',proof_attach2:'Adjuntar comprobante (foto o PDF)',money_proof_chip:'comprobante',
+  m_paid_of:'Pago de ',proof_sub_keep:'Guarda el comprobante — queda junto al gasto.',
+  cat_title_new:'Nueva categoría',cat_title_edit:'Renombrar categoría',cat_sub:'Ej.: Banquete, Fotografía, Decoración, Dulces…',cat_name_label:'Nombre de la categoría',cat_name_ph:'Banquete',cat_save_new:'Crear categoría',cat_del:'Eliminar categoría',
+  m_exp_name:'Dale un nombre al gasto',m_exp_val:'Indica el valor',m_exp_updated:'Gasto actualizado',m_exp_added:'Gasto registrado',m_exp_deleted:'Gasto eliminado',
+  m_paid:'Cuota pagada · ',m_proof_attached:'Comprobante adjuntado',m_proof_removed:'Comprobante quitado',m_proof_received:'Comprobante recibido…',m_proof_savefail:'No pude guardar el comprobante',
+  m_file_toobig:'Archivo demasiado grande (máx ~3,5MB)',m_file_error:'Algo salió mal con el archivo',
+  m_cat_name:'Dale un nombre a la categoría',m_cat_renamed:'Categoría renombrada',m_cat_created:'Categoría creada — registra los presupuestos',m_cat_deleted:'Categoría eliminada',
+  m_pdf_preparing:'Preparando el PDF…',m_report_nodata:'Aún no hay datos para el informe'
+});
+Object.assign(I18N.en,{
+  money_budget_cap:'Budget',money_adjust:'Adjust',money_committed:'Committed:',money_available:'Available:',money_paid:'Paid:',money_topay:'To pay:',
+  money_add:'Add expense',money_report_btn:'Generate PDF report',money_report_sub:'Finances, quotes and signed vendors, in a single document.',
+  exp_title_new:'New expense',exp_title_edit:'Edit expense',exp_sub:"It'll appear on your dashboard with its due date.",
+  exp_desc_label:'Description',exp_desc_ph:'e.g. Venue deposit',exp_cat_label:'Category',exp_cat_ph:'Catering, Dress…',
+  exp_val_label:'Amount (R$)',exp_due_label:'Due date',exp_paid_check:'Already paid',exp_proof_label:'Payment receipt',
+  exp_save:'Save expense',exp_del:'Delete expense',
+  cat_opt_venue:'Venue',cat_opt_buffet:'Catering',cat_opt_photo:'Photo & video',cat_opt_decor:'Decor',cat_opt_dress:'Dress & suit',cat_opt_music:'Music',cat_opt_planner:'Wedding planner',cat_opt_invites:'Invitations & stationery',cat_opt_cake:'Sweets & cake',cat_opt_beauty:'Beauty',cat_opt_favors:'Favors',cat_opt_honeymoon:'Honeymoon',
+  proof_title:'Attach receipt?',proof_sub_default:"Keep this payment's receipt — it's saved with the expense.",proof_attach:'Attach photo or PDF',proof_later:'Not now',
+  proof_view:'View receipt',proof_change:'Replace',proof_remove:'Remove',proof_attach2:'Attach receipt (photo or PDF)',money_proof_chip:'receipt',
+  m_paid_of:'Payment of ',proof_sub_keep:"Keep the receipt — it's saved with the expense.",
+  cat_title_new:'New category',cat_title_edit:'Rename category',cat_sub:'e.g. Catering, Photography, Decor, Sweets…',cat_name_label:'Category name',cat_name_ph:'Catering',cat_save_new:'Create category',cat_del:'Delete category',
+  m_exp_name:'Give the expense a name',m_exp_val:'Enter the amount',m_exp_updated:'Expense updated',m_exp_added:'Expense added',m_exp_deleted:'Expense deleted',
+  m_paid:'Installment paid · ',m_proof_attached:'Receipt attached',m_proof_removed:'Receipt removed',m_proof_received:'Receipt received…',m_proof_savefail:"Couldn't save the receipt",
+  m_file_toobig:'File too large (max ~3.5MB)',m_file_error:'Something went wrong with the file',
+  m_cat_name:'Give the category a name',m_cat_renamed:'Category renamed',m_cat_created:'Category created — add quotes',m_cat_deleted:'Category deleted',
+  m_pdf_preparing:'Preparing the PDF…',m_report_nodata:'No data for the report yet'
+});
+Object.assign(I18N.fr,{
+  money_budget_cap:'Budget',money_adjust:'Ajuster',money_committed:'Engagé :',money_available:'Disponible :',money_paid:'Payé :',money_topay:'À payer :',
+  money_add:'Ajouter une dépense',money_report_btn:'Générer un rapport PDF',money_report_sub:'Finances, devis et prestataires signés, en un seul document.',
+  exp_title_new:'Nouvelle dépense',exp_title_edit:'Modifier la dépense',exp_sub:'Elle apparaîtra sur votre tableau de bord avec son échéance.',
+  exp_desc_label:'Description',exp_desc_ph:'Ex. : Acompte du lieu',exp_cat_label:'Catégorie',exp_cat_ph:'Traiteur, Robe…',
+  exp_val_label:'Montant (R$)',exp_due_label:'Échéance',exp_paid_check:'Déjà payé',exp_proof_label:'Justificatif de paiement',
+  exp_save:'Enregistrer la dépense',exp_del:'Supprimer la dépense',
+  cat_opt_venue:'Lieu',cat_opt_buffet:'Traiteur',cat_opt_photo:'Photo et vidéo',cat_opt_decor:'Décoration',cat_opt_dress:'Robe et costume',cat_opt_music:'Musique',cat_opt_planner:'Wedding planner',cat_opt_invites:'Invitations et papeterie',cat_opt_cake:'Douceurs et gâteau',cat_opt_beauty:'Beauté',cat_opt_favors:'Cadeaux invités',cat_opt_honeymoon:'Lune de miel',
+  proof_title:'Joindre le justificatif ?',proof_sub_default:'Gardez le justificatif de ce paiement — il est enregistré avec la dépense.',proof_attach:'Joindre une photo ou un PDF',proof_later:'Pas maintenant',
+  proof_view:'Voir le justificatif',proof_change:'Remplacer',proof_remove:'Retirer',proof_attach2:'Joindre le justificatif (photo ou PDF)',money_proof_chip:'justificatif',
+  m_paid_of:'Paiement de ',proof_sub_keep:'Gardez le justificatif — il est enregistré avec la dépense.',
+  cat_title_new:'Nouvelle catégorie',cat_title_edit:'Renommer la catégorie',cat_sub:'Ex. : Traiteur, Photographie, Décoration, Douceurs…',cat_name_label:'Nom de la catégorie',cat_name_ph:'Traiteur',cat_save_new:'Créer la catégorie',cat_del:'Supprimer la catégorie',
+  m_exp_name:'Donnez un nom à la dépense',m_exp_val:'Indiquez le montant',m_exp_updated:'Dépense mise à jour',m_exp_added:'Dépense enregistrée',m_exp_deleted:'Dépense supprimée',
+  m_paid:'Versement payé · ',m_proof_attached:'Justificatif joint',m_proof_removed:'Justificatif retiré',m_proof_received:'Justificatif reçu…',m_proof_savefail:"Impossible d'enregistrer le justificatif",
+  m_file_toobig:'Fichier trop volumineux (max ~3,5 Mo)',m_file_error:'Un problème est survenu avec le fichier',
+  m_cat_name:'Donnez un nom à la catégorie',m_cat_renamed:'Catégorie renommée',m_cat_created:'Catégorie créée — ajoutez les devis',m_cat_deleted:'Catégorie supprimée',
+  m_pdf_preparing:'Préparation du PDF…',m_report_nodata:'Pas encore de données pour le rapport'
 });
 
 let authMode='up';
@@ -2397,7 +2470,7 @@ function renderFin(){
     const tag=e.paid?'<span class="tag ok">PAGO</span>':(e.due&&e.due<today?'<span class="tag late">ATRASADO</span>':'<span class="tag due">A PAGAR</span>');
     return `<div class="li" onclick="openExpense('${e.id}')">
       <div class="ic">${ICONS.money}</div>
-      <div class="bd"><div class="t">${esc(e.desc)}</div><div class="m">${e.due?fdate(e.due)+' · ':''}${esc(e.cat||'Geral')}${e.proofId?' · comprovante':''}</div></div>
+      <div class="bd"><div class="t">${esc(e.desc)}</div><div class="m">${e.due?fdate(e.due)+' · ':''}${esc(e.cat||'Geral')}${e.proofId?' · '+t('money_proof_chip'):''}</div></div>
       <div style="text-align:right"><div class="v">${brl(e.val)}</div>${tag}</div>
     </div>`;
   };
@@ -2447,7 +2520,7 @@ let editExp=null, expVendorId=null;
 function openExpense(id,vendorId){
   editExp = id ? state.exp.find(e=>e.id===id) : null;
   expVendorId = editExp ? (editExp.vendorId||null) : (vendorId||null);
-  $('expTitle').textContent = editExp?'Editar despesa':'Nova despesa';
+  $('expTitle').textContent = editExp?t('exp_title_edit'):t('exp_title_new');
   $('exDesc').value=editExp?.desc||'';
   let catPre='';
   if(!editExp && expVendorId){
@@ -2465,21 +2538,21 @@ function openExpense(id,vendorId){
 }
 function saveExpense(){
   const desc=$('exDesc').value.trim(), val=parseBRL($('exVal').value);
-  if(!desc){toast('Dê um nome à despesa');return;}
-  if(!val||val<=0){toast('Informe o valor');return;}
+  if(!desc){toast(t('m_exp_name'));return;}
+  if(!val||val<=0){toast(t('m_exp_val'));return;}
   const data={desc,cat:$('exCat').value.trim(),val,due:$('exDue').value||null,paid:$('exPaid').checked,vendorId:expVendorId};
   if(editExp) Object.assign(editExp,data);
   else state.exp.push({id:uid(),...data});
   const wasEdit=!!editExp;
   persist(); closeSheet(); renderAll();
   if(curVendor && $('s-vendor').classList.contains('on')) renderVendor();
-  toast(wasEdit?'Despesa atualizada':'Despesa registrada');
+  toast(wasEdit?t('m_exp_updated'):t('m_exp_added'));
 }
 function delExpense(){
   state.exp=state.exp.filter(e=>e!==editExp);
   persist(); closeSheet(); renderAll();
   if(curVendor && $('s-vendor').classList.contains('on')) renderVendor();
-  toast('Despesa excluída');
+  toast(t('m_exp_deleted'));
 }
 
 /* =================== FORNECEDORES =================== */
@@ -2846,7 +2919,7 @@ async function readPasted(){
 let editCat=null;
 function openCatEdit(){
   editCat=state.cats.find(x=>x.id===fornCat); if(!editCat) return;
-  $('ctTitle').textContent='Renomear categoria';
+  $('ctTitle').textContent=t('cat_title_edit');
   $('ctName').value=editCat.name;
   $('ctSave').textContent='Salvar nome';
   $('ctDel').style.display='block';
@@ -2854,13 +2927,13 @@ function openCatEdit(){
 }
 function saveCat(){
   const n=$('ctName').value.trim();
-  if(!n){toast('Dê um nome à categoria');return;}
+  if(!n){toast(t('m_cat_name'));return;}
   if(editCat){
     const old=editCat.name;
     editCat.name=n;
     state.exp.forEach(e=>{ if(e.cat===old) e.cat=n; });
     persist(); closeSheet(); renderAll(); renderCatPage();
-    toast('Categoria renomeada');
+    toast(t('m_cat_renamed'));
     return;
   }
   const c={id:uid(),name:n,quotes:[]};
@@ -2868,7 +2941,7 @@ function saveCat(){
   $('ctName').value='';
   persist(); closeSheet(); renderForn();
   openCatPage(c.id);
-  toast('Categoria criada — registre os orçamentos');
+  toast(t('m_cat_created'));
 }
 function delCat(){
   const c=editCat; if(!c) return;
@@ -2886,7 +2959,7 @@ function delCat(){
       state.cats=state.cats.filter(x=>x!==c);
       persist(); renderAll();
       go('forn');
-      toast('Categoria excluída');
+      toast(t('m_cat_deleted'));
     },
     'Excluir'
   );
@@ -3028,7 +3101,7 @@ function renderVendor(){
       const tag=e.paid?'<span class="tag ok">PAGO</span>':(e.due&&e.due<today?'<span class="tag late">ATRASADO</span>':'<span class="tag due">A PAGAR</span>');
       return `<div class="li" onclick="openExpense('${e.id}')">
         <div class="ic">${ICONS.money}</div>
-        <div class="bd"><div class="t">${esc(e.desc)}</div><div class="m">${e.due?'vence '+fdate(e.due):'sem vencimento'}${e.proofId?' · comprovante':''}</div></div>
+        <div class="bd"><div class="t">${esc(e.desc)}</div><div class="m">${e.due?'vence '+fdate(e.due):'sem vencimento'}${e.proofId?' · '+t('money_proof_chip'):''}</div></div>
         <div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:5px">
           <div class="v">${brl(e.val)}</div>
           ${e.paid?tag:`<button class="btn p sm" onclick="event.stopPropagation();payExp('${e.id}')">Pagar</button>`}
@@ -3226,13 +3299,13 @@ function payExp(id){
 function finalizePay(e){
   e.paid=true; persist(); renderAll();
   if(curVendor && $('s-vendor').classList.contains('on')) renderVendor();
-  toast('Parcela quitada · '+brl(e.val));
+  toast(t('m_paid')+brl(e.val));
   offerReceipt(e);
 }
 let proofForExpId=null;
 function offerReceipt(e){
   proofForExpId=e.id;
-  const sub=$('proofSub'); if(sub) sub.textContent='Pagamento de '+brl(e.val)+(e.desc?(' · '+e.desc):'')+'. Guarde o comprovante — fica salvo junto da despesa.';
+  const sub=$('proofSub'); if(sub) sub.textContent=t('m_paid_of')+brl(e.val)+(e.desc?(' · '+e.desc):'')+'. '+t('proof_sub_keep');
   openSheet('sh-proof');
 }
 async function handleProofFile(file){
@@ -3241,13 +3314,13 @@ async function handleProofFile(file){
   const offerOpen = $('sh-proof') && $('sh-proof').style.display!=='none';
   try{
     const {mime,b64}=await prepareFile(file);
-    if(b64.length>=3500000){ toast('Arquivo muito grande (máx ~3,5MB)',true); return; }
+    if(b64.length>=3500000){ toast(t('m_file_toobig'),true); return; }
     const id=uid(); const ok=await saveFileData(id,mime,b64);
     if(ok){ if(e.proofId) await delFileData(e.proofId); e.proofId=id; persist(); renderAll();
       if(curVendor && $('s-vendor').classList.contains('on')) renderVendor();
-      toast('Comprovante anexado'); }
-    else toast('Não consegui salvar o comprovante',true);
-  }catch(err){ toast('Algo deu errado com o arquivo',true); }
+      toast(t('m_proof_attached')); }
+    else toast(t('m_proof_savefail'),true);
+  }catch(err){ toast(t('m_file_error'),true); }
   finally{
     $('fileProof').value='';
     if(offerOpen) closeSheet(); else renderExpProof();
@@ -3257,17 +3330,17 @@ function renderExpProof(){
   const box=$('exProof'); if(!box||!editExp) return;
   box.innerHTML = editExp.proofId
     ? `<div style="display:flex;gap:8px;flex-wrap:wrap">
-         <button class="btn p sm" onclick="viewFile('${editExp.proofId}','Comprovante — ${esc(editExp.desc||'despesa')}')">Ver comprovante</button>
-         <label class="btn g sm" for="fileProof" role="button" tabindex="0" onclick="proofForExpId='${editExp.id}';watchPicker('proof')" style="display:inline-flex;align-items:center">Trocar</label>
-         <button class="btn d sm" onclick="removeProof()">Remover</button>
+         <button class="btn p sm" onclick="viewFile('${editExp.proofId}','Comprovante — ${esc(editExp.desc||'despesa')}')">${t('proof_view')}</button>
+         <label class="btn g sm" for="fileProof" role="button" tabindex="0" onclick="proofForExpId='${editExp.id}';watchPicker('proof')" style="display:inline-flex;align-items:center">${t('proof_change')}</label>
+         <button class="btn d sm" onclick="removeProof()">${t('proof_remove')}</button>
        </div>`
-    : `<label class="importbtn" for="fileProof" role="button" tabindex="0" style="margin-bottom:0" onclick="proofForExpId='${editExp.id}';watchPicker('proof')">Anexar comprovante (foto ou PDF)</label>`;
+    : `<label class="importbtn" for="fileProof" role="button" tabindex="0" style="margin-bottom:0" onclick="proofForExpId='${editExp.id}';watchPicker('proof')">${t('proof_attach2')}</label>`;
 }
 async function removeProof(){
   if(!editExp||!editExp.proofId) return;
   await delFileData(editExp.proofId);
   editExp.proofId=null; persist(); renderAll(); renderExpProof();
-  toast('Comprovante removido');
+  toast(t('m_proof_removed'));
 }
 function addMonths(iso,m){
   const d=new Date(iso+'T12:00:00'); const day=d.getDate();
@@ -4003,7 +4076,7 @@ function exportGuestsPDF(){
   let f=document.getElementById('printFrame');
   if(!f){ f=document.createElement('iframe'); f.id='printFrame'; f.style.cssText='position:fixed;right:0;bottom:0;width:0;height:0;border:0;opacity:0'; document.body.appendChild(f); }
   const d=f.contentWindow.document; d.open(); d.write(doc); d.close();
-  closeSheet(); toast('Preparando o PDF…');
+  closeSheet(); toast(t('m_pdf_preparing'));
   setTimeout(()=>{ try{ f.contentWindow.focus(); }catch(_){}
     try{ f.contentWindow.print(); }catch(e){ toast('Não consegui abrir a impressão'); } }, 650);
 }
@@ -4011,7 +4084,7 @@ function printHTML(doc){
   let f=document.getElementById('printFrame');
   if(!f){ f=document.createElement('iframe'); f.id='printFrame'; f.style.cssText='position:fixed;right:0;bottom:0;width:0;height:0;border:0;opacity:0'; document.body.appendChild(f); }
   const d=f.contentWindow.document; d.open(); d.write(doc); d.close();
-  toast('Preparando o PDF…');
+  toast(t('m_pdf_preparing'));
   setTimeout(()=>{ try{ f.contentWindow.focus(); }catch(_){ } try{ f.contentWindow.print(); }catch(e){ toast('Não consegui abrir a impressão'); } }, 650);
 }
 function _reportFin(){
@@ -4142,7 +4215,7 @@ function exportVendorsPDF(){
 }
 function exportReportsPDF(){
   const exp=state.exp||[], cats=state.cats||[];
-  if(!exp.length && !cats.length){ toast('Ainda não há dados para o relatório'); return; }
+  if(!exp.length && !cats.length){ toast(t('m_report_nodata')); return; }
   printHTML(buildReportDoc());
   if($('ov') && $('ov').classList.contains('open')) closeSheet();
 }
@@ -4561,7 +4634,7 @@ function openSheet(id){
 }
 function closeSheet(){
   $('ov').classList.remove('open'); editExp=editQ=editTk=null; expVendorId=null; editCat=null;
-  $('ctTitle').textContent='Nova categoria'; $('ctSave').textContent='Criar categoria'; $('ctDel').style.display='none';
+  $('ctTitle').textContent=t('cat_title_new'); $('ctSave').textContent=t('cat_save_new'); $('ctDel').style.display='none';
 }
 /* confirmação própria do app — o confirm() do navegador é bloqueado no sandbox */
 function askConfirm(title,msg,onYes,yesLabel){
@@ -4612,7 +4685,7 @@ async function bootApp(){
   ['obBudget','stBudget','exVal','qVal','pcVal'].forEach(id=>maskMoney($(id)));
   $('fileQuote').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast('Arquivo recebido — processando…'); handleQuoteFile(e.target.files[0]); } });
   $('fileContract').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast('Contrato recebido — processando…'); handleContractFile(e.target.files[0]); } });
-  $('fileProof').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast('Comprovante recebido…'); handleProofFile(e.target.files[0]); } });
+  $('fileProof').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast(t('m_proof_received')); handleProofFile(e.target.files[0]); } });
 
   initBackButton();
   $('splash').style.display='none';
