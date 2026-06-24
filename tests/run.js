@@ -10,6 +10,7 @@ load().then(({ w, d, A, base, novaData, errors, results }) => {
     A('L1 app carrega sem erros de console', errors.length === 0);
     if (errors.length) console.log('   erros:', errors.slice(0, 4));
     A('L2 funções principais existem', ['go','openSheet','closeSheet','saveExpense','finalizePay','setLang','t','buildReportDoc','simHandleBack'].every(f => typeof w[f] === 'function'));
+    A('L3 idioma padrão ao entrar é ES', w.SIMLANG === 'es');
   } catch (e) { results.fail++; results.fails.push('L EXCEÇÃO: ' + e.message); }
 
   // ---------- NAV ----------
@@ -134,6 +135,11 @@ load().then(({ w, d, A, base, novaData, errors, results }) => {
     const vd = w.buildVendorsReportDoc();
     A('R3 PDF fornecedores: cotações + fechados', vd.includes('Cotações') && vd.includes('Fornecedores fechados') && vd.includes('Sabor'));
     A('R4 PDF fornecedores: sem Finanças', !vd.includes('Finanças'));
+    setLang('es');
+    const docES = w.buildReportDoc();
+    A('R5 relatório segue idioma (ES)', docES.includes('Informe de la boda') && docES.includes('Finanzas') && docES.includes('Proveedores cerrados'));
+    A('R6 relatório ES sem PT e com $', !docES.includes('Finanças') && !docES.includes('R$') && docES.includes('$'));
+    setLang('pt');
   } catch (e) { results.fail++; results.fails.push('REPORT EXCEÇÃO: ' + e.message); }
 
   // ---------- relatório ----------
