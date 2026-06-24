@@ -651,10 +651,10 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
     <div class="lghero"></div>
     <div class="lgwrap">
       <div class="langsel" id="langsel">
-        <button class="langbtn" type="button" data-lang="pt" onclick="setLang('pt')"><span class="flag">🇧🇷</span> PT</button>
-        <button class="langbtn" type="button" data-lang="es" onclick="setLang('es')"><span class="flag">🇪🇸</span> ES</button>
-        <button class="langbtn" type="button" data-lang="en" onclick="setLang('en')"><span class="flag">🇺🇸</span> EN</button>
-        <button class="langbtn" type="button" data-lang="fr" onclick="setLang('fr')"><span class="flag">🇫🇷</span> FR</button>
+        <button class="langbtn" type="button" data-lang="pt" onclick="setLang('pt')">Português</button>
+        <button class="langbtn" type="button" data-lang="es" onclick="setLang('es')">Español</button>
+        <button class="langbtn" type="button" data-lang="en" onclick="setLang('en')">English</button>
+        <button class="langbtn" type="button" data-lang="fr" onclick="setLang('fr')">Français</button>
       </div>
       <div class="lgmark">SIM<span class="rdot"><svg viewBox="0 0 20 28" aria-hidden="true"><path d="M10 2.5 l3 4.2 -3 4.2 -3 -4.2 Z" fill="currentColor"/><circle cx="10" cy="19" r="6.8" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></span></div>
       <h2 class="lghead" data-i18n="login_head">Você disse sim.<br>A gente organiza o resto.</h2>
@@ -1020,8 +1020,8 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 
     <!-- DINHEIRO -->
     <section class="screen" id="s-fin">
-      <h2 class="sec">Dinheiro</h2>
-      <p class="sub">Cada compromisso do casamento, com vencimento e status.</p>
+      <h2 class="sec" data-i18n="money_head">Dinheiro</h2>
+      <p class="sub" data-i18n="money_sub">Cada compromisso do casamento, com vencimento e status.</p>
 
       <div class="card green">
         <div class="row">
@@ -1050,8 +1050,8 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 
     <!-- FORNECEDORES (visão geral) -->
     <section class="screen" id="s-forn">
-      <h2 class="sec">Fornecedores</h2>
-      <p class="sub">Seus contratos fechados e as cotações em andamento.</p>
+      <h2 class="sec" data-i18n="vendors_head">Fornecedores</h2>
+      <p class="sub" data-i18n="vendors_sub">Seus contratos fechados e as cotações em andamento.</p>
       <div id="fornBody"></div>
       <button class="linkmini muted" style="margin-top:20px" onclick="exportVendorsPDF()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:5px"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Gerar PDF dos fornecedores</button>
       <p class="fine" style="text-align:center;margin:5px 0 0;color:var(--muted)">Cotações e fornecedores fechados, num documento só.</p>
@@ -1068,8 +1068,8 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 
     <!-- LISTA -->
     <section class="screen" id="s-chk">
-      <h2 class="sec">Tarefas</h2>
-      <p class="sub">Seu passo a passo até o altar.</p>
+      <h2 class="sec" data-i18n="tasks_head">Tarefas</h2>
+      <p class="sub" data-i18n="tasks_sub">Seu passo a passo até o altar.</p>
       <div class="card soft" id="chkSummary" style="display:none">
         <div class="row fine"><span><b id="chkPct">0%</b> concluído</span><span id="chkNums"></span></div>
         <div class="meter"><i class="green" id="chkMeter"></i></div>
@@ -1083,9 +1083,9 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 
     <!-- AJUSTES -->
     <section class="screen" id="s-set">
-      <button class="back" onclick="go('home')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>Hoje</button>
-      <h2 class="sec">Ajustes</h2>
-      <p class="sub">Os dados do seu casamento, do seu jeito.</p>
+      <button class="back" onclick="go('home')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg><span data-i18n="nav_home">Hoje</span></button>
+      <h2 class="sec" data-i18n="settings_head">Ajustes</h2>
+      <p class="sub" data-i18n="settings_sub">Os dados do seu casamento, do seu jeito.</p>
       <div class="card">
         <div class="frow">
           <div class="f"><label>Seu nome</label><input id="stA"></div>
@@ -1135,7 +1135,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 
     <!-- ANOTAÇÕES -->
     <section class="screen" id="s-guests">
-      <div class="row" style="margin:20px 0 2px"><h2 class="sec" style="margin:0">Convidados</h2><button onclick="openSheet('sh-guests-help')" style="border:none;background:none;color:var(--gold);font-family:var(--body);font-size:13px;font-weight:700;cursor:pointer;flex-shrink:0;white-space:nowrap">Como funciona?</button></div>
+      <div class="row" style="margin:20px 0 2px"><h2 class="sec" style="margin:0" data-i18n="guests_head">Convidados</h2><button onclick="openSheet('sh-guests-help')" style="border:none;background:none;color:var(--gold);font-family:var(--body);font-size:13px;font-weight:700;cursor:pointer;flex-shrink:0;white-space:nowrap" data-i18n="guests_help">Como funciona?</button></div>
       <div id="guestIntro"></div>
       <!-- SEÇÃO: Confirmações (em cima — nada escondido) -->
       <div class="fsection">
@@ -1145,7 +1145,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       <!-- SEÇÃO: Minha lista -->
       <div class="fsection">
         <div class="fsechead"><h3 class="fsectitle">Minha lista</h3><span class="fseccount" id="cntMine">0</span></div>
-        <p class="sub">Quem você quer ao seu lado no grande dia.</p>
+        <p class="sub" data-i18n="guests_sub">Quem você quer ao seu lado no grande dia.</p>
         <div id="guestSummary"></div>
         <button class="add" onclick="openGuest()" style="margin:4px 0 4px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Adicionar convidado</button>
         <button class="linkmini" onclick="openBulk()" style="margin-bottom:14px">ou colar uma lista de nomes</button>
@@ -1169,8 +1169,8 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>
         Hoje
       </button>
-      <h2 class="sec">Agenda</h2>
-      <p class="sub">Reuniões, provas, degustações e os pagamentos que vencem — tudo em um lugar.</p>
+      <h2 class="sec" data-i18n="agenda_head">Agenda</h2>
+      <p class="sub" data-i18n="agenda_sub">Reuniões, provas, degustações e os pagamentos que vencem — tudo em um lugar.</p>
       <button class="add" onclick="openEvent()" style="margin-bottom:16px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Agendar compromisso</button>
       <div id="agendaBody"></div>
     </section>
@@ -1180,8 +1180,8 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>
         Voltar
       </button>
-      <h2 class="sec">Anotações</h2>
-      <p class="sub">Seu cantinho para tudo que passa pela cabeça — ideias, recados, votos.</p>
+      <h2 class="sec" data-i18n="notes_head">Anotações</h2>
+      <p class="sub" data-i18n="notes_sub">Seu cantinho para tudo que passa pela cabeça — ideias, recados, votos.</p>
       <button class="add" onclick="openNote()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
         Nova anotação
@@ -1228,15 +1228,15 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 
   <nav class="nav" id="nav">
     <button data-s="home" class="on" onclick="go('home')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M3 11l9-7 9 7v9a1 1 0 01-1 1h-5v-6h-6v6H4a1 1 0 01-1-1z"/></svg>Hoje</button>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M3 11l9-7 9 7v9a1 1 0 01-1 1h-5v-6h-6v6H4a1 1 0 01-1-1z"/></svg><span data-i18n="nav_home">Hoje</span></button>
     <button data-s="fin" onclick="go('fin')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="2.5" y="6" width="19" height="13" rx="2"/><path d="M2.5 10h19M7 15h4"/></svg>Dinheiro</button>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="2.5" y="6" width="19" height="13" rx="2"/><path d="M2.5 10h19M7 15h4"/></svg><span data-i18n="nav_money">Dinheiro</span></button>
     <button data-s="forn" onclick="go('forn')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M20 7h-4V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2H4a1.5 1.5 0 00-1.5 1.5V19A1.5 1.5 0 004 20.5h16A1.5 1.5 0 0021.5 19V8.5A1.5 1.5 0 0020 7zM10 7V5h4v2"/></svg>Fornecedores</button>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M20 7h-4V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2H4a1.5 1.5 0 00-1.5 1.5V19A1.5 1.5 0 004 20.5h16A1.5 1.5 0 0021.5 19V8.5A1.5 1.5 0 0020 7zM10 7V5h4v2"/></svg><span data-i18n="nav_vendors">Fornecedores</span></button>
     <button data-s="chk" onclick="go('chk')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg>Tarefas</button>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg><span data-i18n="nav_tasks">Tarefas</span></button>
     <button data-s="guests" onclick="go('guests')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="9" cy="8" r="3"/><path d="M2.5 20a6.5 6.5 0 0113 0"/><path d="M16 5.5a3 3 0 010 5.8M21.5 20a6.5 6.5 0 00-4.5-6.2"/></svg>Convidados</button>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="9" cy="8" r="3"/><path d="M2.5 20a6.5 6.5 0 0113 0"/><path d="M16 5.5a3 3 0 010 5.8M21.5 20a6.5 6.5 0 00-4.5-6.2"/></svg><span data-i18n="nav_guests">Convidados</span></button>
   </nav>
 
   <div class="toast" id="toast"></div>
@@ -1753,6 +1753,59 @@ function setLang(l){
   try{ document.querySelectorAll('#langsel .langbtn').forEach(b=>b.classList.toggle('on', b.dataset.lang===l)); }catch(e){}
   try{ if(typeof state!=='undefined' && state && state.profile && typeof renderAll==='function') renderAll(); }catch(e){}
 }
+// ---- corpo do app: navegação + cabeçalhos + Início ----
+Object.assign(I18N.pt,{
+  nav_home:'Hoje',nav_money:'Dinheiro',nav_vendors:'Fornecedores',nav_tasks:'Tarefas',nav_guests:'Convidados',
+  money_head:'Dinheiro',money_sub:'Cada compromisso do casamento, com vencimento e status.',
+  vendors_head:'Fornecedores',vendors_sub:'Seus contratos fechados e as cotações em andamento.',
+  tasks_head:'Tarefas',tasks_sub:'Seu passo a passo até o altar.',
+  settings_head:'Ajustes',settings_sub:'Os dados do seu casamento, do seu jeito.',
+  guests_head:'Convidados',guests_sub:'Quem você quer ao seu lado no grande dia.',guests_help:'Como funciona?',
+  agenda_head:'Agenda',agenda_sub:'Reuniões, provas, degustações e os pagamentos que vencem — tudo em um lugar.',
+  notes_head:'Anotações',notes_sub:'Seu cantinho para tudo que passa pela cabeça — ideias, recados, votos.',
+  home_head_needs:'Precisa de você',home_sub_needs:'Pagamentos próximos e decisões em aberto.',
+  home_head_first:'Seus primeiros passos',home_sub_first:'O app trabalha por você a partir do que você guarda.',
+  home_head_next:'Próximos passos',home_sub_next:'Sem pendências no que você registrou — veja o que dá pra adiantar.'
+});
+Object.assign(I18N.es,{
+  nav_home:'Hoy',nav_money:'Dinero',nav_vendors:'Proveedores',nav_tasks:'Tareas',nav_guests:'Invitados',
+  money_head:'Dinero',money_sub:'Cada compromiso de la boda, con vencimiento y estado.',
+  vendors_head:'Proveedores',vendors_sub:'Tus contratos cerrados y los presupuestos en curso.',
+  tasks_head:'Tareas',tasks_sub:'Tu paso a paso hasta el altar.',
+  settings_head:'Ajustes',settings_sub:'Los datos de tu boda, a tu manera.',
+  guests_head:'Invitados',guests_sub:'Quienes quieres a tu lado en el gran día.',guests_help:'¿Cómo funciona?',
+  agenda_head:'Agenda',agenda_sub:'Reuniones, pruebas, degustaciones y los pagos que vencen — todo en un lugar.',
+  notes_head:'Notas',notes_sub:'Tu rincón para todo lo que se te ocurra — ideas, recados, votos.',
+  home_head_needs:'Necesita de ti',home_sub_needs:'Pagos próximos y decisiones pendientes.',
+  home_head_first:'Tus primeros pasos',home_sub_first:'La app trabaja por ti a partir de lo que guardas.',
+  home_head_next:'Próximos pasos',home_sub_next:'Sin pendientes en lo que registraste — mira qué puedes adelantar.'
+});
+Object.assign(I18N.en,{
+  nav_home:'Today',nav_money:'Money',nav_vendors:'Vendors',nav_tasks:'Tasks',nav_guests:'Guests',
+  money_head:'Money',money_sub:'Every wedding expense, with due date and status.',
+  vendors_head:'Vendors',vendors_sub:'Your signed contracts and quotes in progress.',
+  tasks_head:'Tasks',tasks_sub:'Your step by step to the altar.',
+  settings_head:'Settings',settings_sub:'Your wedding details, your way.',
+  guests_head:'Guests',guests_sub:'Who you want by your side on the big day.',guests_help:'How does it work?',
+  agenda_head:'Calendar',agenda_sub:'Meetings, fittings, tastings and upcoming payments — all in one place.',
+  notes_head:'Notes',notes_sub:'Your space for everything on your mind — ideas, reminders, vows.',
+  home_head_needs:'Needs you',home_sub_needs:'Upcoming payments and open decisions.',
+  home_head_first:'Your first steps',home_sub_first:'The app works for you based on what you save.',
+  home_head_next:'Next steps',home_sub_next:"Nothing pending in what you logged — see what you can get ahead on."
+});
+Object.assign(I18N.fr,{
+  nav_home:"Aujourd'hui",nav_money:'Argent',nav_vendors:'Prestataires',nav_tasks:'Tâches',nav_guests:'Invités',
+  money_head:'Argent',money_sub:'Chaque dépense du mariage, avec échéance et statut.',
+  vendors_head:'Prestataires',vendors_sub:'Vos contrats signés et les devis en cours.',
+  tasks_head:'Tâches',tasks_sub:"Votre parcours jusqu'à l'autel.",
+  settings_head:'Réglages',settings_sub:'Les infos de votre mariage, à votre façon.',
+  guests_head:'Invités',guests_sub:'Ceux que vous voulez à vos côtés le grand jour.',guests_help:'Comment ça marche ?',
+  agenda_head:'Agenda',agenda_sub:'Rendez-vous, essayages, dégustations et paiements à venir — tout au même endroit.',
+  notes_head:'Notes',notes_sub:'Votre coin pour tout ce qui vous passe par la tête — idées, mots, vœux.',
+  home_head_needs:'A besoin de vous',home_sub_needs:'Paiements à venir et décisions en attente.',
+  home_head_first:'Vos premiers pas',home_sub_first:"L'app travaille pour vous à partir de ce que vous enregistrez.",
+  home_head_next:'Prochaines étapes',home_sub_next:'Rien en attente dans ce que vous avez noté — voyez ce que vous pouvez anticiper.'
+});
 
 let authMode='up';
 function toggleAuthModeTo(mode){ if(authMode!==mode) toggleAuthMode(); }
@@ -2190,8 +2243,8 @@ function renderHome(){
   const CHK_OK='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l5 5L20 6"/></svg>';
   const CHEV='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>';
   if(html){
-    $('homeHead').textContent='Precisa de você';
-    $('homeSub').textContent='Pagamentos próximos e decisões em aberto.';
+    $('homeHead').textContent=t('home_head_needs');
+    $('homeSub').textContent=t('home_sub_needs');
     $('homeAttention').innerHTML=`<div class="card" style="padding:6px 14px">${html}</div>`;
   }else{
     const steps=[
@@ -2201,8 +2254,8 @@ function renderHome(){
     ];
     const todo=steps.filter(s=>!s.done).length;
     if(todo){
-      $('homeHead').textContent='Seus primeiros passos';
-      $('homeSub').textContent='O app trabalha por você a partir do que você guarda.';
+      $('homeHead').textContent=t('home_head_first');
+      $('homeSub').textContent=t('home_sub_first');
       $('homeAttention').innerHTML=`<div class="card">
         <div class="cap gold" style="margin-bottom:4px">Comece por aqui</div>
         <p class="fine" style="margin-bottom:6px">${esc(p.a)}, seu casamento ganha forma a cada dado que você guarda. ${todo===3?'Três passos para começar:':'Falta pouco para tudo estar sob controle:'}</p>
@@ -2230,8 +2283,8 @@ function renderHome(){
       if(!state.events||!state.events.length) sug.push({t:'Agende reuniões e provas',d:'degustação, prova do vestido, visita ao espaço',go:"openAgenda()"});
       if(state.tasks&&state.tasks.some(t=>!t.done)) sug.push({t:'Siga seu roteiro de tarefas',d:'há passos esperando por você',go:"go('chk')"});
       if(state.cats.length<3) sug.push({t:'Adicione mais fornecedores',d:'fotografia, decoração, música, doces…',go:"go('forn')"});
-      $('homeHead').textContent='Próximos passos';
-      $('homeSub').textContent='Sem pendências no que você registrou — veja o que dá pra adiantar.';
+      $('homeHead').textContent=t('home_head_next');
+      $('homeSub').textContent=t('home_sub_next');
       let inner='';
       if(sug.length){
         inner+=`<div class="cap gold" style="margin-bottom:4px">Que tal adiantar</div>`;
