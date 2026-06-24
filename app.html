@@ -1053,8 +1053,8 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       <h2 class="sec" data-i18n="vendors_head">Fornecedores</h2>
       <p class="sub" data-i18n="vendors_sub">Seus contratos fechados e as cotações em andamento.</p>
       <div id="fornBody"></div>
-      <button class="linkmini muted" style="margin-top:20px" onclick="exportVendorsPDF()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:5px"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Gerar PDF dos fornecedores</button>
-      <p class="fine" style="text-align:center;margin:5px 0 0;color:var(--muted)">Cotações e fornecedores fechados, num documento só.</p>
+      <button class="linkmini muted" style="margin-top:20px" onclick="exportVendorsPDF()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:5px"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span data-i18n="vendors_pdf_btn">Gerar PDF dos fornecedores</span></button>
+      <p class="fine" style="text-align:center;margin:5px 0 0;color:var(--muted)" data-i18n="vendors_pdf_sub">Cotações e fornecedores fechados, num documento só.</p>
     </section>
 
     <!-- CATEGORIA (comparar orçamentos) -->
@@ -1328,19 +1328,19 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
     <div class="sheet" id="sh-quote" style="display:none">
       <h3 id="qTitle">Novo orçamento</h3>
       <p class="sub" id="qSub"></p>
-      <div class="f"><label>Fornecedor</label><input id="qName" placeholder="Nome da empresa ou profissional"></div>
+      <div class="f"><label data-i18n="q_vendor_label">Fornecedor</label><input id="qName" data-i18n-ph="q_vendor_ph" placeholder="Nome da empresa ou profissional"></div>
       <div class="frow">
-        <div class="f"><label>Valor (R$)</label><input id="qVal" type="text" inputmode="decimal" placeholder="8.000"></div>
-        <div class="f"><label>WhatsApp <span class="opt">(opcional)</span></label><input id="qPhone" inputmode="tel" placeholder="48 99999-0000"></div>
+        <div class="f"><label data-i18n="exp_val_label">Valor (R$)</label><input id="qVal" type="text" inputmode="decimal" placeholder="8.000"></div>
+        <div class="f"><label>WhatsApp <span class="opt" data-i18n="q_optional">(opcional)</span></label><input id="qPhone" inputmode="tel" placeholder="48 99999-0000"></div>
       </div>
-      <div class="f"><label>O que inclui <span class="opt">(opcional)</span></label><textarea id="qInc" placeholder="Ex.: 150 convidados, bolo incluso, garçons…"></textarea></div>
-      <div class="f"><label>Diferencial <span class="opt">(o que pesa além do preço)</span></label><input id="qDif" placeholder="Ex.: estilo documental, premiado, indicação de amiga…"></div>
+      <div class="f"><label><span data-i18n="q_inc_label">O que inclui</span> <span class="opt" data-i18n="q_optional">(opcional)</span></label><textarea id="qInc" data-i18n-ph="q_inc_ph" placeholder="Ex.: 150 convidados, bolo incluso, garçons…"></textarea></div>
+      <div class="f"><label><span data-i18n="q_dif_label">Diferencial</span> <span class="opt" data-i18n="q_dif_hint">(o que pesa além do preço)</span></label><input id="qDif" data-i18n-ph="q_dif_ph" placeholder="Ex.: estilo documental, premiado, indicação de amiga…"></div>
       <div class="frow">
-        <div class="f"><label>Instagram <span class="opt">(opcional)</span></label><input id="qInsta" placeholder="@fornecedor"></div>
-        <div class="f"><label>E-mail <span class="opt">(opcional)</span></label><input id="qEmail" type="email" placeholder="contato@…"></div>
+        <div class="f"><label>Instagram <span class="opt" data-i18n="q_optional">(opcional)</span></label><input id="qInsta" data-i18n-ph="q_insta_ph" placeholder="@fornecedor"></div>
+        <div class="f"><label><span data-i18n="login_email_label">E-mail</span> <span class="opt" data-i18n="q_optional">(opcional)</span></label><input id="qEmail" type="email" data-i18n-ph="q_email_ph" placeholder="contato@…"></div>
       </div>
-      <button class="btn p full" onclick="saveQuote()">Salvar orçamento</button>
-      <button class="btn d full" id="qDel" style="margin-top:8px;display:none" onclick="delQuote()">Excluir orçamento</button>
+      <button class="btn p full" onclick="saveQuote()"><span data-i18n="q_save">Salvar orçamento</span></button>
+      <button class="btn d full" id="qDel" style="margin-top:8px;display:none" onclick="delQuote()"><span data-i18n="q_del">Excluir orçamento</span></button>
     </div>
 
     <div class="sheet" id="sh-export" style="display:none">
@@ -1357,8 +1357,8 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
     </div>
 
     <div class="sheet" id="sh-contract-confirm" style="display:none">
-      <h3>Confirmar contrato</h3>
-      <p class="sub">Confira o que eu li. Nada muda até você confirmar.</p>
+      <h3 data-i18n="cc_title">Confirmar contrato</h3>
+      <p class="sub" data-i18n="cc_sub">Confira o que eu li. Nada muda até você confirmar.</p>
       <div id="ccBody"></div>
     </div>
 
@@ -1479,15 +1479,15 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
     </div>
 
     <div class="sheet" id="sh-parc" style="display:none">
-      <h3>Plano de pagamento</h3>
-      <p class="sub" id="pcSub">As parcelas entram automaticamente no Dinheiro, com vencimento.</p>
-      <div class="f"><label>Valor a parcelar (R$)</label><input id="pcVal" type="text" inputmode="decimal"></div>
+      <h3 data-i18n="parc_title">Plano de pagamento</h3>
+      <p class="sub" id="pcSub" data-i18n="parc_sub">As parcelas entram automaticamente no Dinheiro, com vencimento.</p>
+      <div class="f"><label data-i18n="parc_val_label">Valor a parcelar (R$)</label><input id="pcVal" type="text" inputmode="decimal"></div>
       <div class="frow">
-        <div class="f"><label>Nº de parcelas</label><input id="pcN" type="number" inputmode="numeric" min="1" max="36" value="3"></div>
-        <div class="f"><label>1º vencimento</label><input id="pcDate" type="date"></div>
+        <div class="f"><label data-i18n="parc_n_label">Nº de parcelas</label><input id="pcN" type="number" inputmode="numeric" min="1" max="36" value="3"></div>
+        <div class="f"><label data-i18n="parc_first_label">1º vencimento</label><input id="pcDate" type="date"></div>
       </div>
-      <p class="fine" style="margin:-4px 0 12px">As demais vencem de mês em mês, na mesma data.</p>
-      <button class="btn p full" onclick="saveParc()">Gerar parcelas</button>
+      <p class="fine" style="margin:-4px 0 12px" data-i18n="parc_note">As demais vencem de mês em mês, na mesma data.</p>
+      <button class="btn p full" onclick="saveParc()"><span data-i18n="parc_gen">Gerar parcelas</span></button>
     </div>
 
     <div class="sheet" id="sh-task" style="display:none">
@@ -1879,6 +1879,79 @@ Object.assign(I18N.fr,{
   m_cat_name:'Donnez un nom à la catégorie',m_cat_renamed:'Catégorie renommée',m_cat_created:'Catégorie créée — ajoutez les devis',m_cat_deleted:'Catégorie supprimée',
   m_pdf_preparing:'Préparation du PDF…',m_report_nodata:'Pas encore de données pour le rapport'
 });
+// ---- tela Fornecedores ----
+Object.assign(I18N.pt,{
+  vendors_pdf_btn:'Gerar PDF dos fornecedores',vendors_pdf_sub:'Cotações e fornecedores fechados, num documento só.',
+  q_title_new:'Novo orçamento',q_title_edit:'Editar orçamento',q_vendor_label:'Fornecedor',q_vendor_ph:'Nome da empresa ou profissional',
+  q_optional:'(opcional)',q_inc_label:'O que inclui',q_inc_ph:'Ex.: 150 convidados, bolo incluso, garçons…',
+  q_dif_label:'Diferencial',q_dif_hint:'(o que pesa além do preço)',q_dif_ph:'Ex.: estilo documental, premiado, indicação de amiga…',
+  q_insta_ph:'@fornecedor',q_email_ph:'contato@…',q_save:'Salvar orçamento',q_del:'Excluir orçamento',q_val_ph_label:'Valor (R$)',
+  cc_title:'Confirmar contrato',cc_sub:'Confira o que eu li. Nada muda até você confirmar.',cc_confirm:'Confirmar e lançar',cc_view:'Ver o contrato anexado',cc_installment:'Parcela',cc_due:'vence ',cc_nodate:'sem data',
+  parc_title:'Plano de pagamento',parc_sub:'As parcelas entram automaticamente no Dinheiro, com vencimento.',parc_val_label:'Valor a parcelar (R$)',parc_n_label:'Nº de parcelas',parc_first_label:'1º vencimento',parc_note:'As demais vencem de mês em mês, na mesma data.',parc_gen:'Gerar parcelas',
+  common_cancel:'Cancelar',
+  v_hired:'Contratados',v_quoting:'Em cotação',v_empty_hired:'Nada fechado ainda. Quando você escolher um fornecedor logo abaixo, ele vem pra cá com o plano de pagamento e os contratos guardados.',
+  v_rename:'Renomear',v_cat_sub_compare:'Compare, avalie com estrelas e contrate.',v_cat_empty:'Guarde aqui cada proposta que receber.',v_attach_quote:'Anexar orçamento',v_view_contract:'Ver contrato',v_contract_btn:'Contratar',v_edit:'Editar',v_view_attach:'Ver anexo',v_orig_quote:'Orçamento original',
+  v_edit_data:'Editar dados',v_quote_value:'Valor do orçamento',v_save_notes:'Salvar anotações',v_contract_this:'Contratar este fornecedor',v_contract_value:'Valor do contrato',v_already_paid:'Já pago',v_in_installments:'Lançado em parcelas',v_to_add:'Falta lançar',v_installments:'Parcelas',v_contracted_on:' · contratado em ',
+  m_q_vendor:'Informe o fornecedor',m_q_value:'Informe o valor da proposta',m_q_saved:'Orçamento guardado',m_q_updated:'Dados atualizados',m_q_deleted:'Orçamento excluído',
+  m_contracted:'Contratado — agora monte o plano de pagamento',m_contract_removed:'Contrato removido',m_contract_added:'Contrato lançado',m_installments_suffix:' parcela(s)',m_notes_saved:'Anotações salvas',
+  m_parc_val:'Informe o valor a parcelar',m_parc_n:'Informe o número de parcelas',m_parc_first:'Escolha o primeiro vencimento',m_contract_received:'Contrato recebido — processando…'
+});
+Object.assign(I18N.es,{
+  vendors_pdf_btn:'Generar PDF de proveedores',vendors_pdf_sub:'Presupuestos y proveedores cerrados, en un solo documento.',
+  q_title_new:'Nuevo presupuesto',q_title_edit:'Editar presupuesto',q_vendor_label:'Proveedor',q_vendor_ph:'Nombre de la empresa o profesional',
+  q_optional:'(opcional)',q_inc_label:'Qué incluye',q_inc_ph:'Ej.: 150 invitados, pastel incluido, meseros…',
+  q_dif_label:'Diferencial',q_dif_hint:'(lo que pesa además del precio)',q_dif_ph:'Ej.: estilo documental, premiado, recomendado por una amiga…',
+  q_insta_ph:'@proveedor',q_email_ph:'contacto@…',q_save:'Guardar presupuesto',q_del:'Eliminar presupuesto',q_val_ph_label:'Valor (R$)',
+  cc_title:'Confirmar contrato',cc_sub:'Revisa lo que leí. Nada cambia hasta que confirmes.',cc_confirm:'Confirmar y registrar',cc_view:'Ver el contrato adjunto',cc_installment:'Cuota',cc_due:'vence ',cc_nodate:'sin fecha',
+  parc_title:'Plan de pago',parc_sub:'Las cuotas entran automáticamente en Dinero, con vencimiento.',parc_val_label:'Valor a financiar (R$)',parc_n_label:'Nº de cuotas',parc_first_label:'1º vencimiento',parc_note:'Las demás vencen mes a mes, en la misma fecha.',parc_gen:'Generar cuotas',
+  common_cancel:'Cancelar',
+  v_hired:'Contratados',v_quoting:'En cotización',v_empty_hired:'Nada cerrado aún. Cuando elijas un proveedor más abajo, vendrá aquí con el plan de pago y los contratos guardados.',
+  v_rename:'Renombrar',v_cat_sub_compare:'Compara, califica con estrellas y contrata.',v_cat_empty:'Guarda aquí cada propuesta que recibas.',v_attach_quote:'Adjuntar presupuesto',v_view_contract:'Ver contrato',v_contract_btn:'Contratar',v_edit:'Editar',v_view_attach:'Ver adjunto',v_orig_quote:'Presupuesto original',
+  v_edit_data:'Editar datos',v_quote_value:'Valor del presupuesto',v_save_notes:'Guardar notas',v_contract_this:'Contratar este proveedor',v_contract_value:'Valor del contrato',v_already_paid:'Ya pagado',v_in_installments:'Registrado en cuotas',v_to_add:'Falta registrar',v_installments:'Cuotas',v_contracted_on:' · contratado el ',
+  m_q_vendor:'Indica el proveedor',m_q_value:'Indica el valor de la propuesta',m_q_saved:'Presupuesto guardado',m_q_updated:'Datos actualizados',m_q_deleted:'Presupuesto eliminado',
+  m_contracted:'Contratado — ahora arma el plan de pago',m_contract_removed:'Contrato quitado',m_contract_added:'Contrato registrado',m_installments_suffix:' cuota(s)',m_notes_saved:'Notas guardadas',
+  m_parc_val:'Indica el valor a financiar',m_parc_n:'Indica el número de cuotas',m_parc_first:'Elige el primer vencimiento',m_contract_received:'Contrato recibido — procesando…'
+});
+Object.assign(I18N.en,{
+  vendors_pdf_btn:'Generate vendors PDF',vendors_pdf_sub:'Quotes and signed vendors, in a single document.',
+  q_title_new:'New quote',q_title_edit:'Edit quote',q_vendor_label:'Vendor',q_vendor_ph:'Company or professional name',
+  q_optional:'(optional)',q_inc_label:"What's included",q_inc_ph:'e.g. 150 guests, cake included, waiters…',
+  q_dif_label:'Standout',q_dif_hint:'(what matters beyond price)',q_dif_ph:'e.g. documentary style, award-winning, recommended by a friend…',
+  q_insta_ph:'@vendor',q_email_ph:'contact@…',q_save:'Save quote',q_del:'Delete quote',q_val_ph_label:'Amount (R$)',
+  cc_title:'Confirm contract',cc_sub:'Check what I read. Nothing changes until you confirm.',cc_confirm:'Confirm and add',cc_view:'View attached contract',cc_installment:'Installment',cc_due:'due ',cc_nodate:'no date',
+  parc_title:'Payment plan',parc_sub:'Installments are added to Money automatically, with due dates.',parc_val_label:'Amount to split (R$)',parc_n_label:'No. of installments',parc_first_label:'1st due date',parc_note:'The rest are due monthly, on the same date.',parc_gen:'Generate installments',
+  common_cancel:'Cancel',
+  v_hired:'Signed',v_quoting:'Quoting',v_empty_hired:'Nothing signed yet. When you pick a vendor below, it moves here with its payment plan and saved contracts.',
+  v_rename:'Rename',v_cat_sub_compare:'Compare, rate with stars and book.',v_cat_empty:'Keep every proposal you receive here.',v_attach_quote:'Attach quote',v_view_contract:'View contract',v_contract_btn:'Book',v_edit:'Edit',v_view_attach:'View attachment',v_orig_quote:'Original quote',
+  v_edit_data:'Edit details',v_quote_value:'Quote amount',v_save_notes:'Save notes',v_contract_this:'Book this vendor',v_contract_value:'Contract amount',v_already_paid:'Paid',v_in_installments:'Added in installments',v_to_add:'Left to add',v_installments:'Installments',v_contracted_on:' · signed on ',
+  m_q_vendor:'Enter the vendor',m_q_value:'Enter the proposal amount',m_q_saved:'Quote saved',m_q_updated:'Details updated',m_q_deleted:'Quote deleted',
+  m_contracted:'Booked — now set up the payment plan',m_contract_removed:'Contract removed',m_contract_added:'Contract added',m_installments_suffix:' installment(s)',m_notes_saved:'Notes saved',
+  m_parc_val:'Enter the amount to split',m_parc_n:'Enter the number of installments',m_parc_first:'Pick the first due date',m_contract_received:'Contract received — processing…'
+});
+Object.assign(I18N.fr,{
+  vendors_pdf_btn:'Générer le PDF des prestataires',vendors_pdf_sub:'Devis et prestataires signés, en un seul document.',
+  q_title_new:'Nouveau devis',q_title_edit:'Modifier le devis',q_vendor_label:'Prestataire',q_vendor_ph:"Nom de l'entreprise ou du professionnel",
+  q_optional:'(facultatif)',q_inc_label:'Ce qui est inclus',q_inc_ph:'Ex. : 150 invités, gâteau inclus, serveurs…',
+  q_dif_label:'Point fort',q_dif_hint:'(ce qui compte au-delà du prix)',q_dif_ph:'Ex. : style documentaire, primé, recommandé par une amie…',
+  q_insta_ph:'@prestataire',q_email_ph:'contact@…',q_save:'Enregistrer le devis',q_del:'Supprimer le devis',q_val_ph_label:'Montant (R$)',
+  cc_title:'Confirmer le contrat',cc_sub:"Vérifiez ce que j'ai lu. Rien ne change avant votre confirmation.",cc_confirm:'Confirmer et enregistrer',cc_view:'Voir le contrat joint',cc_installment:'Versement',cc_due:'échéance ',cc_nodate:'sans date',
+  parc_title:'Plan de paiement',parc_sub:'Les versements sont ajoutés à Argent automatiquement, avec échéance.',parc_val_label:'Montant à échelonner (R$)',parc_n_label:'Nb de versements',parc_first_label:'1re échéance',parc_note:'Les autres sont dus chaque mois, à la même date.',parc_gen:'Générer les versements',
+  common_cancel:'Annuler',
+  v_hired:'Signés',v_quoting:'En cotation',v_empty_hired:'Rien de signé pour l\'instant. Quand vous choisirez un prestataire ci-dessous, il viendra ici avec son plan de paiement et les contrats enregistrés.',
+  v_rename:'Renommer',v_cat_sub_compare:'Comparez, notez avec des étoiles et réservez.',v_cat_empty:'Gardez ici chaque proposition reçue.',v_attach_quote:'Joindre un devis',v_view_contract:'Voir le contrat',v_contract_btn:'Réserver',v_edit:'Modifier',v_view_attach:'Voir la pièce jointe',v_orig_quote:"Devis d'origine",
+  v_edit_data:'Modifier les infos',v_quote_value:'Montant du devis',v_save_notes:'Enregistrer les notes',v_contract_this:'Réserver ce prestataire',v_contract_value:'Montant du contrat',v_already_paid:'Payé',v_in_installments:'Enregistré en versements',v_to_add:'Reste à enregistrer',v_installments:'Versements',v_contracted_on:' · signé le ',
+  m_q_vendor:'Indiquez le prestataire',m_q_value:'Indiquez le montant de la proposition',m_q_saved:'Devis enregistré',m_q_updated:'Infos mises à jour',m_q_deleted:'Devis supprimé',
+  m_contracted:'Réservé — montez le plan de paiement',m_contract_removed:'Contrat retiré',m_contract_added:'Contrat enregistré',m_installments_suffix:' versement(s)',m_notes_saved:'Notes enregistrées',
+  m_parc_val:'Indiquez le montant à échelonner',m_parc_n:'Indiquez le nombre de versements',m_parc_first:'Choisissez la première échéance',m_contract_received:'Contrat reçu — traitement…'
+});
+Object.assign(I18N.pt,{parc_sub_v1:'Contrato com ',parc_sub_v2:' — as parcelas entram no Dinheiro.'});
+Object.assign(I18N.es,{parc_sub_v1:'Contrato con ',parc_sub_v2:' — las cuotas entran en Dinero.'});
+Object.assign(I18N.en,{parc_sub_v1:'Contract with ',parc_sub_v2:' — installments go into Money.'});
+Object.assign(I18N.fr,{parc_sub_v1:'Contrat avec ',parc_sub_v2:' — les versements vont dans Argent.'});
+Object.assign(I18N.pt,{v_add_quote:'Adicionar orçamento',v_no_quotes_in:'Nenhum orçamento em ',v_contract_notes:'Anotações do contrato',v_attach_hint:'Recebeu proposta no WhatsApp? Tire um print e use<br><b>Anexar orçamento</b> — eu leio e preencho os dados.',v_rating_hint:'<span style="color:var(--gold)">★</span> <b>Sua nota</b> — pense em atendimento, estilo do casamento, indicações e diferencial, não só no preço.'});
+Object.assign(I18N.es,{v_add_quote:'Agregar presupuesto',v_no_quotes_in:'Ningún presupuesto en ',v_contract_notes:'Notas del contrato',v_attach_hint:'¿Recibiste una propuesta por WhatsApp? Saca una captura y usa<br><b>Adjuntar presupuesto</b> — yo lo leo y completo los datos.',v_rating_hint:'<span style="color:var(--gold)">★</span> <b>Tu calificación</b> — piensa en atención, estilo de la boda, recomendaciones y diferencial, no solo el precio.'});
+Object.assign(I18N.en,{v_add_quote:'Add quote',v_no_quotes_in:'No quotes in ',v_contract_notes:'Contract notes',v_attach_hint:'Got a proposal on WhatsApp? Take a screenshot and use<br><b>Attach quote</b> — I read it and fill in the details.',v_rating_hint:'<span style="color:var(--gold)">★</span> <b>Your rating</b> — think about service, wedding style, recommendations and standout, not just price.'});
+Object.assign(I18N.fr,{v_add_quote:'Ajouter un devis',v_no_quotes_in:'Aucun devis dans ',v_contract_notes:'Notes du contrat',v_attach_hint:'Reçu une proposition sur WhatsApp ? Faites une capture et utilisez<br><b>Joindre un devis</b> — je le lis et remplis les infos.',v_rating_hint:'<span style="color:var(--gold)">★</span> <b>Votre note</b> — pensez au service, au style du mariage, aux recommandations et au point fort, pas seulement au prix.'});
 
 let authMode='up';
 function toggleAuthModeTo(mode){ if(authMode!==mode) toggleAuthMode(); }
@@ -2572,12 +2645,12 @@ function renderForn(){
 
   let html='';
   // ---- CONTRATADOS (em cima: o que já está garantido) ----
-  html+=`<div class="fsection"><div class="fsechead"><h3 class="fsectitle">Contratados</h3>${hired.length?`<span class="fseccount">${hired.length}</span>`:''}</div>`;
+  html+=`<div class="fsection"><div class="fsechead"><h3 class="fsectitle">${t('v_hired')}</h3>${hired.length?`<span class="fseccount">${hired.length}</span>`:''}</div>`;
   html+= hired.length ? renderHiredCards(hired)
-    : `<div class="fsecempty">Nada fechado ainda. Quando você escolher um fornecedor logo abaixo, ele vem pra cá com o plano de pagamento e os contratos guardados.</div>`;
+    : `<div class="fsecempty">${t('v_empty_hired')}</div>`;
   html+=`</div>`;
   // ---- EM COTAÇÃO (embaixo: o trabalho em andamento) ----
-  html+=`<div class="fsection"><div class="fsechead"><h3 class="fsectitle">Em cotação</h3>${open.length?`<span class="fseccount">${open.length}</span>`:''}</div>`;
+  html+=`<div class="fsection"><div class="fsechead"><h3 class="fsectitle">${t('v_quoting')}</h3>${open.length?`<span class="fseccount">${open.length}</span>`:''}</div>`;
   html+= renderQuoteTab(open);
   html+=`</div>`;
   $('fornBody').innerHTML=html;
@@ -2666,15 +2739,15 @@ function renderCatPage(){
   const sorted=[...c.quotes].sort((a,b)=>(b.stars||0)-(a.stars||0)||a.val-b.val);
 
   let html=`<div class="row" style="align-items:baseline"><h2 class="sec">${esc(c.name)}</h2>
-    <button class="btn g sm" onclick="openCatEdit()">Renomear</button></div>
-  <p class="sub">${c.quotes.length?'Compare, avalie com estrelas e contrate.':'Guarde aqui cada proposta que receber.'}</p>
-  <button class="importbtn" id="importBtn" onclick="openSheet('sh-addq')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> Adicionar orçamento</button>`;
+    <button class="btn g sm" onclick="openCatEdit()">${t('v_rename')}</button></div>
+  <p class="sub">${c.quotes.length?t('v_cat_sub_compare'):t('v_cat_empty')}</p>
+  <button class="importbtn" id="importBtn" onclick="openSheet('sh-addq')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> ${t('v_add_quote')}</button>`;
 
   if(!c.quotes.length){
-    html+=`<div class="empty"><div class="dn">Nenhum orçamento em ${esc(c.name)}</div>
-      <p>Recebeu proposta no WhatsApp? Tire um print e use<br><b>Anexar orçamento</b> — eu leio e preencho os dados.</p></div>`;
+    html+=`<div class="empty"><div class="dn">${t('v_no_quotes_in')}${esc(c.name)}</div>
+      <p>${t('v_attach_hint')}</p></div>`;
   }else{
-    html+=`<p class="fine" style="margin:2px 2px 10px"><span style="color:var(--gold)">★</span> <b>Sua nota</b> — pense em atendimento, estilo do casamento, indicações e diferencial, não só no preço.</p>`;
+    html+=`<p class="fine" style="margin:2px 2px 10px">${t('v_rating_hint')}</p>`;
     html+=sorted.map(q=>{
       const phone=q.phone?q.phone.replace(/\D/g,''):'';
       return `<div class="quote ${q.win?'win':''}" onclick="openVendor('${c.id}','${q.id}')" style="cursor:pointer">
@@ -2692,10 +2765,10 @@ function renderCatPage(){
         ${q.inc?`<div class="inc">${esc(q.inc)}</div>`:''}
         <div class="qfoot" onclick="event.stopPropagation()">
           ${q.win
-            ? `<button class="btn p sm" onclick="openVendor('${c.id}','${q.id}')">Ver contrato</button>`
-            : `<button class="btn p sm" onclick="toggleWin('${c.id}','${q.id}',true)">Contratar</button>
-               <button class="btn g sm" onclick="openQuote('${q.id}')">Editar</button>`}
-          ${q.fileId?`<button class="fileln" onclick="viewFile('${q.fileId}','Orçamento — ${esc(q.name)}')">${CLIP} Ver anexo</button>`:''}
+            ? `<button class="btn p sm" onclick="openVendor('${c.id}','${q.id}')">${t('v_view_contract')}</button>`
+            : `<button class="btn p sm" onclick="toggleWin('${c.id}','${q.id}',true)">${t('v_contract_btn')}</button>
+               <button class="btn g sm" onclick="openQuote('${q.id}')">${t('v_edit')}</button>`}
+          ${q.fileId?`<button class="fileln" onclick="viewFile('${q.fileId}','Orçamento — ${esc(q.name)}')">${CLIP} ${t('v_view_attach')}</button>`:''}
           ${phone?`<a class="wapp" target="_blank" rel="noopener" href="https://wa.me/55${phone}">${ICONS.wa} WhatsApp</a>`:''}
         </div>
       </div>`;
@@ -2968,7 +3041,7 @@ let editQ=null;
 function openQuote(id){
   const c=state.cats.find(x=>x.id===fornCat); if(!c) return;
   editQ = id ? c.quotes.find(q=>q.id===id) : null;
-  $('qTitle').textContent=editQ?'Editar orçamento':'Novo orçamento';
+  $('qTitle').textContent=editQ?t('q_title_edit'):t('q_title_new');
   $('qSub').textContent='Categoria: '+c.name;
   $('qName').value=editQ?.name||'';
   $('qVal').value=editQ?fmtNum(editQ.val):'';
@@ -2983,8 +3056,8 @@ function openQuote(id){
 function saveQuote(){
   const c=state.cats.find(x=>x.id===fornCat); if(!c) return;
   const name=$('qName').value.trim(), val=parseBRL($('qVal').value);
-  if(!name){toast('Informe o fornecedor');return;}
-  if(!val||val<=0){toast('Informe o valor da proposta');return;}
+  if(!name){toast(t('m_q_vendor'));return;}
+  if(!val||val<=0){toast(t('m_q_value'));return;}
   const data={name,val,phone:$('qPhone').value.trim(),inc:$('qInc').value.trim(),dif:$('qDif').value.trim(),insta:$('qInsta').value.trim(),email:$('qEmail').value.trim()};
   const wasEdit=!!editQ;
   if(editQ) Object.assign(editQ,data);
@@ -2992,7 +3065,7 @@ function saveQuote(){
   pendingFileId=null;
   persist(); closeSheet(); renderForn(); renderHome(); renderCatPage();
   if(curVendor && $('s-vendor').classList.contains('on')) renderVendor();
-  toast(wasEdit?'Dados atualizados':'Orçamento guardado');
+  toast(wasEdit?t('m_q_updated'):t('m_q_saved'));
 }
 function delQuote(){
   const c=state.cats.find(x=>x.id===fornCat);
@@ -3001,14 +3074,14 @@ function delQuote(){
   delFileData(editQ.fileId); delFileData(editQ.contractId);
   c.quotes=c.quotes.filter(q=>q!==editQ);
   persist(); closeSheet(); renderAll(); renderCatPage();
-  toast('Orçamento excluído');
+  toast(t('m_q_deleted'));
 }
 function toggleWin(cid,qid,v){
   const c=state.cats.find(x=>x.id===cid);
   c.quotes.forEach(q=>{ q.win = v && q.id===qid; if(q.id===qid&&v&&!q.hiredAt) q.hiredAt=todayISO(); });
   persist(); renderForn(); renderHome();
   if($('s-catpage').classList.contains('on')) renderCatPage();
-  if(v){ openVendor(cid,qid); toast('Contratado — agora monte o plano de pagamento'); }
+  if(v){ openVendor(cid,qid); toast(t('m_contracted')); }
 }
 
 /* =================== PÁGINA DO CONTRATO =================== */
@@ -3043,7 +3116,7 @@ function renderVendor(){
     <div class="vhead">
       <div class="vmono">${esc((q.name[0]||'?').toUpperCase())}</div>
       <div class="vname">${esc(q.name)}</div>
-      <div class="vcat">${esc(c.name)}${hired?' · contratado em '+hired:''}</div>
+      <div class="vcat">${esc(c.name)}${hired?t('v_contracted_on')+hired:''}</div>
       ${q.stars?`<div style="display:flex;justify-content:center;margin-top:6px">${starsView(q.stars)}</div>`:''}
       ${q.dif?`<div style="font-family:var(--display);font-style:italic;font-size:14px;color:var(--gold);margin-top:6px">“${esc(q.dif)}”</div>`:''}
       ${phone?`<div style="display:flex;justify-content:center;margin-top:12px">
@@ -3056,38 +3129,38 @@ function renderVendor(){
         ${q.email?`<a href="mailto:${esc(q.email)}">${esc(q.email)}</a>`:''}
       </div>
       <div style="display:flex;gap:8px;justify-content:center;margin-top:8px;flex-wrap:wrap">
-        <button class="btn g sm" onclick="fornCat='${c.id}';openQuote('${q.id}')">Editar dados</button>
-        ${q.fileId?`<button class="fileln" onclick="viewFile('${q.fileId}','Orçamento — ${esc(q.name)}')">${CLIP} Orçamento original</button>`:''}
+        <button class="btn g sm" onclick="fornCat='${c.id}';openQuote('${q.id}')">${t('v_edit_data')}</button>
+        ${q.fileId?`<button class="fileln" onclick="viewFile('${q.fileId}','Orçamento — ${esc(q.name)}')">${CLIP} ${t('v_orig_quote')}</button>`:''}
       </div>
     </div>`;
 
   if(!q.win){
     html+=`
     <div class="vstats">
-      <div class="vstat"><div class="cap">Valor do orçamento</div><div class="dn">${brl(q.val)}</div></div>
+      <div class="vstat"><div class="cap">${t('v_quote_value')}</div><div class="dn">${brl(q.val)}</div></div>
       ${q.stars?`<div class="vstat"><div class="cap">Sua nota</div><div class="dn" style="color:var(--gold)">${'★'.repeat(q.stars)}<span style="color:var(--line)">${'★'.repeat(5-q.stars)}</span></div></div>`:''}
     </div>
     ${q.inc?`<h2 class="sec" style="font-size:18px">O que está incluso</h2><div class="card"><p style="margin:0;font-size:14px;line-height:1.5">${esc(q.inc)}</p></div>`:''}
-    <h2 class="sec" style="font-size:18px">Anotações</h2>
+    <h2 class="sec" style="font-size:18px">${t('notes_head')}</h2>
     <p class="sub">O que você achou, o que perguntar, o que ainda falta combinar.</p>
     <div class="card">
       <div class="f" style="margin-bottom:10px"><textarea id="vNotes" placeholder="Ex.: respondeu rápido · pedir desconto à vista · confirmar se cobre o dia todo">${esc(q.notes||'')}</textarea></div>
-      <button class="btn p full" onclick="saveVendorNotes()">Salvar anotações</button>
+      <button class="btn p full" onclick="saveVendorNotes()">${t('v_save_notes')}</button>
     </div>
-    <button class="btn p full" style="margin-top:6px" onclick="toggleWin('${c.id}','${q.id}',true)">Contratar este fornecedor</button>`;
+    <button class="btn p full" style="margin-top:6px" onclick="toggleWin('${c.id}','${q.id}',true)">${t('v_contract_this')}</button>`;
     $('vendorBody').innerHTML=html; return;
   }
 
   html+=`
     <div class="vstats">
-      <div class="vstat"><div class="cap">Valor do contrato</div><div class="dn">${brl(q.val)}</div></div>
-      <div class="vstat"><div class="cap">Já pago</div><div class="dn" style="color:var(--ok)">${brl(paid)}</div></div>
-      <div class="vstat"><div class="cap">Lançado em parcelas</div><div class="dn">${brl(launched)}</div></div>
-      <div class="vstat"><div class="cap">Falta lançar</div><div class="dn" style="color:${remaining>0?'var(--gold)':'var(--muted)'}">${brl(remaining)}</div></div>
+      <div class="vstat"><div class="cap">${t('v_contract_value')}</div><div class="dn">${brl(q.val)}</div></div>
+      <div class="vstat"><div class="cap">${t('v_already_paid')}</div><div class="dn" style="color:var(--ok)">${brl(paid)}</div></div>
+      <div class="vstat"><div class="cap">${t('v_in_installments')}</div><div class="dn">${brl(launched)}</div></div>
+      <div class="vstat"><div class="cap">${t('v_to_add')}</div><div class="dn" style="color:${remaining>0?'var(--gold)':'var(--muted)'}">${brl(remaining)}</div></div>
     </div>
 
     <div class="row" style="margin:4px 0 8px">
-      <h2 class="sec" style="margin:0;font-size:18px">Parcelas</h2>
+      <h2 class="sec" style="margin:0;font-size:18px">${t('v_installments')}</h2>
       <div style="display:flex;gap:8px">
         <button class="btn g sm" onclick="openExpense(null,'${q.id}')">+ avulsa</button>
         <button class="btn p sm" onclick="openParc()">Gerar parcelas</button>
@@ -3126,11 +3199,11 @@ function renderVendor(){
       : `<label class="importbtn" id="ctrBtn" for="fileContract" role="button" tabindex="0" style="margin-bottom:0" onclick="watchPicker('contract')">${SPARK} Anexar contrato — preencho tudo, até as parcelas</label>`
     )+`</div>
 
-    <h2 class="sec" style="font-size:18px">Anotações do contrato</h2>
+    <h2 class="sec" style="font-size:18px">${t('v_contract_notes')}</h2>
     <p class="sub">Condições, prazos, o que ficou combinado.</p>
     <div class="card">
       <div class="f" style="margin-bottom:10px"><textarea id="vNotes" placeholder="Ex.: 10% de desconto à vista · entrega do álbum em 60 dias · taxa de deslocamento inclusa">${esc(q.notes||'')}</textarea></div>
-      <button class="btn p full" onclick="saveVendorNotes()">Salvar anotações</button>
+      <button class="btn p full" onclick="saveVendorNotes()">${t('v_save_notes')}</button>
     </div>
     <button class="btn d full" style="margin-bottom:8px" onclick="unhireVendor()">Desfazer contratação</button>`;
   $('vendorBody').innerHTML=html;
@@ -3157,7 +3230,7 @@ async function removeContract(){
   await delFileData(q.contractId);
   q.contractId=null;
   persist(); renderVendor();
-  toast('Contrato removido');
+  toast(t('m_contract_removed'));
 }
 function applyContractParcels(cid,qid,parcels){
   const c=state.cats.find(x=>x.id===cid); if(!c) return;
@@ -3225,14 +3298,14 @@ let pendingContract=null;
 function showContractConfirm(c,q,d){
   const v=typeof d.val==='string'?parseBRL(d.val):Number(d.val);
   const parcels=Array.isArray(d.parcels)?d.parcels.map(p=>({
-    desc:String(p.desc||'Parcela').trim(),
+    desc:String(p.desc||t('cc_installment')).trim(),
     val:(typeof p.val==='string'?parseBRL(p.val):Number(p.val))||0,
     due:/^\d{4}-\d{2}-\d{2}$/.test(p.due||'')?p.due:''
   })).filter(p=>p.val>0):[];
   pendingContract={cid:c.id,qid:q.id,d,v,parcels};
   const sum=parcels.reduce((a,p)=>a+p.val,0);
   let html=`<div class="card" style="margin-bottom:12px">
-    <div class="row" style="margin-bottom:6px"><span class="cap">Fornecedor</span><b style="color:var(--green)">${esc(q.name)}</b></div>`;
+    <div class="row" style="margin-bottom:6px"><span class="cap">${t('q_vendor_label')}</span><b style="color:var(--green)">${esc(q.name)}</b></div>`;
   if(v&&v>0){
     html+=`<div class="row" style="margin-bottom:${d.notes?'6px':'0'}"><span class="cap">Valor total</span><b>${brl(v)}</b>${Math.round(v)!==Math.round(q.val)?`<span class="fine" style="margin-left:7px">era ${brl(q.val)}</span>`:''}</div>`;
   }
@@ -3241,16 +3314,16 @@ function showContractConfirm(c,q,d){
   if(parcels.length){
     html+=`<div class="cap gold" style="margin:0 0 6px">${parcels.length} parcela${parcels.length>1?'s':''} · ${brl(sum)}</div>
       <div class="card" style="padding:6px 14px">`+parcels.map(p=>`<div class="li" style="cursor:default">
-        <div class="bd"><div class="t">${esc(p.desc)}</div><div class="m">${p.due?'vence '+fdate(p.due):'sem data'}</div></div>
+        <div class="bd"><div class="t">${esc(p.desc)}</div><div class="m">${p.due?t('cc_due')+fdate(p.due):t('cc_nodate')}</div></div>
         <div class="v">${brl(p.val)}</div></div>`).join('')+`</div>`;
     if(v>0 && Math.abs(sum-v)>1) html+=`<p class="fine" style="margin:8px 2px 0;color:var(--gold-ink)">A soma das parcelas (${brl(sum)}) não bate com o total (${brl(v)}). Dá pra ajustar depois no Dinheiro.</p>`;
     html+=`<p class="fine" style="margin:8px 2px 0">Ao confirmar, lanço essas parcelas no Dinheiro.</p>`;
   }else{
     html+=`<p class="fine" style="margin:2px 2px 8px">Não encontrei parcelas no contrato. Você pode gerar depois com "Gerar parcelas".</p>`;
   }
-  html+=`<button class="btn p full" style="margin-top:14px" onclick="applyContractData()">Confirmar e lançar</button>`;
-  if(q.contractId) html+=`<button class="btn g full" style="margin-top:8px" onclick="viewFile('${q.contractId}','Contrato — ${esc(q.name)}')">Ver o contrato anexado</button>`;
-  html+=`<button class="btn g full" style="margin-top:8px" onclick="closeSheet()">Agora não</button>`;
+  html+=`<button class="btn p full" style="margin-top:14px" onclick="applyContractData()">${t('cc_confirm')}</button>`;
+  if(q.contractId) html+=`<button class="btn g full" style="margin-top:8px" onclick="viewFile('${q.contractId}','Contrato — ${esc(q.name)}')">${t('cc_view')}</button>`;
+  html+=`<button class="btn g full" style="margin-top:8px" onclick="closeSheet()">${t('proof_later')}</button>`;
   $('ccBody').innerHTML=html;
   openSheet('sh-contract-confirm');
 }
@@ -3276,7 +3349,7 @@ function applyContractData(){
     }
     applyContractParcels(c.id,q.id,parcels);
     renderAll(); closeSheet();
-    toast('Contrato lançado'+(did.length?': '+did.join(' · '):'')+(' · '+parcels.length+' parcela(s)'),true);
+    toast(t('m_contract_added')+(did.length?': '+did.join(' · '):'')+(' · '+parcels.length+t('m_installments_suffix')),true);
     return;
   }
   pendingContract=null;
@@ -3286,7 +3359,7 @@ function applyContractData(){
 function saveVendorNotes(){
   const {q}=getCur(); if(!q) return;
   q.notes=$('vNotes').value.trim();
-  persist(); toast('Anotações salvas');
+  persist(); toast(t('m_notes_saved'));
 }
 function payExp(id){
   const e=state.exp.find(x=>x.id===id); if(!e) return;
@@ -3352,16 +3425,16 @@ function openParc(){
   const {q}=getCur(); if(!q) return;
   const launched=state.exp.filter(e=>e.vendorId===q.id).reduce((a,e)=>a+e.val,0);
   $('pcVal').value=fmtNum(Math.max(0,q.val-launched));
-  $('pcSub').textContent='Contrato com '+q.name+' — as parcelas entram no Dinheiro.';
+  $('pcSub').textContent=t('parc_sub_v1')+q.name+t('parc_sub_v2');
   $('pcDate').value=todayISO();
   openSheet('sh-parc');
 }
 function saveParc(){
   const {c,q}=getCur(); if(!q) return;
   const total=parseBRL($('pcVal').value), n=parseInt($('pcN').value), first=$('pcDate').value;
-  if(!total||total<=0){toast('Informe o valor a parcelar');return;}
-  if(!n||n<1){toast('Informe o número de parcelas');return;}
-  if(!first){toast('Escolha o primeiro vencimento');return;}
+  if(!total||total<=0){toast(t('m_parc_val'));return;}
+  if(!n||n<1){toast(t('m_parc_n'));return;}
+  if(!first){toast(t('m_parc_first'));return;}
   const base=Math.floor((total/n)*100)/100;
   for(let i=0;i<n;i++){
     const val= i===n-1 ? Math.round((total-base*(n-1))*100)/100 : base;
@@ -4684,7 +4757,7 @@ async function bootApp(){
   await load();
   ['obBudget','stBudget','exVal','qVal','pcVal'].forEach(id=>maskMoney($(id)));
   $('fileQuote').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast('Arquivo recebido — processando…'); handleQuoteFile(e.target.files[0]); } });
-  $('fileContract').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast('Contrato recebido — processando…'); handleContractFile(e.target.files[0]); } });
+  $('fileContract').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast(t('m_contract_received')); handleContractFile(e.target.files[0]); } });
   $('fileProof').addEventListener('change',e=>{ pickerOpened=true; clearTimeout(pickerTimer); if(e.target.files[0]){ toast(t('m_proof_received')); handleProofFile(e.target.files[0]); } });
 
   initBackButton();
