@@ -1637,7 +1637,7 @@ async function demoLoop(){
       await dTabPress('fin');
       sc(5); await dSleep(1400);
       await dPress('dmoPay');
-      if(payW) payW.innerHTML='<span class="tag ok">PAGO</span>';
+      if(payW) payW.innerHTML='<span class="tag ok">'+t('tag_paid')+'</span>';
       dToast('Parcela paga');
       await dSleep(1300);
       await dScroll('dsc6',999,1800);
@@ -2234,7 +2234,13 @@ async function startDemoCycle(){
 /* =================== HELPERS =================== */
 const $=id=>document.getElementById(id);
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
-const brl=v=>{v=v||0; const temC=Math.round(v*100)%100!==0; return v.toLocaleString('pt-BR',{style:'currency',currency:'BRL',minimumFractionDigits:temC?2:0,maximumFractionDigits:2});};
+function simCurSym(){ return (typeof simLang!=='undefined' && simLang!=='pt') ? '$' : 'R$'; }
+function simDateLoc(){ return ({pt:'pt-BR',es:'es',en:'en',fr:'fr'})[(typeof simLang!=='undefined'?simLang:'pt')] || 'pt-BR'; }
+Object.assign(I18N.pt,{ fin_topay_suffix:'a pagar',fin_allpaid:'tudo pago',tag_paid:'PAGO',tag_late:'ATRASADO',tag_due:'A PAGAR',fin_nodue:'Sem vencimento',fin_overdue:'Atrasados',fin_where:'Onde está o dinheiro',fin_paid_low:'pago' });
+Object.assign(I18N.es,{ fin_topay_suffix:'por pagar',fin_allpaid:'todo pagado',tag_paid:'PAGADO',tag_late:'ATRASADO',tag_due:'POR PAGAR',fin_nodue:'Sin vencimiento',fin_overdue:'Atrasados',fin_where:'Dónde está el dinero',fin_paid_low:'pagado' });
+Object.assign(I18N.en,{ fin_topay_suffix:'to pay',fin_allpaid:'all paid',tag_paid:'PAID',tag_late:'OVERDUE',tag_due:'TO PAY',fin_nodue:'No due date',fin_overdue:'Overdue',fin_where:'Where the money goes',fin_paid_low:'paid' });
+Object.assign(I18N.fr,{ fin_topay_suffix:'à payer',fin_allpaid:'tout payé',tag_paid:'PAYÉ',tag_late:'EN RETARD',tag_due:'À PAYER',fin_nodue:'Sans échéance',fin_overdue:'En retard',fin_where:"Où va l'argent",fin_paid_low:'payé' });
+const brl=v=>{ v=v||0; const temC=Math.round(v*100)%100!==0; const n=Math.abs(v).toLocaleString(simDateLoc(),{minimumFractionDigits:temC?2:0,maximumFractionDigits:2}); return (v<0?'-':'')+simCurSym()+' '+n; };
 const fmtNum=v=>{v=v||0; const temC=Math.round(v*100)%100!==0; return v.toLocaleString('pt-BR',{minimumFractionDigits:temC?2:0,maximumFractionDigits:2});};
 /* máscara de dinheiro: digite só números, o app formata 60.000.000,00 sozinho */
 function maskMoney(el){
@@ -2247,7 +2253,7 @@ function maskMoney(el){
   });
 }
 const parseBRL=s=>{ if(!s)return NaN; s=String(s).replace(/\D/g,''); return s?parseInt(s,10):NaN; };
-const fdate=s=>{ if(!s)return''; return new Date(s+'T12:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'short'}); };
+const fdate=s=>{ if(!s)return''; return new Date(s+'T12:00:00').toLocaleDateString(simDateLoc(),{day:'2-digit',month:'short'}); };
 const todayISO=()=>new Date().toISOString().slice(0,10);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let _tkHideT=null;
@@ -2511,7 +2517,7 @@ function renderHomeAgenda(){
     return `<div class="li" onclick="${isEv?`openEvent('${i.id}')`:`openExpense('${i.id}')`}">
       <div class="ic">${isEv?ICONS.cal:ICONS.money}</div>
       <div class="bd"><div class="t">${esc(i.desc)}${i.time?' · '+i.time:''}</div>
-      <div class="m">${dia}${isEv?(i.where?' · '+esc(i.where):''):(' · '+(i.paid?'pago':'a pagar'))}</div></div>
+      <div class="m">${dia}${isEv?(i.where?' · '+esc(i.where):''):(' · '+(i.paid?t('fin_paid_low'):t('fin_topay_suffix')))}</div></div>
       ${i.kind==='pay'?`<div class="v">${brl(i.val)}</div>`:'<svg class="chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>'}
     </div>`;
   };
@@ -2540,7 +2546,7 @@ function renderFin(){
   }
   const today=todayISO();
   const row=e=>{
-    const tag=e.paid?'<span class="tag ok">PAGO</span>':(e.due&&e.due<today?'<span class="tag late">ATRASADO</span>':'<span class="tag due">A PAGAR</span>');
+    const tag=e.paid?'<span class="tag ok">'+t('tag_paid')+'</span>':(e.due&&e.due<today?'<span class="tag late">'+t('tag_late')+'</span>':'<span class="tag due">'+t('tag_due')+'</span>');
     return `<div class="li" onclick="openExpense('${e.id}')">
       <div class="ic">${ICONS.money}</div>
       <div class="bd"><div class="t">${esc(e.desc)}</div><div class="m">${e.due?fdate(e.due)+' · ':''}${esc(e.cat||'Geral')}${e.proofId?' · '+t('money_proof_chip'):''}</div></div>
@@ -2555,21 +2561,21 @@ function renderFin(){
   let listHtml='';
   if(late.length){
     const tot=late.reduce((a,e)=>a+e.val,0);
-    listHtml+=`<div class="row" style="margin:2px 0 8px"><span class="cap" style="color:var(--danger)">Atrasados</span><span class="fine"><b style="color:var(--danger)">${brl(tot)}</b></span></div>
+    listHtml+=`<div class="row" style="margin:2px 0 8px"><span class="cap" style="color:var(--danger)">${t('fin_overdue')}</span><span class="fine"><b style="color:var(--danger)">${brl(tot)}</b></span></div>
     <div class="card" style="padding:6px 14px;border-color:#E4C7BF">${late.map(row).join('')}</div>`;
   }
   const months={};
   dated.forEach(e=>{ const k=e.due.slice(0,7); (months[k]=months[k]||[]).push(e); });
   Object.keys(months).sort().forEach(k=>{
     const arr=months[k].sort(byDue);
-    let lab=new Date(k+'-15T12:00:00').toLocaleDateString('pt-BR',{month:'long',year:'numeric'});
+    let lab=new Date(k+'-15T12:00:00').toLocaleDateString(simDateLoc(),{month:'long',year:'numeric'});
     lab=lab.charAt(0).toUpperCase()+lab.slice(1);
     const open=arr.filter(e=>!e.paid).reduce((a,e)=>a+e.val,0);
-    listHtml+=`<div class="row" style="margin:14px 0 8px"><span class="cap">${lab}</span><span class="fine">${open>0?'<b>'+brl(open)+'</b> a pagar':'tudo pago'}</span></div>
+    listHtml+=`<div class="row" style="margin:14px 0 8px"><span class="cap">${lab}</span><span class="fine">${open>0?'<b>'+brl(open)+'</b> '+t('fin_topay_suffix'):t('fin_allpaid')}</span></div>
     <div class="card" style="padding:6px 14px">${arr.map(row).join('')}</div>`;
   });
   if(undated.length){
-    listHtml+=`<div class="row" style="margin:14px 0 8px"><span class="cap">Sem vencimento</span></div>
+    listHtml+=`<div class="row" style="margin:14px 0 8px"><span class="cap">${t('fin_nodue')}</span></div>
     <div class="card" style="padding:6px 14px">${undated.map(row).join('')}</div>`;
   }
   $('finList').innerHTML=listHtml;
@@ -2578,7 +2584,7 @@ function renderFin(){
   const map={};
   state.exp.forEach(e=>{const k=e.cat||'Geral'; map[k]=(map[k]||0)+e.val;});
   const cats=Object.entries(map).sort((a,b)=>b[1]-a[1]);
-  $('finCats').innerHTML=`<h2 class="sec" style="font-size:18px">Onde está o dinheiro</h2>
+  $('finCats').innerHTML=`<h2 class="sec" style="font-size:18px">${t('fin_where')}</h2>
     <div class="card">`+cats.map(([k,v])=>{
       const pc=Math.round(v/commit*100);
       return `<div style="padding:8px 0">
@@ -3171,7 +3177,7 @@ function renderVendor(){
     html+=`<div class="empty"><div class="dn">Nenhuma parcela lançada</div><p>Use <b>Gerar parcelas</b> para dividir o valor do contrato<br>com vencimentos mensais — elas aparecem no Dinheiro.</p></div>`;
   }else{
     html+=`<div class="card" style="padding:6px 14px">`+parcs.map(e=>{
-      const tag=e.paid?'<span class="tag ok">PAGO</span>':(e.due&&e.due<today?'<span class="tag late">ATRASADO</span>':'<span class="tag due">A PAGAR</span>');
+      const tag=e.paid?'<span class="tag ok">'+t('tag_paid')+'</span>':(e.due&&e.due<today?'<span class="tag late">'+t('tag_late')+'</span>':'<span class="tag due">'+t('tag_due')+'</span>');
       return `<div class="li" onclick="openExpense('${e.id}')">
         <div class="ic">${ICONS.money}</div>
         <div class="bd"><div class="t">${esc(e.desc)}</div><div class="m">${e.due?'vence '+fdate(e.due):'sem vencimento'}${e.proofId?' · '+t('money_proof_chip'):''}</div></div>
