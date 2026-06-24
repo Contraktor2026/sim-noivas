@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "jsdom": "^29.1.1"
+  },
+  "name": "sim-noivas",
+  "private": true,
+  "scripts": {
+    "test": "node tests/run.js"
+  }
+}
