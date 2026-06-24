@@ -76,6 +76,23 @@ load().then(({ w, d, A, base, novaData, errors, results }) => {
     A('IV8 volta pro PT', d.querySelector('[data-i18n=q_save]').textContent === 'Salvar orçamento');
   } catch (e) { results.fail++; results.fails.push('I18N-FORN EXCEÇÃO: ' + e.message); }
 
+  // ---------- I18N: Dinheiro dinâmico + moeda ----------
+  try {
+    setLang('es');
+    w.STATE = { profile:{a:'Ana',b:'Pedro',date:'2026-12-01',budget:30000}, cats:[], tasks:[], notes:[], events:[], guests:[],
+      exp:[{id:'e1',desc:'Flora',cat:'Decoración',val:400,due:'2026-06-23',paid:true},
+           {id:'e2',desc:'Hacienda',cat:'Salón',val:1167,due:'2026-07-01',paid:false}] };
+    w.renderFin();
+    const h = $('finList').innerHTML, cats = $('finCats').innerHTML;
+    A('IDF1 mês em espanhol', /junio/i.test(h));
+    A('IDF2 selos PAGADO/POR PAGAR', h.includes('PAGADO') && h.includes('POR PAGAR'));
+    A('IDF3 "todo pagado" e "por pagar"', h.includes('todo pagado') && h.includes('por pagar'));
+    A('IDF4 moeda vira $ (sem R$)', !h.includes('R$') && h.includes('$'));
+    A('IDF5 "Dónde está el dinero"', cats.includes('Dónde está el dinero'));
+    setLang('pt'); w.renderFin();
+    A('IDF6 PT mantém R$', $('finList').innerHTML.includes('R$'));
+  } catch (e) { results.fail++; results.fails.push('I18N-DINF EXCEÇÃO: ' + e.message); }
+
   // ---------- FIN: fluxo de despesa ----------
   try {
     w.STATE = base();
