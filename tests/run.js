@@ -144,6 +144,20 @@ load().then(({ w, d, A, base, novaData, errors, results }) => {
     A('LND5 volta pro PT', d.querySelector('[data-i18n=ld_c1_h]').textContent === 'Dinheiro sob controle');
   } catch (e) { results.fail++; results.fails.push('I18N-LANDING EXCEÇÃO: ' + e.message); }
 
+  // ---------- I18N: Configurações ----------
+  try {
+    setLang('es');
+    const q = k => d.querySelector('#s-set [data-i18n=' + k + ']').textContent.trim();
+    A('SET1 campos ES', q('set_yourname') === 'Tu nombre' && q('set_partner') === 'Nombre de tu pareja' && q('set_city') === 'Ciudad');
+    A('SET2 orçamento vira $', q('set_budget') === 'Presupuesto ($)');
+    A('SET3 seções + botões ES', q('set_account') === 'Cuenta' && q('set_save') === 'Guardar cambios' && q('set_wipe') === 'Borrar todos los datos');
+    A('SET4 lista sugerida mantém <b>', d.querySelector('[data-i18n=set_suggested_p]').innerHTML.includes('<b'));
+    A('SET5 fmtTempo localizado', w.fmtTempo(3) === '3 meses' && w.fmtTempo(0.03) === '1 día');
+    A('SET6 toasts ES', w.t('m_set_saved') === 'Cambios guardados' && w.t('m_rot_full_adapted').replace('{t}', 'X') === 'Guía completa adaptada a los X que faltan');
+    setLang('pt');
+    A('SET7 volta pro PT', q('set_save') === 'Salvar alterações' && q('set_budget') === 'Orçamento (R$)' && w.fmtTempo(3) === '3 meses');
+  } catch (e) { results.fail++; results.fails.push('I18N-SET EXCEÇÃO: ' + e.message); }
+
   // ---------- FIN: fluxo de despesa ----------
   try {
     w.STATE = base();
