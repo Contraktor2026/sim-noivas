@@ -1138,12 +1138,12 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       <div id="guestIntro"></div>
       <!-- SEÇÃO: Confirmações (em cima — nada escondido) -->
       <div class="fsection">
-        <div class="fsechead"><h3 class="fsectitle">Confirmações</h3><span class="fseccount" id="cntRsvp" style="display:none">0</span></div>
+        <div class="fsechead"><h3 class="fsectitle" data-i18n="g_help_rsvp">Confirmações</h3><span class="fseccount" id="cntRsvp" style="display:none">0</span></div>
         <div id="rsvpSection"></div>
       </div>
       <!-- SEÇÃO: Minha lista -->
       <div class="fsection">
-        <div class="fsechead"><h3 class="fsectitle">Minha lista</h3><span class="fseccount" id="cntMine">0</span></div>
+        <div class="fsechead"><h3 class="fsectitle" data-i18n="g_help_mine">Minha lista</h3><span class="fseccount" id="cntMine">0</span></div>
         <p class="sub" data-i18n="guests_sub">Quem você quer ao seu lado no grande dia.</p>
         <div id="guestSummary"></div>
         <button class="add" onclick="openGuest()" style="margin:4px 0 4px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Adicionar convidado</button>
@@ -1343,15 +1343,15 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
     </div>
 
     <div class="sheet" id="sh-export" style="display:none">
-      <h3>Exportar lista</h3>
-      <p class="sub">Leve sua lista de convidados pra onde precisar.</p>
+      <h3 data-i18n="g_export_title">Exportar lista</h3>
+      <p class="sub" data-i18n="g_export_sub">Leve sua lista de convidados pra onde precisar.</p>
       <button class="exopt" onclick="exportGuestsCSV()">
         <div class="exi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4h16v16H4z"/><path d="M4 9h16M4 14h16M9 4v16M15 4v16"/></svg></div>
-        <div><div class="ext">Planilha</div><div class="exd">Abre no Excel ou Google Sheets. Ideal pra enviar ao buffet ou ao espaço.</div></div>
+        <div><div class="ext" data-i18n="g_export_csv">Planilha</div><div class="exd" data-i18n="g_export_csv_sub">Abre no Excel ou Google Sheets. Ideal pra enviar ao buffet ou ao espaço.</div></div>
       </button>
       <button class="exopt" onclick="exportGuestsPDF()">
         <div class="exi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 3h7l5 5v13H7zM14 3v5h5"/><path d="M9 13h6M9 16h6"/></svg></div>
-        <div><div class="ext">PDF para imprimir</div><div class="exd">Lista com o cabeçalho do seu casamento. Salve como PDF ou imprima.</div></div>
+        <div><div class="ext" data-i18n="g_export_pdf">PDF para imprimir</div><div class="exd" data-i18n="g_export_pdf_sub">Lista com o cabeçalho do seu casamento. Salve como PDF ou imprima.</div></div>
       </button>
     </div>
 
@@ -1362,65 +1362,65 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
     </div>
 
     <div class="sheet" id="sh-guests-help" style="display:none">
-      <h3>Como funciona</h3>
-      <p class="sub">Duas partes que trabalham juntas: a sua lista e as respostas dos convidados.</p>
-      <p class="fine" style="margin:16px 0 3px"><b style="color:var(--green)">Minha lista</b></p>
-      <p class="fine" style="margin:0">Sua lista de quem você quer no casamento. Você adiciona cada pessoa, organiza por grupo e marca quem vai, quem está pendente e quem não vai. É o seu controle.</p>
-      <p class="fine" style="margin:15px 0 3px"><b style="color:var(--green)">Confirmações</b></p>
-      <p class="fine" style="margin:0">O link que você envia aos convidados. Cada um responde sozinho se vai poder ir, com quem vem, telefone e restrições. As respostas chegam numa fila de revisão: o SIM. procura a pessoa na sua lista e você confirma com um toque — sem duplicar nada.</p>
-      <p class="fine" style="margin:16px 0 0;padding-top:14px;border-top:1px solid var(--line)"><b style="color:var(--green)">Resumindo:</b> na Minha lista você diz quem quer; nas Confirmações eles dizem se vêm. A palavra final é sempre sua.</p>
-      <button class="btn p full" style="margin-top:16px" onclick="closeSheet()">Entendi</button>
+      <h3 data-i18n="g_help_title">Como funciona</h3>
+      <p class="sub" data-i18n="g_help_sub">Duas partes que trabalham juntas: a sua lista e as respostas dos convidados.</p>
+      <p class="fine" style="margin:16px 0 3px"><b style="color:var(--green)" data-i18n="g_help_mine">Minha lista</b></p>
+      <p class="fine" style="margin:0" data-i18n="g_help_mine_txt">Sua lista de quem você quer no casamento. Você adiciona cada pessoa, organiza por grupo e marca quem vai, quem está pendente e quem não vai. É o seu controle.</p>
+      <p class="fine" style="margin:15px 0 3px"><b style="color:var(--green)" data-i18n="g_help_rsvp">Confirmações</b></p>
+      <p class="fine" style="margin:0" data-i18n="g_help_rsvp_txt">O link que você envia aos convidados. Cada um responde sozinho se vai poder ir, com quem vem, telefone e restrições. As respostas chegam numa fila de revisão: o SIM. procura a pessoa na sua lista e você confirma com um toque — sem duplicar nada.</p>
+      <p class="fine" style="margin:16px 0 0;padding-top:14px;border-top:1px solid var(--line)" data-i18n="g_help_summary"><b style="color:var(--green)">Resumindo:</b> na Minha lista você diz quem quer; nas Confirmações eles dizem se vêm. A palavra final é sempre sua.</p>
+      <button class="btn p full" style="margin-top:16px" onclick="closeSheet()" data-i18n="g_help_ok">Entendi</button>
     </div>
 
     <div class="sheet" id="sh-guest" style="display:none">
       <h3 id="gsTitle">Novo convidado</h3>
-      <p class="sub">Adicione quem você quer convidar. Pode confirmar a presença depois.</p>
-      <div class="f"><label>Nome</label><input id="gsName" placeholder="Ex.: Tia Marta, João e Maria…"></div>
-      <div class="f"><label>Grupo <span class="opt">(opcional)</span></label>
+      <p class="sub" data-i18n="g_sub">Adicione quem você quer convidar. Pode confirmar a presença depois.</p>
+      <div class="f"><label data-i18n="g_name">Nome</label><input id="gsName" placeholder="Ex.: Tia Marta, João e Maria…" data-i18n-ph="g_name_ph"></div>
+      <div class="f"><label><span data-i18n="g_group">Grupo</span> <span class="opt" data-i18n="q_optional">(opcional)</span></label>
         <div class="fchips" id="gsGroups">
-          <span class="fchip" onclick="pickGroup(this)">Família da noiva</span>
-          <span class="fchip" onclick="pickGroup(this)">Família do noivo</span>
-          <span class="fchip" onclick="pickGroup(this)">Amigos</span>
-          <span class="fchip" onclick="pickGroup(this)">Trabalho</span>
-          <span class="fchip" onclick="pickGroup(this)">Padrinhos</span>
+          <span class="fchip" onclick="pickGroup(this)" data-i18n="g_grp_bridefam">Família da noiva</span>
+          <span class="fchip" onclick="pickGroup(this)" data-i18n="g_grp_groomfam">Família do noivo</span>
+          <span class="fchip" onclick="pickGroup(this)" data-i18n="g_grp_friends">Amigos</span>
+          <span class="fchip" onclick="pickGroup(this)" data-i18n="g_grp_work">Trabalho</span>
+          <span class="fchip" onclick="pickGroup(this)" data-i18n="g_grp_party">Padrinhos</span>
         </div>
-        <input id="gsGroupOther" placeholder="Ou digite um grupo…" style="margin-top:8px">
+        <input id="gsGroupOther" placeholder="Ou digite um grupo…" data-i18n-ph="g_grp_other_ph" style="margin-top:8px">
       </div>
-      <div class="f"><label>WhatsApp <span class="opt">(opcional)</span></label><input id="gsPhone" inputmode="tel" placeholder="48 99999-0000"></div>
+      <div class="f"><label>WhatsApp <span class="opt" data-i18n="q_optional">(opcional)</span></label><input id="gsPhone" inputmode="tel" placeholder="48 99999-0000"></div>
       <div class="f">
-        <label>Acompanhantes <span class="opt">(nome e telefone de cada um)</span></label>
+        <label><span data-i18n="g_comp_label">Acompanhantes</span> <span class="opt" data-i18n="g_comp_hint">(nome e telefone de cada um)</span></label>
         <div id="gsCompList"></div>
-        <button type="button" class="btn g full" onclick="gsAddComp()" style="margin-top:2px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-1px;margin-right:4px"><path d="M12 5v14M5 12h14"/></svg>Adicionar acompanhante</button>
+        <button type="button" class="btn g full" onclick="gsAddComp()" style="margin-top:2px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-1px;margin-right:4px"><path d="M12 5v14M5 12h14"/></svg><span data-i18n="g_comp_add">Adicionar acompanhante</span></button>
       </div>
-      <button type="button" class="btn g full" id="gsWa" style="display:none;margin-bottom:14px" onclick="guestWhatsInput()"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:5px"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-2.8.8.8-2.8-.2-.3A8 8 0 1 1 12 20zm4.5-5.9c-.2-.1-1.4-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8.9-.3.2-.6 0a6.6 6.6 0 0 1-1.9-1.2 7.3 7.3 0 0 1-1.4-1.7c-.1-.3 0-.4.1-.5l.4-.5.3-.4v-.4c0-.1-.6-1.5-.8-2s-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3A2.9 2.9 0 0 0 6 9.4a5 5 0 0 0 1.1 2.7 11.5 11.5 0 0 0 4.4 3.9c2.1.8 2.1.6 2.5.5a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .1-1.2c0-.1-.2-.2-.5-.3z"/></svg>Chamar no WhatsApp</button>
-      <div class="f"><label>Presença</label>
+      <button type="button" class="btn g full" id="gsWa" style="display:none;margin-bottom:14px" onclick="guestWhatsInput()"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:5px"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-2.8.8.8-2.8-.2-.3A8 8 0 1 1 12 20zm4.5-5.9c-.2-.1-1.4-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8.9-.3.2-.6 0a6.6 6.6 0 0 1-1.9-1.2 7.3 7.3 0 0 1-1.4-1.7c-.1-.3 0-.4.1-.5l.4-.5.3-.4v-.4c0-.1-.6-1.5-.8-2s-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3A2.9 2.9 0 0 0 6 9.4a5 5 0 0 0 1.1 2.7 11.5 11.5 0 0 0 4.4 3.9c2.1.8 2.1.6 2.5.5a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .1-1.2c0-.1-.2-.2-.5-.3z"/></svg><span data-i18n="g_call_wa">Chamar no WhatsApp</span></button>
+      <div class="f"><label data-i18n="g_presence">Presença</label>
         <div class="gstatus" id="gsStatus">
-          <button type="button" data-s="pending" class="on" onclick="pickStatus('pending')">Pendente</button>
-          <button type="button" data-s="yes" onclick="pickStatus('yes')">Confirmado</button>
-          <button type="button" data-s="no" onclick="pickStatus('no')">Não vai</button>
+          <button type="button" data-s="pending" class="on" onclick="pickStatus('pending')" data-i18n="g_st_pending">Pendente</button>
+          <button type="button" data-s="yes" onclick="pickStatus('yes')" data-i18n="g_st_yes">Confirmado</button>
+          <button type="button" data-s="no" onclick="pickStatus('no')" data-i18n="g_st_no">Não vai</button>
         </div>
       </div>
-      <div class="f"><label>Restrição alimentar ou alergia <span class="opt">(opcional)</span></label><input id="gsDiet" placeholder="Ex.: vegetariana, alergia a amendoim, sem lactose…"></div>
-      <div class="f"><label>Observação <span class="opt">(opcional)</span></label><textarea id="gsNote" placeholder="Ex.: vem de outra cidade, precisa de carona…"></textarea></div>
-      <button class="btn p full" onclick="saveGuest()">Salvar convidado</button>
-      <button class="btn d full" id="gsDel" style="margin-top:8px;display:none" onclick="delGuest()">Excluir convidado</button>
+      <div class="f"><label><span data-i18n="g_diet">Restrição alimentar ou alergia</span> <span class="opt" data-i18n="q_optional">(opcional)</span></label><input id="gsDiet" placeholder="Ex.: vegetariana, alergia a amendoim, sem lactose…" data-i18n-ph="g_diet_ph"></div>
+      <div class="f"><label><span data-i18n="g_note">Observação</span> <span class="opt" data-i18n="q_optional">(opcional)</span></label><textarea id="gsNote" placeholder="Ex.: vem de outra cidade, precisa de carona…" data-i18n-ph="g_note_ph"></textarea></div>
+      <button class="btn p full" onclick="saveGuest()" data-i18n="g_save">Salvar convidado</button>
+      <button class="btn d full" id="gsDel" style="margin-top:8px;display:none" onclick="delGuest()" data-i18n="g_del">Excluir convidado</button>
     </div>
 
     <div class="sheet" id="sh-bulk" style="display:none">
-      <h3>Adicionar vários</h3>
-      <p class="sub">Cole ou digite um nome por linha. Todos entram como pendentes — você confirma depois.</p>
-      <div class="f"><label>Nomes <span class="opt">(um por linha)</span></label><textarea id="bkNames" rows="7" placeholder="Tia Marta&#10;João e Maria Silva&#10;Carlos Souza"></textarea></div>
-      <div class="f"><label>Grupo para todos <span class="opt">(opcional)</span></label>
+      <h3 data-i18n="g_bulk_title">Adicionar vários</h3>
+      <p class="sub" data-i18n="g_bulk_sub">Cole ou digite um nome por linha. Todos entram como pendentes — você confirma depois.</p>
+      <div class="f"><label><span data-i18n="g_bulk_names">Nomes</span> <span class="opt" data-i18n="g_bulk_names_hint">(um por linha)</span></label><textarea id="bkNames" rows="7" placeholder="Tia Marta&#10;João e Maria Silva&#10;Carlos Souza"></textarea></div>
+      <div class="f"><label><span data-i18n="g_bulk_group">Grupo para todos</span> <span class="opt" data-i18n="q_optional">(opcional)</span></label>
         <div class="fchips" id="bkGroups">
-          <span class="fchip" onclick="pickBulkGroup(this)">Família da noiva</span>
-          <span class="fchip" onclick="pickBulkGroup(this)">Família do noivo</span>
-          <span class="fchip" onclick="pickBulkGroup(this)">Amigos</span>
-          <span class="fchip" onclick="pickBulkGroup(this)">Trabalho</span>
-          <span class="fchip" onclick="pickBulkGroup(this)">Padrinhos</span>
+          <span class="fchip" onclick="pickBulkGroup(this)" data-i18n="g_grp_bridefam">Família da noiva</span>
+          <span class="fchip" onclick="pickBulkGroup(this)" data-i18n="g_grp_groomfam">Família do noivo</span>
+          <span class="fchip" onclick="pickBulkGroup(this)" data-i18n="g_grp_friends">Amigos</span>
+          <span class="fchip" onclick="pickBulkGroup(this)" data-i18n="g_grp_work">Trabalho</span>
+          <span class="fchip" onclick="pickBulkGroup(this)" data-i18n="g_grp_party">Padrinhos</span>
         </div>
-        <input id="bkGroupOther" placeholder="Ou digite um grupo…" style="margin-top:8px">
+        <input id="bkGroupOther" placeholder="Ou digite um grupo…" data-i18n-ph="g_grp_other_ph" style="margin-top:8px">
       </div>
-      <button class="btn p full" onclick="saveBulkGuests()">Adicionar à lista</button>
+      <button class="btn p full" onclick="saveBulkGuests()" data-i18n="g_bulk_add">Adicionar à lista</button>
     </div>
 
     <div class="sheet" id="sh-event" style="display:none">
@@ -2244,6 +2244,16 @@ Object.assign(I18N.pt,{ rep_title_full:'Relatório do casamento',rep_foot:'Gerad
 Object.assign(I18N.es,{ rep_title_full:'Informe de la boda',rep_foot:'Generado por SIM.',rep_sec_fin:'Finanzas',rep_launched:'Registrado',rep_falta:'Por pagar',rep_th_due:'Vence',rep_th_val:'Valor',rep_th_paid:'Pagado',rep_general:'General',rep_chip_proof:'compr.',rep_total:'Total',rep_empty_fin:'Aún no hay gastos registrados.',rep_sec_cot:'Presupuestos',rep_quotes_sg:'presupuesto',rep_quotes_pl:'presupuestos',rep_contracted:'CONTRATADO',rep_empty_cot:'Aún no hay presupuestos registrados.',rep_sec_hir:'Proveedores cerrados',rep_th_contract:'Contrato',rep_total_contracted:'Total contratado',rep_empty_hir:'Aún no hay proveedores contratados.' });
 Object.assign(I18N.en,{ rep_title_full:'Wedding report',rep_foot:'Generated by SIM.',rep_sec_fin:'Finances',rep_launched:'Logged',rep_falta:'Left to pay',rep_th_due:'Due',rep_th_val:'Amount',rep_th_paid:'Paid',rep_general:'General',rep_chip_proof:'rcpt',rep_total:'Total',rep_empty_fin:'No expenses logged yet.',rep_sec_cot:'Quotes',rep_quotes_sg:'quote',rep_quotes_pl:'quotes',rep_contracted:'BOOKED',rep_empty_cot:'No quotes recorded yet.',rep_sec_hir:'Signed vendors',rep_th_contract:'Contract',rep_total_contracted:'Total signed',rep_empty_hir:'No vendors booked yet.' });
 Object.assign(I18N.fr,{ rep_title_full:'Rapport du mariage',rep_foot:'Généré par SIM.',rep_sec_fin:'Finances',rep_launched:'Enregistré',rep_falta:'Reste à payer',rep_th_due:'Échéance',rep_th_val:'Montant',rep_th_paid:'Payé',rep_general:'Général',rep_chip_proof:'justif.',rep_total:'Total',rep_empty_fin:'Aucune dépense enregistrée.',rep_sec_cot:'Devis',rep_quotes_sg:'devis',rep_quotes_pl:'devis',rep_contracted:'RÉSERVÉ',rep_empty_cot:'Aucun devis enregistré.',rep_sec_hir:'Prestataires signés',rep_th_contract:'Contrat',rep_total_contracted:'Total signé',rep_empty_hir:'Aucun prestataire réservé.' });
+// ---- tela Convidados (parte 1) ----
+Object.assign(I18N.pt, {"g_export_title": "Exportar lista", "g_export_sub": "Leve sua lista de convidados pra onde precisar.", "g_export_csv": "Planilha", "g_export_csv_sub": "Abre no Excel ou Google Sheets. Ideal pra enviar ao buffet ou ao espaço.", "g_export_pdf": "PDF para imprimir", "g_export_pdf_sub": "Lista com o cabeçalho do seu casamento. Salve como PDF ou imprima.", "g_help_title": "Como funciona", "g_help_sub": "Duas partes que trabalham juntas: a sua lista e as respostas dos convidados.", "g_help_mine": "Minha lista", "g_help_mine_txt": "Sua lista de quem você quer no casamento. Você adiciona cada pessoa, organiza por grupo e marca quem vai, quem está pendente e quem não vai. É o seu controle.", "g_help_rsvp": "Confirmações", "g_help_rsvp_txt": "O link que você envia aos convidados. Cada um responde sozinho se vai poder ir, com quem vem, telefone e restrições. As respostas chegam numa fila de revisão: o SIM. procura a pessoa na sua lista e você confirma com um toque — sem duplicar nada.", "g_help_summary": "<b style=\"color:var(--green)\">Resumindo:</b> na Minha lista você diz quem quer; nas Confirmações eles dizem se vêm. A palavra final é sempre sua.", "g_help_ok": "Entendi", "g_title_new": "Novo convidado", "g_title_edit": "Editar convidado", "g_sub": "Adicione quem você quer convidar. Pode confirmar a presença depois.", "g_name": "Nome", "g_name_ph": "Ex.: Tia Marta, João e Maria…", "g_group": "Grupo", "g_grp_bridefam": "Família da noiva", "g_grp_groomfam": "Família do noivo", "g_grp_friends": "Amigos", "g_grp_work": "Trabalho", "g_grp_party": "Padrinhos", "g_grp_other_ph": "Ou digite um grupo…", "g_comp_label": "Acompanhantes", "g_comp_hint": "(nome e telefone de cada um)", "g_comp_add": "Adicionar acompanhante", "g_comp_name_ph": "Nome do acompanhante", "g_comp_phone_ph": "Telefone (opcional)", "g_adult": "Adulto", "g_child": "Criança", "g_call_wa": "Chamar no WhatsApp", "g_presence": "Presença", "g_st_pending": "Pendente", "g_st_yes": "Confirmado", "g_st_no": "Não vai", "g_diet": "Restrição alimentar ou alergia", "g_diet_ph": "Ex.: vegetariana, alergia a amendoim, sem lactose…", "g_note": "Observação", "g_note_ph": "Ex.: vem de outra cidade, precisa de carona…", "g_save": "Salvar convidado", "g_del": "Excluir convidado", "g_bulk_title": "Adicionar vários", "g_bulk_sub": "Cole ou digite um nome por linha. Todos entram como pendentes — você confirma depois.", "g_bulk_names": "Nomes", "g_bulk_names_hint": "(um por linha)", "g_bulk_group": "Grupo para todos", "g_bulk_add": "Adicionar à lista", "g_adults": "Adultos", "g_kids": "Crianças", "m_g_name": "Qual o nome do convidado?", "m_g_saved": "Convidado salvo", "m_g_removed": "Convidado removido", "m_g_nophone": "Esse convidado não tem telefone", "m_bulk_empty": "Cole pelo menos um nome", "m_list_empty": "Sua lista está vazia"});
+Object.assign(I18N.es, {"g_export_title": "Exportar lista", "g_export_sub": "Lleva tu lista de invitados a donde necesites.", "g_export_csv": "Hoja de cálculo", "g_export_csv_sub": "Se abre en Excel o Google Sheets. Ideal para enviar al banquete o al salón.", "g_export_pdf": "PDF para imprimir", "g_export_pdf_sub": "Lista con el encabezado de tu boda. Guarda como PDF o imprime.", "g_help_title": "Cómo funciona", "g_help_sub": "Dos partes que trabajan juntas: tu lista y las respuestas de los invitados.", "g_help_mine": "Mi lista", "g_help_mine_txt": "Tu lista de a quién quieres en la boda. Agregas a cada persona, la organizas por grupo y marcas quién va, quién está pendiente y quién no va. Es tu control.", "g_help_rsvp": "Confirmaciones", "g_help_rsvp_txt": "El enlace que envías a los invitados. Cada uno responde solo si podrá ir, con quién viene, teléfono y restricciones. Las respuestas llegan a una fila de revisión: SIM. busca a la persona en tu lista y confirmas con un toque, sin duplicar nada.", "g_help_summary": "<b style=\"color:var(--green)\">En resumen:</b> en Mi lista dices a quién quieres; en Confirmaciones ellos dicen si vienen. La última palabra siempre es tuya.", "g_help_ok": "Entendido", "g_title_new": "Nuevo invitado", "g_title_edit": "Editar invitado", "g_sub": "Agrega a quién quieres invitar. Puedes confirmar la asistencia después.", "g_name": "Nombre", "g_name_ph": "Ej.: Tía Marta, Juan y María…", "g_group": "Grupo", "g_grp_bridefam": "Familia de la novia", "g_grp_groomfam": "Familia del novio", "g_grp_friends": "Amigos", "g_grp_work": "Trabajo", "g_grp_party": "Padrinos", "g_grp_other_ph": "O escribe un grupo…", "g_comp_label": "Acompañantes", "g_comp_hint": "(nombre y teléfono de cada uno)", "g_comp_add": "Agregar acompañante", "g_comp_name_ph": "Nombre del acompañante", "g_comp_phone_ph": "Teléfono (opcional)", "g_adult": "Adulto", "g_child": "Niño", "g_call_wa": "Escribir por WhatsApp", "g_presence": "Asistencia", "g_st_pending": "Pendiente", "g_st_yes": "Confirmado", "g_st_no": "No asiste", "g_diet": "Restricción alimentaria o alergia", "g_diet_ph": "Ej.: vegetariana, alergia al maní, sin lactosa…", "g_note": "Observación", "g_note_ph": "Ej.: viene de otra ciudad, necesita transporte…", "g_save": "Guardar invitado", "g_del": "Eliminar invitado", "g_bulk_title": "Agregar varios", "g_bulk_sub": "Pega o escribe un nombre por línea. Todos entran como pendientes — confirmas después.", "g_bulk_names": "Nombres", "g_bulk_names_hint": "(uno por línea)", "g_bulk_group": "Grupo para todos", "g_bulk_add": "Agregar a la lista", "g_adults": "Adultos", "g_kids": "Niños", "m_g_name": "¿Cuál es el nombre del invitado?", "m_g_saved": "Invitado guardado", "m_g_removed": "Invitado eliminado", "m_g_nophone": "Ese invitado no tiene teléfono", "m_bulk_empty": "Pega al menos un nombre", "m_list_empty": "Tu lista está vacía"});
+Object.assign(I18N.en, {"g_export_title": "Export list", "g_export_sub": "Take your guest list wherever you need it.", "g_export_csv": "Spreadsheet", "g_export_csv_sub": "Opens in Excel or Google Sheets. Great to send to the caterer or venue.", "g_export_pdf": "PDF to print", "g_export_pdf_sub": "List with your wedding header. Save as PDF or print.", "g_help_title": "How it works", "g_help_sub": "Two parts that work together: your list and the guests’ replies.", "g_help_mine": "My list", "g_help_mine_txt": "Your list of who you want at the wedding. You add each person, organize by group and mark who’s coming, who’s pending and who isn’t. It’s your control.", "g_help_rsvp": "RSVPs", "g_help_rsvp_txt": "The link you send to guests. Each one replies on their own whether they can come, who they bring, phone and restrictions. Replies arrive in a review queue: SIM. finds the person in your list and you confirm with one tap, without duplicating anything.", "g_help_summary": "<b style=\"color:var(--green)\">In short:</b> in My list you say who you want; in RSVPs they say if they’re coming. The final word is always yours.", "g_help_ok": "Got it", "g_title_new": "New guest", "g_title_edit": "Edit guest", "g_sub": "Add who you want to invite. You can confirm attendance later.", "g_name": "Name", "g_name_ph": "e.g. Aunt Marta, John and Mary…", "g_group": "Group", "g_grp_bridefam": "Bride’s family", "g_grp_groomfam": "Groom’s family", "g_grp_friends": "Friends", "g_grp_work": "Work", "g_grp_party": "Wedding party", "g_grp_other_ph": "Or type a group…", "g_comp_label": "Companions", "g_comp_hint": "(name and phone of each)", "g_comp_add": "Add companion", "g_comp_name_ph": "Companion name", "g_comp_phone_ph": "Phone (optional)", "g_adult": "Adult", "g_child": "Child", "g_call_wa": "Message on WhatsApp", "g_presence": "Attendance", "g_st_pending": "Pending", "g_st_yes": "Confirmed", "g_st_no": "Not coming", "g_diet": "Dietary restriction or allergy", "g_diet_ph": "e.g. vegetarian, peanut allergy, lactose-free…", "g_note": "Note", "g_note_ph": "e.g. coming from another city, needs a ride…", "g_save": "Save guest", "g_del": "Delete guest", "g_bulk_title": "Add several", "g_bulk_sub": "Paste or type one name per line. All come in as pending — you confirm later.", "g_bulk_names": "Names", "g_bulk_names_hint": "(one per line)", "g_bulk_group": "Group for all", "g_bulk_add": "Add to list", "g_adults": "Adults", "g_kids": "Children", "m_g_name": "What’s the guest’s name?", "m_g_saved": "Guest saved", "m_g_removed": "Guest removed", "m_g_nophone": "That guest has no phone", "m_bulk_empty": "Paste at least one name", "m_list_empty": "Your list is empty"});
+
+Object.assign(I18N.pt, {"m_bulk_one": " convidado adicionado", "m_bulk_many": " convidados adicionados"});
+Object.assign(I18N.es, {"m_bulk_one": " invitado agregado", "m_bulk_many": " invitados agregados"});
+Object.assign(I18N.en, {"m_bulk_one": " guest added", "m_bulk_many": " guests added"});
+Object.assign(I18N.fr, {"m_bulk_one": " invité ajouté", "m_bulk_many": " invités ajoutés"});
+Object.assign(I18N.fr, {"g_export_title": "Exporter la liste", "g_export_sub": "Emportez votre liste d’invités où vous voulez.", "g_export_csv": "Tableur", "g_export_csv_sub": "S’ouvre dans Excel ou Google Sheets. Idéal pour le traiteur ou le lieu.", "g_export_pdf": "PDF à imprimer", "g_export_pdf_sub": "Liste avec l’en-tête de votre mariage. Enregistrez en PDF ou imprimez.", "g_help_title": "Comment ça marche", "g_help_sub": "Deux parties qui travaillent ensemble : votre liste et les réponses des invités.", "g_help_mine": "Ma liste", "g_help_mine_txt": "Votre liste de qui vous voulez au mariage. Vous ajoutez chaque personne, organisez par groupe et marquez qui vient, qui est en attente et qui ne vient pas. C’est votre contrôle.", "g_help_rsvp": "Confirmations", "g_help_rsvp_txt": "Le lien que vous envoyez aux invités. Chacun répond seul s’il pourra venir, avec qui, téléphone et restrictions. Les réponses arrivent dans une file de révision : SIM. trouve la personne dans votre liste et vous confirmez en un toucher, sans rien dupliquer.", "g_help_summary": "<b style=\"color:var(--green)\">En résumé :</b> dans Ma liste vous dites qui vous voulez ; dans Confirmations ils disent s’ils viennent. Le dernier mot est toujours le vôtre.", "g_help_ok": "Compris", "g_title_new": "Nouvel invité", "g_title_edit": "Modifier l’invité", "g_sub": "Ajoutez qui vous voulez inviter. Vous pourrez confirmer la présence plus tard.", "g_name": "Nom", "g_name_ph": "Ex. : Tante Marta, Jean et Marie…", "g_group": "Groupe", "g_grp_bridefam": "Famille de la mariée", "g_grp_groomfam": "Famille du marié", "g_grp_friends": "Amis", "g_grp_work": "Travail", "g_grp_party": "Témoins", "g_grp_other_ph": "Ou saisissez un groupe…", "g_comp_label": "Accompagnants", "g_comp_hint": "(nom et téléphone de chacun)", "g_comp_add": "Ajouter un accompagnant", "g_comp_name_ph": "Nom de l’accompagnant", "g_comp_phone_ph": "Téléphone (facultatif)", "g_adult": "Adulte", "g_child": "Enfant", "g_call_wa": "Écrire sur WhatsApp", "g_presence": "Présence", "g_st_pending": "En attente", "g_st_yes": "Confirmé", "g_st_no": "Absent", "g_diet": "Restriction alimentaire ou allergie", "g_diet_ph": "Ex. : végétarien, allergie aux arachides, sans lactose…", "g_note": "Remarque", "g_note_ph": "Ex. : vient d’une autre ville, a besoin d’un covoiturage…", "g_save": "Enregistrer l’invité", "g_del": "Supprimer l’invité", "g_bulk_title": "Ajouter plusieurs", "g_bulk_sub": "Collez ou saisissez un nom par ligne. Tous arrivent en attente — vous confirmez après.", "g_bulk_names": "Noms", "g_bulk_names_hint": "(un par ligne)", "g_bulk_group": "Groupe pour tous", "g_bulk_add": "Ajouter à la liste", "g_adults": "Adultes", "g_kids": "Enfants", "m_g_name": "Quel est le nom de l’invité ?", "m_g_saved": "Invité enregistré", "m_g_removed": "Invité retiré", "m_g_nophone": "Cet invité n’a pas de téléphone", "m_bulk_empty": "Collez au moins un nom", "m_list_empty": "Votre liste est vide"});
 const brl=v=>{ v=v||0; const temC=Math.round(v*100)%100!==0; const n=Math.abs(v).toLocaleString(simDateLoc(),{minimumFractionDigits:temC?2:0,maximumFractionDigits:2}); return (v<0?'-':'')+simCurSym()+' '+n; };
 const fmtNum=v=>{v=v||0; const temC=Math.round(v*100)%100!==0; return v.toLocaleString('pt-BR',{minimumFractionDigits:temC?2:0,maximumFractionDigits:2});};
 /* máscara de dinheiro: digite só números, o app formata 60.000.000,00 sozinho */
@@ -3773,8 +3783,8 @@ function renderMyList(){
       </div>
       <div class="gsum-ppl">
         <div class="gp"><div class="gpv">${headcount}</div><div class="gpl">Pessoas</div></div>
-        <div class="gp"><div class="gpv">${adults}</div><div class="gpl">Adultos</div></div>
-        <div class="gp"><div class="gpv">${kids}</div><div class="gpl">Crianças</div></div>
+        <div class="gp"><div class="gpv">${adults}</div><div class="gpl">${t('g_adults')}</div></div>
+        <div class="gp"><div class="gpv">${kids}</div><div class="gpl">${t('g_kids')}</div></div>
       </div>
       <div style="font-size:11px;color:#C9D8C6;text-align:center;margin-top:11px">Entre os confirmados, já contando os acompanhantes.</div>
     </div>`;
@@ -3801,7 +3811,7 @@ function renderMyList(){
     html+=`<div class="ggroup"><span>${esc(grp)}</span><span class="line"></span></div>`;
     html+=groups[grp].map(g=>{
       const st=g.status||'pending';
-      const label=st==='yes'?'Confirmado':st==='no'?'Não vai':'Pendente';
+      const label=st==='yes'?t('g_st_yes'):st==='no'?t('g_st_no'):t('g_st_pending');
       const named=(g.compDetail||[]).filter(c=>c.name);
       const total=guestCompTotal(g);
       let cs;
@@ -3828,12 +3838,12 @@ function renderGsComps(){
   const box=$('gsCompList'); if(!box) return;
   box.innerHTML=gsComps.map((c,i)=>`
     <div class="rscomp">
-      <input placeholder="Nome do acompanhante" value="${(c.name||'').replace(/"/g,'&quot;')}" oninput="gsComps[${i}].name=this.value">
-      <input class="rscomp-fone" inputmode="tel" placeholder="Telefone (opcional)" value="${(c.phone||'').replace(/"/g,'&quot;')}" oninput="gsComps[${i}].phone=this.value">
+      <input placeholder="${t('g_comp_name_ph')}" value="${(c.name||'').replace(/"/g,'&quot;')}" oninput="gsComps[${i}].name=this.value">
+      <input class="rscomp-fone" inputmode="tel" placeholder="${t('g_comp_phone_ph')}" value="${(c.phone||'').replace(/"/g,'&quot;')}" oninput="gsComps[${i}].phone=this.value">
       <div class="rscomp-row">
         <div class="rskind">
-          <button type="button" class="${c.kind!=='child'?'on':''}" onclick="gsComps[${i}].kind='adult';renderGsComps()">Adulto</button>
-          <button type="button" class="${c.kind==='child'?'on':''}" onclick="gsComps[${i}].kind='child';renderGsComps()">Criança</button>
+          <button type="button" class="${c.kind!=='child'?'on':''}" onclick="gsComps[${i}].kind='adult';renderGsComps()">${t('g_adult')}</button>
+          <button type="button" class="${c.kind==='child'?'on':''}" onclick="gsComps[${i}].kind='child';renderGsComps()">${t('g_child')}</button>
         </div>
         <button type="button" class="rscomp-x" title="Remover" onclick="gsComps.splice(${i},1);renderGsComps()">✕</button>
       </div>
@@ -3841,7 +3851,7 @@ function renderGsComps(){
 }
 function openGuest(id){
   editGuest = id ? (state.guests||[]).find(g=>g.id===id) : null;
-  $('gsTitle').textContent = editGuest ? 'Editar convidado' : 'Novo convidado';
+  $('gsTitle').textContent = editGuest ? t('g_title_edit') : t('g_title_new');
   $('gsName').value = editGuest?.name||'';
   gsComps = (editGuest && Array.isArray(editGuest.compDetail) && editGuest.compDetail.length)
     ? editGuest.compDetail.map(c=>({name:c.name||'',kind:c.kind==='child'?'child':'adult',phone:c.phone||''}))
@@ -3865,7 +3875,7 @@ function openGuest(id){
 }
 function saveGuest(){
   const name=$('gsName').value.trim();
-  if(!name){ toast('Qual o nome do convidado?'); return; }
+  if(!name){ toast(t('m_g_name')); return; }
   let group='';
   const chip=document.querySelector('#gsGroups .fchip.on');
   if(chip) group=chip.textContent.trim();
@@ -3877,13 +3887,13 @@ function saveGuest(){
   else { state.guests.push({id:uid(),...data}); }
   editGuest=null;
   persist(); closeSheet(); renderGuests();
-  toast('Convidado salvo');
+  toast(t('m_g_saved'));
 }
 function delGuest(){
   if(editGuest) state.guests=state.guests.filter(g=>g!==editGuest);
   editGuest=null;
   persist(); closeSheet(); renderGuests();
-  toast('Convidado removido');
+  toast(t('m_g_removed'));
 }
 function guestSearchInput(v){ guestSearch=v; renderMyList(); }
 function waLink(phone, name, status){
@@ -3897,7 +3907,7 @@ function waLink(phone, name, status){
 function guestWhats(id){
   const g=(state.guests||[]).find(x=>x.id===id); if(!g) return;
   const u=waLink(g.phone,g.name,g.status||'pending');
-  if(u) window.open(u,'_blank'); else toast('Esse convidado não tem telefone');
+  if(u) window.open(u,'_blank'); else toast(t('m_g_nophone'));
 }
 function guestWhatsInput(){
   const u=waLink($('gsPhone').value, $('gsName').value, gsStatus);
@@ -3911,14 +3921,14 @@ function openBulk(){
 }
 function saveBulkGuests(){
   const names=($('bkNames').value||'').split('\n').map(s=>s.trim()).filter(Boolean);
-  if(!names.length){ toast('Cole pelo menos um nome'); return; }
+  if(!names.length){ toast(t('m_bulk_empty')); return; }
   let group='';
   const chip=document.querySelector('#bkGroups .fchip.on'); if(chip) group=chip.textContent.trim();
   if($('bkGroupOther').value.trim()) group=$('bkGroupOther').value.trim();
   if(!state.guests) state.guests=[];
   names.forEach(n=> state.guests.push({id:uid(),name:n,group,comp:0,phone:'',diet:'',note:'',status:'pending'}));
   persist(); closeSheet(); renderGuests();
-  toast(names.length+(names.length===1?' convidado adicionado':' convidados adicionados'));
+  toast(names.length+(names.length===1?t('m_bulk_one'):t('m_bulk_many')));
 }
 
 /* ----- link de confirmação (RSVP) ----- */
@@ -4062,7 +4072,7 @@ function compStr(r){
   const c=r.companions||0; return c>0?(c+' acompanhante'+(c>1?'s':'')):'';
 }
 /* ---- exportar lista de convidados ---- */
-function guestStatusLabel(st){ return st==='yes'?'Confirmado':st==='no'?'Não vai':'Pendente'; }
+function guestStatusLabel(st){ return st==='yes'?t('g_st_yes'):st==='no'?t('g_st_no'):t('g_st_pending'); }
 function guestTotalPeople(g){ return 1+guestCompTotal(g); }
 function exportSummary(){
   const gs=state.guests||[];
