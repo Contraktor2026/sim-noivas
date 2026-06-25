@@ -1087,39 +1087,39 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
       <p class="sub" data-i18n="settings_sub">Os dados do seu casamento, do seu jeito.</p>
       <div class="card">
         <div class="frow">
-          <div class="f"><label>Seu nome</label><input id="stA"></div>
-          <div class="f"><label>Nome do par</label><input id="stB"></div>
+          <div class="f"><label data-i18n="set_yourname">Seu nome</label><input id="stA"></div>
+          <div class="f"><label data-i18n="set_partner">Nome do par</label><input id="stB"></div>
         </div>
-        <div class="f"><label>Data do casamento</label><input id="stDate" type="date"></div>
+        <div class="f"><label data-i18n="set_date">Data do casamento</label><input id="stDate" type="date"></div>
         <div class="frow">
-          <div class="f" style="flex:2"><label>País</label><input id="stCountry" placeholder="Brasil"></div>
-          <div class="f" style="flex:1"><label>Estado</label><input id="stUF" maxlength="2" style="text-transform:uppercase"></div>
+          <div class="f" style="flex:2"><label data-i18n="set_country">País</label><input id="stCountry" placeholder="Brasil" data-i18n-ph="set_country_ph"></div>
+          <div class="f" style="flex:1"><label data-i18n="set_state">Estado</label><input id="stUF" maxlength="2" style="text-transform:uppercase"></div>
         </div>
-        <div class="f"><label>Cidade</label><input id="stCity"></div>
+        <div class="f"><label data-i18n="set_city">Cidade</label><input id="stCity"></div>
         <div class="frow">
-          <div class="f"><label>Convidados</label><input id="stGuests" type="number" inputmode="numeric"></div>
-          <div class="f"><label>Orçamento (R$)</label><input id="stBudget" type="text" inputmode="decimal"></div>
+          <div class="f"><label data-i18n="set_guests">Convidados</label><input id="stGuests" type="number" inputmode="numeric"></div>
+          <div class="f"><label data-i18n="set_budget">Orçamento (R$)</label><input id="stBudget" type="text" inputmode="decimal"></div>
         </div>
-        <button class="btn p full" onclick="saveSettings()">Salvar alterações</button>
+        <button class="btn p full" onclick="saveSettings()" data-i18n="set_save">Salvar alterações</button>
       </div>
       <div class="card">
-        <div class="cap" style="margin-bottom:8px">Lista sugerida</div>
-        <p class="fine" style="margin-bottom:10px">Carrego o roteiro do casamento brasileiro <b>adaptado ao tempo que falta até a sua data</b>. Escolha a versão completa (todos os detalhes) ou essencial (os passos imprescindíveis).</p>
-        <button class="btn p full" onclick="loadSuggested('full')">Roteiro completo</button>
-        <button class="btn g full" style="margin-top:8px" onclick="loadSuggested('ess')">Roteiro essencial</button>
+        <div class="cap" style="margin-bottom:8px" data-i18n="set_suggested">Lista sugerida</div>
+        <p class="fine" style="margin-bottom:10px" data-i18n="set_suggested_p">Carrego o roteiro do casamento brasileiro <b>adaptado ao tempo que falta até a sua data</b>. Escolha a versão completa (todos os detalhes) ou essencial (os passos imprescindíveis).</p>
+        <button class="btn p full" onclick="loadSuggested('full')" data-i18n="set_roteiro_full">Roteiro completo</button>
+        <button class="btn g full" style="margin-top:8px" onclick="loadSuggested('ess')" data-i18n="set_roteiro_ess">Roteiro essencial</button>
       </div>
       <div class="card">
-        <div class="cap" style="margin-bottom:8px">Conta</div>
+        <div class="cap" style="margin-bottom:8px" data-i18n="set_account">Conta</div>
         <p class="fine" style="margin-bottom:10px" id="acctEmail">—</p>
-        <button class="btn g full" onclick="doLogout()">Sair da conta</button>
+        <button class="btn g full" onclick="doLogout()" data-i18n="set_logout">Sair da conta</button>
       </div>
       <div class="card">
-        <div class="cap" style="margin-bottom:8px">Guia de uso</div>
-        <button class="btn g full" onclick="showTour(true)">Rever o guia de boas-vindas</button>
+        <div class="cap" style="margin-bottom:8px" data-i18n="set_guide">Guia de uso</div>
+        <button class="btn g full" onclick="showTour(true)" data-i18n="set_review_welcome">Rever o guia de boas-vindas</button>
       </div>
       <div class="card">
-        <div class="cap" style="margin-bottom:8px;color:var(--danger)">Zona de cuidado</div>
-        <button class="btn d full" onclick="resetAll()">Apagar todos os dados</button>
+        <div class="cap" style="margin-bottom:8px;color:var(--danger)" data-i18n="set_danger">Zona de cuidado</div>
+        <button class="btn d full" onclick="resetAll()" data-i18n="set_wipe">Apagar todos os dados</button>
       </div>
     </section>
 
@@ -2259,6 +2259,11 @@ Object.assign(I18N.pt, {"ld_hint": "Conheça o SIM.", "ld_kicker": "O que é", "
 Object.assign(I18N.es, {"ld_hint": "Conoce SIM.", "ld_kicker": "Qué es", "ld_title": "Casarse es un <i class=\"hl\">sueño</i>.<br>Organizarlo no tiene por qué ser una <i class=\"hl\">pesadilla</i>.", "ld_intro": "SIM. es tu asistente de boda: se encarga del dinero, de los proveedores y del paso a paso hasta el altar. Y cuando llegue un presupuesto, mándalo aquí: texto de WhatsApp, captura o PDF. Lo lee y lo completa todo.<br><b style=\"color:var(--green)\">Tú solo decides.</b>", "ld_c1_h": "Dinero bajo control", "ld_c1_p": "Presupuesto total, cuánto ya está comprometido y cuánto queda. Cuotas agrupadas por mes, atrasos destacados. Sin sustos al final.", "ld_c2_h": "Proveedores comparados de verdad", "ld_c2_p": "Mensaje de WhatsApp, captura o PDF: adjunta la propuesta y la inteligencia artificial completa montos y condiciones. Compara por precio, diferencial y reseña, y contrata con seguridad.", "ld_c3_h": "Una página para cada proveedor", "ld_c3_p": "Cada contratado tiene la suya: contrato adjunto, cuotas con vencimiento, WhatsApp, Instagram y notas: todo en un solo lugar. Y el contrato se lee solo: adjúntalo y la app registra monto, condiciones y cuotas con las fechas correctas.", "ld_c4_h": "Una guía a tu ritmo", "ld_c4_p": "Un paso a paso que se adapta al tiempo que falta, de 12 meses a la recta final. Siempre sabes qué hacer ahora y qué puede esperar."});
 Object.assign(I18N.en, {"ld_hint": "Meet SIM.", "ld_kicker": "What it is", "ld_title": "Getting married is a <i class=\"hl\">dream</i>.<br>Planning it doesn’t have to be a <i class=\"hl\">nightmare</i>.", "ld_intro": "SIM. is your wedding assistant: it handles the money, the vendors and the step-by-step to the altar. And when a quote comes in, send it here: WhatsApp text, screenshot or PDF. It reads and fills in everything.<br><b style=\"color:var(--green)\">You just decide.</b>", "ld_c1_h": "Money under control", "ld_c1_p": "Total budget, how much is committed and what’s left. Installments grouped by month, overdue ones highlighted. No surprises at the end.", "ld_c2_h": "Vendors truly compared", "ld_c2_p": "WhatsApp message, screenshot or PDF: attach the proposal and the AI fills in amounts and terms. Compare by price, perks and reviews, and book with confidence.", "ld_c3_h": "A page for each vendor", "ld_c3_p": "Each booked vendor gets their own: attached contract, installments with due dates, WhatsApp, Instagram and notes — all in one place. And the contract reads itself: attach it and the app logs amount, terms and installments with the right dates.", "ld_c4_h": "A roadmap at your pace", "ld_c4_p": "A step-by-step that adapts to the time left, from 12 months to the home stretch. You always know what to do now and what can wait."});
 Object.assign(I18N.fr, {"ld_hint": "Découvrez SIM.", "ld_kicker": "Qu’est-ce que c’est", "ld_title": "Se marier est un <i class=\"hl\">rêve</i>.<br>L’organiser n’a pas à être un <i class=\"hl\">cauchemar</i>.", "ld_intro": "SIM. est votre assistante de mariage : elle gère l’argent, les prestataires et les étapes jusqu’à l’autel. Et quand un devis arrive, envoyez-le ici : texte WhatsApp, capture ou PDF. Elle lit et remplit tout.<br><b style=\"color:var(--green)\">Vous n’avez qu’à décider.</b>", "ld_c1_h": "L’argent sous contrôle", "ld_c1_p": "Budget total, ce qui est déjà engagé et ce qu’il reste. Échéances groupées par mois, retards mis en évidence. Aucune mauvaise surprise à la fin.", "ld_c2_h": "Des prestataires vraiment comparés", "ld_c2_p": "Message WhatsApp, capture ou PDF : joignez la proposition et l’intelligence artificielle remplit montants et conditions. Comparez par prix, atouts et avis, et réservez en toute confiance.", "ld_c3_h": "Une page pour chaque prestataire", "ld_c3_p": "Chaque prestataire réservé a la sienne : contrat joint, échéances, WhatsApp, Instagram et notes : tout au même endroit. Et le contrat se lit tout seul : joignez-le et l’appli enregistre montant, conditions et échéances aux bonnes dates.", "ld_c4_h": "Un parcours à votre rythme", "ld_c4_p": "Un pas à pas qui s’adapte au temps restant, de 12 mois à la dernière ligne droite. Vous savez toujours quoi faire maintenant et ce qui peut attendre."});
+// ---- Configurações ----
+Object.assign(I18N.pt, {"set_yourname": "Seu nome", "set_partner": "Nome do par", "set_date": "Data do casamento", "set_country": "País", "set_country_ph": "Brasil", "set_state": "Estado", "set_city": "Cidade", "set_guests": "Convidados", "set_budget": "Orçamento (R$)", "set_save": "Salvar alterações", "set_suggested": "Lista sugerida", "set_suggested_p": "Carrego o roteiro do casamento brasileiro <b>adaptado ao tempo que falta até a sua data</b>. Escolha a versão completa (todos os detalhes) ou essencial (os passos imprescindíveis).", "set_roteiro_full": "Roteiro completo", "set_roteiro_ess": "Roteiro essencial", "set_account": "Conta", "set_logout": "Sair da conta", "set_guide": "Guia de uso", "set_review_welcome": "Rever o guia de boas-vindas", "set_danger": "Zona de cuidado", "set_wipe": "Apagar todos os dados", "set_connected_as": "Conectada como", "m_set_required": "Nomes, data e orçamento são necessários", "m_set_saved": "Ajustes salvos", "m_set_wiped": "Tudo apagado — recomeçando do zero", "m_rot_ess": "Roteiro essencial carregado", "m_rot_full": "Roteiro completo carregado", "m_rot_full_adapted": "Roteiro completo adaptado para os {t} que faltam", "m_rot_already": "O roteiro já está na sua lista", "time_months": "meses", "time_day": "dia", "time_days": "dias"});
+Object.assign(I18N.es, {"set_yourname": "Tu nombre", "set_partner": "Nombre de tu pareja", "set_date": "Fecha de la boda", "set_country": "País", "set_country_ph": "Brasil", "set_state": "Estado", "set_city": "Ciudad", "set_guests": "Invitados", "set_budget": "Presupuesto ($)", "set_save": "Guardar cambios", "set_suggested": "Lista sugerida", "set_suggested_p": "Cargo una guía de boda <b>adaptada al tiempo que falta hasta tu fecha</b>. Elige la versión completa (todos los detalles) o esencial (los pasos imprescindibles).", "set_roteiro_full": "Guía completa", "set_roteiro_ess": "Guía esencial", "set_account": "Cuenta", "set_logout": "Cerrar sesión", "set_guide": "Guía de uso", "set_review_welcome": "Ver de nuevo la guía de bienvenida", "set_danger": "Zona de cuidado", "set_wipe": "Borrar todos los datos", "set_connected_as": "Conectada como", "m_set_required": "Nombres, fecha y presupuesto son obligatorios", "m_set_saved": "Cambios guardados", "m_set_wiped": "Todo borrado — empezando de cero", "m_rot_ess": "Guía esencial cargada", "m_rot_full": "Guía completa cargada", "m_rot_full_adapted": "Guía completa adaptada a los {t} que faltan", "m_rot_already": "La guía ya está en tu lista", "time_months": "meses", "time_day": "día", "time_days": "días"});
+Object.assign(I18N.en, {"set_yourname": "Your name", "set_partner": "Partner’s name", "set_date": "Wedding date", "set_country": "Country", "set_country_ph": "Brazil", "set_state": "State", "set_city": "City", "set_guests": "Guests", "set_budget": "Budget ($)", "set_save": "Save changes", "set_suggested": "Suggested list", "set_suggested_p": "I load a wedding roadmap <b>adapted to the time left until your date</b>. Choose the full version (every detail) or the essential one (the must-do steps).", "set_roteiro_full": "Full roadmap", "set_roteiro_ess": "Essential roadmap", "set_account": "Account", "set_logout": "Log out", "set_guide": "How-to guide", "set_review_welcome": "Review the welcome guide", "set_danger": "Caution zone", "set_wipe": "Delete all data", "set_connected_as": "Signed in as", "m_set_required": "Names, date and budget are required", "m_set_saved": "Settings saved", "m_set_wiped": "Everything wiped — starting fresh", "m_rot_ess": "Essential roadmap loaded", "m_rot_full": "Full roadmap loaded", "m_rot_full_adapted": "Full roadmap adapted to the {t} left", "m_rot_already": "The roadmap is already in your list", "time_months": "months", "time_day": "day", "time_days": "days"});
+Object.assign(I18N.fr, {"set_yourname": "Votre nom", "set_partner": "Nom du partenaire", "set_date": "Date du mariage", "set_country": "Pays", "set_country_ph": "Brésil", "set_state": "Région", "set_city": "Ville", "set_guests": "Invités", "set_budget": "Budget ($)", "set_save": "Enregistrer les modifications", "set_suggested": "Liste suggérée", "set_suggested_p": "Je charge un parcours de mariage <b>adapté au temps restant jusqu’à votre date</b>. Choisissez la version complète (tous les détails) ou essentielle (les étapes indispensables).", "set_roteiro_full": "Parcours complet", "set_roteiro_ess": "Parcours essentiel", "set_account": "Compte", "set_logout": "Se déconnecter", "set_guide": "Guide d’utilisation", "set_review_welcome": "Revoir le guide de bienvenue", "set_danger": "Zone sensible", "set_wipe": "Effacer toutes les données", "set_connected_as": "Connectée en tant que", "m_set_required": "Noms, date et budget sont requis", "m_set_saved": "Réglages enregistrés", "m_set_wiped": "Tout est effacé — on repart de zéro", "m_rot_ess": "Parcours essentiel chargé", "m_rot_full": "Parcours complet chargé", "m_rot_full_adapted": "Parcours complet adapté aux {t} restants", "m_rot_already": "Le parcours est déjà dans votre liste", "time_months": "mois", "time_day": "jour", "time_days": "jours"});
 // ---- Convidados parte 2 ----
 Object.assign(I18N.pt, {"m_guest_added": "entrou na lista"});
 Object.assign(I18N.es, {"m_guest_added": "entró en la lista"});
@@ -3601,9 +3606,9 @@ function buildPlan(){
   return {adapted:true,M,order,label};
 }
 function fmtTempo(M){
-  if(M>=2) return Math.round(M)+' meses';
+  if(M>=2) return Math.round(M)+' '+t('time_months');
   const d=Math.max(1,Math.round(M*30.44));
-  return d+(d===1?' dia':' dias');
+  return d+(d===1?' '+t('time_day'):' '+t('time_days'));
 }
 function switchRoteiro(mode){
   const atual=(state.planMeta&&state.planMeta.mode)||'full';
@@ -3646,7 +3651,7 @@ function loadSuggested(mode, feitos){
   state.planMeta={adapted: mode==='ess'?false:plan.adapted, months:Math.round(plan.M*10)/10,created:todayISO(),mode};
   persist(); renderChk(); go('chk');
   const nome = mode==='ess'?'essencial':'completo';
-  toast(n? (mode==='ess'?'Roteiro essencial carregado': (plan.adapted?'Roteiro completo adaptado para os '+fmtTempo(plan.M)+' que faltam':'Roteiro completo carregado')) : 'O roteiro já está na sua lista',true);
+  toast(n? (mode==='ess'?t('m_rot_ess'): (plan.adapted?t('m_rot_full_adapted').replace('{t}',fmtTempo(plan.M)):t('m_rot_full'))) : t('m_rot_already'),true);
 }
 function renderChk(){
   if(!state.tasks.length){
@@ -4697,7 +4702,7 @@ function maybePageTour(s){
 
 /* =================== AJUSTES =================== */
 function fillSettings(){
-  if(sbUser) $('acctEmail').textContent='Conectada como '+sbUser.email;
+  if(sbUser) $('acctEmail').textContent=t('set_connected_as')+' '+sbUser.email;
   const p=state.profile; if(!p) return;
   $('stA').value=p.a; $('stB').value=p.b; $('stDate').value=p.date;
   $('stCity').value=p.city||''; $('stUF').value=p.uf||''; $('stCountry').value=p.country||'Brasil';
@@ -4706,10 +4711,10 @@ function fillSettings(){
 }
 function saveSettings(){
   const a=$('stA').value.trim(), b=$('stB').value.trim(), d=$('stDate').value, budget=parseBRL($('stBudget').value);
-  if(!a||!b||!d||!budget){toast('Nomes, data e orçamento são necessários');return;}
+  if(!a||!b||!d||!budget){toast(t('m_set_required'));return;}
   Object.assign(state.profile,{a,b,date:d,city:$('stCity').value.trim(),uf:$('stUF').value.trim().toUpperCase(),country:$('stCountry').value.trim()||'Brasil',guests:parseInt($('stGuests').value)||null,budget});
   persist(); renderAll();
-  toast('Ajustes salvos');
+  toast(t('m_set_saved'));
 }
 function resetAll(){
   askConfirm(
@@ -4726,7 +4731,7 @@ function resetAll(){
       state={profile:null,exp:[],cats:[],tasks:[],notes:[]};
       curVendor=null; fornCat=null;
       $('onb').style.display='flex'; go('home');
-      toast('Tudo apagado — recomeçando do zero');
+      toast(t('m_set_wiped'));
     },
     'Apagar tudo'
   );
