@@ -133,6 +133,17 @@ load().then(({ w, d, A, base, novaData, errors, results }) => {
     A('IG2-7 volta pro PT', $('rsvpSection').innerHTML.includes('Confirmação online') && w.t('g_pdf_title') === 'Lista de convidados');
   } catch (e) { results.fail++; results.fails.push('I18N-GUEST2 EXCEÇÃO: ' + e.message); }
 
+  // ---------- I18N: login landing ----------
+  try {
+    setLang('es');
+    A('LND1 hint + svg preservado', d.querySelector('[data-i18n=ld_hint]').textContent === 'Conoce SIM.' && !!d.querySelector('.ldhint svg'));
+    A('LND2 título mantém <i>', d.querySelector('[data-i18n=ld_title]').innerHTML.includes('<i') && d.querySelector('[data-i18n=ld_title]').textContent.includes('sueño'));
+    A('LND3 intro mantém <b>', d.querySelector('[data-i18n=ld_intro]').innerHTML.includes('<b') && d.querySelector('[data-i18n=ld_intro]').innerHTML.includes('Tú solo decides'));
+    A('LND4 cartões ES', d.querySelector('[data-i18n=ld_c1_h]').textContent === 'Dinero bajo control' && d.querySelector('[data-i18n=ld_c2_h]').textContent === 'Proveedores comparados de verdad');
+    setLang('pt');
+    A('LND5 volta pro PT', d.querySelector('[data-i18n=ld_c1_h]').textContent === 'Dinheiro sob controle');
+  } catch (e) { results.fail++; results.fails.push('I18N-LANDING EXCEÇÃO: ' + e.message); }
+
   // ---------- FIN: fluxo de despesa ----------
   try {
     w.STATE = base();
