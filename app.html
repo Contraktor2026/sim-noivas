@@ -1146,11 +1146,11 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
         <div class="fsechead"><h3 class="fsectitle" data-i18n="g_help_mine">Minha lista</h3><span class="fseccount" id="cntMine">0</span></div>
         <p class="sub" data-i18n="guests_sub">Quem você quer ao seu lado no grande dia.</p>
         <div id="guestSummary"></div>
-        <button class="add" onclick="openGuest()" style="margin:4px 0 4px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Adicionar convidado</button>
-        <button class="linkmini" onclick="openBulk()" style="margin-bottom:14px">ou colar uma lista de nomes</button>
+        <button class="add" onclick="openGuest()" style="margin:4px 0 4px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg><span data-i18n="g_add_guest">Adicionar convidado</span></button>
+        <button class="linkmini" onclick="openBulk()" style="margin-bottom:14px" data-i18n="g_paste_list">ou colar uma lista de nomes</button>
         <div class="gsearch" id="guestSearchWrap" style="display:none">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
-          <input id="guestSearchBox" placeholder="Buscar por nome ou grupo…" oninput="guestSearchInput(this.value)">
+          <input id="guestSearchBox" placeholder="Buscar por nome ou grupo…" data-i18n-ph="g_search_ph" oninput="guestSearchInput(this.value)">
         </div>
         <div class="gfilters" id="guestFilters">
           <button class="gfilter on" data-f="all" onclick="guestFilter('all')">Todos</button>
@@ -2254,6 +2254,15 @@ Object.assign(I18N.es, {"m_bulk_one": " invitado agregado", "m_bulk_many": " inv
 Object.assign(I18N.en, {"m_bulk_one": " guest added", "m_bulk_many": " guests added"});
 Object.assign(I18N.fr, {"m_bulk_one": " invité ajouté", "m_bulk_many": " invités ajoutés"});
 Object.assign(I18N.fr, {"g_export_title": "Exporter la liste", "g_export_sub": "Emportez votre liste d’invités où vous voulez.", "g_export_csv": "Tableur", "g_export_csv_sub": "S’ouvre dans Excel ou Google Sheets. Idéal pour le traiteur ou le lieu.", "g_export_pdf": "PDF à imprimer", "g_export_pdf_sub": "Liste avec l’en-tête de votre mariage. Enregistrez en PDF ou imprimez.", "g_help_title": "Comment ça marche", "g_help_sub": "Deux parties qui travaillent ensemble : votre liste et les réponses des invités.", "g_help_mine": "Ma liste", "g_help_mine_txt": "Votre liste de qui vous voulez au mariage. Vous ajoutez chaque personne, organisez par groupe et marquez qui vient, qui est en attente et qui ne vient pas. C’est votre contrôle.", "g_help_rsvp": "Confirmations", "g_help_rsvp_txt": "Le lien que vous envoyez aux invités. Chacun répond seul s’il pourra venir, avec qui, téléphone et restrictions. Les réponses arrivent dans une file de révision : SIM. trouve la personne dans votre liste et vous confirmez en un toucher, sans rien dupliquer.", "g_help_summary": "<b style=\"color:var(--green)\">En résumé :</b> dans Ma liste vous dites qui vous voulez ; dans Confirmations ils disent s’ils viennent. Le dernier mot est toujours le vôtre.", "g_help_ok": "Compris", "g_title_new": "Nouvel invité", "g_title_edit": "Modifier l’invité", "g_sub": "Ajoutez qui vous voulez inviter. Vous pourrez confirmer la présence plus tard.", "g_name": "Nom", "g_name_ph": "Ex. : Tante Marta, Jean et Marie…", "g_group": "Groupe", "g_grp_bridefam": "Famille de la mariée", "g_grp_groomfam": "Famille du marié", "g_grp_friends": "Amis", "g_grp_work": "Travail", "g_grp_party": "Témoins", "g_grp_other_ph": "Ou saisissez un groupe…", "g_comp_label": "Accompagnants", "g_comp_hint": "(nom et téléphone de chacun)", "g_comp_add": "Ajouter un accompagnant", "g_comp_name_ph": "Nom de l’accompagnant", "g_comp_phone_ph": "Téléphone (facultatif)", "g_adult": "Adulte", "g_child": "Enfant", "g_call_wa": "Écrire sur WhatsApp", "g_presence": "Présence", "g_st_pending": "En attente", "g_st_yes": "Confirmé", "g_st_no": "Absent", "g_diet": "Restriction alimentaire ou allergie", "g_diet_ph": "Ex. : végétarien, allergie aux arachides, sans lactose…", "g_note": "Remarque", "g_note_ph": "Ex. : vient d’une autre ville, a besoin d’un covoiturage…", "g_save": "Enregistrer l’invité", "g_del": "Supprimer l’invité", "g_bulk_title": "Ajouter plusieurs", "g_bulk_sub": "Collez ou saisissez un nom par ligne. Tous arrivent en attente — vous confirmez après.", "g_bulk_names": "Noms", "g_bulk_names_hint": "(un par ligne)", "g_bulk_group": "Groupe pour tous", "g_bulk_add": "Ajouter à la liste", "g_adults": "Adultes", "g_kids": "Enfants", "m_g_name": "Quel est le nom de l’invité ?", "m_g_saved": "Invité enregistré", "m_g_removed": "Invité retiré", "m_g_nophone": "Cet invité n’a pas de téléphone", "m_bulk_empty": "Collez au moins un nom", "m_list_empty": "Votre liste est vide"});
+// ---- Convidados parte 2 ----
+Object.assign(I18N.pt, {"m_guest_added": "entrou na lista"});
+Object.assign(I18N.es, {"m_guest_added": "entró en la lista"});
+Object.assign(I18N.en, {"m_guest_added": "added to your list"});
+Object.assign(I18N.fr, {"m_guest_added": "ajouté à la liste"});
+Object.assign(I18N.pt, {"g_link_title": "Confirmação online", "g_link_sub": "Crie um link para enviar aos convidados no WhatsApp. Eles confirmam presença sozinhos, e as respostas caem aqui.", "g_link_create": "Criar link de confirmação", "g_link_title2": "Link de confirmação", "g_link_custom": "Personalizar", "g_link_copy": "Copiar link", "g_link_wa_text": "Estamos muito felizes em convidar você para o nosso casamento. Confirme sua presença aqui: ", "g_add_guest": "Adicionar convidado", "g_paste_list": "ou colar uma lista de nomes", "g_search_ph": "Buscar por nome ou grupo…", "g_nogroup": "Sem grupo", "g_grp_link": "Confirmados pelo link", "g_rev_none": "Ainda não há confirmações. Compartilhe o link acima 🤍", "g_rev_uptodate": "Tudo em dia ✓", "g_rev_alldone": "Todas as {n} confirmações já estão na sua lista.", "g_rev_new": "{n} novas confirmações para revisar", "g_rev_help": "Eu já procurei cada pessoa na sua lista. Confirme com um toque.", "g_rev_tel": "Tel: ", "g_rev_diet": "Restrição: ", "g_rev_going": "✓ vai", "g_rev_notgoing": "✕ não vai", "g_rev_with": "com ", "g_rev_norecado": "sem recado", "g_rev_match": "Na sua lista parece ser", "g_rev_isbtn": "É", "g_rev_other": "É outra pessoa", "g_rev_notfound": "Não encontrei essa pessoa na sua lista.", "g_rev_ignore": "Ignorar", "g_rev_reviewed": "{n} confirmações já revisadas e na sua lista.", "m_guest_updated": "atualizada na lista", "m_rsvp_ignored": "Confirmação ignorada", "m_print_fail": "Não consegui abrir a impressão", "m_csv_done": "Planilha gerada 🤍", "g_th_status": "Status", "g_th_phone": "Telefone", "g_th_people": "Pessoas", "g_th_diet": "Restrição", "g_csv_total": "Total de pessoas", "g_csv_diet_full": "Restrição alimentar", "g_csv_child": " (criança)", "g_csv_adult": " (adulto)", "g_csv_comp_sg": " acompanhante", "g_csv_comp_pl": " acompanhantes", "g_file_guests": "convidados", "g_pdf_title": "Lista de convidados", "g_pdf_child_abbr": " (cri.)", "g_sum_confirmed": "confirmados", "g_sum_people": "pessoas", "g_sum_adults": "adultos", "g_sum_kids": "crianças", "g_sum_pending": "pendentes", "g_sum_notcoming": "não vão"});
+Object.assign(I18N.es, {"g_link_title": "Confirmación en línea", "g_link_sub": "Crea un enlace para enviar a los invitados por WhatsApp. Confirman su asistencia solos y las respuestas llegan aquí.", "g_link_create": "Crear enlace de confirmación", "g_link_title2": "Enlace de confirmación", "g_link_custom": "Personalizar", "g_link_copy": "Copiar enlace", "g_link_wa_text": "Estamos muy felices de invitarte a nuestra boda. Confirma tu asistencia aquí: ", "g_add_guest": "Agregar invitado", "g_paste_list": "o pegar una lista de nombres", "g_search_ph": "Buscar por nombre o grupo…", "g_nogroup": "Sin grupo", "g_grp_link": "Confirmados por el enlace", "g_rev_none": "Aún no hay confirmaciones. Comparte el enlace de arriba 🤍", "g_rev_uptodate": "Todo al día ✓", "g_rev_alldone": "Las {n} confirmaciones ya están en tu lista.", "g_rev_new": "{n} nuevas confirmaciones para revisar", "g_rev_help": "Ya busqué a cada persona en tu lista. Confirma con un toque.", "g_rev_tel": "Tel: ", "g_rev_diet": "Restricción: ", "g_rev_going": "✓ asiste", "g_rev_notgoing": "✕ no asiste", "g_rev_with": "con ", "g_rev_norecado": "sin mensaje", "g_rev_match": "En tu lista parece ser", "g_rev_isbtn": "Es", "g_rev_other": "Es otra persona", "g_rev_notfound": "No encontré a esa persona en tu lista.", "g_rev_ignore": "Ignorar", "g_rev_reviewed": "{n} confirmaciones ya revisadas y en tu lista.", "m_guest_updated": "actualizada en la lista", "m_rsvp_ignored": "Confirmación ignorada", "m_print_fail": "No pude abrir la impresión", "m_csv_done": "Hoja generada 🤍", "g_th_status": "Estado", "g_th_phone": "Teléfono", "g_th_people": "Personas", "g_th_diet": "Restricción", "g_csv_total": "Total de personas", "g_csv_diet_full": "Restricción alimentaria", "g_csv_child": " (niño)", "g_csv_adult": " (adulto)", "g_csv_comp_sg": " acompañante", "g_csv_comp_pl": " acompañantes", "g_file_guests": "invitados", "g_pdf_title": "Lista de invitados", "g_pdf_child_abbr": " (niño)", "g_sum_confirmed": "confirmados", "g_sum_people": "personas", "g_sum_adults": "adultos", "g_sum_kids": "niños", "g_sum_pending": "pendientes", "g_sum_notcoming": "no asisten"});
+Object.assign(I18N.en, {"g_link_title": "Online RSVP", "g_link_sub": "Create a link to send to guests on WhatsApp. They confirm attendance themselves, and replies land here.", "g_link_create": "Create RSVP link", "g_link_title2": "RSVP link", "g_link_custom": "Customize", "g_link_copy": "Copy link", "g_link_wa_text": "We’re so happy to invite you to our wedding. Please RSVP here: ", "g_add_guest": "Add guest", "g_paste_list": "or paste a list of names", "g_search_ph": "Search by name or group…", "g_nogroup": "No group", "g_grp_link": "Confirmed via link", "g_rev_none": "No RSVPs yet. Share the link above 🤍", "g_rev_uptodate": "All caught up ✓", "g_rev_alldone": "All {n} RSVPs are already in your list.", "g_rev_new": "{n} new RSVPs to review", "g_rev_help": "I already looked up each person in your list. Confirm with one tap.", "g_rev_tel": "Phone: ", "g_rev_diet": "Restriction: ", "g_rev_going": "✓ coming", "g_rev_notgoing": "✕ not coming", "g_rev_with": "with ", "g_rev_norecado": "no message", "g_rev_match": "In your list this looks like", "g_rev_isbtn": "It’s", "g_rev_other": "Someone else", "g_rev_notfound": "I couldn’t find that person in your list.", "g_rev_ignore": "Ignore", "g_rev_reviewed": "{n} RSVPs already reviewed and in your list.", "m_guest_updated": "updated in your list", "m_rsvp_ignored": "RSVP ignored", "m_print_fail": "Couldn’t open printing", "m_csv_done": "Spreadsheet ready 🤍", "g_th_status": "Status", "g_th_phone": "Phone", "g_th_people": "People", "g_th_diet": "Restriction", "g_csv_total": "Total people", "g_csv_diet_full": "Dietary restriction", "g_csv_child": " (child)", "g_csv_adult": " (adult)", "g_csv_comp_sg": " companion", "g_csv_comp_pl": " companions", "g_file_guests": "guests", "g_pdf_title": "Guest list", "g_pdf_child_abbr": " (child)", "g_sum_confirmed": "confirmed", "g_sum_people": "people", "g_sum_adults": "adults", "g_sum_kids": "children", "g_sum_pending": "pending", "g_sum_notcoming": "not coming"});
+Object.assign(I18N.fr, {"g_link_title": "Confirmation en ligne", "g_link_sub": "Créez un lien à envoyer aux invités sur WhatsApp. Ils confirment leur présence seuls et les réponses arrivent ici.", "g_link_create": "Créer le lien de confirmation", "g_link_title2": "Lien de confirmation", "g_link_custom": "Personnaliser", "g_link_copy": "Copier le lien", "g_link_wa_text": "Nous sommes très heureux de vous inviter à notre mariage. Confirmez votre présence ici : ", "g_add_guest": "Ajouter un invité", "g_paste_list": "ou coller une liste de noms", "g_search_ph": "Rechercher par nom ou groupe…", "g_nogroup": "Sans groupe", "g_grp_link": "Confirmés via le lien", "g_rev_none": "Aucune confirmation pour l’instant. Partagez le lien ci-dessus 🤍", "g_rev_uptodate": "Tout est à jour ✓", "g_rev_alldone": "Les {n} confirmations sont déjà dans votre liste.", "g_rev_new": "{n} nouvelles confirmations à examiner", "g_rev_help": "J’ai déjà cherché chaque personne dans votre liste. Confirmez d’un toucher.", "g_rev_tel": "Tél : ", "g_rev_diet": "Restriction : ", "g_rev_going": "✓ présent", "g_rev_notgoing": "✕ absent", "g_rev_with": "avec ", "g_rev_norecado": "sans message", "g_rev_match": "Dans votre liste, on dirait", "g_rev_isbtn": "C’est", "g_rev_other": "Une autre personne", "g_rev_notfound": "Je n’ai pas trouvé cette personne dans votre liste.", "g_rev_ignore": "Ignorer", "g_rev_reviewed": "{n} confirmations déjà examinées et dans votre liste.", "m_guest_updated": "mise à jour dans la liste", "m_rsvp_ignored": "Confirmation ignorée", "m_print_fail": "Impossible d’ouvrir l’impression", "m_csv_done": "Tableur généré 🤍", "g_th_status": "Statut", "g_th_phone": "Téléphone", "g_th_people": "Personnes", "g_th_diet": "Restriction", "g_csv_total": "Total de personnes", "g_csv_diet_full": "Restriction alimentaire", "g_csv_child": " (enfant)", "g_csv_adult": " (adulte)", "g_csv_comp_sg": " accompagnant", "g_csv_comp_pl": " accompagnants", "g_file_guests": "invites", "g_pdf_title": "Liste des invités", "g_pdf_child_abbr": " (enf.)", "g_sum_confirmed": "confirmés", "g_sum_people": "personnes", "g_sum_adults": "adultes", "g_sum_kids": "enfants", "g_sum_pending": "en attente", "g_sum_notcoming": "absents"});
 const brl=v=>{ v=v||0; const temC=Math.round(v*100)%100!==0; const n=Math.abs(v).toLocaleString(simDateLoc(),{minimumFractionDigits:temC?2:0,maximumFractionDigits:2}); return (v<0?'-':'')+simCurSym()+' '+n; };
 const fmtNum=v=>{v=v||0; const temC=Math.round(v*100)%100!==0; return v.toLocaleString('pt-BR',{minimumFractionDigits:temC?2:0,maximumFractionDigits:2});};
 /* máscara de dinheiro: digite só números, o app formata 60.000.000,00 sozinho */
@@ -2366,7 +2375,7 @@ function renderHome(){
   $('chip').textContent = days>0? days+dword : (days===0?'É hoje':'Casados');
   $('monoTxt').innerHTML = esc(p.a[0]||'')+'<span style="font-size:.6em;color:var(--gold)"> &amp; </span>'+esc(p.b[0]||'');
   $('heroNames').textContent = p.a+' & '+p.b;
-  const dt=new Date(p.date+'T12:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'});
+  const dt=new Date(p.date+'T12:00:00').toLocaleDateString(simDateLoc(),{day:'2-digit',month:'long',year:'numeric'});
   const loc=[p.city,p.uf].filter(Boolean).join(', ')+((p.country&&p.country.trim()&&p.country.trim().toLowerCase()!=='brasil')?' · '+p.country.trim():'');
   $('heroPlace').textContent = dt + (loc? ' · '+loc : '');
   $('heroCount').innerHTML = days>0 ? days+'<small>'+dword+' para o sim</small>'
@@ -3805,7 +3814,7 @@ function renderMyList(){
     return;
   }
   const groups={};
-  list.forEach(g=>{ const k=g.group||'Sem grupo'; (groups[k]=groups[k]||[]).push(g); });
+  list.forEach(g=>{ const k=g.group||t('g_nogroup'); (groups[k]=groups[k]||[]).push(g); });
   let html='';
   Object.keys(groups).forEach(grp=>{
     html+=`<div class="ggroup"><span>${esc(grp)}</span><span class="line"></span></div>`;
@@ -3939,21 +3948,21 @@ function renderLinkSection(){
   const box=$('rsvpSection'); if(!box) return;
   if(!state.publicSlug){
     box.innerHTML=`<div class="linkcard">
-      <div class="dn" style="font-size:16px;color:var(--green)">Confirmação online</div>
-      <p class="fine" style="margin:4px 0 10px">Crie um link para enviar aos convidados no WhatsApp. Eles confirmam presença sozinhos, e as respostas caem aqui.</p>
-      <button class="btn p full" onclick="createRSVPLink()">Criar link de confirmação</button>
+      <div class="dn" style="font-size:16px;color:var(--green)">${t('g_link_title')}</div>
+      <p class="fine" style="margin:4px 0 10px">${t('g_link_sub')}</p>
+      <button class="btn p full" onclick="createRSVPLink()">${t('g_link_create')}</button>
     </div>`;
     return;
   }
   box.innerHTML=`<div class="linkcard">
     <div class="row" style="align-items:baseline;gap:8px;margin-bottom:6px">
-      <div class="dn" style="font-size:15px;color:var(--green);flex:1">Link de confirmação</div>
-      <button class="linkmini muted" style="width:auto;padding:0;font-size:12px" onclick="openRsvpCustom()">Personalizar</button>
+      <div class="dn" style="font-size:15px;color:var(--green);flex:1">${t('g_link_title2')}</div>
+      <button class="linkmini muted" style="width:auto;padding:0;font-size:12px" onclick="openRsvpCustom()">${t('g_link_custom')}</button>
     </div>
     <div class="linkbox">${esc(linkURL())}</div>
     <div class="linkact">
-      <button class="btn g" onclick="copyLink()">Copiar link</button>
-      <a class="wabtn" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent('Estamos muito felizes em convidar você para o nosso casamento. Confirme sua presença aqui: '+linkURL())}">${ICONS.wa} WhatsApp</a>
+      <button class="btn g" onclick="copyLink()">${t('g_link_copy')}</button>
+      <a class="wabtn" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(t('g_link_wa_text')+linkURL())}">${ICONS.wa} WhatsApp</a>
     </div>
   </div>
   <div id="rsvpReceived"></div>`;
@@ -4094,33 +4103,33 @@ function downloadBlob(blob, filename){
 }
 function exportGuestsCSV(){
   const gs=state.guests||[];
-  if(!gs.length){ toast('Sua lista está vazia'); return; }
-  const head=['Nome','Grupo','Status','Telefone','Total de pessoas','Acompanhantes','Restrição alimentar','Observação'];
+  if(!gs.length){ toast(t('m_list_empty')); return; }
+  const head=[t('g_name'),t('g_group'),t('g_th_status'),t('g_th_phone'),t('g_csv_total'),t('g_comp_label'),t('g_csv_diet_full'),t('g_note')];
   const lines=[head.join(';')];
   gs.forEach(g=>{
     const cd=(g.compDetail&&g.compDetail.length)?g.compDetail:null;
     const comp=parseInt(g.comp)||0;
-    const compStr=cd?cd.map(c=>c.name+(c.kind==='child'?' (criança)':' (adulto)')+(c.phone?' '+c.phone:'')).join(' | ')
-                    :(comp>0?(comp+' acompanhante'+(comp>1?'s':'')):'');
+    const compStr=cd?cd.map(c=>c.name+(c.kind==='child'?t('g_csv_child'):t('g_csv_adult'))+(c.phone?' '+c.phone:'')).join(' | ')
+                    :(comp>0?(comp+(comp>1?t('g_csv_comp_pl'):t('g_csv_comp_sg'))):'');
     lines.push([g.name||'',g.group||'',guestStatusLabel(g.status||'pending'),g.phone||'',guestTotalPeople(g),compStr,g.diet||'',g.note||''].map(csvCell).join(';'));
   });
   const csv='\ufeff'+lines.join('\r\n');
   const nm=slugify((state.profile.a||'')+'-'+(state.profile.b||''))||'convidados';
-  downloadBlob(new Blob([csv],{type:'text/csv;charset=utf-8'}), 'convidados-'+nm+'.csv');
-  closeSheet(); toast('Planilha gerada 🤍');
+  downloadBlob(new Blob([csv],{type:'text/csv;charset=utf-8'}), t('g_file_guests')+'-'+nm+'.csv');
+  closeSheet(); toast(t('m_csv_done'));
 }
 function exportGuestsPDF(){
   const gs=state.guests||[];
-  if(!gs.length){ toast('Sua lista está vazia'); return; }
+  if(!gs.length){ toast(t('m_list_empty')); return; }
   const p=state.profile||{};
   const names=esc((p.a||'')+' & '+(p.b||''));
   const ini=esc((p.a&&p.a[0]||'').toUpperCase())+' &amp; '+esc((p.b&&p.b[0]||'').toUpperCase());
-  const dt=p.date?new Date(p.date+'T12:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'}):'';
+  const dt=p.date?new Date(p.date+'T12:00:00').toLocaleDateString(simDateLoc(),{day:'2-digit',month:'long',year:'numeric'}):'';
   const loc=[p.city,p.uf].filter(Boolean).join(', ');
   const meta=[dt,loc].filter(Boolean).join(' · ');
   const s=exportSummary();
-  const sumLine=`<b>${s.yes}</b> confirmados · <b>${s.headcount}</b> ${s.headcount===1?'pessoa':'pessoas'} (${s.adults} adultos, ${s.kids} crianças) · ${s.pend} pendentes · ${s.no} não vão`;
-  const groups={}; gs.forEach(g=>{ const k=g.group||'Sem grupo'; (groups[k]=groups[k]||[]).push(g); });
+  const sumLine=`<b>${s.yes}</b> ${t('g_sum_confirmed')} · <b>${s.headcount}</b> ${t('g_sum_people')} (${s.adults} ${t('g_sum_adults')}, ${s.kids} ${t('g_sum_kids')}) · ${s.pend} ${t('g_sum_pending')} · ${s.no} ${t('g_sum_notcoming')}`;
+  const groups={}; gs.forEach(g=>{ const k=g.group||t('g_nogroup'); (groups[k]=groups[k]||[]).push(g); });
   let rows='';
   Object.keys(groups).forEach(grp=>{
     rows+=`<tr class="grp"><td colspan="6">${esc(grp)} · ${groups[grp].length}</td></tr>`;
@@ -4128,7 +4137,7 @@ function exportGuestsPDF(){
       const st=g.status||'pending';
       const cd=(g.compDetail&&g.compDetail.length)?g.compDetail:null;
       const comp=parseInt(g.comp)||0;
-      const cstr=cd?cd.map(c=>esc(c.name)+(c.kind==='child'?' (cri.)':'')).join(', '):(comp>0?(comp+''):'—');
+      const cstr=cd?cd.map(c=>esc(c.name)+(c.kind==='child'?t('g_pdf_child_abbr'):'')).join(', '):(comp>0?(comp+''):'—');
       rows+=`<tr>
         <td><b>${esc(g.name||'')}</b></td>
         <td><span class="st-${st}">${guestStatusLabel(st)}</span></td>
@@ -4139,8 +4148,8 @@ function exportGuestsPDF(){
       </tr>`;
     });
   });
-  const today=new Date().toLocaleDateString('pt-BR');
-  const doc=`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Lista de convidados — ${names}</title>
+  const today=new Date().toLocaleDateString(simDateLoc());
+  const doc=`<!doctype html><html lang="${simLang}"><head><meta charset="utf-8"><title>${t('g_pdf_title')} — ${names}</title>
 
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
@@ -4161,9 +4170,9 @@ function exportGuestsPDF(){
     .foot{margin-top:18px;text-align:center;font-size:10px;color:#999}
     tr{page-break-inside:avoid}
   </style></head><body>
-    <div class="lh"><div class="mono">${ini}</div><div class="nm">${names}</div>${meta?`<div class="meta">${esc(meta)}</div>`:''}<div class="ttl">Lista de convidados</div></div>
+    <div class="lh"><div class="mono">${ini}</div><div class="nm">${names}</div>${meta?`<div class="meta">${esc(meta)}</div>`:''}<div class="ttl">${t('g_pdf_title')}</div></div>
     <div class="sum">${sumLine}</div>
-    <table><thead><tr><th>Nome</th><th>Status</th><th>Pessoas</th><th>Telefone</th><th>Acompanhantes</th><th>Restrição</th></tr></thead><tbody>${rows}</tbody></table>
+    <table><thead><tr><th>${t('g_name')}</th><th>${t('g_th_status')}</th><th>${t('g_th_people')}</th><th>${t('g_th_phone')}</th><th>${t('g_comp_label')}</th><th>${t('g_th_diet')}</th></tr></thead><tbody>${rows}</tbody></table>
     <div class="foot">${t('rep_foot')} · ${today}</div>
   </body></html>`;
   let f=document.getElementById('printFrame');
@@ -4171,14 +4180,14 @@ function exportGuestsPDF(){
   const d=f.contentWindow.document; d.open(); d.write(doc); d.close();
   closeSheet(); toast(t('m_pdf_preparing'));
   setTimeout(()=>{ try{ f.contentWindow.focus(); }catch(_){}
-    try{ f.contentWindow.print(); }catch(e){ toast('Não consegui abrir a impressão'); } }, 650);
+    try{ f.contentWindow.print(); }catch(e){ toast(t('m_print_fail')); } }, 650);
 }
 function printHTML(doc){
   let f=document.getElementById('printFrame');
   if(!f){ f=document.createElement('iframe'); f.id='printFrame'; f.style.cssText='position:fixed;right:0;bottom:0;width:0;height:0;border:0;opacity:0'; document.body.appendChild(f); }
   const d=f.contentWindow.document; d.open(); d.write(doc); d.close();
   toast(t('m_pdf_preparing'));
-  setTimeout(()=>{ try{ f.contentWindow.focus(); }catch(_){ } try{ f.contentWindow.print(); }catch(e){ toast('Não consegui abrir a impressão'); } }, 650);
+  setTimeout(()=>{ try{ f.contentWindow.focus(); }catch(_){ } try{ f.contentWindow.print(); }catch(e){ toast(t('m_print_fail')); } }, 650);
 }
 function _reportFin(){
   const p=state.profile||{}, exp=state.exp||[];
@@ -4253,7 +4262,7 @@ function _reportShell(title, inner){
   const p=state.profile||{};
   const names=esc((p.a||'')+' & '+(p.b||''));
   const ini=esc((p.a&&p.a[0]||'').toUpperCase())+' &amp; '+esc((p.b&&p.b[0]||'').toUpperCase());
-  const dt=p.date?new Date(p.date+'T12:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'}):'';
+  const dt=p.date?new Date(p.date+'T12:00:00').toLocaleDateString(simDateLoc(),{day:'2-digit',month:'long',year:'numeric'}):'';
   const loc=[p.city,p.uf].filter(Boolean).join(', ');
   const meta=[dt,loc].filter(Boolean).join(' · ');
   const today=new Date().toLocaleDateString('pt-BR');
@@ -4336,44 +4345,44 @@ function matchGuest(rsvpName){
 }
 function renderReviewQueue(){
   const box=$('rsvpReceived'); if(!box) return;
-  if(!lastRSVPs.length){ box.innerHTML='<p class="fine" style="margin-top:12px;text-align:center">Ainda não há confirmações. Compartilhe o link acima 🤍</p>'; return; }
+  if(!lastRSVPs.length){ box.innerHTML='<p class="fine" style="margin-top:12px;text-align:center">'+t('g_rev_none')+'</p>'; return; }
   state.rsvpDone=state.rsvpDone||[];
   const pend=lastRSVPs.filter(r=>!state.rsvpDone.includes(r.id));
   const feitas=lastRSVPs.length-pend.length;
   if(!pend.length){
-    box.innerHTML=`<div class="card soft" style="text-align:center;margin-top:12px"><div class="dn" style="color:var(--green)">Tudo em dia ✓</div><p class="fine" style="margin-top:4px">Todas as ${lastRSVPs.length} ${lastRSVPs.length===1?'confirmação já está':'confirmações já estão'} na sua lista.</p></div>`;
+    box.innerHTML=`<div class="card soft" style="text-align:center;margin-top:12px"><div class="dn" style="color:var(--green)">${t('g_rev_uptodate')}</div><p class="fine" style="margin-top:4px">${t('g_rev_alldone').replace('{n}',lastRSVPs.length)}</p></div>`;
     return;
   }
-  let html=`<div class="cap gold" style="margin:16px 0 4px">${pend.length} ${pend.length===1?'confirmação nova':'confirmações novas'} para revisar</div>
-    <p class="fine" style="margin:0 0 12px">Eu já procurei cada pessoa na sua lista. Confirme com um toque.</p>`;
+  let html=`<div class="cap gold" style="margin:16px 0 4px">${t('g_rev_new').replace('{n}',pend.length)}</div>
+    <p class="fine" style="margin:0 0 12px">${t('g_rev_help')}</p>`;
   html+=pend.map(r=>{
     const vai=r.status!=='no', m=matchGuest(r.guest_name), cs=compStr(r);
     const extra=[];
-    if(r.phone) extra.push('Tel: '+esc(r.phone));
-    if(r.diet) extra.push('Restrição: '+esc(r.diet));
-    const info=`<div class="rin-n">${esc(r.guest_name)} <span style="font-size:11px;color:${vai?'var(--yes)':'var(--no)'}">${vai?'✓ vai':'✕ não vai'}</span></div>
-      <div class="rin-m">${cs?('com '+cs+' · '):''}${r.message?('“'+esc(r.message)+'”'):'sem recado'}</div>
+    if(r.phone) extra.push(t('g_rev_tel')+esc(r.phone));
+    if(r.diet) extra.push(t('g_rev_diet')+esc(r.diet));
+    const info=`<div class="rin-n">${esc(r.guest_name)} <span style="font-size:11px;color:${vai?'var(--yes)':'var(--no)'}">${vai?t('g_rev_going'):t('g_rev_notgoing')}</span></div>
+      <div class="rin-m">${cs?(t('g_rev_with')+cs+' · '):''}${r.message?('“'+esc(r.message)+'”'):t('g_rev_norecado')}</div>
       ${extra.length?`<div class="rin-m" style="color:var(--green)">${extra.join(' · ')}</div>`:''}`;
     if(m){
       return `<div class="revcard">
         <div class="rin-bd">${info}</div>
-        <div class="revmatch hit">Na sua lista parece ser <b>${esc(m.name)}</b></div>
+        <div class="revmatch hit">${t('g_rev_match')} <b>${esc(m.name)}</b></div>
         <div class="revact">
-          <button class="btn p sm" onclick="confirmMatch('${r.id}','${m.id}')">É ${esc(m.name.split(' ')[0])}</button>
-          <button class="btn g sm" onclick="addRSVPNew('${r.id}')">É outra pessoa</button>
+          <button class="btn p sm" onclick="confirmMatch('${r.id}','${m.id}')">${t('g_rev_isbtn')} ${esc(m.name.split(' ')[0])}</button>
+          <button class="btn g sm" onclick="addRSVPNew('${r.id}')">${t('g_rev_other')}</button>
         </div>
       </div>`;
     }
     return `<div class="revcard">
       <div class="rin-bd">${info}</div>
-      <div class="revmatch">Não encontrei essa pessoa na sua lista.</div>
+      <div class="revmatch">${t('g_rev_notfound')}</div>
       <div class="revact">
-        <button class="btn p sm" onclick="addRSVPNew('${r.id}')">Adicionar à lista</button>
-        <button class="btn g sm" onclick="ignoreRSVP('${r.id}')">Ignorar</button>
+        <button class="btn p sm" onclick="addRSVPNew('${r.id}')">${t('g_bulk_add')}</button>
+        <button class="btn g sm" onclick="ignoreRSVP('${r.id}')">${t('g_rev_ignore')}</button>
       </div>
     </div>`;
   }).join('');
-  if(feitas>0) html+=`<p class="fine" style="margin-top:14px;text-align:center">${feitas} ${feitas===1?'confirmação já revisada':'confirmações já revisadas'} e na sua lista.</p>`;
+  if(feitas>0) html+=`<p class="fine" style="margin-top:14px;text-align:center">${t('g_rev_reviewed').replace('{n}',feitas)}</p>`;
   box.innerHTML=html;
 }
 function confirmMatch(rsvpId,guestId){
@@ -4386,28 +4395,28 @@ function confirmMatch(rsvpId,guestId){
   if(r.message && !g.note) g.note=r.message;
   state.rsvpDone=state.rsvpDone||[]; state.rsvpDone.push(rsvpId);
   persist(); renderGuests();
-  toast(g.name+' atualizada na lista');
+  toast(g.name+' '+t('m_guest_updated'));
 }
 function addRSVPNew(rsvpId){
   const r=lastRSVPs.find(x=>x.id===rsvpId); if(!r) return;
   state.guests=state.guests||[];
-  state.guests.push({id:uid(),name:r.guest_name,group:'Confirmados pelo link',comp:r.companions||0,compDetail:Array.isArray(r.companions_detail)?r.companions_detail:[],phone:r.phone||'',diet:r.diet||'',note:r.message||'',status:r.status==='no'?'no':'yes'});
+  state.guests.push({id:uid(),name:r.guest_name,group:t('g_grp_link'),comp:r.companions||0,compDetail:Array.isArray(r.companions_detail)?r.companions_detail:[],phone:r.phone||'',diet:r.diet||'',note:r.message||'',status:r.status==='no'?'no':'yes'});
   state.rsvpDone=state.rsvpDone||[]; state.rsvpDone.push(rsvpId);
   persist(); renderGuests();
-  toast(r.guest_name+' entrou na lista');
+  toast(r.guest_name+' '+t('m_guest_added'));
 }
 function ignoreRSVP(rsvpId){
   state.rsvpDone=state.rsvpDone||[]; state.rsvpDone.push(rsvpId);
   persist(); renderGuests();
-  toast('Confirmação ignorada');
+  toast(t('m_rsvp_ignored'));
 }
 function addRSVPGuest(id){
   const r=lastRSVPs.find(x=>x.id===id); if(!r) return;
   state.guests=state.guests||[];
-  state.guests.push({id:uid(),name:r.guest_name,group:'Confirmados pelo link',comp:r.companions||0,phone:'',note:r.message||'',status:r.status==='no'?'no':'yes'});
+  state.guests.push({id:uid(),name:r.guest_name,group:t('g_grp_link'),comp:r.companions||0,phone:'',note:r.message||'',status:r.status==='no'?'no':'yes'});
   state.rsvpDone=state.rsvpDone||[]; state.rsvpDone.push(id);
   persist(); renderGuests();
-  toast(r.guest_name+' entrou na lista');
+  toast(r.guest_name+' '+t('m_guest_added'));
 }
 
 /* =================== AGENDA =================== */
