@@ -94,6 +94,27 @@ load().then(({ w, d, A, base, novaData, errors, results }) => {
     A('IDF6 PT mantém R$', $('finList').innerHTML.includes('R$'));
   } catch (e) { results.fail++; results.fails.push('I18N-DINF EXCEÇÃO: ' + e.message); }
 
+  // ---------- I18N: Convidados (parte 1) ----------
+  try {
+    setLang('es');
+    const q = sel => d.querySelector(sel).textContent.trim();
+    A('IG1 export ES', q('#sh-export [data-i18n=g_export_title]') === 'Exportar lista' && q('[data-i18n=g_export_csv]') === 'Hoja de cálculo');
+    A('IG2 ficha ES (chip + status + salvar)', q('#sh-guest [data-i18n=g_grp_bridefam]') === 'Familia de la novia' && q('#sh-guest [data-i18n=g_st_pending]') === 'Pendiente' && q('#sh-guest [data-i18n=g_save]') === 'Guardar invitado');
+    A('IG3 bulk ES', q('#sh-bulk [data-i18n=g_bulk_title]') === 'Agregar varios' && q('#sh-bulk [data-i18n=g_bulk_add]') === 'Agregar a la lista');
+    A('IG4 ajuda: resumo mantém <b>', d.querySelector('[data-i18n=g_help_summary]').innerHTML.includes('<b'));
+    A('IG5 cabeçalhos lista ES', q('.fsectitle[data-i18n=g_help_mine]') === 'Mi lista' && q('.fsectitle[data-i18n=g_help_rsvp]') === 'Confirmaciones');
+    w.STATE = { profile:{a:'Ana',b:'Pedro',date:'2026-12-01',budget:50000}, cats:[], tasks:[], notes:[], events:[], exp:[],
+      guests:[{id:'x1',name:'Tío Juan',status:'yes',group:'Amigos',comps:[]},{id:'x2',name:'Niña',status:'pending',child:true,comps:[]}] };
+    w.renderGuests();
+    A('IG6 lista dinâmica ES (status + stats)', $('s-guests').innerHTML.includes('Confirmado') && /Adulto|Niño/.test($('s-guests').innerHTML));
+    w.openGuest('x1');
+    A('IG7 título ficha (editar) ES', $('gsTitle').textContent === 'Editar invitado');
+    w.closeSheet();
+    A('IG8 chaves dinâmicas (toasts)', w.t('m_g_saved') === 'Invitado guardado' && w.t('m_bulk_one') === ' invitado agregado');
+    setLang('pt');
+    A('IG9 volta pro PT', q('#sh-guest [data-i18n=g_save]') === 'Salvar convidado');
+  } catch (e) { results.fail++; results.fails.push('I18N-GUEST EXCEÇÃO: ' + e.message); }
+
   // ---------- FIN: fluxo de despesa ----------
   try {
     w.STATE = base();
