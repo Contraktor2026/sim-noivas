@@ -115,6 +115,24 @@ load().then(({ w, d, A, base, novaData, errors, results }) => {
     A('IG9 volta pro PT', q('#sh-guest [data-i18n=g_save]') === 'Salvar convidado');
   } catch (e) { results.fail++; results.fails.push('I18N-GUEST EXCEÇÃO: ' + e.message); }
 
+  // ---------- I18N: Convidados (parte 2) ----------
+  try {
+    setLang('es');
+    const base = { profile:{a:'Ana',b:'Pedro',date:'2026-12-01',budget:50000}, cats:[], tasks:[], notes:[], events:[], exp:[], guests:[] };
+    w.STATE = { ...base }; w.renderLinkSection();
+    let ls = $('rsvpSection').innerHTML;
+    A('IG2-1 link sem slug ES', ls.includes('Confirmación en línea') && ls.includes('Crear enlace de confirmación'));
+    w.STATE = { ...base, publicSlug:'ana-pedro' }; w.renderLinkSection();
+    ls = $('rsvpSection').innerHTML;
+    A('IG2-2 link com slug ES', ls.includes('Enlace de confirmación') && ls.includes('Copiar enlace') && ls.includes('Personalizar'));
+    A('IG2-3 estáticos add ES', d.querySelector('[data-i18n=g_add_guest]').textContent === 'Agregar invitado' && d.querySelector('[data-i18n=g_paste_list]').textContent === 'o pegar una lista de nombres');
+    A('IG2-4 chaves fila de revisão ES', w.t('g_rev_new').replace('{n}','3') === '3 nuevas confirmaciones para revisar' && w.t('g_rev_other') === 'Es otra persona' && w.t('g_rev_isbtn') === 'Es');
+    A('IG2-5 chaves CSV/PDF ES', w.t('g_th_status') === 'Estado' && w.t('g_csv_total') === 'Total de personas' && w.t('g_sum_notcoming') === 'no asisten' && w.t('g_pdf_title') === 'Lista de invitados');
+    A('IG2-6 grupo fallback + link group ES', w.t('g_nogroup') === 'Sin grupo' && w.t('g_grp_link') === 'Confirmados por el enlace');
+    setLang('pt'); w.STATE = { ...base }; w.renderLinkSection();
+    A('IG2-7 volta pro PT', $('rsvpSection').innerHTML.includes('Confirmação online') && w.t('g_pdf_title') === 'Lista de convidados');
+  } catch (e) { results.fail++; results.fails.push('I18N-GUEST2 EXCEÇÃO: ' + e.message); }
+
   // ---------- FIN: fluxo de despesa ----------
   try {
     w.STATE = base();
