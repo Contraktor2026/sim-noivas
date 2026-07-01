@@ -158,6 +158,22 @@ load().then(({ w, d, A, base, novaData, errors, results }) => {
     A('SET7 volta pro PT', q('set_save') === 'Salvar alterações' && q('set_budget') === 'Orçamento (R$)' && w.fmtTempo(3) === '3 meses');
   } catch (e) { results.fail++; results.fails.push('I18N-SET EXCEÇÃO: ' + e.message); }
 
+  // ---------- I18N: Personalizar RSVP (ES) ----------
+  try {
+    setLang('es');
+    const q = k => { const el = d.querySelector('#s-rsvpcustom [data-i18n=' + k + ']'); return el ? el.textContent.trim() : ''; };
+    A('RC1 tela ES', q('rc_title') === 'Personalizar la página' && q('rc_preview') === 'Vista previa' && q('rc_save') === 'Guardar personalización');
+    A('RC2 switches ES', q('rc_allow_comp') === 'Permitir acompañantes' && q('rc_allow_kids') === 'Permitir niños');
+    A('RC3 overlay IA ES', d.querySelector('[data-i18n=rc_ai_reading]').textContent.trim() === 'Leyendo con la IA…');
+    w.STATE = { profile:{a:'Ana',b:'Pedro',date:'2026-12-01',budget:50000}, cats:[], tasks:[], notes:[], events:[], exp:[], guests:[] };
+    w.renderRcPhoto();
+    A('RC4 foto pick ES', $('rcPhotoArea').innerHTML.includes('Agregar una foto'));
+    w.STATE = { ...w.STATE, publicPhoto:'data:image/jpeg;base64,x' }; w.renderRcPhoto();
+    A('RC5 foto adicionada ES', $('rcPhotoArea').innerHTML.includes('Foto agregada') && $('rcPhotoArea').innerHTML.includes('Quitar'));
+    A('RC6 toasts ES', w.t('m_page_custom') === 'Página personalizada 🤍' && w.t('m_link_first') === 'Crea el enlace primero');
+    setLang('pt');
+  } catch (e) { results.fail++; results.fails.push('I18N-RC EXCEÇÃO: ' + e.message); }
+
   // ---------- FIN: fluxo de despesa ----------
   try {
     w.STATE = base();
