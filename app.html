@@ -1189,38 +1189,38 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
     </section>
 
     <section class="screen" id="s-rsvpcustom">
-      <button class="back" onclick="go('guests')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>Confirmações</button>
-      <h2 class="sec">Personalizar a página</h2>
-      <p class="sub">Deixe a página de confirmação com a cara do seu casamento. Veja a prévia enquanto edita.</p>
+      <button class="back" onclick="go('guests')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg><span data-i18n="g_help_rsvp">Confirmações</span></button>
+      <h2 class="sec" data-i18n="rc_title">Personalizar a página</h2>
+      <p class="sub" data-i18n="rc_sub">Deixe a página de confirmação com a cara do seu casamento. Veja a prévia enquanto edita.</p>
 
-      <div class="cap gold" style="margin:18px 0 8px">Prévia</div>
+      <div class="cap gold" style="margin:18px 0 8px" data-i18n="rc_preview">Prévia</div>
       <div id="rcPreview" class="rc-preview"></div>
 
-      <div class="cap gold" style="margin:22px 0 8px">Foto <span style="color:var(--muted);font-weight:600;text-transform:none;letter-spacing:0">(opcional)</span></div>
-      <p class="fine" style="margin:-2px 0 9px">Uma foto de vocês no topo da página. Pode deixar sem — a página fica linda do mesmo jeito.</p>
+      <div class="cap gold" style="margin:22px 0 8px"><span data-i18n="rc_photo">Foto</span> <span style="color:var(--muted);font-weight:600;text-transform:none;letter-spacing:0" data-i18n="q_optional">(opcional)</span></div>
+      <p class="fine" style="margin:-2px 0 9px" data-i18n="rc_photo_p">Uma foto de vocês no topo da página. Pode deixar sem — a página fica linda do mesmo jeito.</p>
       <input type="file" id="rcPhotoInput" accept="image/*" style="display:none" onchange="setRsvpPhoto(this)">
       <div id="rcPhotoArea"></div>
 
-      <div class="f" style="margin-top:22px"><label>Mensagem de boas-vindas <span class="opt">(opcional)</span></label><textarea id="rcMsg" maxlength="240" placeholder="Ex.: Que alegria ter você com a gente! Confirme sua presença abaixo." oninput="rcRenderPreview()"></textarea></div>
+      <div class="f" style="margin-top:22px"><label><span data-i18n="rc_msg_label">Mensagem de boas-vindas</span> <span class="opt" data-i18n="q_optional">(opcional)</span></label><textarea id="rcMsg" maxlength="240" placeholder="Ex.: Que alegria ter você com a gente! Confirme sua presença abaixo." data-i18n-ph="rc_msg_ph" oninput="rcRenderPreview()"></textarea></div>
 
-      <div class="f"><label>Cor do papel</label>
+      <div class="f"><label data-i18n="rc_paper">Cor do papel</label>
         <div class="rc-papers" id="rcPapers"></div>
       </div>
 
-      <div class="cap gold" style="margin:24px 0 4px">Acompanhantes</div>
-      <p class="fine" style="margin:0 0 6px">Você decide o que o convidado pode incluir ao confirmar.</p>
+      <div class="cap gold" style="margin:24px 0 4px" data-i18n="g_comp_label">Acompanhantes</div>
+      <p class="fine" style="margin:0 0 6px" data-i18n="rc_comp_p">Você decide o que o convidado pode incluir ao confirmar.</p>
       <div class="card" style="padding:4px 14px">
         <div class="swrow">
-          <div class="swbd"><div class="swt">Permitir acompanhantes</div><div class="swd">O convidado pode incluir quem vem com ele.</div></div>
+          <div class="swbd"><div class="swt" data-i18n="rc_allow_comp">Permitir acompanhantes</div><div class="swd" data-i18n="rc_allow_comp_d">O convidado pode incluir quem vem com ele.</div></div>
           <button type="button" class="sw" id="swComp" onclick="toggleAllowComp()" aria-label="Permitir acompanhantes"></button>
         </div>
         <div class="swrow" id="swKidsRow">
-          <div class="swbd"><div class="swt">Permitir crianças</div><div class="swd">Desligado, só adultos podem ser incluídos como acompanhantes.</div></div>
+          <div class="swbd"><div class="swt" data-i18n="rc_allow_kids">Permitir crianças</div><div class="swd" data-i18n="rc_allow_kids_d">Desligado, só adultos podem ser incluídos como acompanhantes.</div></div>
           <button type="button" class="sw" id="swKids" onclick="toggleAllowKids()" aria-label="Permitir crianças"></button>
         </div>
       </div>
 
-      <button class="btn p full" style="margin-top:22px" onclick="savePublicCustom()">Salvar personalização</button>
+      <button class="btn p full" style="margin-top:22px" onclick="savePublicCustom()" data-i18n="rc_save">Salvar personalização</button>
     </section>
 
   </div>
@@ -1245,7 +1245,7 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
         <svg viewBox="0 0 50 50" fill="none"><circle cx="25" cy="25" r="21" stroke="var(--gold-soft)" stroke-width="4"/><circle cx="25" cy="25" r="21" stroke="var(--gold)" stroke-width="4" stroke-linecap="round" stroke-dasharray="38 120"/></svg>
         <span class="tk-dot"><svg viewBox="0 0 20 20"><path d="M10 1.5 l4.2 8.5 -4.2 8.5 -4.2 -8.5 Z" fill="var(--gold)"/></svg></span>
       </div>
-      <div class="tk-label">Lendo com a IA…</div>
+      <div class="tk-label" data-i18n="rc_ai_reading">Lendo com a IA…</div>
     </div>
   </div>
 
@@ -2264,6 +2264,11 @@ Object.assign(I18N.pt, {"set_yourname": "Seu nome", "set_partner": "Nome do par"
 Object.assign(I18N.es, {"set_yourname": "Tu nombre", "set_partner": "Nombre de tu pareja", "set_date": "Fecha de la boda", "set_country": "País", "set_country_ph": "Brasil", "set_state": "Estado", "set_city": "Ciudad", "set_guests": "Invitados", "set_budget": "Presupuesto ($)", "set_save": "Guardar cambios", "set_suggested": "Lista sugerida", "set_suggested_p": "Cargo una guía de boda <b>adaptada al tiempo que falta hasta tu fecha</b>. Elige la versión completa (todos los detalles) o esencial (los pasos imprescindibles).", "set_roteiro_full": "Guía completa", "set_roteiro_ess": "Guía esencial", "set_account": "Cuenta", "set_logout": "Cerrar sesión", "set_guide": "Guía de uso", "set_review_welcome": "Ver de nuevo la guía de bienvenida", "set_danger": "Zona de cuidado", "set_wipe": "Borrar todos los datos", "set_connected_as": "Conectada como", "m_set_required": "Nombres, fecha y presupuesto son obligatorios", "m_set_saved": "Cambios guardados", "m_set_wiped": "Todo borrado — empezando de cero", "m_rot_ess": "Guía esencial cargada", "m_rot_full": "Guía completa cargada", "m_rot_full_adapted": "Guía completa adaptada a los {t} que faltan", "m_rot_already": "La guía ya está en tu lista", "time_months": "meses", "time_day": "día", "time_days": "días"});
 Object.assign(I18N.en, {"set_yourname": "Your name", "set_partner": "Partner’s name", "set_date": "Wedding date", "set_country": "Country", "set_country_ph": "Brazil", "set_state": "State", "set_city": "City", "set_guests": "Guests", "set_budget": "Budget ($)", "set_save": "Save changes", "set_suggested": "Suggested list", "set_suggested_p": "I load a wedding roadmap <b>adapted to the time left until your date</b>. Choose the full version (every detail) or the essential one (the must-do steps).", "set_roteiro_full": "Full roadmap", "set_roteiro_ess": "Essential roadmap", "set_account": "Account", "set_logout": "Log out", "set_guide": "How-to guide", "set_review_welcome": "Review the welcome guide", "set_danger": "Caution zone", "set_wipe": "Delete all data", "set_connected_as": "Signed in as", "m_set_required": "Names, date and budget are required", "m_set_saved": "Settings saved", "m_set_wiped": "Everything wiped — starting fresh", "m_rot_ess": "Essential roadmap loaded", "m_rot_full": "Full roadmap loaded", "m_rot_full_adapted": "Full roadmap adapted to the {t} left", "m_rot_already": "The roadmap is already in your list", "time_months": "months", "time_day": "day", "time_days": "days"});
 Object.assign(I18N.fr, {"set_yourname": "Votre nom", "set_partner": "Nom du partenaire", "set_date": "Date du mariage", "set_country": "Pays", "set_country_ph": "Brésil", "set_state": "Région", "set_city": "Ville", "set_guests": "Invités", "set_budget": "Budget ($)", "set_save": "Enregistrer les modifications", "set_suggested": "Liste suggérée", "set_suggested_p": "Je charge un parcours de mariage <b>adapté au temps restant jusqu’à votre date</b>. Choisissez la version complète (tous les détails) ou essentielle (les étapes indispensables).", "set_roteiro_full": "Parcours complet", "set_roteiro_ess": "Parcours essentiel", "set_account": "Compte", "set_logout": "Se déconnecter", "set_guide": "Guide d’utilisation", "set_review_welcome": "Revoir le guide de bienvenue", "set_danger": "Zone sensible", "set_wipe": "Effacer toutes les données", "set_connected_as": "Connectée en tant que", "m_set_required": "Noms, date et budget sont requis", "m_set_saved": "Réglages enregistrés", "m_set_wiped": "Tout est effacé — on repart de zéro", "m_rot_ess": "Parcours essentiel chargé", "m_rot_full": "Parcours complet chargé", "m_rot_full_adapted": "Parcours complet adapté aux {t} restants", "m_rot_already": "Le parcours est déjà dans votre liste", "time_months": "mois", "time_day": "jour", "time_days": "jours"});
+// ---- Personalizar RSVP (pt+es) ----
+Object.assign(I18N.pt, {"rc_add_photo":"Adicionar uma foto"});
+Object.assign(I18N.es, {"rc_add_photo":"Agregar una foto"});
+Object.assign(I18N.pt, {"rc_title": "Personalizar a página", "rc_sub": "Deixe a página de confirmação com a cara do seu casamento. Veja a prévia enquanto edita.", "rc_preview": "Prévia", "rc_photo": "Foto", "rc_photo_p": "Uma foto de vocês no topo da página. Pode deixar sem — a página fica linda do mesmo jeito.", "rc_msg_label": "Mensagem de boas-vindas", "rc_msg_ph": "Ex.: Que alegria ter você com a gente! Confirme sua presença abaixo.", "rc_paper": "Cor do papel", "rc_comp_p": "Você decide o que o convidado pode incluir ao confirmar.", "rc_allow_comp": "Permitir acompanhantes", "rc_allow_comp_d": "O convidado pode incluir quem vem com ele.", "rc_allow_kids": "Permitir crianças", "rc_allow_kids_d": "Desligado, só adultos podem ser incluídos como acompanhantes.", "rc_save": "Salvar personalização", "rc_ai_reading": "Lendo com a IA…", "rc_pv_title": "Confirmação de presença", "rc_photo_added": "Foto adicionada", "rc_photo_hint": "Aparece no topo da página", "rc_remove": "Remover", "m_pick_image": "Escolha uma imagem", "m_img_fail": "Não consegui usar essa imagem", "m_photo_added": "Foto adicionada 🤍", "m_img_open_fail": "Não consegui abrir a imagem", "m_link_first": "Crie o link primeiro", "m_page_custom": "Página personalizada 🤍", "m_save_fail": "Não foi possível salvar agora"});
+Object.assign(I18N.es, {"rc_title": "Personalizar la página", "rc_sub": "Dale a la página de confirmación la cara de tu boda. Mira la vista previa mientras editas.", "rc_preview": "Vista previa", "rc_photo": "Foto", "rc_photo_p": "Una foto de ustedes en la parte superior de la página. Puedes dejarla sin foto — la página queda hermosa igual.", "rc_msg_label": "Mensaje de bienvenida", "rc_msg_ph": "Ej.: ¡Qué alegría tenerte con nosotros! Confirma tu asistencia abajo.", "rc_paper": "Color del papel", "rc_comp_p": "Tú decides qué puede incluir el invitado al confirmar.", "rc_allow_comp": "Permitir acompañantes", "rc_allow_comp_d": "El invitado puede incluir a quienes vienen con él.", "rc_allow_kids": "Permitir niños", "rc_allow_kids_d": "Apagado, solo se pueden incluir adultos como acompañantes.", "rc_save": "Guardar personalización", "rc_ai_reading": "Leyendo con la IA…", "rc_pv_title": "Confirmación de asistencia", "rc_photo_added": "Foto agregada", "rc_photo_hint": "Aparece en la parte superior de la página", "rc_remove": "Quitar", "m_pick_image": "Elige una imagen", "m_img_fail": "No pude usar esa imagen", "m_photo_added": "Foto agregada 🤍", "m_img_open_fail": "No pude abrir la imagen", "m_link_first": "Crea el enlace primero", "m_page_custom": "Página personalizada 🤍", "m_save_fail": "No se pudo guardar ahora"});
 // ---- Convidados parte 2 ----
 Object.assign(I18N.pt, {"m_guest_added": "entrou na lista"});
 Object.assign(I18N.es, {"m_guest_added": "entró en la lista"});
@@ -2354,7 +2359,7 @@ function finishOnb(){
 /* =================== HOJE =================== */
 function setHeroPhoto(input){
   const file=input.files&&input.files[0]; if(!file){ return; }
-  if(!/^image\//.test(file.type)){ toast('Escolha uma imagem'); input.value=''; return; }
+  if(!/^image\//.test(file.type)){ toast(t('m_pick_image')); input.value=''; return; }
   const reader=new FileReader();
   reader.onload=ev=>{
     const img=new Image();
@@ -2364,10 +2369,10 @@ function setHeroPhoto(input){
       const cv=document.createElement('canvas'); cv.width=w; cv.height=h;
       cv.getContext('2d').drawImage(img,0,0,w,h);
       try{ state.heroPhoto=cv.toDataURL('image/jpeg',0.72); }
-      catch(e){ toast('Não consegui usar essa imagem'); return; }
-      persist(); renderHome(); toast('Foto adicionada 🤍');
+      catch(e){ toast(t('m_img_fail')); return; }
+      persist(); renderHome(); toast(t('m_photo_added'));
     };
-    img.onerror=()=>toast('Não consegui abrir a imagem');
+    img.onerror=()=>toast(t('m_img_open_fail'));
     img.src=ev.target.result;
   };
   reader.readAsDataURL(file);
@@ -4008,7 +4013,7 @@ async function createRSVPLink(){
 }
 let rcPaper='classico';
 function openRsvpCustom(){
-  if(!state.publicSlug){ toast('Crie o link primeiro'); return; }
+  if(!state.publicSlug){ toast(t('m_link_first')); return; }
   rcPaper=state.publicPaper||'classico';
   $('rcMsg').value=state.publicMsg||'';
   $('rcPapers').innerHTML=Object.keys(RSVP_PAPERS).map(function(k){
@@ -4024,14 +4029,14 @@ function rcPick(k){ rcPaper=k; document.querySelectorAll('#rcPapers .rc-paper').
 function renderRcPhoto(){
   const a=$('rcPhotoArea'); if(!a) return;
   if(state.publicPhoto){
-    a.innerHTML='<div class="photo-has"><div class="thumb" style="background-image:url('+state.publicPhoto+')"></div><div style="flex:1"><div style="font-weight:700;font-size:14px">Foto adicionada</div><div class="fine">Aparece no topo da página</div></div><button class="ph-x" onclick="removeRsvpPhoto()">Remover</button></div>';
+    a.innerHTML='<div class="photo-has"><div class="thumb" style="background-image:url('+state.publicPhoto+')"></div><div style="flex:1"><div style="font-weight:700;font-size:14px">'+t('rc_photo_added')+'</div><div class="fine">'+t('rc_photo_hint')+'</div></div><button class="ph-x" onclick="removeRsvpPhoto()">'+t('rc_remove')+'</button></div>';
   }else{
-    a.innerHTML='<button class="photo-pick" onclick="document.getElementById(\'rcPhotoInput\').click()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 8a2 2 0 0 1 2-2h2l1.5-2h7L19 6h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="3.2"/></svg> Adicionar uma foto</button>';
+    a.innerHTML='<button class="photo-pick" onclick="document.getElementById(\'rcPhotoInput\').click()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 8a2 2 0 0 1 2-2h2l1.5-2h7L19 6h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="3.2"/></svg> '+t('rc_add_photo')+'</button>';
   }
 }
 function setRsvpPhoto(input){
   const file=input.files&&input.files[0]; if(!file){ return; }
-  if(!/^image\//.test(file.type)){ toast('Escolha uma imagem'); input.value=''; return; }
+  if(!/^image\//.test(file.type)){ toast(t('m_pick_image')); input.value=''; return; }
   const reader=new FileReader();
   reader.onload=ev=>{
     const img=new Image();
@@ -4041,10 +4046,10 @@ function setRsvpPhoto(input){
       const cv=document.createElement('canvas'); cv.width=w; cv.height=h;
       cv.getContext('2d').drawImage(img,0,0,w,h);
       try{ state.publicPhoto=cv.toDataURL('image/jpeg',0.72); }
-      catch(e){ toast('Não consegui usar essa imagem'); return; }
-      renderRcPhoto(); rcRenderPreview(); toast('Foto adicionada 🤍');
+      catch(e){ toast(t('m_img_fail')); return; }
+      renderRcPhoto(); rcRenderPreview(); toast(t('m_photo_added'));
     };
-    img.onerror=()=>toast('Não consegui abrir a imagem');
+    img.onerror=()=>toast(t('m_img_open_fail'));
     img.src=ev.target.result;
   };
   reader.readAsDataURL(file);
@@ -4066,18 +4071,18 @@ function rcRenderPreview(){
   const pv=$('rcPreview'); if(!pv) return;
   pv.style.background=t.bg;
   pv.innerHTML=(state.publicPhoto?'<div class="pv-photo" style="background-image:url('+state.publicPhoto+')"></div>':'')
-    +'<div class="pv-orn" style="color:'+t.accent+'">Confirmação de presença</div><div class="pv-names">'+esc(names)+'</div>'+(msg?'<div class="pv-msg">'+esc(msg)+'</div>':'');
+    +'<div class="pv-orn" style="color:'+t.accent+'">'+t('rc_pv_title')+'</div><div class="pv-names">'+esc(names)+'</div>'+(msg?'<div class="pv-msg">'+esc(msg)+'</div>':'');
 }
 async function savePublicCustom(){
-  if(!state.publicSlug){ toast('Crie o link primeiro'); return; }
+  if(!state.publicSlug){ toast(t('m_link_first')); return; }
   state.publicMsg=($('rcMsg').value||'').trim();
   state.publicPaper=rcPaper;
   try{
     const {error}=await sb.from('sim_public').upsert(publicRow());
     if(error) throw error;
     persist(); go('guests'); renderLinkSection();
-    toast('Página personalizada 🤍');
-  }catch(e){ toast('Não foi possível salvar agora'); }
+    toast(t('m_page_custom'));
+  }catch(e){ toast(t('m_save_fail')); }
 }
 function copyLink(){
   const url=linkURL();
