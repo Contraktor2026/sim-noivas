@@ -191,6 +191,22 @@ load().then(({ w, d, A, base, novaData, errors, results }) => {
     setLang('pt');
   } catch (e) { results.fail++; results.fails.push('I18N-TASKS EXCEÇÃO: ' + e.message); }
 
+  // ---------- I18N: retradução de tarefas ao trocar idioma ----------
+  try {
+    setLang('pt');
+    w.STATE = { profile:{a:'Ana',b:'Pedro',date:'2027-06-01',budget:50000}, cats:[], tasks:[], notes:[], events:[], exp:[], guests:[], phaseOrder:[] };
+    w.loadSuggested('ess');
+    w.STATE.tasks.push({ id:'c1', t:'Contratar meu primo pra filmar', phase:'', custom:true, done:false });
+    A('RT1 criado em PT', w.STATE.tasks[0].t === 'Definir o orçamento total e quem contribui');
+    setLang('es');
+    A('RT2 tarefas viram ES ao trocar idioma', w.STATE.tasks[0].t === 'Definir el presupuesto total y quién aporta');
+    A('RT3 nenhuma sobra em PT', !w.STATE.tasks.some(t => !t.custom && /ção|orçamento|quem |convidad|cerimôni|até /.test(t.t)));
+    A('RT4 tarefa digitada à mão é preservada', w.STATE.tasks.find(t => t.custom).t === 'Contratar meu primo pra filmar');
+    setLang('pt');
+    A('RT5 volta pro PT', w.STATE.tasks[0].t === 'Definir o orçamento total e quem contribui');
+    setLang('pt');
+  } catch (e) { results.fail++; results.fails.push('I18N-RETRANS EXCEÇÃO: ' + e.message); }
+
   // ---------- FIN: fluxo de despesa ----------
   try {
     w.STATE = base();
