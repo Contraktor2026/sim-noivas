@@ -82,7 +82,7 @@ load().then(({ w, d, A, base, novaData, errors, results }) => {
     setLang('es');
     w.STATE = { profile:{a:'Ana',b:'Pedro',date:'2026-12-01',budget:30000}, cats:[], tasks:[], notes:[], events:[], guests:[],
       exp:[{id:'e1',desc:'Flora',cat:'Decoración',val:400,due:'2026-06-23',paid:true},
-           {id:'e2',desc:'Hacienda',cat:'Salón',val:1167,due:'2026-07-01',paid:false}] };
+           {id:'e2',desc:'Hacienda',cat:'Salón',val:1167,due:'2027-09-01',paid:false}] };
     w.renderFin();
     const h = $('finList').innerHTML, cats = $('finCats').innerHTML;
     A('IDF1 mês em espanhol', /junio/i.test(h));
