@@ -174,6 +174,23 @@ load().then(({ w, d, A, base, novaData, errors, results }) => {
     setLang('pt');
   } catch (e) { results.fail++; results.fails.push('I18N-RC EXCEÇÃO: ' + e.message); }
 
+  // ---------- I18N: Tarefas (ES) ----------
+  try {
+    setLang('es');
+    w.STATE = { profile:{a:'Ana',b:'Pedro',date:'2027-06-01',budget:50000}, cats:[], tasks:[], notes:[], events:[], exp:[], guests:[], phaseOrder:[] };
+    w.renderChk();
+    const empty = $('chkBody').innerHTML;
+    A('TK1 estado vazio ES', empty.includes('Aún no tienes tareas') && empty.includes('Cargar guía esencial'));
+    w.loadSuggested('ess');
+    const tasks = w.STATE.tasks;
+    A('TK2 roteiro essencial em ES', tasks.length > 10 && tasks[0].t === 'Definir el presupuesto total y quién aporta');
+    A('TK3 nenhuma tarefa em PT', !tasks.some(t => /ção|Definir o |Reservar o |Agendar deg/.test(t.t)));
+    w.renderChk();
+    A('TK4 toggle ES + numerada', $('chkBody').innerHTML.includes('Esencial') && $('chkBody').innerHTML.includes('1.'));
+    A('TK5 toasts + ficha ES', w.t('m_task_done') === 'Un paso más dado' && w.t('tk_save') === 'Guardar tarea' && w.t('m_task_deleted') === 'Tarea eliminada');
+    setLang('pt');
+  } catch (e) { results.fail++; results.fails.push('I18N-TASKS EXCEÇÃO: ' + e.message); }
+
   // ---------- FIN: fluxo de despesa ----------
   try {
     w.STATE = base();
