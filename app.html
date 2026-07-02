@@ -1749,6 +1749,7 @@ function setLang(l){
   simLang=l; try{ localStorage.setItem('sim-lang',l); }catch(e){}
   try{ document.documentElement.lang=(l==='pt'?'pt-BR':l); }catch(e){}
   applyI18n();
+  try{ retranslateTasks(l); }catch(e){}
   try{ document.querySelectorAll('#langsel .langbtn').forEach(b=>b.classList.toggle('on', b.dataset.lang===l)); }catch(e){}
   try{ if(typeof state!=='undefined' && state && state.profile && typeof renderAll==='function') renderAll(); }catch(e){}
 }
@@ -3571,6 +3572,23 @@ const ROTEIRO_ES={"Comemorar o noivado com quem vocês amam": "Celebrar el compr
 const PHASES_ES={"Primeiros passos": "Primeros pasos", "12 a 8 meses antes": "12 a 8 meses antes", "8 a 5 meses antes": "8 a 5 meses antes", "5 a 2 meses antes": "5 a 2 meses antes", "Último mês": "Último mes", "Semana do casamento": "Semana de la boda", "Comece agora": "Empieza ahora", "Outras tarefas": "Otras tareas"};
 function trTask(x){ return (typeof simLang!=='undefined'&&simLang==='es'&&ROTEIRO_ES[x])?ROTEIRO_ES[x]:x; }
 function trPhase(x){ return (typeof simLang!=='undefined'&&simLang==='es'&&PHASES_ES[x])?PHASES_ES[x]:x; }
+const ROTEIRO_PT=Object.fromEntries(Object.entries(ROTEIRO_ES).map(function(e){return [e[1],e[0]];}));
+const PHASES_PT=Object.fromEntries(Object.entries(PHASES_ES).map(function(e){return [e[1],e[0]];}));
+function retranslateTasks(l){
+  try{
+    if(typeof state==='undefined'||!state||!state.tasks) return;
+    const map = l==='es'?ROTEIRO_ES : l==='pt'?ROTEIRO_PT : null;
+    const pmap = l==='es'?PHASES_ES : l==='pt'?PHASES_PT : null;
+    if(!map) return; // só pt<->es por enquanto
+    state.tasks.forEach(function(tk){
+      if(tk.custom) return;               // não mexe no que a pessoa digitou
+      if(map[tk.t]) tk.t=map[tk.t];
+      if(tk.phase && pmap[tk.phase]) tk.phase=pmap[tk.phase];
+    });
+    if(Array.isArray(state.phaseOrder)) state.phaseOrder=state.phaseOrder.map(function(ph){ return (pmap&&pmap[ph])?pmap[ph]:ph; });
+    if(typeof persist==='function') persist();
+  }catch(e){}
+}
 function monthsLeft(){
   if(!state.profile) return 12;
   const days=(new Date(state.profile.date+'T16:00:00')-new Date())/86400000;
