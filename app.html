@@ -1491,9 +1491,9 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
 
     <div class="sheet" id="sh-task" style="display:none">
       <h3 id="tkTitle">Nova tarefa</h3>
-      <p class="sub">Adicione ao seu roteiro até o altar.</p>
-      <div class="f"><label>Tarefa</label><input id="tkText" placeholder="Ex.: Agendar degustação do buffet"></div>
-      <div class="f"><label>Fase <span class="opt">(opcional)</span></label>
+      <p class="sub" data-i18n="tk_sub">Adicione ao seu roteiro até o altar.</p>
+      <div class="f"><label data-i18n="tk_label">Tarefa</label><input id="tkText" placeholder="Ex.: Agendar degustação do buffet" data-i18n-ph="tk_ph"></div>
+      <div class="f"><label><span data-i18n="tk_phase">Fase</span> <span class="opt" data-i18n="q_optional">(opcional)</span></label>
         <select id="tkPhase">
           <option value="">Sem fase</option>
           <option>Primeiros passos</option><option>12 a 8 meses antes</option>
@@ -1501,8 +1501,8 @@ p.sub{font-size:13px;color:var(--muted);margin-bottom:14px}
           <option>Último mês</option><option>Semana do casamento</option>
         </select>
       </div>
-      <button class="btn p full" onclick="saveTask()">Salvar tarefa</button>
-      <button class="btn d full" id="tkDel" style="margin-top:8px;display:none" onclick="delTask()">Excluir tarefa</button>
+      <button class="btn p full" onclick="saveTask()" data-i18n="tk_save">Salvar tarefa</button>
+      <button class="btn d full" id="tkDel" style="margin-top:8px;display:none" onclick="delTask()" data-i18n="tk_del">Excluir tarefa</button>
     </div>
 
   </div>
@@ -2269,6 +2269,9 @@ Object.assign(I18N.pt, {"rc_add_photo":"Adicionar uma foto"});
 Object.assign(I18N.es, {"rc_add_photo":"Agregar una foto"});
 Object.assign(I18N.pt, {"rc_title": "Personalizar a página", "rc_sub": "Deixe a página de confirmação com a cara do seu casamento. Veja a prévia enquanto edita.", "rc_preview": "Prévia", "rc_photo": "Foto", "rc_photo_p": "Uma foto de vocês no topo da página. Pode deixar sem — a página fica linda do mesmo jeito.", "rc_msg_label": "Mensagem de boas-vindas", "rc_msg_ph": "Ex.: Que alegria ter você com a gente! Confirme sua presença abaixo.", "rc_paper": "Cor do papel", "rc_comp_p": "Você decide o que o convidado pode incluir ao confirmar.", "rc_allow_comp": "Permitir acompanhantes", "rc_allow_comp_d": "O convidado pode incluir quem vem com ele.", "rc_allow_kids": "Permitir crianças", "rc_allow_kids_d": "Desligado, só adultos podem ser incluídos como acompanhantes.", "rc_save": "Salvar personalização", "rc_ai_reading": "Lendo com a IA…", "rc_pv_title": "Confirmação de presença", "rc_photo_added": "Foto adicionada", "rc_photo_hint": "Aparece no topo da página", "rc_remove": "Remover", "m_pick_image": "Escolha uma imagem", "m_img_fail": "Não consegui usar essa imagem", "m_photo_added": "Foto adicionada 🤍", "m_img_open_fail": "Não consegui abrir a imagem", "m_link_first": "Crie o link primeiro", "m_page_custom": "Página personalizada 🤍", "m_save_fail": "Não foi possível salvar agora"});
 Object.assign(I18N.es, {"rc_title": "Personalizar la página", "rc_sub": "Dale a la página de confirmación la cara de tu boda. Mira la vista previa mientras editas.", "rc_preview": "Vista previa", "rc_photo": "Foto", "rc_photo_p": "Una foto de ustedes en la parte superior de la página. Puedes dejarla sin foto — la página queda hermosa igual.", "rc_msg_label": "Mensaje de bienvenida", "rc_msg_ph": "Ej.: ¡Qué alegría tenerte con nosotros! Confirma tu asistencia abajo.", "rc_paper": "Color del papel", "rc_comp_p": "Tú decides qué puede incluir el invitado al confirmar.", "rc_allow_comp": "Permitir acompañantes", "rc_allow_comp_d": "El invitado puede incluir a quienes vienen con él.", "rc_allow_kids": "Permitir niños", "rc_allow_kids_d": "Apagado, solo se pueden incluir adultos como acompañantes.", "rc_save": "Guardar personalización", "rc_ai_reading": "Leyendo con la IA…", "rc_pv_title": "Confirmación de asistencia", "rc_photo_added": "Foto agregada", "rc_photo_hint": "Aparece en la parte superior de la página", "rc_remove": "Quitar", "m_pick_image": "Elige una imagen", "m_img_fail": "No pude usar esa imagen", "m_photo_added": "Foto agregada 🤍", "m_img_open_fail": "No pude abrir la imagen", "m_link_first": "Crea el enlace primero", "m_page_custom": "Página personalizada 🤍", "m_save_fail": "No se pudo guardar ahora"});
+// ---- Tarefas (pt+es) ----
+Object.assign(I18N.pt, {"tk_title_new": "Nova tarefa", "tk_title_edit": "Editar tarefa", "tk_sub": "Adicione ao seu roteiro até o altar.", "tk_label": "Tarefa", "tk_ph": "Ex.: Agendar degustação do buffet", "tk_phase": "Fase", "tk_nophase": "Sem fase", "tk_save": "Salvar tarefa", "tk_del": "Excluir tarefa", "chk_empty_t": "Você ainda não tem tarefas", "chk_empty_p": "Escolha por onde começar. Eu organizo as etapas conforme o tempo que falta até a sua data.", "chk_full_p": "Todas as etapas do casamento, do orçamento ao altar. Para quem quer cuidar de cada detalhe.", "chk_load_full": "Carregar roteiro completo", "chk_ess_p": "Os passos imprescindíveis, sem se perder nos detalhes. Para quem prefere o caminho mais direto.", "chk_load_ess": "Carregar roteiro essencial", "chk_of": "de", "chk_toggle_full": "Completo", "chk_toggle_ess": "Essencial", "chk_adapted_b": "Roteiro adaptado ao seu tempo.", "chk_adapted_p": "Como faltam {t} para o casamento, reorganizei as etapas do plano completo para caberem no seu prazo, começando agora.", "chk_pace_b": "Atenção ao ritmo:", "chk_pace_p": "com o casamento próximo, várias tarefas se concentraram em {fase} ({n} itens). Vale priorizar o que tem prazo (espaço, buffet, foto) e, se puder, contar com ajuda para não sobrecarregar.", "chk_other": "Outras tarefas", "m_task_done": "Mais um passo dado", "m_task_empty": "Escreva a tarefa", "m_task_added": "Tarefa adicionada", "m_task_updated": "Tarefa atualizada", "m_task_deleted": "Tarefa excluída", "m_already_ess": "Você já está no roteiro essencial", "m_already_full": "Você já está no roteiro completo", "chk_switch_ess_t": "Mudar para o essencial?", "chk_switch_full_t": "Mudar para o completo?", "chk_switch_ess_b": "Vou deixar só os passos imprescindíveis, numerados. Suas marcações de concluído são mantidas. Tarefas que você adicionou à mão continuam na lista.", "chk_switch_full_b": "Vou trazer todas as etapas, organizadas por fase. Suas marcações de concluído são mantidas.", "chk_use_ess": "Usar essencial", "chk_use_full": "Usar completo"});
+Object.assign(I18N.es, {"tk_title_new": "Nueva tarea", "tk_title_edit": "Editar tarea", "tk_sub": "Agrega a tu guía hasta el altar.", "tk_label": "Tarea", "tk_ph": "Ej.: Agendar degustación del banquete", "tk_phase": "Fase", "tk_nophase": "Sin fase", "tk_save": "Guardar tarea", "tk_del": "Eliminar tarea", "chk_empty_t": "Aún no tienes tareas", "chk_empty_p": "Elige por dónde empezar. Yo organizo las etapas según el tiempo que falta hasta tu fecha.", "chk_full_p": "Todas las etapas de la boda, del presupuesto al altar. Para quien quiere cuidar cada detalle.", "chk_load_full": "Cargar guía completa", "chk_ess_p": "Los pasos imprescindibles, sin perderse en los detalles. Para quien prefiere el camino más directo.", "chk_load_ess": "Cargar guía esencial", "chk_of": "de", "chk_toggle_full": "Completa", "chk_toggle_ess": "Esencial", "chk_adapted_b": "Guía adaptada a tu tiempo.", "chk_adapted_p": "Como faltan {t} para la boda, reorganicé las etapas del plan completo para que quepan en tu plazo, empezando ahora.", "chk_pace_b": "Atención al ritmo:", "chk_pace_p": "con la boda cerca, varias tareas se concentraron en {fase} ({n} ítems). Conviene priorizar lo que tiene fecha (salón, banquete, foto) y, si puedes, contar con ayuda para no sobrecargarte.", "chk_other": "Otras tareas", "m_task_done": "Un paso más dado", "m_task_empty": "Escribe la tarea", "m_task_added": "Tarea agregada", "m_task_updated": "Tarea actualizada", "m_task_deleted": "Tarea eliminada", "m_already_ess": "Ya estás en la guía esencial", "m_already_full": "Ya estás en la guía completa", "chk_switch_ess_t": "¿Cambiar a la esencial?", "chk_switch_full_t": "¿Cambiar a la completa?", "chk_switch_ess_b": "Voy a dejar solo los pasos imprescindibles, numerados. Tus marcas de completado se mantienen. Las tareas que agregaste a mano siguen en la lista.", "chk_switch_full_b": "Voy a traer todas las etapas, organizadas por fase. Tus marcas de completado se mantienen.", "chk_use_ess": "Usar esencial", "chk_use_full": "Usar completa"});
 // ---- Convidados parte 2 ----
 Object.assign(I18N.pt, {"m_guest_added": "entrou na lista"});
 Object.assign(I18N.es, {"m_guest_added": "entró en la lista"});
@@ -3564,6 +3567,10 @@ const SUGGESTED=[
   [0.15,'Delegar o celular e os pagamentos a alguém de confiança'],
   [0.1,'Relaxar na véspera: nada de estresse'],
 ];
+const ROTEIRO_ES={"Comemorar o noivado com quem vocês amam": "Celebrar el compromiso con quienes aman", "Criar um e-mail só para o casamento": "Crear un correo solo para la boda", "Conversar sobre a visão do casamento: tamanho, clima e prioridades": "Hablar sobre la visión de la boda: tamaño, estilo y prioridades", "Definir o orçamento total e quem contribui": "Definir el presupuesto total y quién aporta", "Decidir a cidade e a data do casamento": "Decidir la ciudad y la fecha de la boda", "Iniciar a lista de convidados": "Empezar la lista de invitados", "Pesquisar e contratar assessoria ou cerimonial": "Buscar y contratar wedding planner o coordinación", "Começar a busca pelo vestido dos sonhos": "Empezar la búsqueda del vestido soñado", "Visitar espaços e reservar a cerimônia e a festa": "Visitar lugares y reservar la ceremonia y la fiesta", "Pedir orçamentos de buffet e agendar degustações": "Pedir presupuestos de banquete y agendar degustaciones", "Contratar o buffet": "Contratar el banquete", "Definir onde passar a lua de mel": "Definir dónde pasar la luna de miel", "Iniciar os procedimentos legais do casamento": "Iniciar los trámites legales de la boda", "Reservar o dia da noiva e do noivo (salão, hospedagem)": "Reservar el día de la novia y del novio (salón, hospedaje)", "Contratar banda ou DJ, incluindo pista de dança": "Contratar banda o DJ, incluida la pista de baile", "Definir serviços de entretenimento (cabine de foto, totem, atrações)": "Definir servicios de entretenimiento (cabina de fotos, tótem, atracciones)", "Criar o site do casamento e a lista de presentes": "Crear el sitio web de la boda y la lista de regalos", "Contratar foto e vídeo": "Contratar foto y vídeo", "Fazer o ensaio pré-wedding (sessão de fotos do casal)": "Hacer la sesión pre-boda (fotos de la pareja)", "Contratar a decoração": "Contratar la decoración", "Escolher os padrinhos e madrinhas e convidá-los": "Elegir a los padrinos y madrinas e invitarlos", "Enviar o save the date (digital é prático e econômico)": "Enviar el save the date (digital es práctico y económico)", "Escolher a decoração da cerimônia e da festa": "Elegir la decoración de la ceremonia y la fiesta", "Comprar as alianças": "Comprar las alianzas", "Rever a lista de convidados": "Revisar la lista de invitados", "Escolher o vestido e iniciar as provas": "Elegir el vestido e iniciar las pruebas", "Contratar o bar e o serviço de bebidas": "Contratar la barra y el servicio de bebidas", "Escolher o traje do noivo": "Elegir el traje del novio", "Escolher os convites e a caixa dos padrinhos": "Elegir las invitaciones y la caja de los padrinos", "Fechar a lista de convidados": "Cerrar la lista de invitados", "Encomendar a papelaria (convite, tags, menu)": "Encargar la papelería (invitación, tarjetas, menú)", "Definir as lembrancinhas": "Definir los recuerditos", "Contratar bolo, doces e bem-casados": "Contratar pastel, dulces y bocaditos", "Planejar a lua de mel e reservar passagens": "Planear la luna de miel y reservar los pasajes", "Verificar vacinas e documentos para a viagem de lua de mel": "Verificar vacunas y documentos para el viaje de luna de miel", "Escolher o sapato e os acessórios da noiva e do noivo": "Elegir el calzado y los accesorios de la novia y el novio", "Separar documentos e marcar o casamento civil no cartório": "Reunir los documentos y agendar el matrimonio civil", "Definir pajens e daminhas": "Definir los pajes y las damitas", "Organizar chá de panela, chá bar ou chá de lingerie": "Organizar la despedida o el té de regalos", "Definir o buquê e os detalhes da decoração": "Definir el ramo y los detalles de la decoración", "Iniciar tratamentos de pele e cuidados de beleza": "Iniciar tratamientos de piel y cuidados de belleza", "Comprar as forminhas dos doces": "Comprar los pirotines para los dulces", "Entregar os convites": "Entregar las invitaciones", "Reservar hotel para a noite de núpcias": "Reservar hotel para la noche de bodas", "Definir o carro para a cerimônia": "Definir el auto para la ceremonia", "Prova final do vestido, cabelo e maquiagem": "Prueba final del vestido, peinado y maquillaje", "Prova final do traje do noivo": "Prueba final del traje del novio", "Confirmar presença dos convidados": "Confirmar la asistencia de los invitados", "Confirmar com o buffet a quantidade de convidados": "Confirmar con el banquete la cantidad de invitados", "Definir a ordem do cortejo e as músicas da cerimônia": "Definir el orden del cortejo y las músicas de la ceremonia", "Montar o mapa de mesas": "Armar el plano de mesas", "Alinhamento final com assessoria e fornecedores": "Alineación final con la coordinación y los proveedores", "Fazer o pagamento final dos fornecedores": "Hacer el pago final de los proveedores", "Agendar depilação, manicure e limpeza de pele": "Agendar depilación, manicura y limpieza facial", "Entregar cópia dos contratos ao cerimonial": "Entregar copia de los contratos a la coordinación", "Separar documentos, alianças e itens da cerimônia": "Preparar documentos, alianzas y objetos de la ceremonia", "Arrumar as malas para a lua de mel": "Armar las maletas para la luna de miel", "Lembrar os convidados de visitar o site do casamento": "Recordar a los invitados visitar el sitio de la boda", "Montar o kit de emergência da noiva": "Armar el kit de emergencia de la novia", "Providenciar uma caneta bonita para as assinaturas": "Conseguir un bolígrafo bonito para las firmas", "Estudar a rota até o local e prever o trânsito": "Estudiar la ruta al lugar y prever el tránsito", "Pensar num penteado plano B para depois da cerimônia": "Pensar un peinado plan B para después de la ceremonia", "Retirar o vestido da noiva e o traje do noivo": "Retirar el vestido de la novia y el traje del novio", "Delegar o celular e os pagamentos a alguém de confiança": "Delegar el celular y los pagos a alguien de confianza", "Relaxar na véspera: nada de estresse": "Relajarse la víspera: nada de estrés"};
+const PHASES_ES={"Primeiros passos": "Primeros pasos", "12 a 8 meses antes": "12 a 8 meses antes", "8 a 5 meses antes": "8 a 5 meses antes", "5 a 2 meses antes": "5 a 2 meses antes", "Último mês": "Último mes", "Semana do casamento": "Semana de la boda", "Comece agora": "Empieza ahora", "Outras tarefas": "Otras tareas"};
+function trTask(x){ return (typeof simLang!=='undefined'&&simLang==='es'&&ROTEIRO_ES[x])?ROTEIRO_ES[x]:x; }
+function trPhase(x){ return (typeof simLang!=='undefined'&&simLang==='es'&&PHASES_ES[x])?PHASES_ES[x]:x; }
 function monthsLeft(){
   if(!state.profile) return 12;
   const days=(new Date(state.profile.date+'T16:00:00')-new Date())/86400000;
@@ -3617,22 +3624,22 @@ function fmtTempo(M){
 }
 function switchRoteiro(mode){
   const atual=(state.planMeta&&state.planMeta.mode)||'full';
-  if(mode===atual){ toast('Você já está no roteiro '+(mode==='ess'?'essencial':'completo')); return; }
+  if(mode===atual){ toast(mode==='ess'?t('m_already_ess'):t('m_already_full')); return; }
   // guardar o que estava concluído (por texto) para repor
   const feitos=new Set(state.tasks.filter(t=>t.done).map(t=>t.t));
   const temEditadas=state.tasks.some(t=>t.custom);
   askConfirm(
-    mode==='ess'?'Mudar para o essencial?':'Mudar para o completo?',
+    mode==='ess'?t('chk_switch_ess_t'):t('chk_switch_full_t'),
     mode==='ess'
-      ? 'Vou deixar só os passos imprescindíveis, numerados. Suas marcações de concluído são mantidas. Tarefas que você adicionou à mão continuam na lista.'
-      : 'Vou trazer todas as etapas, organizadas por fase. Suas marcações de concluído são mantidas.',
+      ? t('chk_switch_ess_b')
+      : t('chk_switch_full_b'),
     ()=>{
       // preservar tarefas personalizadas (adicionadas pela noiva)
       const custom=state.tasks.filter(t=>t.custom);
       state.tasks=custom;
       loadSuggested(mode, feitos);
     },
-    mode==='ess'?'Usar essencial':'Usar completo'
+    mode==='ess'?t('chk_use_ess'):t('chk_use_full')
   );
 }
 function loadSuggested(mode, feitos){
@@ -3642,17 +3649,18 @@ function loadSuggested(mode, feitos){
   const existing=new Set(state.tasks.map(t=>t.t));
   let n=0, num=0;
   SUGGESTED.forEach(item=>{
-    const m=item[0], t=item[1], ess=item[2]===1;
+    const m=item[0], ess=item[2]===1;
+    const t=trTask(item[1]);
     if(mode==='ess' && !ess) return;   // versão essencial: só as marcadas
     if(existing.has(t)) return;
     num++;
     // essencial: sem fase, com número de ordem. completo: organizado por fase.
-    const phase = mode==='ess' ? '' : plan.label(m);
+    const phase = mode==='ess' ? '' : trPhase(plan.label(m));
     state.tasks.push({id:uid(),t,phase,done:feitos.has(t),num: mode==='ess'?num:null});
     n++;
   });
   if(mode==='ess'){ state.phaseOrder=[]; }
-  else { state.phaseOrder=plan.order; }
+  else { state.phaseOrder=plan.order.map(trPhase); }
   state.planMeta={adapted: mode==='ess'?false:plan.adapted, months:Math.round(plan.M*10)/10,created:todayISO(),mode};
   persist(); renderChk(); go('chk');
   const nome = mode==='ess'?'essencial':'completo';
@@ -3661,16 +3669,16 @@ function loadSuggested(mode, feitos){
 function renderChk(){
   if(!state.tasks.length){
     $('chkSummary').style.display='none';
-    $('chkBody').innerHTML=`<div class="empty">${ICONS.ring}<div class="dn">Você ainda não tem tarefas</div><p>Escolha por onde começar. Eu organizo as etapas conforme o tempo que falta até a sua data.</p>
+    $('chkBody').innerHTML=`<div class="empty">${ICONS.ring}<div class="dn">${t('chk_empty_t')}</div><p>${t('chk_empty_p')}</p>
     <div class="card" style="text-align:left;margin-top:16px;border-color:rgba(168,133,59,.4)">
-      <div class="dn" style="font-size:16px;color:var(--green)">Roteiro completo</div>
-      <p class="fine" style="margin:4px 0 10px">Todas as etapas do casamento, do orçamento ao altar. Para quem quer cuidar de cada detalhe.</p>
-      <button class="btn p full" onclick="loadSuggested('full')">Carregar roteiro completo</button>
+      <div class="dn" style="font-size:16px;color:var(--green)">${t('set_roteiro_full')}</div>
+      <p class="fine" style="margin:4px 0 10px">${t('chk_full_p')}</p>
+      <button class="btn p full" onclick="loadSuggested('full')">${t('chk_load_full')}</button>
     </div>
     <div class="card" style="text-align:left">
-      <div class="dn" style="font-size:16px;color:var(--green)">Roteiro essencial</div>
-      <p class="fine" style="margin:4px 0 10px">Os passos imprescindíveis, sem se perder nos detalhes. Para quem prefere o caminho mais direto.</p>
-      <button class="btn g full" onclick="loadSuggested('ess')">Carregar roteiro essencial</button>
+      <div class="dn" style="font-size:16px;color:var(--green)">${t('set_roteiro_ess')}</div>
+      <p class="fine" style="margin:4px 0 10px">${t('chk_ess_p')}</p>
+      <button class="btn g full" onclick="loadSuggested('ess')">${t('chk_load_ess')}</button>
     </div></div>`;
     return;
   }
@@ -3678,22 +3686,22 @@ function renderChk(){
   const done=state.tasks.filter(t=>t.done).length;
   const pct=Math.round(done/state.tasks.length*100);
   $('chkPct').textContent=pct+'%';
-  $('chkNums').textContent=done+' de '+state.tasks.length;
+  $('chkNums').textContent=done+' '+t('chk_of')+' '+state.tasks.length;
   $('chkMeter').style.width=pct+'%';
 
   const modo=(state.planMeta&&state.planMeta.mode)||'full';
   let html='';
   // troca de versão do roteiro
   html+=`<div style="display:flex;gap:8px;margin-bottom:12px">
-    <button class="btn ${modo==='full'?'p':'g'} sm" style="flex:1" onclick="switchRoteiro('full')">Completo</button>
-    <button class="btn ${modo==='ess'?'p':'g'} sm" style="flex:1" onclick="switchRoteiro('ess')">Essencial</button>
+    <button class="btn ${modo==='full'?'p':'g'} sm" style="flex:1" onclick="switchRoteiro('full')">${t('chk_toggle_full')}</button>
+    <button class="btn ${modo==='ess'?'p':'g'} sm" style="flex:1" onclick="switchRoteiro('ess')">${t('chk_toggle_ess')}</button>
   </div>`;
 
   if(state.planMeta&&state.planMeta.adapted){
     const M=monthsLeft();
     html+=`<div class="card soft" style="display:flex;gap:10px;align-items:flex-start">
       <span style="color:var(--gold);flex-shrink:0;margin-top:1px">${SPARK}</span>
-      <p class="fine" style="margin:0"><b style="color:var(--green)">Roteiro adaptado ao seu tempo.</b> Como faltam ${fmtTempo(M)} para o casamento, reorganizei as etapas do plano completo para caberem no seu prazo, começando agora.</p>
+      <p class="fine" style="margin:0"><b style="color:var(--green)">${t('chk_adapted_b')}</b> ${t('chk_adapted_p').replace('{t}',fmtTempo(M))}</p>
     </div>`;
     // aviso de acúmulo: detectar a fase mais cheia entre as tarefas pendentes
     const pend=state.tasks.filter(t=>!t.done);
@@ -3704,7 +3712,7 @@ function renderChk(){
     if(M<=7 && maxT>=8){
       html+=`<div class="card" style="border-color:rgba(168,133,59,.5);background:var(--gold-soft);display:flex;gap:10px;align-items:flex-start;margin-top:-2px">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--gold-ink)" stroke-width="1.8" style="flex-shrink:0;margin-top:1px"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
-        <p class="fine" style="margin:0;color:var(--gold-ink)"><b>Atenção ao ritmo:</b> com o casamento próximo, várias tarefas se concentraram em <b>${esc(faseTop)}</b> (${maxT} itens). Vale priorizar o que tem prazo (espaço, buffet, foto) e, se puder, contar com ajuda para não sobrecarregar.</p>
+        <p class="fine" style="margin:0;color:var(--gold-ink)"><b>${t('chk_pace_b')}</b> ${t('chk_pace_p').replace('{fase}','<b>'+esc(faseTop)+'</b>').replace('{n}',maxT)}</p>
       </div>`;
     }
   }
@@ -3729,7 +3737,7 @@ function renderChk(){
       const ts=state.tasks.filter(t=>(t.phase||'')===ph);
       if(!ts.length) return;
       const fd=ts.filter(t=>t.done).length;
-      html+=`<div class="phh"><div class="dn">${esc(ph)||'Outras tarefas'}</div><span>${fd}/${ts.length}</span></div>`;
+      html+=`<div class="phh"><div class="dn">${esc(ph)||t('chk_other')}</div><span>${fd}/${ts.length}</span></div>`;
       html+=ts.map(t=>taskRow(t)).join('');
     });
   }
@@ -3739,31 +3747,31 @@ function togTask(id){
   const t=state.tasks.find(x=>x.id===id);
   t.done=!t.done;
   persist(); renderChk();
-  if(t.done) toast('Mais um passo dado');
+  if(t.done) toast(t('m_task_done'));
 }
 let editTk=null;
 function openTask(id){
   editTk = id ? state.tasks.find(t=>t.id===id) : null;
-  $('tkTitle').textContent=editTk?'Editar tarefa':'Nova tarefa';
+  $('tkTitle').textContent=editTk?t('tk_title_edit'):t('tk_title_new');
   $('tkText').value=editTk?.t||'';
   const known=state.phaseOrder&&state.phaseOrder.length?state.phaseOrder:PHASES.filter(Boolean);
   const extras=[...new Set(state.tasks.map(t=>t.phase||''))].filter(f=>f&&!known.includes(f));
-  $('tkPhase').innerHTML='<option value="">Sem fase</option>'+[...known,...extras].map(f=>`<option>${esc(f)}</option>`).join('');
+  $('tkPhase').innerHTML='<option value="">'+t('tk_nophase')+'</option>'+[...known,...extras].map(f=>`<option>${esc(trPhase(f))}</option>`).join('');
   $('tkPhase').value=editTk?.phase||'';
   $('tkDel').style.display=editTk?'block':'none';
   openSheet('sh-task');
 }
 function saveTask(){
   const t=$('tkText').value.trim();
-  if(!t){toast('Escreva a tarefa');return;}
+  if(!t){toast(t('m_task_empty'));return;}
   if(editTk){ editTk.t=t; editTk.phase=$('tkPhase').value; }
   else state.tasks.push({id:uid(),t,phase:$('tkPhase').value,done:false,custom:true});
   persist(); closeSheet(); renderChk();
-  toast(editTk?'Tarefa atualizada':'Tarefa adicionada');
+  toast(editTk?t('m_task_updated'):t('m_task_added'));
 }
 function delTask(){
   state.tasks=state.tasks.filter(t=>t!==editTk);
-  persist(); closeSheet(); renderChk(); toast('Tarefa excluída');
+  persist(); closeSheet(); renderChk(); toast(t('m_task_deleted'));
 }
 
 /* =================== ANOTAÇÕES =================== */
